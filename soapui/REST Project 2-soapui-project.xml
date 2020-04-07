@@ -1,0 +1,1888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="b6ce03a7-c9d8-4d4c-b129-a0ae5844c884" activeEnvironment="Default" name="REST Project 2" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="${projectDir}" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="f8252692-0f26-401d-85cf-914d0d78f364" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8087" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://localhost:8087</con:endpoint></con:endpoints><con:resource name="user" path="/api/v1/user" id="f2370755-9f57-4ea5-9b68-76520238696b"><con:settings/><con:parameters><con:parameter><con:name>role</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="ida" path="ida" id="7da5d541-8d59-40d5-ae96-b41590dab765"><con:settings/><con:parameters><con:parameter><con:name>subjectid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>organizationid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>organization</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="REQUEST IDA FOR HOSPITAL" id="ec3837aa-fe6d-463d-98a1-a30cadcdc661" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:ida="http://localhost/api/v1/user/ida">ida:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/xml; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:urn="urn:oasis:names:tc:SAML:2.0:assertion">urn:Assertion</con:element></con:representation><con:request name="Request 1" id="e9e93708-683b-4561-a6ab-a3996ff12f37" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/user/ida</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="organizationid" value="1.2.40.0.34.99.10.2.1.2.14827"/>
+  <con:entry key="role" value=""/>
+  <con:entry key="organization" value="SWHKrankenanstalt Baumgartling"/>
+  <con:entry key="userId" value=""/>
+  <con:entry key="subjectid" value="K2113"/>
+</con:parameters><con:parameterOrder><con:entry>subjectid</con:entry><con:entry>organizationid</con:entry><con:entry>organization</con:entry><con:entry>role</con:entry><con:entry>userId</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="LOGIN" id="5435283b-3b82-4ed0-928f-f07a69312e9a" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:user="http://localhost/api/v1/user">user:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html;charset=iso-8859-1</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:oasis:names:tc:SAML:2.0:assertion">urn:Assertion</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="LOGIN GINA" id="dd30cd77-5256-4ce4-a556-8984d7ac6f11" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId":"1",  
+	"role":"700", 
+	"password":"0000",
+	"givenName": "Anna", 
+	"familyName": "Test", 
+	"cardReaderId": "lanccr_neu_ip_5 (02:bb:a0)", 
+	"prefix" : "Dr."
+}</con:request><con:originalUri>http://localhost/api/v1/user</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="role" value=""/>
+  <con:entry key="userId" value=""/>
+</con:parameters><con:parameterOrder><con:entry>role</con:entry><con:entry>userId</con:entry></con:parameterOrder></con:request><con:request name="LOGIN HOSPITAL" id="b9d0d051-825e-4a02-83c5-3abe12a6e1d1" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId":"2",  
+	"role":"702", 
+	"subjectid": "K2113",
+	"organization": "SWHKrankenanstalt Baumgartling",
+	"organizationid": "1.2.40.0.34.99.10.2.1.2.14827"
+}</con:request><con:originalUri>http://localhost/api/v1/user</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="role" value=""/>
+  <con:entry key="userId" value=""/>
+</con:parameters><con:parameterOrder><con:entry>role</con:entry><con:entry>userId</con:entry></con:parameterOrder></con:request><con:request name="LOGIN WITH IDA" id="7cd16975-f241-4fc4-9c94-6708bffcb2b4" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request><![CDATA[<saml2:Assertion ID="_dd58c37a-3458-4c70-bd43-fb57bcf34884" IssueInstant="2020-04-02T13:08:38.338Z" Version="2.0" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:env="http://www.w3.org/2003/05/soap-envelope"><saml2:Issuer Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">urn:tiani:idp</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#_dd58c37a-3458-4c70-bd43-fb57bcf34884"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces PrefixList="xsd" xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>+BPfwsiByLJgZumr6Gl6LDYxKpPHLcx7Q0pP/tvknCY=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Bw4Yw2SV1sM1ixjf2hgPRIl9QNaGWmxhLCOcGs/C9KN4a1Z0kW8+sEC96Q4lwJ3RK55bRLmv0nUafivKcB5fJfZLuC6t2WJr3QXOZSoxvb4j1W/Oac0+iUnE0fTPst4M2d3JoF49Srg14U7B9iB/0GFzsw7EI1pIUJbjQQ63k/8qtjGcLYKX+0DqhRNp1qy97sBxrjrBJ4eDdulIl333OTFtxop39HagBvSGrNYLYZxRDr8gAr/BPJzzmOKUIV2DRhXR5r6gZj41P7AvlWDD6kxfc6Y27JvdmFgNZogTIdLkX6G/t4hF/h/7hDBUc6Y1XIlsdIVMczHzLvfMklhdVg==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIFnjCCA4agAwIBAgIILvmoVmjE+1kwDQYJKoZIhvcNAQELBQAwRzEhMB8GA1UEAwwYRWxnYS1TcGlyaXQtSW50LUlzc3VlckNBMRUwEwYDVQQKDAxUaWFuaS1TcGlyaXQxCzAJBgNVBAYTAkFUMB4XDTE4MDQwOTEwMDUwMFoXDTIwMDUwODEwMDUwMFowSTEjMCEGA1UEAwwaaWRwLWlzc3Vlci5lbGdhLXNwaXJpdC5pbnQxFTATBgNVBAoMDFRpYW5pLVNwaXJpdDELMAkGA1UEBhMCQVQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCpchtqU9TYOGgTOIIt9mmS9P1fVWM8wjEBjRLPp0XkG+zZbqqnJ8spuXfR776fOB7z2hr6TV1EmQmaHamdjmCjr3d1LuBnf/EPxpY9AW18lcWvjVejqePNetK+MXRdOU2t3TRwFtHXXizNcL6AMkefvbiHFkySXw912CoqtBCYXId+QlBb6lENs01dVaRPm3qFUGHdmqaO0uiDfGc+mn/gzoH+ovC+LBaWEwJUKMslBVFIRAVzcTJ0yDMNodY2jyVgrqsxjKBg+RT3BJ9Zr/mtdF8lS+8b4RAbc8WzbNBT/GMq9PzeJ28nrvelj++hxsxNFoYV7yLmvWx6Pn/gJw8jAgMBAAGjggGKMIIBhjAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFEEvjZgma/DZi+EtO1gB9V+ClxqJME0GCCsGAQUFBwEBBEEwPzA9BggrBgEFBQcwAYYxaHR0cDovL1NwaXJpdFBLSTo4MDgwL2VqYmNhL3B1YmxpY3dlYi9zdGF0dXMvb2NzcDCB1gYDVR0fBIHOMIHLMIHIoHmgd4Z1aHR0cDovL1NwaXJpdFBLSTo4MDgwL2VqYmNhL3B1YmxpY3dlYi93ZWJkaXN0L2NlcnRkaXN0P2NtZD1jcmwmaXNzdWVyPUNOPUVsZ2EtU3Bpcml0LUludC1Jc3N1ZXJDQSxPPVRpYW5pLVNwaXJpdCxDPUFUokukSTBHMSEwHwYDVQQDDBhFbGdhLVNwaXJpdC1JbnQtSXNzdWVyQ0ExFTATBgNVBAoMDFRpYW5pLVNwaXJpdDELMAkGA1UEBhMCQVQwHQYDVR0OBBYEFLZ8vzn+Mk2k8GJNivKLqeVNVVaAMA4GA1UdDwEB/wQEAwIF4DANBgkqhkiG9w0BAQsFAAOCAgEAtlClQSfzzIQMZwwdAM6wfM4DI/9b3fegLtQ8Im521z536yrKmgKwSX7fDlP6kckE7XKr0yhMG+BEwWPD3OPBqVbaXiCzMvAmTxYPcjw0UZd0wpKyz9zxjkh6rUjaU0bX7eSFG0C3k82jnEAwUwNcEZRYHlPsqA5kmtwoU1fjpFTia3Ni9kE97PGefqW5fHIsUl9MChtbKU5CZotuUiyA5PqJdivnbf1Ou1/sGa5AfnwXKo19bKnIMTDtmLob1se4D1ZDCSaMg6o4XXPAgbY2hq4a0eD2njmSPabrxJkvYLOD5T0+hDm0HR6Fq4KBjyptEQCJB2PV0F2OXG9p1WlsqOH4Veol4cJ0TONGU2yvRsUaZNXLs7NOAHrl/ECvFHTTAfOiyQX5DKEmbARl31ADjqe+tO2lkF/doChgAY+P3ljwwVjf01HYXAx2C6kCm2y2nlMRLm0Meap9KQtB+Z9CJFyh53UcvAyH3CxjSaCz1CXYEQqyfH65McrjR0T9fKWpVfnGNDLK6yncN6gHXO5vb/TyqoqPOZ2xPH3vpVfBrdRs740jlZ2toarrcYn1ivKNVL/UPLqftlrLoyEbXNgUwwGXCosqxzuIN2DVNN+0R24KkwFiEqrwTgDncWorBgxViDY9Xfkv4lHOukkUP1w2BO4OmkA9+1PdrEhSchi+fhY=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject><saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">K2113</saml2:NameID><saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml2:SubjectConfirmationData/></saml2:SubjectConfirmation></saml2:Subject><saml2:Conditions NotBefore="2020-04-02T13:08:38.337Z" NotOnOrAfter="2020-04-02T13:28:38.337Z"><saml2:ProxyRestriction Count="2"/><saml2:AudienceRestriction><saml2:Audience>https://elga-online.at/ETS</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions><saml2:AuthnStatement AuthnInstant="2020-04-02T13:08:38.337Z"><saml2:AuthnContext><saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PreviousSession</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement><saml2:AttributeStatement><saml2:Attribute FriendlyName="ELGA OID Issuing Authority" Name="urn:elga:bes:2013:OIDIssuingAuthority" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xsi:type="xsd:string" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1.2.40.0.34</saml2:AttributeValue></saml2:Attribute><saml2:Attribute FriendlyName="XSPA Subject" Name="urn:oasis:names:tc:xacml:1.0:subject:subject-id" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xsi:type="xsd:string" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">K2113</saml2:AttributeValue></saml2:Attribute><saml2:Attribute FriendlyName="XSPA Organization ID" Name="urn:oasis:names:tc:xspa:1.0:subject:organization-id" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xsi:type="xsd:anyURI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1.2.40.0.34.99.10.2.1.2.14827</saml2:AttributeValue></saml2:Attribute><saml2:Attribute FriendlyName="XSPA Organization" Name="urn:oasis:names:tc:xspa:1.0:subject:organization" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xsi:type="xsd:anyURI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SWHKrankenanstalt Baumgartling</saml2:AttributeValue></saml2:Attribute></saml2:AttributeStatement></saml2:Assertion>]]></con:request><con:originalUri>http://192.168.5.35/api/v1/user</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="role" value="702"/>
+  <con:entry key="userId" value="2"/>
+</con:parameters><con:parameterOrder><con:entry>role</con:entry><con:entry>userId</con:entry></con:parameterOrder></con:request></con:method><con:method name="LOGOFF" id="63eb30cf-7e25-45d3-94cc-eea38c863385" method="DELETE"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value>1</con:value><con:style>QUERY</con:style><con:default>1</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:user="http://localhost/api/v1/user">user:Fault</con:element></con:representation><con:request name="LOGOFF USER" id="6a9466e7-26f9-4c56-8556-a531f13ee879" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/user</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="role" value=""/>
+  <con:entry key="userId" value="2"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>role</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="ehealthapplications" path="/api/v1/ehealthapplications" id="24cf3d14-bc15-4cda-869a-1041c13ecefc"><con:settings/><con:parameters/><con:resource name="immunizationrecord" path="immunizationrecord" id="39cba1e3-c37b-4462-a174-083ed90c3c43"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="search" path="search" id="00c812da-83a4-41fe-b7c3-4381ec99bb93"><con:settings/><con:parameters/><con:method name="Method 1" id="784cd6f4-ce66-48f8-88d1-41b49cf88299" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>401 500</con:status><con:params/><con:element xmlns:sear="http://localhost/api/v1/ehealthapplications/immunizationrecord/search">sear:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:sear="http://localhost/api/v1/ehealthapplications/immunizationrecord/search">sear:Response</con:element></con:representation><con:request name="Request 1" id="161faebd-973a-4a0b-afb1-7eea00cb7e82" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId":"2", 
+	"ssno":"1002120289", 
+	"authorId": "" 
+}</con:request><con:originalUri>http://localhost/api/v1/ehealthapplications/immunizationrecord/search</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="format" value="" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="GET COMPLETE IMMUNISIERUNGSSTATUS" id="6ae2c4ca-7c1b-49a3-b432-b7a278c10d79" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500 401</con:status><con:params/><con:element xmlns:imm="http://localhost/api/v1/ehealthapplications/immunizationrecord">imm:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/html;charset=iso-8859-1</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Request 1" id="158ca7aa-9b90-4488-a142-326824a55f8b" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/ehealthapplications/immunizationrecord</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="ssno" value="1002120289"/>
+  <con:entry key="format" value="html"/>
+  <con:entry key="userId" value="2"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request></con:method><con:method name="CREATE UPDATE IMMUNISIERUNGSSTATUS" id="11636f86-aae7-4cc4-a6e0-e0a0d6683cfd" method="POST"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/html;charset=iso-8859-1</con:mediaType><con:status>500 404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>400 401 500</con:status><con:params/><con:element xmlns:imm="http://localhost/api/v1/ehealthapplications/immunizationrecord">imm:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:imm="http://localhost/api/v1/ehealthapplications/immunizationrecord">imm:Response</con:element></con:representation><con:request name="EXISTING CDA" id="3eb360a4-dded-40d1-a157-0bce9fabcfe6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+    "userId": "1",
+    "healthcareFacilityCode": "100",
+    "practiceSettingCode": "F001",
+    "ssno": "1002120289",
+    "validate": false, 
+    "document": "PCEtLURvY3VtZW50IGJhc2VkIG9uIENEQSBSMiBnZW5lcmF0ZWQgYnkgZUhlYWx0aENvbm5lY3Rv\_r\nciBSeHh4eHh4LCBSZWxlYXNlIERhdGUgdG9kbyByZWxlYXNlIGRhdGUtLT4KPD94bWwtc3R5bGVz\_r\naGVldCB0eXBlPSJ0ZXh0L3hzbCIgaHJlZj0iZWltcGYtc3R5bGVzaGVldF92MS4wLnhzbCI/Pgo8\_r\nQ2xpbmljYWxEb2N1bWVudCBjbGFzc0NvZGU9IkRPQ0NMSU4iIG1vb2RDb2RlPSJFVk4iIHhtbG5z\_r\nPSJ1cm46aGw3LW9yZzp2MyIgeG1sbnM6bnMyPSJ1cm46aWhlOnBoYXJtOm1lZGljYXRpb24iPgog\_r\nICA8cmVhbG1Db2RlIGNvZGU9IkFUIi8+CiAgIDx0eXBlSWQgZXh0ZW5zaW9uPSJQT0NEX0hEMDAw\_r\nMDQwIiByb290PSIyLjE2Ljg0MC4xLjExMzg4My4xLjMiLz4KICAgPHRlbXBsYXRlSWQgcm9vdD0i\_r\nMS4yLjQwLjAuMzQuNi4wLjExLjAuMSIvPgogICA8dGVtcGxhdGVJZCByb290PSIxLjIuNDAuMC4z\_r\nNC43LjE5Ii8+CiAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjEuMi40MC4wLjM0LjYuMC4xMS4wLjIiLz4K\_r\nICAgPHRlbXBsYXRlSWQgZXh0ZW5zaW9uPSJYRFNkb2N1bWVudEVudHJ5LmZvcm1hdENvZGVedXJu\_r\nOmhsNy1hdDplSW1wZjoyMDE5IiByb290PSIxLjIuNDAuMC4zNC42LjAuMTEuMC4yLjEiLz4KICAg\_r\nPHRlbXBsYXRlSWQgcm9vdD0iMS4zLjYuMS40LjEuMTkzNzYuMS41LjMuMS4xLjE4LjEuMiIvPgog\_r\nICA8aWQgZXh0ZW5zaW9uPSI3NjM0ZTcxOC0xNjM0LTA2MGUtMWNmMS1jZWEwNDY3ZGM5MTRfMjAy\_r\nMDAzMDIxNjE2NDEiIHJvb3Q9IjEuMi40MC4wLjM0Ljk5LjMuMi4xMDQ2MTY3Ii8+CiAgIDxjb2Rl\_r\nIGNvZGU9IjExMzY5LTYiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuMSIgZGlzcGxh\_r\neU5hbWU9IkhJU1RPUlkgT0YgSU1NVU5JWkFUSU9OUyI+CiAgICAgIDx0cmFuc2xhdGlvbiBjb2Rl\_r\nPSI4NzI3My05IiBjb2RlU3lzdGVtPSIyLjE2Ljg0MC4xLjExMzg4My42LjEiIGRpc3BsYXlOYW1l\_r\nPSJJbW11bml6YXRpb24gbm90ZSIvPgogICA8L2NvZGU+CiAgIDx0aXRsZT5VcGRhdGUgSW1tdW5p\_r\nc2llcnVuZ3NzdGF0dXM8L3RpdGxlPgogICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAyMDAzMDIw\_r\nNDE2NDIrMDEwMCIvPgogICA8Y29uZmlkZW50aWFsaXR5Q29kZSBjb2RlPSJOIiBjb2RlU3lzdGVt\_r\nPSIyLjE2Ljg0MC4xLjExMzg4My41LjI1IiBjb2RlU3lzdGVtTmFtZT0iSEw3OkNvbmZpZGVudGlh\_r\nbGl0eSIgZGlzcGxheU5hbWU9Im5vcm1hbCIvPgogICA8bGFuZ3VhZ2VDb2RlIGNvZGU9ImRlLUFU\_r\nIi8+CiAgIDxzZXRJZCBleHRlbnNpb249Ijk0NDI4NzEwLWI0M2UtMDNhYy0wNjcwLTg0ZGNhMjli\_r\nZGVhNl8yMDIwMDIxOTIwMDEyMSIgcm9vdD0iMS4yLjQwLjAuMzQuOTkuMy4yLjEwNDYxNjciLz4K\_r\nICAgPHZlcnNpb25OdW1iZXIgdmFsdWU9IjIiLz4KICAgPHJlY29yZFRhcmdldCBjb250ZXh0Q29u\_r\ndHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0iUkNUIj4KICAgICAgPHBhdGllbnRSb2xlIGNsYXNzQ29k\_r\nZT0iUEFUIj4KICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9Ik9yZGluYXRpb24g\_r\nRHIuIE11c3RlcsOkcnp0aW4iIGV4dGVuc2lvbj0iNzAwMDAiIHJvb3Q9IjEuMi40MC4wLjM0Ljk5\_r\nLjMuMi4xMDQ2MTY3Ii8+CiAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSLDlnN0\_r\nZXJyZWljaGlzY2hlIFNvemlhbHZlcnNpY2hlcnVuZyIgZXh0ZW5zaW9uPSIxMDAyMTIwMjg5IiBy\_r\nb290PSIxLjIuNDAuMC4xMC4xLjQuMy4xIi8+CiAgICAgICAgIDxhZGRyPgogICAgICAgICAgICA8\_r\nY2l0eT5HcmF6PC9jaXR5PgogICAgICAgICAgICA8Y291bnRyeT5BVVQ8L2NvdW50cnk+CiAgICAg\_r\nICAgICAgIDxwb3N0YWxDb2RlPjgwMjA8L3Bvc3RhbENvZGU+CiAgICAgICAgICAgIDxzdHJlZXRO\_r\nYW1lPkdhcnRlbnN0cmHDn2U8L3N0cmVldE5hbWU+CiAgICAgICAgIDwvYWRkcj4KICAgICAgICAg\_r\nPHBhdGllbnQgY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAg\_r\nICAgICAgIDxuYW1lPgogICAgICAgICAgICAgICA8ZmFtaWx5Pk11c3RlcnBhdGllbnQ8L2ZhbWls\_r\neT4KICAgICAgICAgICAgICAgPGdpdmVuPk1heDwvZ2l2ZW4+CiAgICAgICAgICAgICAgIDxwcmVm\_r\naXggcXVhbGlmaWVyPSJBQyI+RGlwbC4tSW5nLjwvcHJlZml4PgogICAgICAgICAgICAgICA8c3Vm\_r\nZml4PkJTYzwvc3VmZml4PgogICAgICAgICAgICA8L25hbWU+CiAgICAgICAgICAgIDxhZG1pbmlz\_r\ndHJhdGl2ZUdlbmRlckNvZGUgY29kZT0iTSIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMu\_r\nNS4xIiBjb2RlU3lzdGVtTmFtZT0iSEw3OkFkbWluaXN0cmF0aXZlR2VuZGVyIiBkaXNwbGF5TmFt\_r\nZT0iTWFsZSIvPgogICAgICAgICAgICA8YmlydGhUaW1lIHZhbHVlPSIxOTg5MDIxMiIvPgogICAg\_r\nICAgICA8L3BhdGllbnQ+CiAgICAgIDwvcGF0aWVudFJvbGU+CiAgIDwvcmVjb3JkVGFyZ2V0Pgog\_r\nICA8YXV0aG9yIGNvbnRleHRDb250cm9sQ29kZT0iT1AiIHR5cGVDb2RlPSJBVVQiPgogICAgICA8\_r\ndGltZSBudWxsRmxhdm9yPSJVTksiLz4KICAgICAgPGFzc2lnbmVkQXV0aG9yIGNsYXNzQ29kZT0i\_r\nQVNTSUdORUQiPgogICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iR0RBLUluZGV4\_r\nIiByb290PSIxLjIuNDAuMC4zNC45OS4zLjIuMTA0NjE2NyIvPgogICAgICAgICA8YXNzaWduZWRQ\_r\nZXJzb24gY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAg\_r\nICAgIDxuYW1lPgogICAgICAgICAgICAgICA8ZmFtaWx5Pk11c3RlcsOkcnp0aW48L2ZhbWlseT4K\_r\nICAgICAgICAgICAgICAgPGdpdmVuPkhlbGdhPC9naXZlbj4KICAgICAgICAgICAgICAgPHByZWZp\_r\neCBxdWFsaWZpZXI9IkFDIj5Eci48L3ByZWZpeD4KICAgICAgICAgICAgICAgPHN1ZmZpeD5NQkE8\_r\nL3N1ZmZpeD4KICAgICAgICAgICAgPC9uYW1lPgogICAgICAgICA8L2Fzc2lnbmVkUGVyc29uPgog\_r\nICAgICAgICA8cmVwcmVzZW50ZWRPcmdhbml6YXRpb24gY2xhc3NDb2RlPSJPUkciIGRldGVybWlu\_r\nZXJDb2RlPSJJTlNUQU5DRSI+CiAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1l\_r\nPSJHREEtSW5kZXgiIHJvb3Q9IjEuMi40MC4wLjM0Ljk5LjMuMi4xMDQ2MTY3Ii8+CiAgICAgICAg\_r\nICAgIDxuYW1lIHVzZT0iTCI+T3JkaW5hdGlvbiBEci4gTXVzdGVyw6RyenRpbjwvbmFtZT4KICAg\_r\nICAgICAgICAgPGFkZHI+CiAgICAgICAgICAgICAgIDxjaXR5PkdyYXo8L2NpdHk+CiAgICAgICAg\_r\nICAgICAgIDxjb3VudHJ5PkFVVDwvY291bnRyeT4KICAgICAgICAgICAgICAgPHBvc3RhbENvZGU+\_r\nODAxMDwvcG9zdGFsQ29kZT4KICAgICAgICAgICAgICAgPHN0cmVldE5hbWU+VGVzdGdhc3NlPC9z\_r\ndHJlZXROYW1lPgogICAgICAgICAgICA8L2FkZHI+CiAgICAgICAgIDwvcmVwcmVzZW50ZWRPcmdh\_r\nbml6YXRpb24+CiAgICAgIDwvYXNzaWduZWRBdXRob3I+CiAgIDwvYXV0aG9yPgogICA8ZGF0YUVu\_r\ndGVyZXIgY29udGV4dENvbnRyb2xDb2RlPSJPUCIgdHlwZUNvZGU9IkVOVCI+CiAgICAgIDxhc3Np\_r\nZ25lZEVudGl0eT4KICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkdEQS1JbmRl\_r\neCIgcm9vdD0iMS4yLjQwLjAuMzQuOTkuMy4yLjEwNDYxNjciLz4KICAgICAgICAgPGFzc2lnbmVk\_r\nUGVyc29uIGNsYXNzQ29kZT0iUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAg\_r\nICAgICA8bmFtZT4KICAgICAgICAgICAgICAgPGZhbWlseT5NdXN0ZXLDpHJ6dGluPC9mYW1pbHk+\_r\nCiAgICAgICAgICAgICAgIDxnaXZlbj5IZWxnYTwvZ2l2ZW4+CiAgICAgICAgICAgICAgIDxwcmVm\_r\naXggcXVhbGlmaWVyPSJBQyI+RHIuPC9wcmVmaXg+CiAgICAgICAgICAgICAgIDxzdWZmaXg+TUJB\_r\nPC9zdWZmaXg+CiAgICAgICAgICAgIDwvbmFtZT4KICAgICAgICAgPC9hc3NpZ25lZFBlcnNvbj4K\_r\nICAgICAgICAgPHJlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICAgICAgICA8aWQgYXNzaWdu\_r\naW5nQXV0aG9yaXR5TmFtZT0iR0RBLUluZGV4IiByb290PSIxLjIuNDAuMC4zNC45OS4zLjIuMTA0\_r\nNjE2NyIvPgogICAgICAgICAgICA8bmFtZSB1c2U9IkwiPk9yZGluYXRpb24gRHIuIE11c3RlcsOk\_r\ncnp0aW48L25hbWU+CiAgICAgICAgICAgIDxhZGRyPgogICAgICAgICAgICAgICA8Y2l0eT5HcmF6\_r\nPC9jaXR5PgogICAgICAgICAgICAgICA8Y291bnRyeT5BVVQ8L2NvdW50cnk+CiAgICAgICAgICAg\_r\nICAgIDxwb3N0YWxDb2RlPjgwMTA8L3Bvc3RhbENvZGU+CiAgICAgICAgICAgICAgIDxzdHJlZXRO\_r\nYW1lPlRlc3RnYXNzZTwvc3RyZWV0TmFtZT4KICAgICAgICAgICAgPC9hZGRyPgogICAgICAgICA8\_r\nL3JlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICA8L2Fzc2lnbmVkRW50aXR5PgogICA8L2Rh\_r\ndGFFbnRlcmVyPgogICA8Y3VzdG9kaWFuPgogICAgICA8YXNzaWduZWRDdXN0b2RpYW4gY2xhc3ND\_r\nb2RlPSJBU1NJR05FRCI+CiAgICAgICAgIDxyZXByZXNlbnRlZEN1c3RvZGlhbk9yZ2FuaXphdGlv\_r\nbiBjbGFzc0NvZGU9Ik9SRyIgZGV0ZXJtaW5lckNvZGU9IklOU1RBTkNFIj4KICAgICAgICAgICAg\_r\nPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9IkdEQS1JbmRleCIgcm9vdD0iMS4yLjQwLjAuMzQu\_r\nOTkuMy4yLjEwNDYxNjciLz4KICAgICAgICAgICAgPG5hbWUgdXNlPSJMIj5PcmRpbmF0aW9uIERy\_r\nLiBNdXN0ZXLDpHJ6dGluPC9uYW1lPgogICAgICAgICAgICA8YWRkcj4KICAgICAgICAgICAgICAg\_r\nPGNpdHk+R3JhejwvY2l0eT4KICAgICAgICAgICAgICAgPGNvdW50cnk+QVVUPC9jb3VudHJ5Pgog\_r\nICAgICAgICAgICAgICA8cG9zdGFsQ29kZT44MDEwPC9wb3N0YWxDb2RlPgogICAgICAgICAgICAg\_r\nICA8c3RyZWV0TmFtZT5UZXN0Z2Fzc2U8L3N0cmVldE5hbWU+CiAgICAgICAgICAgIDwvYWRkcj4K\_r\nICAgICAgICAgPC9yZXByZXNlbnRlZEN1c3RvZGlhbk9yZ2FuaXphdGlvbj4KICAgICAgPC9hc3Np\_r\nZ25lZEN1c3RvZGlhbj4KICAgPC9jdXN0b2RpYW4+CiAgIDxsZWdhbEF1dGhlbnRpY2F0b3IgY29u\_r\ndGV4dENvbnRyb2xDb2RlPSJPUCIgdHlwZUNvZGU9IkxBIj4KICAgICAgPHRpbWUgbnVsbEZsYXZv\_r\ncj0iVU5LIi8+CiAgICAgIDxzaWduYXR1cmVDb2RlIGNvZGU9IlMiLz4KICAgICAgPGFzc2lnbmVk\_r\nRW50aXR5IGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAgICA8aWQgcm9vdD0iMS4yLjQwLjAu\_r\nMzQuOTkuMy4yLjEwNDYxNjciLz4KICAgICAgICAgPGFzc2lnbmVkUGVyc29uIGNsYXNzQ29kZT0i\_r\nUFNOIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0UiPgogICAgICAgICAgICA8bmFtZT4KICAgICAg\_r\nICAgICAgICAgPGZhbWlseT5NdXN0ZXLDpHJ6dGluPC9mYW1pbHk+CiAgICAgICAgICAgICAgIDxn\_r\naXZlbj5IZWxnYTwvZ2l2ZW4+CiAgICAgICAgICAgICAgIDxwcmVmaXggcXVhbGlmaWVyPSJBQyI+\_r\nRHIuPC9wcmVmaXg+CiAgICAgICAgICAgICAgIDxzdWZmaXg+TUJBPC9zdWZmaXg+CiAgICAgICAg\_r\nICAgIDwvbmFtZT4KICAgICAgICAgPC9hc3NpZ25lZFBlcnNvbj4KICAgICAgICAgPHJlcHJlc2Vu\_r\ndGVkT3JnYW5pemF0aW9uIGNsYXNzQ29kZT0iT1JHIiBkZXRlcm1pbmVyQ29kZT0iSU5TVEFOQ0Ui\_r\nPgogICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iR0RBLUluZGV4IiByb290\_r\nPSIxLjIuNDAuMC4zNC45OS4zLjIuMTA0NjE2NyIvPgogICAgICAgICAgICA8bmFtZSB1c2U9Ikwi\_r\nPk9yZGluYXRpb24gRHIuIE11c3RlcsOkcnp0aW48L25hbWU+CiAgICAgICAgICAgIDxhZGRyPgog\_r\nICAgICAgICAgICAgICA8Y2l0eT5HcmF6PC9jaXR5PgogICAgICAgICAgICAgICA8Y291bnRyeT5B\_r\nVVQ8L2NvdW50cnk+CiAgICAgICAgICAgICAgIDxwb3N0YWxDb2RlPjgwMTA8L3Bvc3RhbENvZGU+\_r\nCiAgICAgICAgICAgICAgIDxzdHJlZXROYW1lPlRlc3RnYXNzZTwvc3RyZWV0TmFtZT4KICAgICAg\_r\nICAgICAgPC9hZGRyPgogICAgICAgICA8L3JlcHJlc2VudGVkT3JnYW5pemF0aW9uPgogICAgICA8\_r\nL2Fzc2lnbmVkRW50aXR5PgogICA8L2xlZ2FsQXV0aGVudGljYXRvcj4KICAgPGRvY3VtZW50YXRp\_r\nb25PZiB0eXBlQ29kZT0iRE9DIj4KICAgICAgPHNlcnZpY2VFdmVudCBjbGFzc0NvZGU9IlBDUFIi\_r\nIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICA8Y29kZSBjb2RlPSI0MTAwMDE3OTEwMyIgY29kZVN5\_r\nc3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi45NiIgY29kZVN5c3RlbU5hbWU9IlNOT01FRCBDVCIg\_r\nZGlzcGxheU5hbWU9IkltbXVuaXphdGlvbiByZWNvcmQgKHJlY29yZCBhcnRpZmFjdCkiLz4KICAg\_r\nICAgICAgPGVmZmVjdGl2ZVRpbWU+CiAgICAgICAgICAgIDxsb3cgdmFsdWU9IjIwMjAwMjExMTIw\_r\nMDAwKzAxMDAiLz4KICAgICAgICAgICAgPGhpZ2ggdmFsdWU9IjIwMjAwMjEyMTIwMDAwKzAxMDAi\_r\nLz4KICAgICAgICAgPC9lZmZlY3RpdmVUaW1lPgogICAgICA8L3NlcnZpY2VFdmVudD4KICAgPC9k\_r\nb2N1bWVudGF0aW9uT2Y+CiAgIDxjb21wb25lbnQ+CiAgICAgIDxzdHJ1Y3R1cmVkQm9keSBjbGFz\_r\nc0NvZGU9IkRPQ0JPRFkiIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICA8Y29tcG9uZW50PgogICAg\_r\nICAgICAgICA8c2VjdGlvbiBjbGFzc0NvZGU9IkRPQ1NFQ1QiIG1vb2RDb2RlPSJFVk4iPgogICAg\_r\nICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjIuNDAuMC4zNC42LjAuMTEuMi4xIi8+CiAg\_r\nICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEzODgzLjEwLjIwLjEu\_r\nNiIvPgogICAgICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4x\_r\nLjUuMy4xLjMuMjMiLz4KICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iMTEzNjktNiIgY29kZVN5\_r\nc3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4xIiBkaXNwbGF5TmFtZT0iSElTVE9SWSBPRiBJTU1V\_r\nTklaQVRJT05TIi8+CiAgICAgICAgICAgICAgIDx0aXRsZT5JbXBmdW5nZW48L3RpdGxlPgogICAg\_r\nICAgICAgICAgICA8dGV4dD4KICAgICAgICAgICAgICAgICAgPHRhYmxlIElEPSJzYmRtLTAiPgog\_r\nICAgICAgICAgICAgICAgICAgICA8dGJvZHk+CiAgICAgICAgICAgICAgICAgICAgICAgIDx0cj4K\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRkIHN0eWxlQ29kZT0ieEVMR0FfY29sdzoyMCI+\_r\nSW1wZnVuZyBnZWdlbjo8L3RkPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQ+CiAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50IElEPSJ0YXJnZXQtMCI+VHlwaHVzLUhl\_r\ncGF0aXRpcyBBIEltcGZzdG9mZmtvbWJpbmF0aW9uPC9jb250ZW50PgogICAgICAgICAgICAgICAg\_r\nICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAg\_r\nICAgICAgICAgICAgICA8dHI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZD5JbXBmc2No\_r\nZW1hOjwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZD4KICAgICAgICAgICAgICAg\_r\nICAgICAgICAgICAgICAgPGNvbnRlbnQgSUQ9ImNyaXRlcmlvbi0wIj5IZXBhdGl0aXMgQSBJbXBm\_r\nc3RvZmY8L2NvbnRlbnQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAg\_r\nICAgICAgICAgICAgICAgIDwvdHI+CiAgICAgICAgICAgICAgICAgICAgICAgIDx0cj4KICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgPHRkPkRvc2lzOjwvdGQ+CiAgICAgICAgICAgICAgICAgICAg\_r\nICAgICAgIDx0ZD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQgSUQ9ImRv\_r\nc2Vuci0wIj5Eb3NpcyAxPC9jb250ZW50PgogICAgICAgICAgICAgICAgICAgICAgICAgICA8L3Rk\_r\nPgogICAgICAgICAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICAgICAgICAgICAgICA8\_r\ndHI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZD5JbXBmc3RvZmY6PC90ZD4KICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgPHRkPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8\_r\nY29udGVudCBJRD0icHJvZE5hbWUtMCI+RlNNRS1JTU1VTiBGU1BSIDAsNU1MIE5BRCBGPC9jb250\_r\nZW50PgogICAgICAgICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAg\_r\nICAgICA8L3RyPgogICAgICAgICAgICAgICAgICAgICA8L3Rib2R5PgogICAgICAgICAgICAgICAg\_r\nICA8L3RhYmxlPgogICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgIDxlbnRyeSBj\_r\nb250ZXh0Q29uZHVjdGlvbkluZD0idHJ1ZSIgdHlwZUNvZGU9IkRSSVYiPgogICAgICAgICAgICAg\_r\nICAgICA8c3Vic3RhbmNlQWRtaW5pc3RyYXRpb24gY2xhc3NDb2RlPSJTQkFETSIgbW9vZENvZGU9\_r\nIkVWTiIgbmVnYXRpb25JbmQ9ImZhbHNlIj4KICAgICAgICAgICAgICAgICAgICAgPHRlbXBsYXRl\_r\nSWQgcm9vdD0iMS4yLjQwLjAuMzQuNi4wLjExLjMuMSIvPgogICAgICAgICAgICAgICAgICAgICA8\_r\ndGVtcGxhdGVJZCByb290PSIyLjE2Ljg0MC4xLjExMzg4My4xMC4yMC4xLjI0Ii8+CiAgICAgICAg\_r\nICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjEuMy42LjEuNC4xLjE5Mzc2LjEuNS4zLjEu\_r\nNC4xMiIvPgogICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0i\_r\nT3JkaW5hdGlvbiBEci4gTXVzdGVyw6RyenRpbiIgZXh0ZW5zaW9uPSIxMjMiIHJvb3Q9IjEuMi40\_r\nMC4wLjM0Ljk5LjMuMi4xMDQ2MTY3Ii8+CiAgICAgICAgICAgICAgICAgICAgIDxjb2RlIGNvZGU9\_r\nIklNTVVOSVoiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjUuNCIgY29kZVN5c3RlbU5h\_r\nbWU9IkFjdENvZGUiLz4KICAgICAgICAgICAgICAgICAgICAgPHRleHQ+CiAgICAgICAgICAgICAg\_r\nICAgICAgICAgIDxyZWZlcmVuY2UgdmFsdWU9IiNpbW11bml6YXRpb24tZW50cnktMCIvPgogICAg\_r\nICAgICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICAgICAgIDxzdGF0dXNDb2Rl\_r\nIGNvZGU9ImNvbXBsZXRlZCIvPgogICAgICAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2\_r\nYWx1ZT0iMjAyMDAyMDcxMjAwMDArMDEwMCIvPgogICAgICAgICAgICAgICAgICAgICA8cm91dGVD\_r\nb2RlIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgIDxhcHByb2FjaFNpdGVD\_r\nb2RlIG51bGxGbGF2b3I9Ik5BIi8+CiAgICAgICAgICAgICAgICAgICAgIDxkb3NlUXVhbnRpdHkg\_r\nbnVsbEZsYXZvcj0iVU5LIi8+CiAgICAgICAgICAgICAgICAgICAgIDxjb25zdW1hYmxlIHR5cGVD\_r\nb2RlPSJDU00iPgogICAgICAgICAgICAgICAgICAgICAgICA8bWFudWZhY3R1cmVkUHJvZHVjdCBj\_r\nbGFzc0NvZGU9Ik1BTlUiPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJZCBy\_r\nb290PSIxLjIuNDAuMC4zNC42LjAuMTEuOS4zMiIvPgogICAgICAgICAgICAgICAgICAgICAgICAg\_r\nICA8dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjUuMy4xLjQuNy4yIi8+CiAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjIuMTYuODQwLjEuMTEz\_r\nODgzLjEwLjIwLjEuNTMiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPG1hbnVmYWN0dXJl\_r\nZE1hdGVyaWFsIGNsYXNzQ29kZT0iTU1BVCIgZGV0ZXJtaW5lckNvZGU9IktJTkQiPgogICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3\_r\nNi4xLjkuMS4zLjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNvZGUgY29kZT0i\_r\nMDUxNDk4NiIgY29kZVN5c3RlbT0iMS4yLjQwLjAuMzQuNC4xNi4xIiBkaXNwbGF5TmFtZT0iRlNN\_r\nRS1JTU1VTiBGU1BSIDAsNU1MIE5BRCBGIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg\_r\nIDxuYW1lPkZTTUUtSU1NVU4gRlNQUiAwLDVNTCBOQUQgRjwvbmFtZT4KICAgICAgICAgICAgICAg\_r\nICAgICAgICAgICAgICAgPGxvdE51bWJlclRleHQ+MTIzMTQyMzQ8L2xvdE51bWJlclRleHQ+CiAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxuczI6aW5ncmVkaWVudCBjbGFzc0NvZGU9IkFD\_r\nVEkiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bnMyOmluZ3JlZGllbnQgY2xh\_r\nc3NDb2RlPSJNTUFUIiBkZXRlcm1pbmVyQ29kZT0iS0lORCIgeHNpOnR5cGU9Im5zMjpDT0NUX01U\_r\nMjMwMTAwVVYuU3Vic3RhbmNlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1M\_r\nU2NoZW1hLWluc3RhbmNlIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPG5z\_r\nMjpjb2RlIG51bGxGbGF2b3I9IlVOSyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg\_r\nICA8L25zMjppbmdyZWRpZW50PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L25zMjpp\_r\nbmdyZWRpZW50PgogICAgICAgICAgICAgICAgICAgICAgICAgICA8L21hbnVmYWN0dXJlZE1hdGVy\_r\naWFsPgogICAgICAgICAgICAgICAgICAgICAgICA8L21hbnVmYWN0dXJlZFByb2R1Y3Q+CiAgICAg\_r\nICAgICAgICAgICAgICAgIDwvY29uc3VtYWJsZT4KICAgICAgICAgICAgICAgICAgICAgPGF1dGhv\_r\nciBjb250ZXh0Q29udHJvbENvZGU9Ik9QIiB0eXBlQ29kZT0iQVVUIj4KICAgICAgICAgICAgICAg\_r\nICAgICAgICAgPHRpbWUgdmFsdWU9IjIwMjAwMjE3MTIwMDAwKzAxMDAiLz4KICAgICAgICAgICAg\_r\nICAgICAgICAgICAgPGFzc2lnbmVkQXV0aG9yIGNsYXNzQ29kZT0iQVNTSUdORUQiPgogICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICA8aWQgYXNzaWduaW5nQXV0aG9yaXR5TmFtZT0iR0RBLUluZGV4\_r\nIiByb290PSIxLjIuNDAuMC4zNC45OS4zLjIuMTA0NjE2NyIvPgogICAgICAgICAgICAgICAgICAg\_r\nICAgICAgICA8YXNzaWduZWRQZXJzb24gY2xhc3NDb2RlPSJQU04iIGRldGVybWluZXJDb2RlPSJJ\_r\nTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1lPgogICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICA8ZmFtaWx5Pk11c3RlcsOkcnp0aW48L2ZhbWlseT4KICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGdpdmVuPkhlbGdhPC9naXZlbj4KICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgPHByZWZpeCBxdWFsaWZpZXI9IkFDIj5Eci48L3By\_r\nZWZpeD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN1ZmZpeD5NQkE8L3N1ZmZp\_r\neD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9uYW1lPgogICAgICAgICAgICAgICAg\_r\nICAgICAgICAgICA8L2Fzc2lnbmVkUGVyc29uPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8\_r\ncmVwcmVzZW50ZWRPcmdhbml6YXRpb24gY2xhc3NDb2RlPSJPUkciIGRldGVybWluZXJDb2RlPSJJ\_r\nTlNUQU5DRSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRo\_r\nb3JpdHlOYW1lPSJHREEtSW5kZXgiIHJvb3Q9IjEuMi40MC4wLjM0Ljk5LjMuMi4xMDQ2MTY3Ii8+\_r\nCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxuYW1lIHVzZT0iTCI+T3JkaW5hdGlvbiBE\_r\nci4gTXVzdGVyw6RyenRpbjwvbmFtZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGFk\_r\nZHI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXR5PkdyYXo8L2NpdHk+CiAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjb3VudHJ5PkFVVDwvY291bnRyeT4KICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBvc3RhbENvZGU+ODAxMDwvcG9zdGFsQ29k\_r\nZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN0cmVldE5hbWU+VGVzdGdhc3Nl\_r\nPC9zdHJlZXROYW1lPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2FkZHI+CiAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgIDwvcmVwcmVzZW50ZWRPcmdhbml6YXRpb24+CiAgICAgICAg\_r\nICAgICAgICAgICAgICAgIDwvYXNzaWduZWRBdXRob3I+CiAgICAgICAgICAgICAgICAgICAgIDwv\_r\nYXV0aG9yPgogICAgICAgICAgICAgICAgICAgICA8ZW50cnlSZWxhdGlvbnNoaXAgdHlwZUNvZGU9\_r\nIlJTT04iPgogICAgICAgICAgICAgICAgICAgICAgICA8b2JzZXJ2YXRpb24gY2xhc3NDb2RlPSJP\_r\nQlMiIG1vb2RDb2RlPSJFVk4iPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJ\_r\nZCByb290PSIxLjIuNDAuMC4zNC42LjAuMTEuMy4yIi8+CiAgICAgICAgICAgICAgICAgICAgICAg\_r\nICAgIDxjb2RlIGNvZGU9IjMzMzcwNzAwNyIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMu\_r\nNi45NiIgZGlzcGxheU5hbWU9IlR5cGh1cy1IZXBhdGl0aXMgQSBJbXBmc3RvZmZrb21iaW5hdGlv\_r\nbiIgeHNpOnR5cGU9IkNFIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2No\_r\nZW1hLWluc3RhbmNlIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZXh0PgogICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICA8cmVmZXJlbmNlIHZhbHVlPSIjdGFyZ2V0LTAiLz4KICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgPC90ZXh0PgogICAgICAgICAgICAgICAgICAgICAgICAg\_r\nICA8c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0ZWQiLz4KICAgICAgICAgICAgICAgICAgICAgICAg\_r\nPC9vYnNlcnZhdGlvbj4KICAgICAgICAgICAgICAgICAgICAgPC9lbnRyeVJlbGF0aW9uc2hpcD4K\_r\nICAgICAgICAgICAgICAgICAgICAgPGVudHJ5UmVsYXRpb25zaGlwIHR5cGVDb2RlPSJTVUJKIj4K\_r\nICAgICAgICAgICAgICAgICAgICAgICAgPGFjdCBjbGFzc0NvZGU9IkFDVCIgbW9vZENvZGU9IklO\_r\nVCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjEuMi40MC4w\_r\nLjM0LjYuMC4xMS4zLjUiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPGlkIGFzc2lnbmlu\_r\nZ0F1dGhvcml0eU5hbWU9Ik9yZGluYXRpb24gRHIuIE11c3RlcsOkcnp0aW4iIGV4dGVuc2lvbj0i\_r\nMTIyMyIgcm9vdD0iMS4yLjQuNSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8Y29kZSBj\_r\nb2RlPSJQQVkiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjUuNCIgZGlzcGxheU5hbWU9\_r\nInBheW1lbnQiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cXVhbGlmaWVyPgogICAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dmFsdWUgY29kZT0iSUcyIiBjb2RlU3lzdGVt\_r\nPSIxLjIuNDAuMC4zNC41LjE4MyIgZGlzcGxheU5hbWU9IldpZWRlcmhvbHVuZ3NpbXBmdW5nIGF1\_r\nZmdydW5kIG1lZGl6aW5pc2NoZXIgSW5kaWthdGlvbiIvPgogICAgICAgICAgICAgICAgICAgICAg\_r\nICAgICAgICA8L3F1YWxpZmllcj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9jb2RlPgog\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICA8ZWZmZWN0aXZlVGltZSB2YWx1ZT0iMjAyNTEyMjAi\_r\nLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9hY3Q+CiAgICAgICAgICAgICAgICAgICAgIDwv\_r\nZW50cnlSZWxhdGlvbnNoaXA+CiAgICAgICAgICAgICAgICAgICAgIDxwcmVjb25kaXRpb24+CiAg\_r\nICAgICAgICAgICAgICAgICAgICAgIDxjcml0ZXJpb24gY2xhc3NDb2RlPSJPQlMiIG1vb2RDb2Rl\_r\nPSJFVk4uQ1JUIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRlbXBsYXRlSWQgcm9vdD0i\_r\nMS4yLjQwLjAuMzQuNi4wLjExLjMuMTAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNv\_r\nZGUgY29kZT0iMTQ3NDUwMDUiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuOTYiIGRp\_r\nc3BsYXlOYW1lPSJIZXBhdGl0aXMgQSBJbXBmc3RvZmYiIHhzaTp0eXBlPSJDRSIgeG1sbnM6eHNp\_r\nPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIvPgogICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICA8dGV4dD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHJl\_r\nZmVyZW5jZSB2YWx1ZT0iI2ltcGZFbXBmLXNjaGVkdWxlLWRvc2UtMCIvPgogICAgICAgICAgICAg\_r\nICAgICAgICAgICAgICA8L3RleHQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx2YWx1ZSBj\_r\nb2RlPSJEMSIgY29kZVN5c3RlbT0iMS4yLjQwLjAuMzQuNS4xODMiIGRpc3BsYXlOYW1lPSJEb3Np\_r\ncyAxIiB4c2k6dHlwZT0iQ0QiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxT\_r\nY2hlbWEtaW5zdGFuY2UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3JpZ2luYWxU\_r\nZXh0PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cmVmZXJlbmNlIHZhbHVlPSIj\_r\naW1wZkVtcGYtc2NoZWR1bGUtZG9zZS0wIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg\_r\nIDwvb3JpZ2luYWxUZXh0PgogICAgICAgICAgICAgICAgICAgICAgICAgICA8L3ZhbHVlPgogICAg\_r\nICAgICAgICAgICAgICAgICAgICA8L2NyaXRlcmlvbj4KICAgICAgICAgICAgICAgICAgICAgPC9w\_r\ncmVjb25kaXRpb24+CiAgICAgICAgICAgICAgICAgIDwvc3Vic3RhbmNlQWRtaW5pc3RyYXRpb24+\_r\nCiAgICAgICAgICAgICAgIDwvZW50cnk+CiAgICAgICAgICAgIDwvc2VjdGlvbj4KICAgICAgICAg\_r\nPC9jb21wb25lbnQ+CiAgICAgICAgIDxjb21wb25lbnQ+CiAgICAgICAgICAgIDxzZWN0aW9uIGNs\_r\nYXNzQ29kZT0iRE9DU0VDVCIgbW9vZENvZGU9IkVWTiI+CiAgICAgICAgICAgICAgIDx0ZW1wbGF0\_r\nZUlkIHJvb3Q9IjEuMi40MC4wLjM0LjYuMC4xMS4yLjUiLz4KICAgICAgICAgICAgICAgPHRlbXBs\_r\nYXRlSWQgcm9vdD0iMS4zLjYuMS40LjEuMTkzNzYuMS41LjMuMS4zLjgiLz4KICAgICAgICAgICAg\_r\nICAgPGNvZGUgY29kZT0iMTEzNDgtMCIgY29kZVN5c3RlbT0iMi4xNi44NDAuMS4xMTM4ODMuNi4x\_r\nIiBjb2RlU3lzdGVtTmFtZT0iTE9JTkMiIGRpc3BsYXlOYW1lPSJISVNUT1JZIE9GIFBBU1QgSUxM\_r\nTkVTUyIvPgogICAgICAgICAgICAgICA8dGl0bGU+SW1wZnJlbGV2YW50ZSBFcmtyYW5rdW5nZW48\_r\nL3RpdGxlPgogICAgICAgICAgICAgICA8dGV4dD4KICAgICAgICAgICAgICAgICAgRGVyIFBhdGll\_r\nbnQgaGF0dGU6CiAgICAgICAgICAgICAgICAgIDxici8+CiAgICAgICAgICAgICAgICAgIDxsaXN0\_r\nPgogICAgICAgICAgICAgICAgICAgICA8aXRlbSBJRD0icmVsZXZhbnRlRGlzZWFzZS0wIj5udWxs\_r\nPC9pdGVtPgogICAgICAgICAgICAgICAgICA8L2xpc3Q+CiAgICAgICAgICAgICAgIDwvdGV4dD4K\_r\nICAgICAgICAgICAgICAgPGVudHJ5IGNvbnRleHRDb25kdWN0aW9uSW5kPSJ0cnVlIiB0eXBlQ29k\_r\nZT0iRFJJViI+CiAgICAgICAgICAgICAgICAgIDxhY3QgY2xhc3NDb2RlPSJBQ1QiIG1vb2RDb2Rl\_r\nPSJFVk4iPgogICAgICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjIuNDAuMC4z\_r\nNC42LjAuMTEuMy44Ii8+CiAgICAgICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjIu\_r\nMTYuODQwLjEuMTEzODgzLjEwLjIwLjEuMjciLz4KICAgICAgICAgICAgICAgICAgICAgPHRlbXBs\_r\nYXRlSWQgcm9vdD0iMS4zLjYuMS40LjEuMTkzNzYuMS41LjMuMS40LjUuMSIvPgogICAgICAgICAg\_r\nICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjMuNi4xLjQuMS4xOTM3Ni4xLjUuMy4xLjQu\_r\nNS4yIi8+CiAgICAgICAgICAgICAgICAgICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSJP\_r\ncmRpbmF0aW9uIERyLiBNdXN0ZXLDpHJ6dGluIiBleHRlbnNpb249IjExMjEyMTIiIHJvb3Q9IjEu\_r\nMi40MC4wLjM0Ljk5LjMuMi4xMDQ2MTY3Ii8+CiAgICAgICAgICAgICAgICAgICAgIDxjb2RlIG51\_r\nbGxGbGF2b3I9Ik5BIiB4c2k6dHlwZT0iQ0UiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcv\_r\nMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAgICAgICAgICAgICAgICAgPHN0YXR1c0Nv\_r\nZGUgY29kZT0iY29tcGxldGVkIi8+CiAgICAgICAgICAgICAgICAgICAgIDxlZmZlY3RpdmVUaW1l\_r\nPgogICAgICAgICAgICAgICAgICAgICAgICA8bG93IHZhbHVlPSIyMDE5MTExMyIvPgogICAgICAg\_r\nICAgICAgICAgICAgICAgICA8aGlnaCB2YWx1ZT0iMjAyMDAyMTkiLz4KICAgICAgICAgICAgICAg\_r\nICAgICAgPC9lZmZlY3RpdmVUaW1lPgogICAgICAgICAgICAgICAgICAgICA8ZW50cnlSZWxhdGlv\_r\nbnNoaXAgY29udGV4dENvbmR1Y3Rpb25JbmQ9InRydWUiIGludmVyc2lvbkluZD0iZmFsc2UiIHR5\_r\ncGVDb2RlPSJTVUJKIj4KICAgICAgICAgICAgICAgICAgICAgICAgPG9ic2VydmF0aW9uIGNsYXNz\_r\nQ29kZT0iT0JTIiBtb29kQ29kZT0iRVZOIiBuZWdhdGlvbkluZD0iZmFsc2UiPgogICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICA8dGVtcGxhdGVJZCByb290PSIxLjIuNDAuMC4zNC42LjAuMTEuMy45\_r\nIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZW1wbGF0ZUlkIHJvb3Q9IjIuMTYuODQw\_r\nLjEuMTEzODgzLjEwLjIwLjEuMjgiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRlbXBs\_r\nYXRlSWQgcm9vdD0iMS4zLjYuMS40LjEuMTkzNzYuMS41LjMuMS40LjUiLz4KICAgICAgICAgICAg\_r\nICAgICAgICAgICAgICAgPGlkIGFzc2lnbmluZ0F1dGhvcml0eU5hbWU9Ik9yZGluYXRpb24gRHIu\_r\nIE11c3RlcsOkcnp0aW4iIGV4dGVuc2lvbj0iMTEyMTIxMiIgcm9vdD0iMS4yLjQwLjAuMzQuOTku\_r\nMy4yLjEwNDYxNjciLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNvZGUgY29kZT0iNTU2\_r\nMDcwMDYiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuOTYiIGRpc3BsYXlOYW1lPSJQ\_r\ncm9ibGVtIiB4c2k6dHlwZT0iQ0UiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9Y\_r\nTUxTY2hlbWEtaW5zdGFuY2UiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRleHQ+CiAg\_r\nICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxyZWZlcmVuY2UgdmFsdWU9IiNyZWxldmFudGVE\_r\naXNlYXNlLTAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgPC90ZXh0PgogICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICA8c3RhdHVzQ29kZSBjb2RlPSJjb21wbGV0ZWQiLz4KICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICAgPGVmZmVjdGl2ZVRpbWU+CiAgICAgICAgICAgICAgICAgICAgICAg\_r\nICAgICAgIDxsb3cgdmFsdWU9IjIwMTkxMTEzIi8+CiAgICAgICAgICAgICAgICAgICAgICAgICAg\_r\nICAgIDxoaWdoIHZhbHVlPSIyMDIwMDIxOSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICA8\_r\nL2VmZmVjdGl2ZVRpbWU+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIDx2YWx1ZSBjb2RlPSI3\_r\nMTI5ODYwMDEiIGNvZGVTeXN0ZW09IjIuMTYuODQwLjEuMTEzODgzLjYuOTYiIHhzaTp0eXBlPSJD\_r\nRCIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+\_r\nCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvcmlnaW5hbFRleHQ+CiAgICAgICAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgIDxyZWZlcmVuY2UgdmFsdWU9IiNyZWxldmFudGVEaXNlYXNl\_r\nLTAiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9vcmlnaW5hbFRleHQ+CiAgICAg\_r\nICAgICAgICAgICAgICAgICAgICAgIDwvdmFsdWU+CiAgICAgICAgICAgICAgICAgICAgICAgIDwv\_r\nb2JzZXJ2YXRpb24+CiAgICAgICAgICAgICAgICAgICAgIDwvZW50cnlSZWxhdGlvbnNoaXA+CiAg\_r\nICAgICAgICAgICAgICAgIDwvYWN0PgogICAgICAgICAgICAgICA8L2VudHJ5PgogICAgICAgICAg\_r\nICAgICA8Y29tcG9uZW50IGNvbnRleHRDb25kdWN0aW9uSW5kPSJ0cnVlIiB0eXBlQ29kZT0iQ09N\_r\nUCI+CiAgICAgICAgICAgICAgICAgIDxzZWN0aW9uPgogICAgICAgICAgICAgICAgICAgICA8dGVt\_r\ncGxhdGVJZCByb290PSIxLjIuNDAuMC4zNC42LjAuMTEuMi44Ii8+CiAgICAgICAgICAgICAgICAg\_r\nICAgIDxpZCBhc3NpZ25pbmdBdXRob3JpdHlOYW1lPSLDnGJlcnNldHp1bmcgMTIzIiBleHRlbnNp\_r\nb249IjEyMyIgcm9vdD0iMS4yLjMuNCIvPgogICAgICAgICAgICAgICAgICAgICA8dGl0bGU+ZGlz\_r\nZWFzZXM8L3RpdGxlPgogICAgICAgICAgICAgICAgICAgICA8dGV4dD50ZXh0PC90ZXh0PgogICAg\_r\nICAgICAgICAgICAgICAgICA8bGFuZ3VhZ2VDb2RlIGNvZGU9ImVuIi8+CiAgICAgICAgICAgICAg\_r\nICAgIDwvc2VjdGlvbj4KICAgICAgICAgICAgICAgPC9jb21wb25lbnQ+CiAgICAgICAgICAgIDwv\_r\nc2VjdGlvbj4KICAgICAgICAgPC9jb21wb25lbnQ+CiAgICAgIDwvc3RydWN0dXJlZEJvZHk+CiAg\_r\nIDwvY29tcG9uZW50Pgo8L0NsaW5pY2FsRG9jdW1lbnQ+"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="format" value=""/>
+  <con:entry key="userId" value=""/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request><con:request name="INCLUSIVE CDA" id="c6f81ba9-5b8c-484b-ae32-4c3994efc0f0" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+    "userId": "2",
+    "healthcareFacilityCode": "100",
+    "practiceSettingCode": "F001",
+    "ssno": "1002120289",
+    "validate": false, 
+    "cda": {
+        "patient": {
+            "ssno": "1002120289",
+            "givenname": "Max",
+            "familyname": "Musterpatient",
+            "prefix": "Dipl.-Ing.",
+            "suffix": "BSc",
+            "birthdate": "1989-02-12",
+            "gender": "M",
+            "address": {
+                "streetname": "Gartenstraße",
+                "housenumber": "25",
+                "city": "Graz",
+                "postalcode": "8020"
+            },
+            "localpatientid": "70000",
+            "telecoms": [
+                {
+                    "mail": "test@musterpatient.at",
+                    "phone": "036055343445",
+                    "usage": "H"
+                }
+            ],
+            "birthplace": {
+                "streetname": "Willhelmstraße",
+                "housenumber": "2",
+                "city": "München",
+                "postalcode": "34534",
+                "country": "GER"
+            },
+            "guardians": [
+                {
+                    "organizationname": "Jugendamt",
+                    "address": {
+                        "streetname": "Hausbergstraße",
+                        "housenumber": "25",
+                        "city": "Graz",
+                        "postalcode": "8020"
+                    },
+                    "telecoms": [
+                        {
+                            "mail": "jugendamt@graz.at",
+                            "phone": "03603344345",
+                            "usage": "WP"
+                        }
+                    ]
+                },
+                {
+                    "givenname": "Helga",
+                    "familyname": "Muster",
+                    "prefix": "Dr.",
+                    "address": {
+                        "streetname": "Harrachgasse",
+                        "housenumber": "6",
+                        "city": "Graz",
+                        "postalcode": "8010"
+                    },
+                    "telecoms": [
+                        {
+                            "mail": "helga.muster@provider.at",
+                            "phone": "0630120212",
+                            "usage": "H"
+                        }
+                    ]
+                }
+            ]
+        },
+        "authors": [
+            {
+                "time": "",
+                "givenname": "Helga",
+                "familyname": "Musterärztin",
+                "prefix": "Dr.",
+                "suffix": "MBA",
+                "functioncode": "100",
+                "organization": {
+                    "address": {
+                        "streetname": "Testgasse",
+                        "housenumber": "83",
+                        "city": "Graz",
+                        "postalcode": "8010"
+                    },
+                    "telecoms": [
+                        {
+                            "mail": "ordination@musterärztin.at",
+                            "phone": "0360554345",
+                            "usage": "WP"
+                        }
+                    ]
+                }
+            }
+        ],
+        "relevantdiseases": [
+            {
+                "code": "712986001",
+                "id": "1121212",
+                "active": false,
+                "start": "2019-11-13",
+                "stop": "2020-02-19",
+                "originalreport": {
+                    "id": "10",
+                    "cdacode": "11369-6",
+                    "setid": {
+                        "id": "1234534"
+                    },
+                    "version": 2,
+                    "author": "Mustermann Alexander",
+                    "title": "Befund 2019",
+                    "authortime": "2020-01-01"
+                },
+                "comments": [
+                    {
+                        "text": "durch Vorbefund",
+                        "authortime": "2020-01-12",
+                        "authors": [
+                            {
+                                "givenname": "Helga",
+                                "familyname": "Gruber",
+                                "prefix": "Dr.",
+                                "functioncode": {
+                                    "code": "F027",
+                                    "codesystem": "1.2.3.4",
+                                    "displayname": "Kinder- und Jugendheilkunde"
+                                },
+                                "organization": {
+                                    "address": {
+                                        "streetname": "Testgasse",
+                                        "housenumber": "83",
+                                        "city": "Graz",
+                                        "postalcode": "8010"
+                                    },
+                                    "telecoms": [
+                                        {
+                                            "mail": "ordination@musterärztin.at",
+                                            "phone": "0360554345",
+                                            "usage": "WP"
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "informants": [
+                            {
+                                "givenname": "Helga",
+                                "familyname": "Gruber",
+                                "prefix": "Dr.",
+                                "relationship": "SELF",
+                                "addresses": [
+                                    {
+                                        "streetname": "Testgasse",
+                                        "housenumber": "83",
+                                        "city": "Graz",
+                                        "postalcode": "8010"
+                                    }
+                                ],
+                                "telecoms": [
+                                    {
+                                        "mail": "ordination@musterärztin.at",
+                                        "phone": "0360554345",
+                                        "usage": "WP"
+                                    }
+                                ]
+                            },
+                            {
+                                "givenname": "Inge",
+                                "familyname": "Huber",
+                                "prefix": "Dr.",
+                                "authorspeciality": "104",
+                                "addresses": [
+                                    {
+                                        "streetname": "Testgasse",
+                                        "housenumber": "83",
+                                        "city": "Graz",
+                                        "postalcode": "8010"
+                                    }
+                                ],
+                                "telecoms": [
+                                    {
+                                        "mail": "ordination@musterärztin.at",
+                                        "phone": "0360554345",
+                                        "usage": "WP"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "translations": [
+                    {
+                        "id": {
+                            "id": "123",
+                            "root": "1.2.3.4",
+                            "authorityname": "Übersetzung 123"
+                        },
+                        "title": "diseases",
+                        "text": "text",
+                        "language": "en",
+                        "authors": [
+                            {
+                                "time": "2020-02-28",
+                                "givenname": "Astrid",
+                                "familyname": "Lindgren",
+                                "organization": {
+                                    "name": "Übersetzungsfirma",
+                                    "address": {
+                                        "streetname": "Testgasse",
+                                        "housenumber": "83",
+                                        "city": "Graz",
+                                        "postalcode": "8010"
+                                    },
+                                    "telecoms": [
+                                        {
+                                            "mail": "astrid@provider.at",
+                                            "phone": "0360554345",
+                                            "usage": "WP"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "start": "2020-02-11",
+        "stop": "2020-02-12",
+        "exposurerisks": [
+            {
+                "active": true,
+                "start": "2020-01-31",
+                "stop": "",
+                "authortime": "2020-02-12",
+                "author": {
+                    "givenname": "Helga",
+                    "familyname": "Musterärztin",
+                    "prefix": "Dr.",
+                    "organization": {
+                        "address": {
+                            "streetname": "Testgasse",
+                            "housenumber": "83",
+                            "city": "Graz",
+                            "postalcode": "8010"
+                        }
+                    }
+                },
+                "risk": {
+                    "id": {
+                        "id": "12123",
+                        "root": "123123",
+                        "authorityname": "Ordination Dr. Achleitner"
+                    },
+                    "start": "2020-01-31",
+                    "code": "224627004"
+                },
+                "originalreport": {
+                    "setid": {
+                        "id": "12212323",
+                        "root": "1.2.3.4.5"
+                    },
+                    "id": {
+                        "id": "12212",
+                        "root": "1.2.35.62"
+                    },
+                    "version": 1,
+                    "cdacode": "11369-6",
+                    "author": "Dr. Auer Christian",
+                    "authortime": "2020-01-31",
+                    "title": "Immunisierungsstatus"
+                }
+            },
+            {
+                "active": false,
+                "start": "2020-02-11",
+                "stop": "2020-02-21",
+                "authortime": "2020-02-22",
+                "risk": {
+                    "id": "12345",
+                    "start": "2020-02-11",
+                    "code": "14745005"
+                }
+            }
+        ],
+        "immunizations": [
+            {
+                "id": "123",
+                "date": "2020-02-07",
+                "drug": {
+                    "code": "0514986",
+                    "text": "Packungsangaben",
+                    "pharmno": "12345",
+                    "lotnumber": "12314234"
+                },
+                "dose": {
+                    "unit": "mL",
+                    "quantity": 100
+                },
+                "schedule": {
+                    "scheme": "SCHEM19",
+                    "immunizationdose": "D1"
+                },
+                "targets": [
+                    "90043005"
+                ],
+                "reason": "IG2",
+                "originalreport": {
+                    "id": "10",
+                    "cdacode": "11369-6",
+                    "setid": {
+                        "id": "1234534"
+                    },
+                    "author": "Mustermann Alexander",
+                    "title": "Befund 2019",
+                    "authortime": "2020-01-01"
+                },
+                "expirationdate": "2025-12-20",
+                "approvaldate": "2020-02-17",
+                "dataprocessor": {
+                    "recorddate": "2020-02-12",
+                    "ids": [
+                        {
+                            "id": "3"
+                        }
+                    ],
+                    "device": {
+                        "softwarename": "ArztIS",
+                        "modelname": "8"
+                    }
+                },
+                "performer": {
+                    "functioncode": "100"
+                }
+            },
+            {
+                "id": "124",
+                "date": "2020-02-07",
+                "drug": {
+                    "code": "0514986",
+                    "text": "Packungsangaben",
+                    "pharmno": "12345",
+                    "lotnumber": "12314234"
+                },
+                "dose": {
+                    "unit": "mL",
+                    "quantity": 100
+                },
+                "schedule": {
+                    "scheme": "14745005",
+                    "immunizationdose": "D1"
+                },
+                "targets": [
+                    "90043005"
+                ],
+                "reason": "IG2",
+                "voucher": {
+                    "id": "1223",
+                    "root": "1.2.4.5"
+                },
+                "expirationdate": "2025-12-20",
+                "approvaldate": "2020-02-17"
+            }
+        ],
+        "recommendation": [
+            {
+                "active": true,
+                "start": "2000-01-01",
+                "stop": "",
+                "author": {
+                    "time": "2020-02-24",
+                    "givenname": "Helga",
+                    "familyname": "Musterärztin",
+                    "prefix": "Dr.",
+                    "organization": {
+                        "address": {
+                            "streetname": "Testgasse",
+                            "housenumber": "83",
+                            "city": "Graz",
+                            "postalcode": "8010"
+                        }
+                    }
+                },
+                "drug": {
+                    "code": "0514986",
+                    "text": "Packungsangaben",
+                    "pharmno": "12345",
+                    "lotnumber": "12314234"
+                },
+                "schedule": {
+                    "scheme": "14745005",
+                    "immunizationdose": "G1"
+                },
+                "targets": [
+                    "90043005"
+                ],
+                "id": {
+                    "id": "",
+                    "root": ""
+                }
+            }
+        ],
+        "antibodydetermination": [
+            {
+                "start": "2020-03-01",
+                "stop": "2020-03-05",
+                "code": "56844000",
+                "laboratorytests": [
+                    {
+                        "id": "1",
+                        "determination": "56844000",
+                        "validationtime": "2020-03-03",
+                        "sampletime": "2020-03-02",
+                        "finishedtime": "2020-03-05",
+                        "aborted": false,
+                        "interpretation": "IND",
+                        "validationperson": {
+                            "address": {
+                                "housenumber": "109",
+                                "streetname": "Laborstraße",
+                                "city": "Wien",
+                                "postalcode": "1020"
+                            },
+                            "ids": [
+                                {
+                                    "id": "1.10.234.34.123.234",
+                                    "authorityname": "GDA-Index"
+                                }
+                            ],
+                            "telecoms": [
+                                {
+                                    "mail": "labor@provider.at",
+                                    "phone": "01212323409234",
+                                    "usage": "WP"
+                                }
+                            ],
+                            "givenname": "Herbert",
+                            "familyname": "Strohmayer",
+                            "prefix": "Mag."
+                        },
+                        "laboratories": [
+                            {
+                                "address": {
+                                    "housenumber": "109",
+                                    "streetname": "Laborstraße",
+                                    "city": "Wien",
+                                    "postalcode": "1020"
+                                },
+                                "ids": [
+                                    {
+                                        "id": "1.10.234.34.123.234",
+                                        "authorityname": "GDA-Index"
+                                    }
+                                ],
+                                "telecoms": [
+                                    {
+                                        "mail": "labor@provider.at",
+                                        "phone": "01212323409234",
+                                        "usage": "WP"
+                                    }
+                                ],
+                                "givenname": "Helga",
+                                "familyname": "Gruber",
+                                "prefix": "Dr.",
+                                "functioncode": {
+                                    "code": "F027",
+                                    "codesystem": "1.2.3.4",
+                                    "displayname": "Kinder- und Jugendheilkunde"
+                                }
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "text": "durch Vorbefund",
+                                "authortime": "2020-01-12",
+                                "authors": [
+                                    {
+                                        "device": {
+                                            "softwarename": "labrequest",
+                                            "modelname": "v21.4.2"
+                                        },
+                                        "organization": {
+                                            "address": {
+                                                "streetname": "Testgasse",
+                                                "housenumber": "83",
+                                                "city": "Graz",
+                                                "postalcode": "8010"
+                                            },
+                                            "telecoms": [
+                                                {
+                                                    "mail": "ordination@musterärztin.at",
+                                                    "phone": "0360554345",
+                                                    "usage": "WP"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "informants": [
+                                    {
+                                        "givenname": "Helga",
+                                        "familyname": "Gruber",
+                                        "prefix": "Dr.",
+                                        "relationship": "SELF",
+                                        "addresses": [
+                                            {
+                                                "streetname": "Testgasse",
+                                                "housenumber": "83",
+                                                "city": "Graz",
+                                                "postalcode": "8010"
+                                            }
+                                        ],
+                                        "telecoms": [
+                                            {
+                                                "mail": "ordination@musterärztin.at",
+                                                "phone": "0360554345",
+                                                "usage": "WP"
+                                            }
+                                        ],
+                                        "organization": {
+                                            "name": "Ordination Dr. Gruber",
+                                            "ids": [
+                                                {
+                                                    "id": "10.1239.2345.34324.234"
+                                                }
+                                            ],
+                                            "addresses": {
+                                                "streetname": "Testgasse",
+                                                "housenumber": "83",
+                                                "city": "Graz",
+                                                "postalcode": "8010"
+                                            },
+                                            "telecoms": [
+                                                {
+                                                    "mail": "ordination@musterärztin.at",
+                                                    "phone": "0360554345",
+                                                    "usage": "WP"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "givenname": "Inge",
+                                        "familyname": "Huber",
+                                        "prefix": "Dr.",
+                                        "authorspeciality": "104",
+                                        "addresses": [
+                                            {
+                                                "streetname": "Testgasse",
+                                                "housenumber": "83",
+                                                "city": "Graz",
+                                                "postalcode": "8010"
+                                            }
+                                        ],
+                                        "telecoms": [
+                                            {
+                                                "mail": "ordination@musterärztin.at",
+                                                "phone": "0360554345",
+                                                "usage": "WP"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "labvalues": {
+                            "value": 12,
+                            "highvalue": "",
+                            "lowvalue": "",
+                            "unit": "mL"
+                        },
+                        "observationrange": {
+                            "denominator": 12,
+                            "inclusive": true
+                        }
+                    }
+                ],
+                "originalreport": {},
+                "translations": [
+                    {}
+                ]
+            }
+        ]
+    }
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="INCLUSIVE MINIMAL CDA" id="e209e973-3694-43b6-ad18-238eb472f458" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+    "userId": "2",
+    "healthcareFacilityCode": "100",
+    "practiceSettingCode": "F001",
+    "ssno": "1002120289",
+    "validate": false, 
+    "cda": {
+        "patient": {
+            "ssno": "1002120289",
+            "givenname": "Max",
+            "familyname": "Musterpatient",
+            "birthdate": "1989-02-12",
+            "gender": "M",
+            "localpatientid": "70000"
+        },
+        "authors": [
+            {
+                "time": "",
+                "givenname": "Laura",
+                "familyname": "Baumgartner",
+                "prefix": "Dr.",
+                "organization": {
+                	"name": "Ambulanz xyz", 
+                    "address": {
+                        "streetname": "Testgasse",
+                        "housenumber": "87",
+                        "city": "Graz",
+                        "postalcode": "8010"
+                    }
+                }
+            }
+        ],
+        "start": "2020-04-04",
+        "stop": "2020-04-05",
+        "immunizations": [
+            {
+                "id": "1",
+                "date": "2020-04-04",
+                "drug": {
+                    "code": "3920095",
+                    "text": "Packungsangaben",
+                    "pharmno": "09461122",
+                    "lotnumber": "9831423"
+                },
+                "dose": {
+                    "unit": "mL",
+                    "quantity": 0.4
+                },
+                "schedule": {
+                    "scheme": "SCHEM30",
+                    "immunizationdose": "D1"
+                },
+                "targets": [
+                    "785864002"
+                ],
+                "reason": "IG2",
+                "expirationdate": "2025-12-20",
+                "approvaldate": "2020-04-04"
+            }
+        ]
+    }
+}</con:request><con:originalUri>http://localhost/api/v1/ehealthapplications/immunizationrecord</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="INCLUSIVE REL. DISEASE CDA" id="c9d10ff8-b154-4b0e-8eb9-b4524f75d4c3" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+	"userId": "2",
+	"healthcareFacilityCode": "100",
+	"practiceSettingCode": "F001",
+	"ssno": "1002120289",
+	"validate": false,
+	"cda": {
+		"patient": {
+			"ssno": "1002120289",
+			"givenname": "Max",
+			"familyname": "Musterpatient",
+			"prefix": "Dipl.-Ing.",
+			"suffix": "BSc",
+			"birthdate": "1980-01-01",
+			"gender": "M",
+			"address": {
+				"streetname": "Gartenstraße",
+				"housenumber": "25",
+				"city": "Graz",
+				"postalcode": "8020"
+			},
+			"localpatientid": "70000",
+			"telecoms": [
+				{
+					"mail": "test@musterpatient.at",
+					"phone": "063055343445",
+					"usage": "H"
+				}
+			],
+			"birthplace": {
+				"streetname": "Willhelmstraße",
+				"housenumber": "2",
+				"city": "München",
+				"postalcode": "34534",
+				"country": "GER"
+			},
+			"guardians": [
+				{
+					"givenname": "Astrid",
+					"familyname": "Musterfrau",
+					"prefix": "Dr.",
+					"address": {
+						"streetname": "Harrachgasse",
+						"housenumber": "10",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "astrid.musterfrau@provider.at",
+							"phone": "0630120212",
+							"usage": "H"
+						}
+					]
+				}
+			]
+		},
+		"authors": [
+			{
+				"time": "2020-03-31",
+				"givenname": "Laura",
+				"familyname": "Musterfrau",
+				"prefix": "Dr.",
+				"functioncode": "300",
+				"organization": {
+					"address": {
+						"streetname": "Test-Willhelm-Gasse",
+						"housenumber": "83",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "krankenanstalt@baumgratlingen.at",
+							"phone": "0630554345",
+							"usage": "WP"
+						}
+					]
+				}
+			}
+		],
+		"relevantdiseases": [
+			{
+				"code": "36653000",
+				"id": "12",
+				"active": false,
+				"start": "2019-11-13",
+				"stop": "2019-12-03",
+				"originalreport": {
+					"id": "10",
+					"cdacode": "11490-0",
+					"setid": {
+						"id": "1234534"
+					},
+					"version": 1,
+					"author": "Abteilung für Kinder- und Jugendheilkunde LKH Graz",
+					"title": "Befund Röteln Nov. 2019",
+					"authortime": "2019-12-14"
+				},
+				"comments": [
+					{
+						"text": "durch Vorbefund",
+						"authortime": "2020-04-05",
+						"authors": [
+							{
+								"givenname": "Helga",
+								"familyname": "Grünbacher",
+								"prefix": "Dr.",
+								"functioncode": {
+									"code": "118",
+									"codesystem": "1.2.40.0.34.5.160",
+									"displayname": "Fachärztin/Facharzt für Kinder- und Jugendheilkunde"
+								},
+								"organization": {
+									"address": {
+										"streetname": "Testgasse",
+										"housenumber": "83",
+										"city": "Graz",
+										"postalcode": "8010"
+									},
+									"telecoms": [
+										{
+											"mail": "helga.gruenbacher@baumgartlingen.at",
+											"phone": "0360554345",
+											"usage": "WP"
+										}
+									]
+								}
+							}
+						],
+						"informants": [
+							{
+								"givenname": "Dominik",
+								"familyname": "Gruber",
+								"relationship": "FTH",
+								"addresses": [
+									{
+										"streetname": "Gartenstraße",
+										"housenumber": "25",
+										"city": "Graz",
+										"postalcode": "8020"
+									}
+								],
+								"telecoms": [
+									{
+										"mail": "gruber.dom@provider.at",
+										"phone": "0630123234",
+										"usage": "H"
+									}
+								]
+							}
+						]
+					}
+				],
+				"translations": [
+					{
+						"id": {
+							"id": "123",
+							"root": "1.2.3.4",
+							"authorityname": "Übersetzung 123"
+						},
+						"title": "diseases",
+						"text": "rubella",
+						"language": "en",
+						"authors": [
+							{
+								"time": "2020-03-09",
+								"givenname": "Barbara",
+								"familyname": "Bauer",
+								"organization": {
+									"name": "Übersetzungsstube Bauer",
+									"address": {
+										"streetname": "Testgasse",
+										"housenumber": "83",
+										"city": "Graz",
+										"postalcode": "8010"
+									},
+									"telecoms": [
+										{
+											"mail": "barbara.bauer@provider.at",
+											"phone": "0360554345",
+											"usage": "WP"
+										}
+									]
+								}
+							}
+						]
+					}
+				]
+			}
+		],
+		"start": "2020-03-31",
+		"stop": "2020-04-01",
+		"immunizations": [
+			{
+				"id": "1",
+				"date": "2020-03-31",
+				"drug": {
+					"code": "4465799",
+					"text": "Fertigspritze",
+					"pharmno": "4465799",
+					"lotnumber": "1111111"
+				},
+				"dose": {
+					"unit": "mL",
+					"quantity": 0.1
+				},
+				"schedule": {
+					"scheme": "SCHEM63",
+					"immunizationdose": "D1"
+				},
+				"targets": [
+					"333606008"
+				],
+				"reason": "IG1",
+				"originalreport": {
+					"id": "10",
+					"cdacode": "11369-6",
+					"setid": {
+						"id": "1234534"
+					},
+					"author": "Mustermann Alexander",
+					"title": "Befund 2019",
+					"authortime": "2019-03-01"
+				},
+				"expirationdate": "2025-12-20",
+				"approvaldate": "2020-03-31",
+				"performer": {
+					"functioncode": "100"
+				}
+			}
+		]
+	}
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="INCLUSIVE RECOMMENDATION CDA" id="d650f4a5-0622-4ecc-9b85-a099d2f5d41c" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId": "2",
+	"healthcareFacilityCode": "100",
+	"practiceSettingCode": "F001",
+	"ssno": "1001210995",
+	"validate": false,
+	"cda": {
+		"patient": {
+			"ssno": "1001210995",
+			"givenname": "Max",
+			"familyname": "Musterpatient",
+			"prefix": "Dipl.-Ing.",
+			"suffix": "BSc",
+			"birthdate": "1995-09-21",
+			"gender": "M",
+			"address": {
+				"streetname": "Gartenstraße",
+				"housenumber": "25",
+				"city": "Graz",
+				"postalcode": "8020"
+			},
+			"localpatientid": "70001",
+			"telecoms": [
+				{
+					"mail": "test@musterpatient.at",
+					"phone": "063055343445",
+					"usage": "H"
+				}
+			],
+			"birthplace": {
+				"streetname": "Willhelmstraße",
+				"housenumber": "2",
+				"city": "München",
+				"postalcode": "34534",
+				"country": "GER"
+			},
+			"guardians": [
+				{
+					"givenname": "Astrid",
+					"familyname": "Musterfrau",
+					"prefix": "Dr.",
+					"address": {
+						"streetname": "Harrachgasse",
+						"housenumber": "10",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "astrid.musterfrau@provider.at",
+							"phone": "0630120212",
+							"usage": "H"
+						}
+					]
+				}
+			]
+		},
+		"authors": [
+			{
+				"time": "2020-04-02",
+				"givenname": "Helga",
+				"familyname": "Musterärztin",
+				"prefix": "Dr.",
+				"suffix": "MBA",
+				"functioncode": "118",
+				"organization": {
+					"address": {
+						"streetname": "Testgasse",
+						"housenumber": "83",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "ordination@musterärztin.at",
+							"phone": "0630554345",
+							"usage": "WP"
+						}
+					]
+				}
+			}
+		],
+		"start": "2020-04-01",
+		"stop": "2020-04-02",
+		"immunizations": [
+			{
+				"id": "1",
+				"date": "2020-04-01",
+				"drug": {
+					"code": "2454923",
+					"text": "Fertigspritze",
+					"pharmno": "2454923",
+					"lotnumber": "1111111"
+				},
+				"schedule": {
+					"scheme": "SCHEM54",
+					"immunizationdose": "D1"
+				},
+				"targets": [
+					"108729007"
+				],
+				"reason": "IG2",
+				"originalreport": {
+					"id": "10",
+					"cdacode": "11369-6",
+					"setid": {
+						"id": "1234534"
+					},
+					"author": "Mustermann Alexander",
+					"title": "Befund 2019",
+					"authortime": "2019-03-01"
+				},
+				"expirationdate": "2025-08-25",
+				"approvaldate": "2020-04-01",
+				"performer": {
+					"functioncode": "100"
+				}
+			}
+		],
+		"recommendation": [
+			{
+				"active": true,
+				"start": "2000-01-01",
+				"stop": "",
+				"author": {
+					"time": "2020-02-24",
+					"givenname": "Helga",
+					"familyname": "Musterärztin",
+					"prefix": "Dr.",
+					"organization": {
+						"address": {
+							"streetname": "Testgasse",
+							"housenumber": "83",
+							"city": "Graz",
+							"postalcode": "8010"
+						}
+					}
+				},
+				"drug": {
+					"code": "0514986",
+					"text": "Packungsangaben",
+					"pharmno": "0514986",
+					"lotnumber": "12314234"
+				},
+				"schedule": {
+					"scheme": "14745005",
+					"immunizationdose": "G1"
+				},
+				"targets": [
+					"90043005"
+				],
+				"id": {
+					"id": "",
+					"root": ""
+				}
+			},
+			{
+				"active": true,
+				"start": "2001-01-01",
+				"stop": "",
+				"author": {
+					"time": "2020-02-24",
+					"givenname": "Helga",
+					"familyname": "Musterärztin",
+					"prefix": "Dr.",
+					"organization": {
+						"address": {
+							"streetname": "Testgasse",
+							"housenumber": "83",
+							"city": "Graz",
+							"postalcode": "8010"
+						}
+					}
+				},
+				"targets": [
+					"333707007"
+				]
+			}
+		]
+	}
+}</con:request><con:originalUri>http://localhost/api/v1/ehealthapplications/immunizationrecord</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="INCLUSIVE EXPOSURE RISK CDA" id="222f28bc-68e6-48b4-9290-1042fd64e50e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+	"userId": "2",
+	"healthcareFacilityCode": "100",
+	"practiceSettingCode": "F001",
+	"ssno": "1001210995",
+	"validate": false,
+	"cda": {
+		"patient": {
+			"ssno": "1001210995",
+			"givenname": "Max",
+			"familyname": "Musterpatient",
+			"prefix": "Dipl.-Ing.",
+			"suffix": "BSc",
+			"birthdate": "1995-09-21",
+			"gender": "M",
+			"address": {
+				"streetname": "Gartenstraße",
+				"housenumber": "25",
+				"city": "Graz",
+				"postalcode": "8020"
+			},
+			"localpatientid": "70001",
+			"telecoms": [
+				{
+					"mail": "test@musterpatient.at",
+					"phone": "063055343445",
+					"usage": "H"
+				}
+			],
+			"birthplace": {
+				"streetname": "Willhelmstraße",
+				"housenumber": "2",
+				"city": "München",
+				"postalcode": "34534",
+				"country": "GER"
+			},
+			"guardians": [
+				{
+					"givenname": "Astrid",
+					"familyname": "Musterfrau",
+					"prefix": "Dr.",
+					"address": {
+						"streetname": "Harrachgasse",
+						"housenumber": "10",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "astrid.musterfrau@provider.at",
+							"phone": "0630120212",
+							"usage": "H"
+						}
+					]
+				}
+			]
+		},
+		"authors": [
+			{
+				"time": "2020-04-08",
+				"givenname": "Helga",
+				"familyname": "Musterärztin",
+				"prefix": "Dr.",
+				"suffix": "MBA",
+				"functioncode": "118",
+				"organization": {
+					"address": {
+						"streetname": "Testgasse",
+						"housenumber": "83",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "ordination@musterärztin.at",
+							"phone": "0630554345",
+							"usage": "WP"
+						}
+					]
+				}
+			}
+		],
+		"start": "2020-04-07",
+		"stop": "2020-04-08",
+		"immunizations": [
+			{
+				"id": "1",
+				"date": "2020-04-07",
+				"drug": {
+					"code": "3904699",
+					"text": "Fertigspritze",
+					"pharmno": "3904699",
+					"lotnumber": "1111111"
+				},
+				"dose": {
+					"unit": "mL",
+					"quantity": 0.3
+				},
+				"schedule": {
+					"scheme": "SCHEM09",
+					"immunizationdose": "D2"
+				},
+				"targets": [
+					"14745005"
+				],
+				"reason": "IG2",
+				"originalreport": {
+					"id": "10",
+					"cdacode": "11369-6",
+					"setid": {
+						"id": "1234534"
+					},
+					"author": "Mustermann Alexander",
+					"title": "Befund 2019",
+					"authortime": "2019-03-01"
+				},
+				"expirationdate": "2021-11-11",
+				"approvaldate": "2020-04-07",
+				"performer": {
+					"functioncode": "100"
+				}
+			}
+		],
+		"exposurerisks": [
+			{
+				"active": true,
+				"start": "2020-01-31",
+				"stop": "",
+				"authortime": "2020-04-07",
+				"risk": {
+					"id": {
+						"root": "1.2.40.0.34.99.3.2.10410",
+						"authorityname": "Ordination Dr. Achleitner"
+					},
+					"start": "2020-01-31",
+					"code": "14745005"
+				},
+				"originalreport": {
+					"setid": {
+						"id": "12212323",
+						"root": "1.2.40.0.34.99.3.2.10410"
+					},
+					"id": {
+						"id": "12212",
+						"root": "1.2.40.0.34.99.3.2.10410"
+					},
+					"version": 1,
+					"cdacode": "11502-2",
+					"author": "Dr. Achleitner Martin",
+					"authortime": "2020-01-31",
+					"title": "Laborbefund Allgemein"
+				}
+			}
+		]
+	}
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="Method 3" id="f87d935a-a8d7-4fe1-8006-ba43b8ddb86b" method="DELETE"><con:settings/><con:parameters><con:parameter><con:name>entryUuid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>classCode</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>authorInstitutionName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:request name="Request 1" id="47349ba7-997c-4166-b1db-85c0cf27ca06" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="classCode" value="11369-6"/>
+  <con:entry key="ssno" value="1001210995"/>
+  <con:entry key="format" value=""/>
+  <con:entry key="userId" value="1"/>
+  <con:entry key="authorInstitutionName" value="Ordination Dr. Musterärztin"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="vos" path="vos" id="9a86c762-9ae5-42a7-8106-a332448b40d6"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>voId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>id</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="search" path="search" id="d524e1e6-39d4-4c99-b2a9-ab7d7d8493ad"><con:settings/><con:parameters/><con:method name="Method 1" id="28bedfb6-29dc-4426-9b99-f48c121ff2a6" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="90a5fae8-c710-4f81-bc0a-3892240f5ec8" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:method name="Method 1" id="4a39a0f4-5b2e-41aa-a093-ffd2d0d9540d" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>401</con:status><con:params/><con:element xmlns:vos="http://192.168.5.35/api/v1/ehealthapplications/vos">vos:Fault</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html;charset=iso-8859-1</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Request 1" id="8aaead79-d8ba-407a-8aba-aa94751df4b4" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://192.168.5.35/api/v1/ehealthapplications/vos</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="voId" value="98"/>
+  <con:entry key="format" value="html"/>
+  <con:entry key="userId" value="1"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>format</con:entry><con:entry>voId</con:entry><con:entry>id</con:entry></con:parameterOrder></con:request></con:method><con:method name="CANCEL VO DOCUMENT" id="1550af3e-fe6f-414f-8c80-96545a8572d6" method="DELETE"><con:settings/><con:parameters/><con:request name="Request 1" id="5517ddc8-0953-4e2a-8dc5-1f1ab24009fe" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="REGISTER VO DOCUMENT" id="041d9c05-8b4b-4bf3-94e3-0cbb1856579c" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="2bc4e15d-a39b-4231-82d0-f11359bc5dce" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:resource><con:resource name="cda" path="/api/v1/cda" id="c798e31a-f097-45b7-807e-71f283c4bb05"><con:settings/><con:parameters/><con:resource name="immunizationrecord" path="immunizationrecord" id="755fd578-6096-4231-b26d-55e705a1b684"><con:settings/><con:parameters/><con:method name="Method 1" id="100579eb-1298-414d-ad9b-c6e9f8fa3d26" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>400</con:status><con:params/><con:element xmlns:imm="http://localhost/api/v1/cda/immunizationrecord">imm:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:urn="urn:hl7-org:v3">urn:ClinicalDocument</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="6c0498ae-abfd-409f-b87f-ba362a5044cc" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId": "2", 
+		"patient": {
+			"ssno": "1001210995",
+			"givenname": "Max",
+			"familyname": "Musterpatient",
+			"prefix": "Dipl.-Ing.",
+			"suffix": "BSc",
+			"birthdate": "1995-09-21",
+			"gender": "M",
+			"address": {
+				"streetname": "Gartenstraße",
+				"housenumber": "25",
+				"city": "Graz",
+				"postalcode": "8020"
+			},
+			"localpatientid": "70001",
+			"telecoms": [
+				{
+					"mail": "test@musterpatient.at",
+					"phone": "063055343445",
+					"usage": "H"
+				}
+			],
+			"birthplace": {
+				"streetname": "Willhelmstraße",
+				"housenumber": "2",
+				"city": "München",
+				"postalcode": "34534",
+				"country": "GER"
+			},
+			"guardians": [
+				{
+					"givenname": "Astrid",
+					"familyname": "Musterfrau",
+					"prefix": "Dr.",
+					"address": {
+						"streetname": "Harrachgasse",
+						"housenumber": "10",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "astrid.musterfrau@provider.at",
+							"phone": "0630120212",
+							"usage": "H"
+						}
+					]
+				}
+			]
+		},
+		"authors": [
+			{
+				"time": "2020-04-08",
+				"givenname": "Helga",
+				"familyname": "Musterärztin",
+				"prefix": "Dr.",
+				"suffix": "MBA",
+				"functioncode": "118",
+				"organization": {
+					"address": {
+						"streetname": "Testgasse",
+						"housenumber": "83",
+						"city": "Graz",
+						"postalcode": "8010"
+					},
+					"telecoms": [
+						{
+							"mail": "ordination@musterärztin.at",
+							"phone": "0630554345",
+							"usage": "WP"
+						}
+					]
+				}
+			}
+		],
+		"start": "2020-04-07",
+		"stop": "2020-04-08",
+		"immunizations": [
+			{
+				"id": "1",
+				"date": "2020-04-07",
+				"drug": {
+					"code": "3904699",
+					"text": "Fertigspritze",
+					"pharmno": "3904699",
+					"lotnumber": "1111111"
+				},
+				"dose": {
+					"unit": "mL",
+					"quantity": 0.3
+				},
+				"schedule": {
+					"scheme": "SCHEM09",
+					"immunizationdose": "D2"
+				},
+				"targets": [
+					"14745005"
+				],
+				"reason": "IG2",
+				"originalreport": {
+					"id": "10",
+					"cdacode": "11369-6",
+					"setid": {
+						"id": "1234534"
+					},
+					"author": "Mustermann Alexander",
+					"title": "Befund 2019",
+					"authortime": "2019-03-01"
+				},
+				"expirationdate": "2021-11-11",
+				"approvaldate": "2020-04-07",
+				"performer": {
+					"functioncode": "100"
+				}
+			}
+		],
+		"exposurerisks": [
+			{
+				"active": true,
+				"start": "2020-01-31",
+				"stop": "",
+				"authortime": "2020-04-07",
+				"risk": {
+					"id": {
+						"root": "1.2.40.0.34.99.3.2.10410",
+						"authorityname": "Ordination Dr. Achleitner"
+					},
+					"start": "2020-01-31",
+					"code": "14745005"
+				},
+				"originalreport": {
+					"setid": {
+						"id": "12212323",
+						"root": "1.2.40.0.34.99.3.2.10410"
+					},
+					"id": {
+						"id": "12212",
+						"root": "1.2.40.0.34.99.3.2.10410"
+					},
+					"version": 1,
+					"cdacode": "11502-2",
+					"author": "Dr. Achleitner Martin",
+					"authortime": "2020-01-31",
+					"title": "Laborbefund Allgemein"
+				}
+			}
+		]
+	}</con:request><con:originalUri>http://localhost/api/v1/cda/immunizationrecord</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:resource><con:resource name="patientcontacts" path="/api/v1/patientcontacts" id="c3ad1d49-a982-4d09-ba9e-8aa7b398d8ac"><con:settings/><con:parameters/><con:method name="CREATE PATIENTCONTACT WITHOUT ECARD" id="3f3c9ff2-db0d-4e30-a714-dbebaeaf709f" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500 401</con:status><con:params/><con:element xmlns:pat="http://localhost/patientcontacts">pat:Fault</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:pat="http://localhost/patientcontacts">pat:Response</con:element></con:representation><con:request name="Request 1" id="7d8dbd78-6bcb-4e2a-8471-7b6293b3d0c6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+	"userId": "2", 
+	"bpk": "GH:1chxEM68ODqCY2R2kEcELnd9peg="
+}</con:request><con:originalUri>http://localhost/patientcontacts</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="CREATE PATIENTCONTACT WITH ECARD" id="718d6d70-d969-49cf-8f08-bb33b3a6b099" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="176cfcf6-11fc-43ef-bb38-a9ea705696e4" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+	"userId": "1", 
+	"ssno": "",
+	"cardReaderId": ""
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="LIST PATIENTCONTACT" id="cd182734-8007-4238-8ed2-382c2cf8afba" method="GET"><con:settings/><con:parameters><con:parameter><con:name>ssno</con:name><con:value>1001210995</con:value><con:style>QUERY</con:style><con:default>1001210995</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>userId</con:name><con:value>2</con:value><con:style>QUERY</con:style><con:default>2</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>401</con:status><con:params/><con:element xmlns:pat="http://localhost/api/v1/patientcontacts">pat:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:pat="http://localhost/api/v1/patientcontacts">pat:Response</con:element></con:representation><con:request name="Request 1" id="4ebb7c55-d13e-4b54-b43b-339422e1e749" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/patientcontacts</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="ssno" value="1002120289" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method><con:method name="CANCEL PATIENTCONTACT" id="34c91cc7-4dc1-43c5-9f40-a825f40bec53" method="DELETE"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value>2</con:value><con:style>QUERY</con:style><con:default>2</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>patientcontact</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>401</con:status><con:params/><con:element xmlns:pat="http://localhost/api/v1/patientcontacts">pat:Fault</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:pat="http://localhost/api/v1/patientcontacts">pat:Response</con:element></con:representation><con:request name="Request 1" id="3cc5290c-2a63-4375-8bb2-5befc827fd40" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/patientcontacts</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="patientcontact" value="70266ed2-f9e9-40a4-a26e-b2b9201253c9" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource><con:resource name="patientdemographics" path="/api/v1/patientdemographics" id="b9fa8175-d512-4504-b5fb-2269f3a79e20"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>familyName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>givenName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>birthDate</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>city</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>gender</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>postalcode</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>streetname</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>buildingnumber</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="REQUEST PATIENT DEMOGRAPHICS" id="aa55b203-47dd-4637-aa18-e60340553d79" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>401</con:status><con:params/><con:element xmlns:pat="http://192.168.5.35/api/v1/patientdemographics">pat:Fault</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:pat="http://192.168.5.35/api/v1/patientdemographics">pat:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>500</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType xsi:nil="true"/><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="04e8da96-05a9-401f-9c2d-9e041d460824" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://192.168.5.35/api/v1/patientdemographics</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="ssno" value="1001210995"/>
+  <con:entry key="userId" value="2"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>familyName</con:entry><con:entry>givenName</con:entry><con:entry>birthDate</con:entry><con:entry>city</con:entry><con:entry>gender</con:entry><con:entry>postalcode</con:entry><con:entry>streetname</con:entry><con:entry>buildingnumber</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="gda" path="/api/v1/gda" id="55c23f72-1803-4338-a502-d3d6373ca369"><con:settings/><con:parameters><con:parameter><con:name>familyName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>givenName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>city</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>postalcode</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>streetname</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>streetnumber</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>role</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>maxresults</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>isactive</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Method 1" id="77c489d9-f0db-4b53-8686-eb900ad31e5f" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:gda="http://192.168.5.35/api/v1/gda">gda:Response</con:element></con:representation><con:request name="Request 1" id="bf3c369b-0c16-45bc-99e0-5d8f0dde06d9" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://192.168.5.35/api/v1/gda</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="role" value="700"/>
+  <con:entry key="city" value="Wien"/>
+  <con:entry key="streetname" value="Ernst-Melchior-Gasse"/>
+  <con:entry key="postalcode" value="1020"/>
+  <con:entry key="isactive" value="true"/>
+  <con:entry key="familyName" value="Musterärztin"/>
+  <con:entry key="givenName" value="Helga"/>
+  <con:entry key="streetnumber" value="22"/>
+  <con:entry key="maxresults" value="200"/>
+</con:parameters><con:parameterOrder><con:entry>familyName</con:entry><con:entry>givenName</con:entry><con:entry>city</con:entry><con:entry>postalcode</con:entry><con:entry>streetname</con:entry><con:entry>streetnumber</con:entry><con:entry>role</con:entry><con:entry>maxresults</con:entry><con:entry>isactive</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="card" path="/api/v1/card" id="0f41712c-9be1-4685-b75f-abad04acfd42"><con:settings/><con:parameters><con:parameter><con:name>cardReaderId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Method 1" id="3cd13b18-0bd3-480c-adf5-eeb14af57076" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:card="http://192.168.5.35/api/v1/card">card:Response</con:element></con:representation><con:request name="Request 1" id="233ac465-082f-46af-bc8e-afe6d2095561" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://192.168.5.35/api/v1/card</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="cardReaderId" value="lanccr_neu_ip_5 (02:bb:a0)" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>cardReaderId</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="cardReaders" path="/api/v1/cardReaders" id="53113319-b420-4ba6-9afe-eb33163be786"><con:settings/><con:parameters/><con:method name="Method 1" id="f7383e59-0b78-4828-8a31-81c38996b31d" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:car="http://192.168.5.35/api/v1/cardReaders">car:Response</con:element></con:representation><con:request name="Request 1" id="4922ad9e-e124-429a-a510-69868a4326d8" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://192.168.5.35/api/v1/cardReaders</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="document" path="/api/v1/document" id="a8c7ea30-be80-4902-8e52-849b00f31ddc"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>id</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>entryUuid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>classCode</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>authorInstitutionName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="search" path="search" id="85e534da-72d6-4dab-8944-255103527256"><con:settings/><con:parameters/><con:method name="SEARCH METADATA" id="28fedbc6-0a10-47fd-9cf6-e74166cfd07a" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:sear="http://192.168.5.35/api/v1/document/search">sear:Fault</con:element></con:representation><con:request name="Request 1" id="5b022d47-69de-4acb-aec0-cefb84feee19" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request>{
+ "userId":"1",
+ "ssno":"1001210995"
+}</con:request><con:originalUri>http://192.168.5.35/api/v1/document/search</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>id</con:entry><con:entry>format</con:entry><con:entry>entryUuid</con:entry><con:entry>ssno</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="GET ELGA DOCUMENT" id="0ce4fd81-dbc0-4b30-a0ba-24dba9ce0297" method="GET"><con:settings/><con:parameters/><con:request name="Request 1" id="8c096a9e-077b-47af-b1a6-db83ecd9aa8b" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="format" value="html"/>
+  <con:entry key="userId" value="1"/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>id</con:entry><con:entry>format</con:entry><con:entry>entryUuid</con:entry><con:entry>ssno</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method><con:method name="REGISTER ELGA DOCUMENT" id="506c9102-152b-47ea-81bc-70f8b659818f" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="20ae50f4-3f6f-4700-80a0-013ada4f3428" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>id</con:entry><con:entry>format</con:entry><con:entry>entryUuid</con:entry><con:entry>ssno</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method><con:method name="CANCEL ELGA DOCUMENT" id="101dc0d1-6ffd-49ce-9c37-c61a33c291a1" method="DELETE"><con:settings/><con:parameters/><con:request name="Request 1" id="719a8a8a-ff6b-464d-88b6-40af8bbc50d7" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry>userId</con:entry><con:entry>id</con:entry><con:entry>format</con:entry><con:entry>entryUuid</con:entry><con:entry>ssno</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="medicationlist" path="/api/v1/medicationlist" id="9a7edcc9-8965-45ed-b0f9-1687b28adc5f"><con:settings/><con:parameters><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Method 1" id="e7aebcd8-8c3b-4bc7-b686-10cde79575da" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:med="http://localhost/api/v1/medicationlist">med:Fault</con:element></con:representation><con:request name="Request 1" id="165d5ecc-0ff7-4bbc-be7c-138595b77185" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://192.168.5.35:8087</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1/medicationlist</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="ssno" value="1002120289"/>
+  <con:entry key="format" value="html"/>
+  <con:entry key="userId" value="1"/>
+</con:parameters><con:parameterOrder><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="prescriptions" path="/api/v1/prescriptions" id="54062545-d143-4408-ad6e-efc13dd1d740"><con:settings/><con:parameters><con:parameter><con:name>emedid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>userId</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>entryUuid</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>classCode</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>authorInstitutionName</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="search" path="search" id="ea5fce98-9dd2-4fe9-9679-6f2429795d96"><con:settings/><con:parameters/><con:method name="SEARCH METADATA OF PRESCRIPTIONS" id="b4bdedb4-ca43-400e-826e-c3f7a3c66d91" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="a4969173-52d4-4741-be72-3b124fdc31d0" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+  "userId":"1",
+  "ssno":"1001210995"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>emedid</con:entry><con:entry>format</con:entry><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="id" path="id" id="a77ac74f-2791-4b78-92ae-f2340109ff4a"><con:settings/><con:parameters><con:parameter><con:name>ssno</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>dataMatrix</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Method 1" id="b05e36e8-da00-4a8d-833d-a8a4a0344b5e" method="GET"><con:settings/><con:parameters/><con:request name="Request 1" id="8dda7e82-2ce5-4492-b49f-03903c03d5d5" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value="1001210995"/>
+  <con:entry key="userId" value="1"/>
+  <con:entry key="dataMatrix" value="true"/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>emedid</con:entry><con:entry>format</con:entry><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>dataMatrix</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="GET PRESCRIPTION" id="4b996d18-62c3-4871-b4a0-e3303a9b07c2" method="GET"><con:settings/><con:parameters/><con:request name="Request 1" id="185a9072-2df0-40b2-830a-d2aa7f83fc62" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="format" value="html"/>
+  <con:entry key="userId" value="1"/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>emedid</con:entry><con:entry>format</con:entry><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method><con:method name="REGISTER PRESCRIPTION" id="cc6c38c2-cf61-4bec-a723-6a51ee25d1d6" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="11f9e3cb-687d-4d79-a70f-87b418e48786" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request>{
+ "userId":"1",
+ "formatCode": "urn:elga:emedat:2015-v2.06",
+ "healthcareFacilityCode":"100",
+ "parentDocument":"",
+ "practiceSettingCode": "F001",
+ "ssno":"1001210995",
+ "document": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPD94bWwtc3R5bGVzaGVldCB0eXBlPSJ0ZXh0L3hzbCIgaHJlZj0iRUxHQV9TdHlsZXNoZWV0X3YxLjAueHNsIj"
+}</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="entryUuid" value=""/>
+  <con:entry key="classCode" value=""/>
+  <con:entry key="ssno" value=""/>
+  <con:entry key="authorInstitutionName" value=""/>
+</con:parameters><con:parameterOrder><con:entry>emedid</con:entry><con:entry>format</con:entry><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method><con:method name="CANCEL PRESCRIPTION" id="d3b87d3a-1b2a-4906-b795-df9e4672660a" method="DELETE"><con:settings/><con:parameters/><con:request name="Request 1" id="6ff5a6fb-3ce7-45a8-9441-090159cd816d" mediaType="application/json" postQueryString="false"><con:settings/><con:endpoint>http://localhost:8087</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="ssno" value="1001210995"/>
+  <con:entry key="userId" value="1"/>
+</con:parameters><con:parameterOrder><con:entry>emedid</con:entry><con:entry>format</con:entry><con:entry>userId</con:entry><con:entry>ssno</con:entry><con:entry>entryUuid</con:entry><con:entry>classCode</con:entry><con:entry>authorInstitutionName</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="validate" path="/api/v1/validate" id="e11e27e2-23ea-403e-b824-1662743f6f41"><con:settings/><con:parameters/><con:method name="Method 1" id="928f5fb7-412c-40d0-99f4-dbcaa45ec162" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/xml</con:mediaType><con:params/><con:element xmlns:urn="urn:hl7-org:v3">urn:ClinicalDocument</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:val="http://192.168.5.35/api/v1/validate">val:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:val="http://192.168.5.35/api/v1/validate">val:Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="2b765c75-587a-42a6-a371-2fc61ca20e83" mediaType="application/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8087</con:endpoint><con:request><![CDATA[<!--Document based on CDA R2 generated by eHealthConnector Rxxxxxx, Release Date todo release date-->
+<?xml-stylesheet type="text/xsl" href="eimpf-stylesheet_v1.0.xsl"?>
+<ClinicalDocument classCode="DOCCLIN" moodCode="EVN" xmlns="urn:hl7-org:v3" xmlns:ns2="urn:ihe:pharm:medication">
+   <realmCode code="AT"/>
+   <typeId extension="POCD_HD000040" root="2.16.840.1.113883.1.3"/>
+   <templateId root="1.2.40.0.34.6.0.11.0.1"/>
+   <templateId root="1.2.40.0.34.7.19"/>
+   <templateId root="1.2.40.0.34.6.0.11.0.2"/>
+   <templateId extension="XDSdocumentEntry.formatCode^urn:hl7-at:eImpf:2019" root="1.2.40.0.34.6.0.11.0.2.1"/>
+   <templateId root="1.3.6.1.4.1.19376.1.5.3.1.1.18.1.2"/>
+   <id extension="30d693ec-50d4-0d48-85d8-5732d0766579_20200407154406" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+   <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" displayName="HISTORY OF IMMUNIZATIONS">
+      <translation code="87273-9" codeSystem="2.16.840.1.113883.6.1" displayName="Immunization note"/>
+   </code>
+   <title>Update Immunisierungsstatus</title>
+   <effectiveTime value="20200407034406+0200"/>
+   <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25" codeSystemName="HL7:Confidentiality" displayName="normal"/>
+   <languageCode code="de-AT"/>
+   <setId extension="30d693ec-50d4-0d48-85d8-5732d0766579_20200407154406" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+   <versionNumber value="1"/>
+   <recordTarget contextControlCode="OP" typeCode="RCT">
+      <patientRole classCode="PAT">
+         <id assigningAuthorityName="Ordination Dr. Musterärztin" extension="70001" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+         <id assigningAuthorityName="Österreichische Sozialversicherung" extension="1001210995" root="1.2.40.0.10.1.4.3.1"/>
+         <addr>
+            <houseNumber>25</houseNumber>
+            <city>Graz</city>
+            <country>AUT</country>
+            <postalCode>8020</postalCode>
+            <streetName>Gartenstraße</streetName>
+         </addr>
+         <telecom use="H" value="mailto:test@musterpatient.at"/>
+         <telecom use="H" value="tel:063055343445"/>
+         <patient classCode="PSN" determinerCode="INSTANCE">
+            <name>
+               <family>Musterpatient</family>
+               <given>Max</given>
+               <prefix qualifier="AC">Dipl.-Ing.</prefix>
+               <suffix>BSc</suffix>
+            </name>
+            <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1" codeSystemName="HL7:AdministrativeGender" displayName="Male"/>
+            <birthTime value="19950921"/>
+            <guardian classCode="GUARD">
+               <addr>
+                  <houseNumber>10</houseNumber>
+                  <city>Graz</city>
+                  <country>AUT</country>
+                  <postalCode>8010</postalCode>
+                  <streetName>Harrachgasse</streetName>
+               </addr>
+               <telecom use="H" value="mailto:astrid.musterfrau@provider.at"/>
+               <telecom use="H" value="tel:0630120212"/>
+               <guardianPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                     <family>Musterfrau</family>
+                     <given>Astrid</given>
+                     <prefix qualifier="AC">Dr.</prefix>
+                  </name>
+               </guardianPerson>
+            </guardian>
+            <birthplace classCode="BIRTHPL">
+               <place determinerCode="INSTANCE">
+                  <addr>
+                     <houseNumber>25</houseNumber>
+                     <city>Graz</city>
+                     <country>AUT</country>
+                     <postalCode>8020</postalCode>
+                     <streetName>Gartenstraße</streetName>
+                  </addr>
+               </place>
+            </birthplace>
+         </patient>
+      </patientRole>
+   </recordTarget>
+   <author contextControlCode="OP" typeCode="AUT">
+      <functionCode code="118" codeSystem="1.2.40.0.34.5.2" displayName="Fachärztin/Facharzt für Kinder- und Jugendheilkunde"/>
+      <time nullFlavor="UNK"/>
+      <assignedAuthor classCode="ASSIGNED">
+         <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+         <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+            <name>
+               <family>Musterärztin</family>
+               <given>Helga</given>
+               <prefix qualifier="AC">Dr.</prefix>
+               <suffix>MBA</suffix>
+            </name>
+         </assignedPerson>
+         <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+            <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+            <name use="L">Ordination Dr. Musterärztin</name>
+            <telecom use="WP" value="mailto:ordination@musterärztin.at"/>
+            <telecom use="WP" value="tel:0630554345"/>
+            <addr use="PHYS">
+               <houseNumber>83</houseNumber>
+               <city>Graz</city>
+               <country>AUT</country>
+               <postalCode>8010</postalCode>
+               <streetName>Testgasse</streetName>
+            </addr>
+         </representedOrganization>
+      </assignedAuthor>
+   </author>
+   <custodian>
+      <assignedCustodian classCode="ASSIGNED">
+         <representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
+            <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+            <name use="L">Ordination Dr. Musterärztin</name>
+            <telecom use="WP" value="mailto:ordination@musterärztin.at"/>
+            <addr use="PHYS">
+               <houseNumber>83</houseNumber>
+               <city>Graz</city>
+               <country>AUT</country>
+               <postalCode>8010</postalCode>
+               <streetName>Testgasse</streetName>
+            </addr>
+         </representedCustodianOrganization>
+      </assignedCustodian>
+   </custodian>
+   <legalAuthenticator contextControlCode="OP" typeCode="LA">
+      <time nullFlavor="UNK"/>
+      <signatureCode code="S"/>
+      <assignedEntity classCode="ASSIGNED">
+         <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+         <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+            <name>
+               <family>Musterärztin</family>
+               <given>Helga</given>
+               <prefix qualifier="AC">Dr.</prefix>
+               <suffix>MBA</suffix>
+            </name>
+         </assignedPerson>
+         <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+            <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+            <name use="L">Ordination Dr. Musterärztin</name>
+            <telecom use="WP" value="mailto:ordination@musterärztin.at"/>
+            <telecom use="WP" value="tel:0630554345"/>
+            <addr use="PHYS">
+               <houseNumber>83</houseNumber>
+               <city>Graz</city>
+               <country>AUT</country>
+               <postalCode>8010</postalCode>
+               <streetName>Testgasse</streetName>
+            </addr>
+         </representedOrganization>
+      </assignedEntity>
+   </legalAuthenticator>
+   <documentationOf typeCode="DOC">
+      <serviceEvent classCode="PCPR" moodCode="EVN">
+         <code code="41000179103" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT" displayName="Immunization record (record artifact)"/>
+         <effectiveTime>
+            <low value="20200407120000+0200"/>
+            <high value="20200408120000+0200"/>
+         </effectiveTime>
+      </serviceEvent>
+   </documentationOf>
+   <component>
+      <structuredBody classCode="DOCBODY" moodCode="EVN">
+         <component>
+            <section classCode="DOCSECT" moodCode="EVN">
+               <templateId root="1.2.40.0.34.6.0.11.2.1"/>
+               <templateId root="2.16.840.1.113883.10.20.1.6"/>
+               <templateId root="1.3.6.1.4.1.19376.1.5.3.1.3.23"/>
+               <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" displayName="HISTORY OF IMMUNIZATIONS"/>
+               <title>Impfungen</title>
+               <text>
+                  <table ID="sbdm-0">
+                     <tbody>
+                        <tr>
+                           <td styleCode="xELGA_colw:20">Impfung gegen:</td>
+                           <td>
+                              <content ID="target-0">Hepatitis A Impfstoff</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Impfschema:</td>
+                           <td>
+                              <content ID="criterion-0">Hepatitis A Indikationsschema</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Dosis:</td>
+                           <td>
+                              <content ID="dosenr-0">Dosis 2</content>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Impfstoff:</td>
+                           <td>
+                              <content ID="prodName-0">VAQTA FSPR INJ.SUS</content>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <br/>
+               </text>
+               <entry contextConductionInd="true" typeCode="DRIV">
+                  <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+                     <templateId root="1.2.40.0.34.6.0.11.3.1"/>
+                     <templateId root="2.16.840.1.113883.10.20.1.24"/>
+                     <templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.12"/>
+                     <id assigningAuthorityName="Ordination Dr. Musterärztin" extension="1" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                     <code code="IMMUNIZ" codeSystem="2.16.840.1.113883.5.4" codeSystemName="ActCode"/>
+                     <text>
+                        <reference value="#immunization-entry-0"/>
+                     </text>
+                     <statusCode code="completed"/>
+                     <effectiveTime value="20200407120000+0200"/>
+                     <routeCode nullFlavor="NA"/>
+                     <approachSiteCode nullFlavor="NA"/>
+                     <doseQuantity unit="mL" value="0.3"/>
+                     <consumable typeCode="CSM">
+                        <manufacturedProduct classCode="MANU">
+                           <templateId root="1.2.40.0.34.6.0.11.9.32"/>
+                           <templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.7.2"/>
+                           <templateId root="2.16.840.1.113883.10.20.1.53"/>
+                           <manufacturedMaterial classCode="MMAT" determinerCode="KIND">
+                              <templateId root="1.3.6.1.4.1.19376.1.9.1.3.1"/>
+                              <code code="3904699" codeSystem="1.2.40.0.34.4.16.1" displayName="VAQTA FSPR INJ.SUS"/>
+                              <name>VAQTA FSPR INJ.SUS</name>
+                              <lotNumberText>1111111</lotNumberText>
+                           </manufacturedMaterial>
+                        </manufacturedProduct>
+                     </consumable>
+                     <performer typeCode="PRF">
+                        <templateId root="1.2.40.0.34.6.0.11.9.21"/>
+                        <time value="20200407120000+0200"/>
+                        <assignedEntity classCode="ASSIGNED">
+                           <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                           <code code="100" codeSystem="1.2.40.0.34.5.2" displayName="Ärztin/Arzt für Allgemeinmedizin"/>
+                           <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+                              <name>
+                                 <family>Musterärztin</family>
+                                 <given>Helga</given>
+                                 <prefix qualifier="AC">Dr.</prefix>
+                                 <suffix>MBA</suffix>
+                              </name>
+                           </assignedPerson>
+                           <representedOrganization>
+                              <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                              <name use="L">Ordination Dr. Musterärztin</name>
+                              <telecom use="WP" value="mailto:ordination@musterärztin.at"/>
+                              <telecom use="WP" value="tel:0630554345"/>
+                              <addr use="PHYS">
+                                 <houseNumber>83</houseNumber>
+                                 <city>Graz</city>
+                                 <country>AUT</country>
+                                 <postalCode>8010</postalCode>
+                                 <streetName>Testgasse</streetName>
+                              </addr>
+                           </representedOrganization>
+                        </assignedEntity>
+                     </performer>
+                     <author contextControlCode="OP" typeCode="AUT">
+                        <time value="20200407120000+0200"/>
+                        <assignedAuthor classCode="ASSIGNED">
+                           <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                           <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+                              <name>
+                                 <family>Musterärztin</family>
+                                 <given>Helga</given>
+                                 <prefix qualifier="AC">Dr.</prefix>
+                                 <suffix>MBA</suffix>
+                              </name>
+                           </assignedPerson>
+                           <representedOrganization classCode="ORG" determinerCode="INSTANCE">
+                              <id assigningAuthorityName="GDA-Index" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                              <name use="L">Ordination Dr. Musterärztin</name>
+                              <telecom use="WP" value="mailto:ordination@musterärztin.at"/>
+                              <telecom use="WP" value="tel:0630554345"/>
+                              <addr use="PHYS">
+                                 <houseNumber>83</houseNumber>
+                                 <city>Graz</city>
+                                 <country>AUT</country>
+                                 <postalCode>8010</postalCode>
+                                 <streetName>Testgasse</streetName>
+                              </addr>
+                           </representedOrganization>
+                        </assignedAuthor>
+                     </author>
+                     <entryRelationship typeCode="RSON">
+                        <observation classCode="OBS" moodCode="EVN">
+                           <templateId root="1.2.40.0.34.6.0.11.3.2"/>
+                           <code code="14745005" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis A Impfstoff" xsi:type="CE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                           <text>
+                              <reference value="#target-0-0"/>
+                           </text>
+                           <statusCode code="completed"/>
+                        </observation>
+                     </entryRelationship>
+                     <reference typeCode="REFR">
+                        <externalDocument classCode="DOC" moodCode="EVN">
+                           <templateId root="1.2.40.0.34.6.0.11.3.14"/>
+                           <id assigningAuthorityName="Ordination Dr. Musterärztin" extension="10" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                           <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" displayName="HISTORY OF IMMUNIZATIONS"/>
+                           <text>
+                              <reference value="#external-doc-0"/>
+                           </text>
+                           <setId assigningAuthorityName="Ordination Dr. Musterärztin" extension="1234534" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                           <versionNumber value="1"/>
+                        </externalDocument>
+                     </reference>
+                     <precondition typeCode="PRCN">
+                        <criterion classCode="OBS" moodCode="EVN.CRT">
+                           <templateId root="1.2.40.0.34.6.0.11.3.10"/>
+                           <code code="SCHEM09" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Indikationsschema" xsi:type="CE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                           <text>
+                              <reference value="#impfEmpf-schedule-dose-0"/>
+                           </text>
+                           <value code="D2" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 2" xsi:type="CD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                        </criterion>
+                     </precondition>
+                  </substanceAdministration>
+               </entry>
+            </section>
+         </component>
+         <component>
+            <section classCode="DOCSECT" moodCode="EVN">
+               <templateId root="1.2.40.0.34.6.0.11.2.4"/>
+               <templateId root="2.16.840.1.113883.10.20.1.11"/>
+               <templateId root="1.3.6.1.4.1.19376.1.5.3.1.3.6"/>
+               <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="PROBLEM LIST"/>
+               <title>Spezielle Impfindikation</title>
+               <text>
+                  <list>
+                     <item ID="risk-0">Spezielle Risikogruppe für Hepatitis B Impfstoff</item>
+                  </list>
+               </text>
+               <entry contextConductionInd="true" typeCode="DRIV">
+                  <act classCode="ACT" moodCode="EVN">
+                     <templateId root="1.2.40.0.34.6.0.11.3.20"/>
+                     <templateId root="2.16.840.1.113883.10.20.1.27"/>
+                     <templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5.1"/>
+                     <templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5.2"/>
+                     <id assigningAuthorityName="Ordination Dr. Musterärztin" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                     <code nullFlavor="NA" xsi:type="CE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                     <statusCode code="active"/>
+                     <effectiveTime>
+                        <low value="20200131"/>
+                        <high nullFlavor="UNK"/>
+                     </effectiveTime>
+                     <entryRelationship contextConductionInd="true" inversionInd="false" typeCode="SUBJ">
+                        <observation classCode="OBS" moodCode="EVN" negationInd="false">
+                           <templateId root="1.2.40.0.34.6.0.11.3.21"/>
+                           <templateId root="2.16.840.1.113883.10.20.1.28"/>
+                           <templateId root="1.3.6.1.4.1.19376.1.5.3.1.4.5"/>
+                           <id assigningAuthorityName="Ordination Dr. Musterärztin" root="1.2.40.0.34.99.10.2.1.2.14827"/>
+                           <code code="55607006" codeSystem="2.16.840.1.113883.6.96" xsi:type="CE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                           <text>
+                              <reference value="#risk-0"/>
+                           </text>
+                           <statusCode code="completed"/>
+                           <effectiveTime>
+                              <low value="20200131"/>
+                           </effectiveTime>
+                           <value code="14745005" codeSystem="2.16.840.1.113883.6.96" displayName="Spezielle Risikogruppe für Hepatitis B Impfstoff" xsi:type="CD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                              <originalText>
+                                 <reference value="#risk-0"/>
+                              </originalText>
+                           </value>
+                        </observation>
+                     </entryRelationship>
+                     <reference typeCode="REFR">
+                        <externalDocument classCode="DOC" moodCode="EVN">
+                           <templateId root="1.2.40.0.34.6.0.11.3.14"/>
+                           <id assigningAuthorityName="Ordination Dr. Musterärztin" extension="12212" root="1.2.40.0.34.99.3.2.10410"/>
+                           <text>
+                              <reference value="#external-doc-0"/>
+                           </text>
+                           <setId assigningAuthorityName="Ordination Dr. Musterärztin" extension="12212323" root="1.2.40.0.34.99.3.2.10410"/>
+                           <versionNumber value="1"/>
+                        </externalDocument>
+                     </reference>
+                  </act>
+               </entry>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</ClinicalDocument>]]></con:request><con:originalUri>http://192.168.5.35/api/v1/validate</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
