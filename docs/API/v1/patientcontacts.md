@@ -14,9 +14,9 @@ Confirms the patient contact with the eCard in ELGA. The registered patient cont
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to confirm the patient contact
-- `patientId` *(String)* *(required)* - ssno of the patient
-- `cardReaderId` *(String)* *(required)* - id of the used card reader
+- `userId` *(String)* *(required)* - id of user, who wants to confirm the patient contact
+- `patientId` *(String)* *(required)* - ssno of patient
+- `cardReaderId` *(String)* *(required)* - id of used card reader
 
 **Example:**
 
