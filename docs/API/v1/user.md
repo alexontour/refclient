@@ -14,14 +14,14 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which should be registered
-- `role` *(String)* *(required)* - role of the surgery like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
-- `password` *(String)* *(required)* - pin for the gina client
-- `givenName` *(String)* *(required)* - given name of the person, who should be registered in ELGA
-- `familyName` *(String)* *(required)* - family name of the person, who should be registered in ELGA
-- `cardReaderId` *(String)* *(required)* - id of the card reader, which should be used to execute the registration
-- `prefix` *(String)* *(optional)* - prefix of the person, who should be registered in ELGA
-- `suffix` *(String)* *(optional)* - suffix of the person, who should be registered in ELGA
+- `userId` *(String)* *(required)* - id of user, who should be registered
+- `role` *(String)* *(required)* - role of surgeon like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
+- `password` *(String)* *(required)* - pin for  gina client
+- `givenName` *(String)* *(required)* - given name of person, who should be registered in ELGA
+- `familyName` *(String)* *(required)* - family name of  person, who should be registered in ELGA
+- `cardReaderId` *(String)* *(required)* - id of card reader, which should be used to execute the registration
+- `prefix` *(String)* *(optional)* - prefix of person, who should be registered in ELGA
+- `suffix` *(String)* *(optional)* - suffix of person, who should be registered in ELGA
 
 **Example:**
 
