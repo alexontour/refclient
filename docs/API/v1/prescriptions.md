@@ -26,13 +26,13 @@ Sends a prescription to ELGA.
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to create the prescription
-- `ssno` *(String)* *(required)*- ssno of the patient for which the prescription should be uploaded
-- `formatCode` *(String)* *(optional)* - format code of the uploaded prescription
-- `healthcareFacilityCode` *(String)* *(optional)* - healthcare facility code of the uploading physician/organization
-- `practiceSettingCode` *(String)* *(required)* - treatment event for the consultation
-- `parentDocument` *(String)* *(optional)* - emedId of the parent prescription
-- `document` *(String)* *(optional)* - the prescription as base64 encoded xml document (CDA document), which should be uploaded
+- `userId` *(String)* *(required)* - id of user, who wants to create the prescription
+- `ssno` *(String)* *(required)*- ssno of patient for whom the prescription should be uploaded
+- `formatCode` *(String)* *(optional)* - format code of uploaded prescription
+- `healthcareFacilityCode` *(String)* *(optional)* - healthcare facility code of uploading physician/organization
+- `practiceSettingCode` *(String)* *(required)* - treatment event for consultation
+- `parentDocument` *(String)* *(optional)* - emedId of parent prescription
+- `document` *(String)* *(optional)* - prescription as base64 encoded xml document (CDA document), which should be uploaded
 
  all current code values are located at <https://termpub.gesundheit.gv.at>
 
