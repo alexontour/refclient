@@ -26,12 +26,12 @@ Sends a document to ELGA.
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to send the ELGA document
-- `ssno` *(String)* *(required)*- ssno of the patient for which the document should be uploaded
-- `formatCode` *(String)* *(required)* - format code of the uploaded document
-- `healthcareFacilityCode` *(String)* *(required)* - healthcare facility code of the uploading physician/organization
-- `practiceSettingCode` *(String)* *(required)* - practice setting code of the uploading physician/organization
-- `parentdocument` *(String)* *(optional)* - id of the parent document. required if the user wants to update a existing document
+- `userId` *(String)* *(required)* - id of user, which wants to send the ELGA document
+- `ssno` *(String)* *(required)*- ssno of patient for whom the document should be uploaded
+- `formatCode` *(String)* *(required)* - format code of uploaded document
+- `healthcareFacilityCode` *(String)* *(required)* - healthcare facility code of uploading physician/organization
+- `practiceSettingCode` *(String)* *(required)* - practice setting code of uploading physician/organization
+- `parentdocument` *(String)* *(optional)* - id of  parent document, required if the user wants to update an existing document
 - `document` *(String)* *(required)* - the document as base64 encoded xml document (CDA document), which should be uploaded
 
  all actual code values are located at <https://termpub.gesundheit.gv.at>
@@ -51,7 +51,7 @@ Sends a document to ELGA.
 
 ### JSON Object Structure Response
 
-- `message` *(String)* - Information of the message
+- `message` *(String)* - detailed  message
 - `type` *(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
 
 **Example:**
@@ -74,7 +74,7 @@ Document, which should be canceled (the correct id could be taken from the answe
 
 ### JSON Object Structure
 
-- `message` *(String)* - Information of the message
+- `message` *(String)* - detailed message
 - `type` *(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
 
 **Example:**
@@ -95,8 +95,8 @@ Queries the metadata of the registered ELGA documents (Laboratory reports, disch
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to search the immunization entries
-- `ssno` *(String)* *(required)* - ssno of the patient.
+- `userId` *(String)* *(required)* - id of user, who wants to search for immunization entries
+- `ssno` *(String)* *(required)* - ssno of patient.
 
 **Example:**
 
@@ -113,22 +113,22 @@ Queries the metadata of the registered ELGA documents (Laboratory reports, disch
 
 ### JSON Object Structure List
 
-- `entryUuid` *(String)* - uuid of the document
-- `classCode` *(Array)* - class codes of the document
-- `formatCode` *(Array)* - format codes of the document
-- `comments` *(String)* - comments of the document
-- `practiceSettingCode` *(Array)* - practice setting codes of the physician/organization, which created the document
-- `healthcareFacilityCode` *(Array)* - healthcarefacility codes of the physician/organization, which created the document
-- `languageCode` *(Array)* - language codes of the document
-- `confidentialityCode` *(Array)* - confidentiality codes of the document
-- `typeCode` *(Object)* - type code of the document
-- `eventCode` *(Array)* - event codes of the document
-- `patient` *(Object)* - patient for which is the document
-- `legalAuthenticator` *(String)* - name of the legal authenticator of the document
-- `id` *(Object)* - id of the document (`emedId`;`repositoryId`;`homeCommunityId`)
+- `entryUuid` *(String)* - uuid of document
+- `classCode` *(Array)* - class codes of document
+- `formatCode` *(Array)* - format codes of document
+- `comments` *(String)* - comments of document
+- `practiceSettingCode` *(Array)* - practice setting codes of physician/organization, that created the document
+- `healthcareFacilityCode` *(Array)* - healthcarefacility codes of physician/organization, that created the document
+- `languageCode` *(Array)* - language codes of document
+- `confidentialityCode` *(Array)* - confidentiality codes of document
+- `typeCode` *(Object)* - type code of document
+- `eventCode` *(Array)* - event codes of document
+- `patient` *(Object)* - patient for whom the document was created
+- `legalAuthenticator` *(String)* - name of legal authenticator of the document
+- `id` *(Object)* - id of document (`emedId`;`repositoryId`;`homeCommunityId`)
 - `referencedIdList` *(Object)* - list with ids of documents which reference the requested document
-- `authors` *(Object)* - the authors of the document
-- `title` *(String)* - the title of the document
+- `authors` *(Object)* - authors of the document
+- `title` *(String)* - title of the document
 - `creationTime` *(String)* - date time, when the documented was created (ISO8601 formatted time)
 
 ### JSON Object Structure codes
@@ -139,27 +139,27 @@ Queries the metadata of the registered ELGA documents (Laboratory reports, disch
 
 ### JSON Object Structure referencedIdList
 
-- `homeCommunityId` *(String)* - id of the community (e.g. elga area), where the document is stored
-- `id` *(String)* - displayname of the code
-  - `extension` *(String)* - extension of the id
-  - `root` *(String)* - root of the id (oid)
+- `homeCommunityId` *(String)* - id of community (e.g. elga area), where the document is stored
+- `id` *(String)* - displayname of code
+  - `extension` *(String)* - extension of id
+  - `root` *(String)* - root of id (oid)
 
 ### JSON Object Structure authors
 
-- `id` *(String)* - id of the author
-- `oid` *(String)* - code system of the author id
-- `givenName` *(String)* - given name of the author
-- `familyName` *(String)* - family name of the author
-- `prefix` *(String)* - prefix of the author
-- `suffix` *(String)* - suffix of the author
+- `id` *(String)* - id of author
+- `oid` *(String)* - code system of author id
+- `givenName` *(String)* - given name of author
+- `familyName` *(String)* - family name of tauthor
+- `prefix` *(String)* - prefix of author
+- `suffix` *(String)* - suffix of author
 
 ### JSON Object Structure patient
 
-- `id` *(Object)* - id of the author
-  - `extension` *(String)* - id of the author
-  - `root` *(String)* - code system of the author
-- `organization` *(String)* - organization of the author
-- `familyName` *(String)* - family name of the author
+- `id` *(Object)* - id of author
+  - `extension` *(String)* - id of author
+  - `root` *(String)* - code system of author
+- `organization` *(String)* - organization of author
+- `familyName` *(String)* - family name of author
 
 **Example successful response:**
 
