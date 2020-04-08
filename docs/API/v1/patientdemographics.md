@@ -16,16 +16,16 @@ Queries the demographic details of the patient. The parameters can limit the sea
 
 - `list` *(Array)* - list of found patient demographics
   - `deceased`*(boolean)* - information wheter the patient has died
-  - `prefix`*(String)* - prefix of the patient
-  - `suffix`*(String)* - suffix of the patient
-  - `givenName`*(String)* - given name of the patient
-  - `familyName`*(String)* - family name of the patient
-  - `ids`*(Array)* - list of identification of the patient
+  - `prefix`*(String)* - prefix of patient
+  - `suffix`*(String)* - suffix of patient
+  - `givenName`*(String)* - given name of patient
+  - `familyName`*(String)* - family name of patient
+  - `ids`*(Array)* - list of identifications for patient
 
 #### Structure ids
 
 - `extension` *(String)* - extension of the id, e.g. social security number
-- `root` *(String)* - oid of the id
+- `root` *(String)* - oid of id
 
 **Example:**
 
