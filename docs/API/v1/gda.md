@@ -18,20 +18,20 @@ Queries health service providers with the given parameters as filter
 
 #### Structure health service providers
 
-- `address` *(Object)* - address of the health service provider
+- `address` *(Object)* - address of health service provider
   - `country` *(String)* - country
   - `streetname` *(String)* - street name
   - `city` *(String)* - city
   - `postalCode` *(String)* - postal code
   - `streetnumber` *(String)* - street number
-- `id` *(Object)* - id of the health service provider
-  - `extension` *(String)* - extension of the id (this is the actual oid of the health service provider)
-  - `root` *(String)* - oid of the id
-- `givenName` *(String)* - given name of the health service provider
-- `familyName` *(String)* - family name of the health service provider
-- `prefix` *(String)* - prefix of the health service provider
-- `suffix` *(String)* - suffix of the health service provider
-- `elgaRole` *(String)* - elga role of the health service provider
+- `id` *(Object)* - id of health service provider
+  - `extension` *(String)* - extension of id (this is the actual oid of the health service provider)
+  - `root` *(String)* - oid of id
+- `givenName` *(String)* - given name of health service provider
+- `familyName` *(String)* - family name of health service provider
+- `prefix` *(String)* - prefix of health service provider
+- `suffix` *(String)* - suffix of health service provider
+- `elgaRole` *(String)* - elga role of health service provider
 
 **Example (if number of maxresults (parameter) is too small):**
 
