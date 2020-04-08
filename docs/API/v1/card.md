@@ -15,13 +15,13 @@ Queries the data of the current card in the card reader
 ### JSON Object Structure
 
 - `cardType` *(String)* - type of card. Possible values: `"e-Card"`, `"o-Card"`, `"schulungs-e-card"`
-- `familyName` *(String)* - family name of the card owner  
-- `givenName` *(String)* - given name of the card owner  
-- `number` *(String)* - social security number of the e-Card or Vertragspartnernummer of the Admin-Card
-- `prefix` *(String)* - title of the card owner  
-- `sex` *(String)* - sex of the card owner  
-- `suffix` *(String)* - title after the name of the card owner  
-- `birthDate` *(String)* - birth date of the card owner
+- `familyName` *(String)* - family name of card owner  
+- `givenName` *(String)* - given name of card owner  
+- `number` *(String)* - social security number of patient (e-Card) or contract number (Vertragspartnernummer) (Admin-Card)
+- `prefix` *(String)* - title of card owner  
+- `sex` *(String)* - sex of card owner  
+- `suffix` *(String)* - title shown as suffix after name of card owner  
+- `birthDate` *(String)* - birth date of card owner
   
 **Example:**
 
