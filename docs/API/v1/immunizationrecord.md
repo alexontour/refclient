@@ -19,11 +19,11 @@ Writes a update immunization document into immunization record.
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to write the document
-- `ssno` *(String)* *(required)* - ssno of the patient for which the document should be written
+- `userId` *(String)* *(required)* - id of user, which wants to write the document
+- `ssno` *(String)* *(required)* - ssno of patient for whom the document should be written
 - `document` *(String)* *(optional)* - base64 encoded CDA document (Update Immunisierungsstatus CDA Dokument)
 - `cda`*(Object)* *(optional)* - cda json object with data for (Update Immunisierungsstatus CDA Dokument). Either the cda or the document must be given.
- The description about this json you can find in the file cda.md
+ The description of this json can be found in the file cda.md
 - `healthcareFacilityCode` *(String)* *(required)* - id of the document's healthcare facility code
 - `practiceSettingCode` *(String)* *(required)* - id of the document's practice setting code  
 - `validate`*(boolean)* *(optional)* - specifies if the document should be validated before it is posted to ELGA. The default value is true.
