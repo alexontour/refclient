@@ -15,7 +15,7 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 ### JSON Object Structure Request
 
 - `userId` *(String)* *(required)* - id of user, who should be registered
-- `role` *(String)* *(required)* - role of surgeon like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
+- `role` *(String)* *(required)* - role of physician like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
 - `password` *(String)* *(required)* - pin for  gina client
 - `givenName` *(String)* *(required)* - given name of person, who should be registered in ELGA
 - `familyName` *(String)* *(required)* - family name of  person, who should be registered in ELGA
