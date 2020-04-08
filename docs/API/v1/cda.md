@@ -18,7 +18,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus"
 - `patient` *(Object)* *(required)* - patient data  
   - `ssno` *(String)* *(required)* - social security number of patient
   - `givenname` *(String)* *(required)* - given name of patient
-  - `familyname` *(String)* *(optional)* - last name of patient
+  - `familyname` *(String)* *(required)* - last name of patient
   - `prefix`*(String)* *(optional)* - prefixes of patient name like academic titles (Dr., Mag., ...)
   - `suffix` *(String)* *(optional)* - suffixes of patient name like acadmeic titles (MSC, MBA, ...)
   - `birthdate`*(String)* *(optional)* - date of birth of patient
@@ -38,7 +38,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus"
     - `postalcode` *(Object)* *(required)* - postal code of birthplace
     - `country` *(Object)* *(optional)* - country of birthplace. The default value is Austria, if not given.
   - `guardians`*(Array)* *(optional)* - Legal representative (e.g. adult representative). The legal representative can be either a person or an organization.
-- `authors` *(Array)* *(required)* - auhtors of document
+- `authors` *(Array)* *(required)* - authors of document
 - `legalauthenticator`*(Object)* *(required)* - main and legal signature. Information about the first author will be used as default value.  
 - `dataenterer`*(Object)* *(optional)* - Typist, medical documentation assistant, etc.
 - `custodian`*(Object)* *(required)* - Custodian of document. Information about the organization of the first author will be used as default value.  
