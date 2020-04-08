@@ -15,18 +15,18 @@ Possible values for the parameter format are `"xml"`, `"html"`. If the format ht
 ### JSON Object Structure Response (format xml example)
 
 - `documents` *(Array)* - list of received documents
-- `transactionId` *(String)* - transaction id, which was used internal to execute the specific request
-- `instanceId` *(String)* - id of the instance (window)
-- `userId` *(String)* - id of the user, which requested the document
-- `tenantId` *(String)* - id of the tenant
-- `workspaceId` *(String)* - id of the workspace, where the user requested the document
+- `transactionId` *(String)* - transaction id, which was used internally to execute the specific request
+- `instanceId` *(String)* - id of instance (window)
+- `userId` *(String)* - id of user, who requested the document
+- `tenantId` *(String)* - id of tenant
+- `workspaceId` *(String)* - id of workspace, where the user requested the document
 
 #### Structure documents
 
 - `document` *(Object)* - requested document
   - `base64String` *(Array)* - base64 encoded document
-- `id` *(String)* - id of the document
-- `type` *(String)* - type of the received document (for this application always ELGADOCUMENT will be returned)
+- `id` *(String)* - id of document
+- `type` *(String)* - type of the received document (in this application the type ELGADOCUMENT will always be returned)
 
 **Example:**
 
