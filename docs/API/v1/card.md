@@ -17,10 +17,10 @@ Queries data of current card in card reader
 - `type` *(String)* - type of card. Possible values: `"e-Card"`, `"o-Card"`, `"schulungs-e-card"`
 - `family` *(String)* - family name of card owner  
 - `given` *(String)* - given name of card owner  
-- `number` *(String)* - social security number of e-Card or Vertragspartnernummer of Admin-Card
+- `number` *(String)* - social security number of patient (e-Card) or contract number (Vertragspartnernummer) (Admin-Card)
 - `prefix` *(String)* - title of card owner  
 - `sex` *(String)* - sex of card owner  
-- `suffix` *(String)* - title after name of card owner  
+- `suffix` *(String)* - title shown as suffix after name of card owner
 - `birthDate` *(String)* - birth date of card owner
   
 **Example:**

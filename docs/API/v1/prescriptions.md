@@ -7,7 +7,8 @@ Handles all actions related to prescriptions in ELGA
 ## Retrieve new eMed id [`GET`]
 
 - Endpoint: `/id`
-- Parameters: `userId` *(required)*, `ssno` *(required)*, `dataMatrix` *(required)*
+- Headers: `Authorization`
+- Parameters: `ssno` *(required)*, `dataMatrix` *(required)*
 - Response: JSON-Object
 
 Requests a new eMed id for ELGA prescriptions for one patient. Possible values for dataMatrix: `"true"`, `"false"`

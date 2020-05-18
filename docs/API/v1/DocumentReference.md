@@ -36,7 +36,7 @@ Writes a document in ELGA area. Implemented according to <http://hl7.org/fhir/R4
     - `target` *(Object)* *(required)* - reference to parent document. Structure described under <http://hl7.org/fhir/R4/references.html#Reference>
       - `type` *(String)* *(required)* - type of reference. It must be `"DocumentReference"`
       - `identifier` *(Object)* *(required)* - id of parent document. Structure described under <http://hl7.org/fhir/R4/datatypes.html#Identifier>
-  - `subject` *(Object)* *(required)* - patient for which the document should be written
+  - `subject` *(Object)* *(required)* - patient for whom the document should be written
     - `type` *(String)* *(required)* - type of reference. It must be `"Patient"`
     - `identifier` *(Object)* *(required)* - id of patient. Structure described under <http://hl7.org/fhir/R4/datatypes.html#Identifier>
 
