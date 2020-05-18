@@ -2,7 +2,7 @@
 
 Microservice endpoint: `/api/v1/user`
 
-Handles all acctions related to the user registration with the A-Card.
+Handles all actions related to user registration to ELGA.
 
 ## Register a user with the A-Card [`POST`]
 
@@ -14,24 +14,22 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which should be registered
-- `role` *(String)* *(required)* - role of the surgery like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
-- `password` *(String)* *(required)* - pin for the gina client
-- `givenName` *(String)* *(required)* - given name of the person, who should be registered in ELGA
-- `familyName` *(String)* *(required)* - family name of the person, who should be registered in ELGA
-- `cardReaderId` *(String)* *(required)* - id of the card reader, which should be used to execute the registration
-- `prefix` *(String)* *(optional)* - prefix of the person, who should be registered in ELGA
-- `suffix` *(String)* *(optional)* - suffix of the person, who should be registered in ELGA
+- `role` *(String)* *(required)* - role of surgery like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt), .... (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
+- `password` *(String)* *(required)* - pin for gina client
+- `given` *(String)* *(required)* - given name of person, who should be registered in ELGA
+- `family` *(String)* *(required)* - family name of person, who should be registered in ELGA
+- `cardReaderId` *(String)* *(required)* - id of card reader, which should be used to execute registration
+- `prefix` *(String)* *(optional)* - prefix of person, who should be registered in ELGA
+- `suffix` *(String)* *(optional)* - suffix of person, who should be registered in ELGA
 
 **Example:**
 
 ```JSON
 {
-"userId":"1",
 "role":"700",
 "password":"0000",
-"givenName": "Anna",
-"familyName": "Test",
+"given": "Anna",
+"family": "Test",
 "cardReaderId": "lanccr_neu_ip_5 (02:79:87)",
 "prefix" : "Dr.",
 "suffix" : "MSc"
@@ -40,8 +38,8 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 
 ### JSON Object Structure Response
 
-- `message` *(String)* - Information of the message
-- `type` *(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
+- `message` *(String)* - Information of message
+- `type` *(String)* - One of following possible type `"SUCCESS"`, `"ERROR"`
 
 **Example:**
 
@@ -58,15 +56,14 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 - Content-Type: `application/json`
 - Response: JSON-Object
 
-Creates a GINA dialog for one user and registers the user for ELGA actions. Same structure like for the GET method.
+Creates a GINA dialog for one user and registers user for ELGA actions. Same structure like for GET method.
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which should be registered
-- `role` *(String)* *(required)* - role of the surgery like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"702"`(Krankenanstalt), `"703"`(Einrichtung der Pflege),  `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt). Actual values are available under (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
-- `subjectid` *(String)* *(required)* - id of the organization to register
-- `organization` *(String)* *(required)* - name of the organization to register
-- `organizationid` *(String)* *(required)* - OID of the GDA to register
+- `role` *(String)* *(required)* - role of surgery like Arzt/Ärztin. Possible values: `"700"`(Arzt/Ärztin), `"701"`(Zahnarzt/Zahnärztin), `"702"`(Krankenanstalt), `"703"`(Einrichtung der Pflege),  `"704"` (Apotheke), `"716"`(Amtsärztin/Amtsarzt). Actual values are available under (<https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen>)
+- `subjectid` *(String)* *(required)* - id of organization to register
+- `organization` *(String)* *(required)* - name of organization to register
+- `organizationid` *(String)* *(required)* - OID of GDA to register
 
 **Example:**
 
@@ -83,11 +80,11 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 ## Register a user with existing IDA [`POST`]
 
 - Endpoint: `/`
-- Parameters: `userId` *(required)*, `role` *(required)*
+- Parameters: `role` *(required)*
 - Content-Type: `application/xml`
 - Response: JSON-Object
 
-This method uses the passed identity assertion to request an HCP assertion from ELGA. If a context assertion is needed for the ELGA application like for the electronic immunization record, the context assertion will be requested with the appropriate HCP assertion. All assertions are cached in the client, therefore the
+This method uses the passed identity assertion to request an HCP assertion from ELGA. If a context assertion is needed for the ELGA application like for electronic immunization record, the context assertion will be requested with the appropriate HCP assertion. All assertions are cached in the client, therefore the
 user id is need for nearly every request
 
 ### JSON Object Structure Response
@@ -107,7 +104,7 @@ user id is need for nearly every request
 ## Delete a user [`DELETE`]
 
 - Endpoint: `/`
-- Parameters: `userId` *(required)*
+- Headers: `Authorization` *(required)*
 - Response: JSON-Object
 
 Log off a user from the ELGA referent client. In the background it closes the related GINA dialog, if it exists. And it invalidates the
@@ -141,8 +138,8 @@ Requests an identity assertion from ELGA. It is not possible to use for physicia
 
 ### JSON Object Structure
 
-- `message` *(String)* - Information of the message
-- `type` *(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
+- `message` *(String)* - Information of message
+- `type` *(String)* - One of following possible type `"SUCCESS"`, `"ERROR"`
 
 **Example for error:**
 

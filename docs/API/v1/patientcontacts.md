@@ -2,89 +2,58 @@
 
 Microservice endpoint: `/api/v1/patientcontacts`
 
-Handles all actions related to the patient contact confirmation for ELGA
+Handles all actions related to patient contact confirmation for ELGA
 
 ## Confirm patient contact with eCard [`POST`]
 
 - Endpoint: `/`
+- Headers: `Authorization`
 - Content-Type: `application/json`
 - Response: JSON-Object
 
-Confirms the patient contact with the eCard in ELGA. The registered patient contact is necessary to be able to interact with ELGA.  
+Confirms patient contact. If parameter cardReaderId is given patient contact will be confirmed with eCard in ELGA otherwise patient contact will be confirmed with the bpk in ELGA. The registered patient contact is necessary to be able to interact with ELGA.
 
 ### JSON Object Structure Request
 
-- `userId` *(String)* *(required)* - id of the user, which want to confirm the patient contact
-- `patientId` *(String)* *(required)* - ssno of the patient
-- `cardReaderId` *(String)* *(required)* - id of the used card reader
+- `identifier` *(String)* *(required)* - identifier of patient.
+- `cardReaderId` *(String)* *(optional)* - id of used card reader, only required if patient contact should be registered with eCard
 
 **Example:**
 
 ```JSON
 {
-  "userId": "1",
-  "patientId": "1001210995",
+  "identifier": "1001210995",
   "cardReaderId": "lanccr (02:72:54)"
 }
 ```
 
-### JSON Object Structure Response
+### JSON Object Structure message as response
 
-- `message` *(String)* - Information of the message
-- `type`*(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
+- `resourceType` *(String)* - type of resource here it is always `"Bundle"`
+- `type` *(String)* - type of bundle. This will be `"transaction-response"` for failed query.
+- `timestamp` *(String)* - time when the bundle was created
+- `entry` *(Array)* - information about error
 
-**Example:**
+#### Structure entry
 
-```JSON
-{
-   "message": "Der Patientenkontakt wurde erfolgreich registriert",
-   "type": "SUCCESS"
-}
-```
-
-## Confirm patient contact with bpk [`POST`]
-
-- Endpoint: `/`
-- Content-Type: `application/json`
-- Response: JSON-Object
-
-Confirms the patient contact with the bpk in ELGA. The registered patient contact is necessary to be able to interact with ELGA. 
-
-### JSON Object Structure Request
-
-- `userId` *(String)* *(required)* - id of the user, which want to confirm the patient contact
-- `bpk` *(String)* *(required)* - bpk of the patient
+- `response` *(Object)* - result of execution
+  - `status` *(String)* - HTTP Status Code like 401 for Unauthorized or 201 for created
+  - `outcome` *(Object)* - details about response. Structure is described under <https://www.hl7.org/fhir/operationoutcome.html>
 
 **Example:**
 
 ```JSON
-{
-  "userId": "2",
-  "bpk": "GH:1chxEM68ODqCY2R2kEcELnd9peg="
-}
-```
 
-### JSON Object Structure Response
-
-- `message` *(String)* - Information of the message
-- `type`*(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
-
-**Example:**
-
-```JSON
-{
-   "message": "Der Patientenkontakt wurde erfolgreich registriert",
-   "type": "SUCCESS"
-}
 ```
 
 ## Request patient contacts [`GET`]
 
 - Endpoint: `/`
-- Parameters: `userId` *(required)* `ssno` *(required)*
+- Headers: `Authorization`
+- Parameters: `patient.identifier` *(required)*
 - Response: JSON-Object
 
-Queries the confirmed patient contacts of one patient for the registered GDA.
+Queries confirmed patient contacts of one patient for registered GDA.
 
 ### JSON Object Structure Response
 
@@ -143,24 +112,30 @@ Queries the confirmed patient contacts of one patient for the registered GDA.
 ]}
 ```
 
-## Cancel a patient contact [`DELETE`]
+## Cancel patient contact [`DELETE`]
 
 - Endpoint: `/`
-- Parameters: `userId` *(required)*, `patientcontact` *(required)*
+- Headers: `Authorization`
+- Parameters: `identifier` *(required)*
 - Response: JSON-Object
 
-Invalidates the patient contact with the id of the parameter `"patientcontact>"`
+Invalidates patient contact with id of parameter `"identifier"`
 
-### JSON Object Structure Response
+### JSON Object Structure message as response
 
-- `message` *(String)* - Information of the message
-- `type`*(String)* - One of the following possible type `"SUCCESS"`, `"ERROR"`
+- `resourceType` *(String)* - type of resource here it is always `"Bundle"`
+- `type` *(String)* - type of bundle. This will be `"transaction-response"` for failed query.
+- `timestamp` *(String)* - time when bundle was created
+- `entry` *(Array)* - information about error
+
+#### Structure entry
+
+- `response` *(Object)* - result of execution
+  - `status` *(String)* - HTTP Status Code like 401 for Unauthorized or 200 for OK
+  - `outcome` *(Object)* - details about response. Structure is described under <https://www.hl7.org/fhir/operationoutcome.html>
 
 **Example:**
 
 ```JSON
-{
-   "message": "Der Patientenkontakt wurde erfolgreich storniert.",
-   "type": "SUCCESS"
-}
+
 ```

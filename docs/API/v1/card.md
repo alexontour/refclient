@@ -2,7 +2,7 @@
 
 Microservice endpoint: `/api/v1/card`
 
-Handles all actions related to query the data of a card. 
+Handles all actions related to query the data of a card.
 
 ## Query card data [`GET`]
 
@@ -10,18 +10,18 @@ Handles all actions related to query the data of a card.
 - Parameters: `cardReaderId` *(required)*
 - Response: JSON-Object
 
-Queries the data of the current card in the card reader
+Queries data of current card in card reader
 
 ### JSON Object Structure
 
-- `cardType` *(String)* - type of card. Possible values: `"e-Card"`, `"o-Card"`, `"schulungs-e-card"`
-- `familyName` *(String)* - family name of the card owner  
-- `givenName` *(String)* - given name of the card owner  
-- `number` *(String)* - social security number of the e-Card or Vertragspartnernummer of the Admin-Card
-- `prefix` *(String)* - title of the card owner  
-- `sex` *(String)* - sex of the card owner  
-- `suffix` *(String)* - title after the name of the card owner  
-- `birthDate` *(String)* - birth date of the card owner
+- `type` *(String)* - type of card. Possible values: `"e-Card"`, `"o-Card"`, `"schulungs-e-card"`
+- `family` *(String)* - family name of card owner  
+- `given` *(String)* - given name of card owner  
+- `number` *(String)* - social security number of e-Card or Vertragspartnernummer of Admin-Card
+- `prefix` *(String)* - title of card owner  
+- `sex` *(String)* - sex of card owner  
+- `suffix` *(String)* - title after name of card owner  
+- `birthDate` *(String)* - birth date of card owner
   
 **Example:**
 

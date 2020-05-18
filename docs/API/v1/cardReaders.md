@@ -2,7 +2,7 @@
 
 Microservice endpoint: `/api/v1/cardReaders`
 
-Handles all actions related to query the ids of the eCard readers.  
+Handles all actions related to query ids of eCard readers.  
 
 ## Query all availabe card readers [`GET`]
 
