@@ -1,0 +1,109 @@
+{
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "DocumentReference",
+                "meta": {
+                    "profile": "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Query_Comprehensive_DocumentReference"
+                },
+                "status": "current",
+                "language": "de-AT",
+                "text": "comments for immunization",
+                "masterIdentifier": {
+                    "value": "44929e4e-048e-03fc-be6b-108f72287c59_20200221092703",
+                    "system": "1.2.40.0.34.99.3.2.1046167"
+                },
+                "identifier": {
+                    "value": "urn:uuid:cc85c289-d169-4114-8e99-f82577a9a7ad"
+                },
+                "category": {
+                    "coding": [
+                        {
+                            "code": "11369-6",
+                            "system": "urn:oid:2.16.840.1.113883.6.1",
+                            "display": "History of Immunization Narrative"
+                        }
+                    ]
+                },
+                "type": {
+                    "coding": [
+                        {
+                            "code": "87273-9",
+                            "system": "urn:oid:2.16.840.1.113883.6.1",
+                            "display": "Immunization note"
+                        }
+                    ]
+                },
+                "subject": {
+                    "type": "Patient",
+                    "identifier": {
+                        "value": "3822390b-902b-499d-9fa3-f6c4b12bd768",
+                        "system": "1.2.40.0.34.3.1.1052.12.1.6.1.1.17"
+                    }
+                },
+                "author": [{
+                    "type": "Practitioner",
+                    "reference": "Practitioner/1"
+                }],
+                "authenticator":[
+                    {
+                        "type": "Practitioner",
+                        "reference": "Practitioner/1"
+                    }
+                ], 
+                "date": "2016-03-08T10:00:00Z",
+                "description": "Update Immunisierungsstatus",
+                "context": {
+                    "period":{
+                        "start": "2016-03-08T09:00:00Z", 
+                        "end": "2016-03-10T10:00:00Z"
+                    },
+                    "facilityType": [
+                        {
+                            "coding": [
+                                {
+                                    "code": "100",
+                                    "system": "1.2.40.0.34.5.2"
+                                }
+                            ]
+                        }
+                    ],
+                    "practiceSetting": [
+                        {
+                            "coding": [
+                                {
+                                    "code": "F001",
+                                    "system": "1.2.40.0.34.5.12"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "content": [
+                    {
+                        "attachment": {
+                            //url to query elga document
+                            "url": "http://localhost:50051/DocumentReference/1.2.40.0.34.99.3.2.1047013.2714.1/1.2.40.0.34.3.1.1052.12.1.6.2.1.3/urn:oid:1.2.40.0.34.3.1.1052.12.1.6"
+                        },
+                        "format": "urn:hl7-at:eImpf:2019"
+                    }
+                ]
+            }
+        }, 
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "1",
+                "name": [
+                    {
+                        "given": "Helga",
+                        "family": "Musterärztin",
+                        "prefix": "Dr."
+                    }
+                ]
+            }
+        }
+    ]
+}

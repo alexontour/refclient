@@ -1,0 +1,232 @@
+{
+    "resourceType": "Bundle", //fix value
+    "type": "document", //fix value
+    "identifier": {
+        "value": "44929e4e-048e-03fc-be6b-108f72287c59_20200221092703",
+        "system": "1.2.40.0.34.99.3.2.1046167" // default value is the OID of organization, which is authorized
+    },
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Composition", //fix value
+                "type": [
+                    {
+                        "code": "87273-9" //fix value for update immunization state
+                    }
+                ],
+                "category": [
+                    {
+                        "code": "11369-6" //fix value for immunization state
+                    }
+                ],
+                "title": "Update Immunisierungsstatus", //fix value
+                "status": "final", //fix value
+                "date": "2020-05-10T12:30:02Z",
+                "subject": {
+                    "reference": "Patient/1",
+                    "type": "Patient" //fix value
+                },
+                "author": [
+                    {
+                        "reference": "PractitionerRole/2",
+                        "type": "PractitionerRole" //fix value
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/1",
+                    "type": "Organization" //fix value
+                },
+                "attester": [
+                    {
+                        "mode": "legal", //fix value
+                        "time": "2020-05-10T10:30:02Z",
+                        "party": {
+                            "reference": "PractitionerRole/2",
+                            "type": "PractitionerRole" //fix value
+                        }
+                    }
+                ],
+                "event": [
+                    {
+                        "period": {
+                            "start": "2020-05-09",
+                            "end": "2020-05-10"
+                        }
+                    }
+                ],
+                "section": [
+                    {
+                        "entry": [
+                            {
+                                "reference": "Immunization/1",
+                                "type": "Immunization" //fix value
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Patient", //fix value
+                "id": "1",
+                "identifier": [
+                    {
+                        "value": "1001210995",
+                        "system": "1.2.40.0.10.1.4.3.1"
+                    }
+                ],
+                "name": [
+                    {
+                        "given": "Max",
+                        "family": "Musterpatient"
+                    }
+                ],
+                "birthDate": "1995-09-21",
+                "gender": "male",
+                "address": [
+                    {
+                        "line": "Testgasse 35",
+                        "city": "Graz",
+                        "postalCode": "8020",
+                        "state": "STMK",
+                        "country": "AT"
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "03168899521",
+                        "use": "home"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole", //fix value
+                "id": "2",
+                "organization": {
+                    "reference": "Organization/1",
+                    "type": "Organization" //fix value
+                },
+                "practitioner": {
+                    "reference": "Practitioner/1",
+                    "type": "Practitioner" //fix value
+                }
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner", //fix value
+                "id": "1",
+                "name": [
+                    {
+                        "given": "Helga",
+                        "family": "Musterärztin",
+                        "prefix": "Dr."
+                    }
+                ],
+                "address": [
+                    {
+                        "line": "Ernst-Melchior-Gasse 22",
+                        "city": "Wien",
+                        "postalCode": "1020",
+                        "state": "W",
+                        "country": "AT"
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "0154168899521",
+                        "use": "work"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization", //fix value
+                "id": "1",
+                "identifier": [ // default value is the OID of organization, which is authorized
+                    {
+                        "value": "1.2.40.0.34.99.3.2.1046167"
+                    }
+                ],
+                "name": "Ordination Dr. Musterärztin",
+                "address": [
+                    {
+                        "line": "Ernst-Melchior-Gasse 22",
+                        "city": "Wien",
+                        "postalCode": "1020",
+                        "state": "W",
+                        "country": "AT"
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "0154168899521",
+                        "use": "work"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization", //fix value
+                "id": "1",
+                "identifier": [
+                    {
+                        "system": "1.2.40.0.34.99.3.2.1046167", // default value is the OID of organization, which is authorized
+                        "value": "1"
+                    }
+                ],
+                "status": "completed", //fix value
+                "occurrenceDateTime": "2020-05-09",
+                "vaccineCode": [ 
+                    {
+                        "coding": [
+                            {
+                                "code": "0515738" //PZN of vaccination
+                            }
+                        ]
+                    }
+                ],
+                "lotNumber": "12345", // "Chargennummer"
+                "protocolApplied": {
+                    "series": "SCHEM03", //schema
+                    "doseNumberString": "D1", //vaccination part
+                    "authority": { //practitioner, which is responsible for vaccination
+                        "reference": "PractitionerRole/2",
+                        "type": "PractitionerRole"       
+                    }
+                },
+                "expirationDate": "2025-04-30",
+                "programEligibility": {
+                    "code": "1234", //voucher code
+                    "system": "" //OID of Land Steiermark for example
+                },
+                "recorded": "2020-05-09",
+                "performer": [
+                    {
+                        "function": [
+                            {
+                                "coding": [
+                                    {
+                                        "code": "100" //general practitioner
+                                    }
+                                ]
+                            }
+                        ],
+                        "actor": { //practitioner, who performed vaccination
+                            "reference": "PractitionerRole/2",
+                            "type": "PractitionerRole" //fix value
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction-response",
+    "timestamp": "2020-05-18T12:30:02Z",
+    "entry": [
+        {
+            "response": {
+                "status": "401",
+                "outcome": {
+                    "resourceType": "OperationOutcome",
+                    "issue": [
+                        {
+                            "severity": "error",
+                            "code": "unknown",
+                            "details": {
+                                "coding": [
+                                    {
+                                        "code": "MSG_AUTH_REQUIRED",
+                                        "system": "2.16.840.1.113883.4.642.4.1127",
+                                        "display": "You must authenticate before you can use this service"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

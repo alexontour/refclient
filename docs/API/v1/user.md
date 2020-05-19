@@ -32,7 +32,7 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 "family": "Test",
 "cardReaderId": "lanccr_neu_ip_5 (02:79:87)",
 "prefix" : "Dr.",
-"suffix" : "MSc"
+"suffix" : "MSc",
 }
 ```
 
@@ -46,7 +46,8 @@ Creates a GINA dialog for one user and registers the user for ELGA actions. Same
 ```JSON
 {
    "message": "Die Registrierung war erfolgreich",
-   "type": "SUCCESS"
+   "type": "SUCCESS",
+   "jwt": "jwtTokenExmaple"
 }
 ```
 
@@ -77,7 +78,7 @@ Creates a GINA dialog for one user and registers user for ELGA actions. Same str
 }
 ```
 
-## Register a user with existing IDA [`POST`]
+## Register a user with existing IDA like PVP Assertion [`POST`]
 
 - Endpoint: `/`
 - Parameters: `role` *(required)*
@@ -97,7 +98,8 @@ user id is need for nearly every request
 ```JSON
 {
    "message": "Die Registrierung war erfolgreich",
-   "type": "SUCCESS"
+   "type": "SUCCESS",
+   "jwt": "jwtTokenExmaple"
 }
 ```
 

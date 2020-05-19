@@ -1,0 +1,51 @@
+{
+    "resourceType": "Bundle", //fix value
+    "type": "transaction", //fix value
+    "meta": {
+        "profile": "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Provide_Minimal_DocumentBundle" //fix value
+    },
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "DocumentReference", //fix value
+                "status": "current", //fix value for creating new immunization
+                "context": {
+                    "facilityType": [
+                        {
+                            "coding": [
+                                {
+                                    "code": "100"
+                                }
+                            ]
+                        }
+                    ],
+                    "practiceSetting": [
+                        {
+                            "coding": [
+                                {
+                                    "code": "F001"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/fhir+json", 
+                            "data": "base64encodedComposition"
+                        }, 
+                        "format": "urn:hl7-at:eImpf:2019" //fix value
+                    }
+                ],
+                "subject": {
+                    "type": "Patient", //fix value 
+                    "identifier": {
+                        "value": "1001210995", 
+                        "system": "1.2.40.0.10.1.4.3.1" //OID of ssno
+                    }
+                }
+            }
+        }
+    ]
+}

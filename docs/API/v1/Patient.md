@@ -4,7 +4,7 @@ Microservice endpoint: `/api/v1/Patient`
 
 Handles all actions related to the patient demographics stored for ELGA
 
-## Retrieve ELGA prescription [`GET`]
+## Retrieve patient demographics [`GET`]
 
 - Endpoint: `/`
 - Parameters: `identifier` *(optional)*, `given` *(optional)*, `family` *(optional)*, `birthdate` *(optional)*, `gender` *(optional)*, `address-city` *(optional)*, `address-postalcode` *(optional)*, `address` *(optional)*
@@ -40,5 +40,57 @@ Queries the demographic details of the patient. The parameters can limit the sea
 **Example:**
 
 ```JSON
-
+{
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "timestamp": "2020-05-10T11:30:02Z",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "status": "current",
+                "identifier": [
+                    {
+                        "value": "1002120289",
+                        "system": "urn:oid:1.3.6.1.4.1.21998.12.2.1.4"
+                    },
+                    {
+                        "value": "REG.5KL3LCEVS",
+                        "system": "urn:oid:1.3.6.1.4.1.21998.12.2.1.3"
+                    },
+                    {
+                        "value": "1002120289",
+                        "system": "urn:oid:1.2.40.0.10.1.4.3.1"
+                    },
+                    {
+                        "value": "GH:1chxEM68ODqCY2R2kEcELnd9peg=",
+                        "system": "urn:oid:1.2.40.0.10.2.1.1.149"
+                    }
+                ],
+                "name": [
+                    {
+                        "given": "Max",
+                        "family": "Musterpatient"
+                    }
+                ],
+                "birthDate": "1995-09-21",
+                "gender": "male",
+                "deceasedBoolean": false,
+                "multipleBirthBoolean": false,
+                "address": [
+                    {
+                        "line": "Testgasse 35",
+                        "city": "Graz",
+                        "postalCode": "8020",
+                        "state": "STMK",
+                        "country": "AT"
+                    }
+                ]
+            },
+            "search": {
+                "mode": "match"
+            }
+        }
+    ]
+}
 ```

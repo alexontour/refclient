@@ -4,7 +4,7 @@ Microservice endpoint: `/api/v1/patientcontacts`
 
 Handles all actions related to patient contact confirmation for ELGA
 
-## Confirm patient contact with eCard [`POST`]
+## Confirm patient contact [`POST`]
 
 - Endpoint: `/`
 - Headers: `Authorization`
@@ -15,7 +15,7 @@ Confirms patient contact. If parameter cardReaderId is given patient contact wil
 
 ### JSON Object Structure Request
 
-- `identifier` *(String)* *(required)* - identifier of patient.
+- `identifier` *(String)* *(required)* - identifier of patient. bPK without e-Card and ssno with e-Card.
 - `cardReaderId` *(String)* *(optional)* - id of used card reader, only required if patient contact should be registered with eCard
 
 **Example:**
@@ -24,6 +24,14 @@ Confirms patient contact. If parameter cardReaderId is given patient contact wil
 {
   "identifier": "1001210995",
   "cardReaderId": "lanccr (02:72:54)"
+}
+```
+
+**Example for registration without e-Card:**
+
+```JSON
+{
+  "identifier": "GH:1chxEM68ODqCY2R2kEcELnd9peg="
 }
 ```
 
@@ -131,11 +139,22 @@ Invalidates patient contact with id of parameter `"identifier"`
 #### Structure entry
 
 - `response` *(Object)* - result of execution
-  - `status` *(String)* - HTTP Status Code like 401 for Unauthorized or 200 for OK
+  - `status` *(String)* - HTTP Status Code like 401 for Unauthorized or 200 for OK.  202 if patient contact was cancelled successfully.
   - `outcome` *(Object)* - details about response. Structure is described under <https://www.hl7.org/fhir/operationoutcome.html>
 
 **Example:**
 
 ```JSON
-
+{
+    "resourceType": "Bundle",
+    "type": "transaction-response",
+    "timestamp": "2020-05-18T13:30:02Z",
+    "entry": [
+        {
+            "response": {
+                "status": "202"
+            }
+        }
+    ]
+}
 ```

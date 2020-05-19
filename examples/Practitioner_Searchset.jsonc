@@ -1,0 +1,47 @@
+{
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "timestamp": "2020-05-10T11:30:02Z",
+    "entry": [ //all found practitioners
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "active": true,
+                "identifier": [
+                    {
+                        "value": "1.2.40.0.34.99.3.2.1046167" //OID of surgery
+                    }
+                ],
+                "name": [
+                    {
+                        "given": "Helga",
+                        "family": "Musterärztin", 
+                        "prefix": "Dr.", 
+                        "suffix": "MSc"
+                    }
+                ],
+                "address": [
+                    {
+                        "line": "Ernst-Melchior-Gasse 22",
+                        "city": "Wien",
+                        "postalCode": "1020",
+                        "state": "W",
+                        "country": "AT"
+                    }
+                ], 
+                "qualification":[
+                    {
+                        "coding": [
+                            {
+                                "code": "700" //ELGA role of practitioner
+                            }
+                        ]
+                    }
+                ]
+            },
+            "search": {
+                "mode": "match"
+            }
+        }
+    ]
+}
