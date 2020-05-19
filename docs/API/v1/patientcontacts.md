@@ -15,14 +15,17 @@ Confirms patient contact. If parameter cardReaderId is given patient contact wil
 
 ### JSON Object Structure Request
 
-- `identifier` *(String)* *(required)* - identifier of patient. bPK without e-Card and ssno with e-Card.
+- `identifier` *(Object)* *(required)* - identifier of patient. bPK without e-Card and ssno with e-Card.
 - `cardReaderId` *(String)* *(optional)* - id of used card reader, only required if patient contact should be registered with eCard
 
 **Example:**
 
 ```JSON
 {
-  "identifier": "1001210995",
+  "identifier": {
+     "value" : "1001210995",
+     "system": "1.2.40.0.10.1.4.3.1"
+  },
   "cardReaderId": "lanccr (02:72:54)"
 }
 ```
@@ -31,7 +34,10 @@ Confirms patient contact. If parameter cardReaderId is given patient contact wil
 
 ```JSON
 {
-  "identifier": "GH:1chxEM68ODqCY2R2kEcELnd9peg="
+  "identifier": {
+     "value" : "GH:1chxEM68ODqCY2R2kEcELnd9peg=",
+     "system": "1.2.40.0.10.2.1.1.149"
+  }
 }
 ```
 

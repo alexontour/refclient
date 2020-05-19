@@ -277,7 +277,7 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
                 "description": "Update Immunisierungsstatus",
                 "context": {
                     "period":{
-                        "start": "2016-03-08T09:00:00Z", 
+                        "start": "2016-03-08T09:00:00Z",
                         "end": "2016-03-10T10:00:00Z"
                     },
                     "facilityType": [
