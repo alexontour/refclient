@@ -44,8 +44,8 @@
                     }
                 },
                 "author": [{
-                    "type": "Practitioner",
-                    "reference": "Practitioner/1"
+                    "type": "PractitionerRole",
+                    "reference": "PractitionerRole/1"
                 }],
                 "authenticator":[
                     {
@@ -103,6 +103,41 @@
                         "prefix": "Dr."
                     }
                 ]
+            }
+        }, 
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "1",
+                "speciality": [
+                    {
+                        "coding": [
+                            {
+                                "value": "100"
+                            }
+                        ]
+                    }
+                ],
+                "practitioner": {
+                    "reference": "Practitioner/1",
+                    "type": "Practitioner"
+                }, 
+                "organization": {
+                    "reference": "Organization/1",
+                    "type": "Organization"
+                }
+            }
+        }, 
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "1",
+                "identifier": [
+                    {
+                       "value": "1.2.40.0.34.99.3.2.1046167"
+                    }
+                ], 
+                "name": "Ordination Dr. Musterärztin"
             }
         }
     ]

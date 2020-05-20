@@ -1,4 +1,4 @@
-# API Documentation: "immunizationrecord"
+# API Documentation: "DocumentReference"
 
 Microservice endpoint: `/api/v1/DocumentReference`
 
@@ -194,7 +194,7 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
   - `identifier` *(Array)* - identifier of document (entryUUID). The structure is described under <http://hl7.org/fhir/R4/datatypes.html#Identifier>
   - `status` *(String)* - status of document. Possible values: `"current"` and `"superseded"`
   - `category` *(Object)* - class code of document. Structure is described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>. Possible values for parameter category are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
-  - `type` *(Object)* - type of document. Structure is described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>. Possible values for parameter category are the second level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
+  - `type` *(Object)* - type of document. Structure is described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>. Possible values for parameter type are second level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
   - `subject` *(Object)* - reference to patient
   - `author` *(Array)* - references to authors
   - `authenticator` *(Object)* - reference to legal authenticator
@@ -264,20 +264,20 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
                     }
                 },
                 "author": [{
-                    "type": "Practitioner",
-                    "reference": "Practitioner/1"
+                    "type": "PractitionerRole",
+                    "reference": "PractitionerRole/1"
                 }],
                 "authenticator":[
                     {
                         "type": "Practitioner",
                         "reference": "Practitioner/1"
                     }
-                ],
+                ], 
                 "date": "2016-03-08T10:00:00Z",
                 "description": "Update Immunisierungsstatus",
                 "context": {
                     "period":{
-                        "start": "2016-03-08T09:00:00Z",
+                        "start": "2016-03-08T09:00:00Z", 
                         "end": "2016-03-10T10:00:00Z"
                     },
                     "facilityType": [
@@ -304,13 +304,14 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
                 "content": [
                     {
                         "attachment": {
+                            //url to query elga document
                             "url": "http://localhost:50051/DocumentReference/1.2.40.0.34.99.3.2.1047013.2714.1/1.2.40.0.34.3.1.1052.12.1.6.2.1.3/urn:oid:1.2.40.0.34.3.1.1052.12.1.6"
                         },
                         "format": "urn:hl7-at:eImpf:2019"
                     }
                 ]
             }
-        },
+        }, 
         {
             "resource": {
                 "resourceType": "Practitioner",
@@ -322,6 +323,41 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
                         "prefix": "Dr."
                     }
                 ]
+            }
+        }, 
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "1",
+                "speciality": [
+                    {
+                        "coding": [
+                            {
+                                "value": "100"
+                            }
+                        ]
+                    }
+                ],
+                "practitioner": {
+                    "reference": "Practitioner/1",
+                    "type": "Practitioner"
+                }, 
+                "organization": {
+                    "reference": "Organization/1",
+                    "type": "Organization"
+                }
+            }
+        }, 
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "1",
+                "identifier": [
+                    {
+                       "value": "1.2.40.0.34.99.3.2.1046167"
+                    }
+                ], 
+                "name": "Ordination Dr. Musterärztin"
             }
         }
     ]
