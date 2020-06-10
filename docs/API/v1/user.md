@@ -69,8 +69,7 @@ Creates a GINA dialog for one user and registers user for ELGA actions. Same str
 **Example:**
 
 ```JSON
-{
-"userId":"2",  
+{ 
 "role":"702",
 "subjectid": "K2113",
 "organization": "SWHKrankenanstalt Baumgartling",

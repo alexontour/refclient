@@ -53,9 +53,3 @@ Confirms patient contact. If parameter cardReaderId is given patient contact wil
 - `response` *(Object)* - result of execution
   - `status` *(String)* - HTTP Status Code like 401 for Unauthorized or 201 for created
   - `outcome` *(Object)* - details about response. Structure is described under <https://www.hl7.org/fhir/operationoutcome.html>
-
-**Example:**
-
-```JSON
-
-```
