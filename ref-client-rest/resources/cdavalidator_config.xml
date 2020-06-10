@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration baseDir="resources" workDir="resources"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="configuration.xsd">
+	
+	<application>
+		<document-schema>schema/CDA_extELGA.xsd</document-schema>
+		<!-- The PDF Level used for Validation:
+		1a: PDF/A 1a, ISO 19005-1, Level A compliance
+		1b: PDF/A 1b, ISO 19005-1, Level B compliance
+		2a: PDF/A 2a, ISO 19005-2, Level A compliance
+		2b: PDF/A 2b, ISO 19005-2, Level B compliance
+		2u: PDF/A 2u, ISO 19005-2, Level U compliance
+		3a: PDF/A 3a, ISO 19005-3, Level A compliance
+		3b: PDF/A 3b, ISO 19005-3, Level B compliance
+		3u: PDF/A 3u, ISO 19005-3, Level U compliance
+		-->
+		
+		<!-- In ELGA only 1a is allowed according to the general implementation guide 
+		(https://www.gesundheit.gv.at/r/service/Allgemeiner_CDA-Implementierungsleitfaden_v2_05_1.pdf?on5vby) -->
+		<!-- <pdf-level>1a</pdf-level>-->
+
+		<!-- The level of validation result reporting:
+		0: none Nothing is reported
+		1: errors Errors are reported
+		2: warnings Errors and warnings are reported
+		3: information Error, warnings and information are reported
+		-->
+		<!--<pdf-reporting-level>3</pdf-reporting-level>-->
+
+		<!-- The license-key for the pdf-tools software -->
+		<!-- Uncomment the license-key only if you pdf-tools installed -->
+
+		<!-- <license-key>yourkey</license-key>  -->
+	</application>
+
+
+	<!-- The Schematrons are located at a path relative to the base directory. -->
+	<schematron dir="schematrons">
+
+		<rule-set file="elga-cdaea.sch">
+			<description>Schematron for ELGA CDA Dokumente Entlassung Ärztlich</description>
+			<display-name>CDA Entlassungsbrief Ärztlich</display-name>
+			<!-- template id means the template id of the ELGA guideline, e.g. Entlassungsbrief Ärztlich Full Support -->
+			<templateId>1.2.40.0.34.11.2.0.3</templateId>
+		</rule-set>
+		<rule-set file="elga-cdalab.sch">
+			<description>Schematron for ELGA CDA Laborbefunde</description>
+			<display-name>CDA Laborbefund</display-name>
+			<!-- template id means the template id of the ELGA guideline, e.g. Speziellen Implementierungsleitfadens "Labor", ELGA Interoperabilitätsstufe (EIS) "full support -->
+			<templateId>1.2.40.0.34.11.4.0.3</templateId>
+		</rule-set>
+		<rule-set file="elga-cdabgd.sch">
+			<description>Schematron for ELGA CDA Befund Bildgebende Diagnostik</description>
+			<display-name>CDA Befund Bildgebende Diagnostik</display-name>
+			<templateId>1.2.40.0.34.11.5.0.3</templateId>
+		</rule-set>
+		<rule-set file="elga-cdaep.sch">
+			<description>Schematron for ELGA CDA Dokumente Entlassung Pflege</description>
+			<display-name>CDA Entlassungsbrief Pflege</display-name>
+			<templateId>1.2.40.0.34.11.3.0.3</templateId>
+		</rule-set>
+		<rule-set file="elga-cdaempr.sch">
+			<description>Schematron for ELGA CDA Prescription</description>
+			<display-name>CDA Dokument eMedikation Rezept</display-name>
+			<templateId>1.2.40.0.34.11.8.0.3</templateId>
+		</rule-set>
+		<rule-set file="elgaimpf-KompletterImmunisierungsstatus.sch">
+			<description>Schematron for ELGA eImpfpass kompletter Immunisierungsstatus</description>
+			<display-name>CDA Dokument eImpfpass kompletter Immunisierungsstatus</display-name>
+			<templateId>1.2.40.0.34.6.0.11.0.4</templateId>
+		</rule-set>
+		<rule-set file="elgaimpf-UpdateImmunisierungsstatus.sch">
+			<description>Schematron for ELGA eImpfpass update Immunisierungsstatus</description>
+			<display-name>CDA Dokument eImpfpass update Immunisierungsstatus</display-name>
+			<templateId>1.2.40.0.34.6.0.11.0.2</templateId>
+		</rule-set>
+	</schematron>
+
+</configuration>
+

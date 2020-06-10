@@ -78,7 +78,9 @@
                 ],
                 "name": [
                     {
-                        "given": "Max",
+                        "given": [
+                            "Max"
+                        ],
                         "family": "Musterpatient"
                     }
                 ],
@@ -86,7 +88,9 @@
                 "gender": "male",
                 "address": [
                     {
-                        "line": "Testgasse 35",
+                        "line": [
+                            "Testgasse 35"
+                        ],
                         "city": "Graz",
                         "postalCode": "8020",
                         "state": "STMK",
@@ -122,14 +126,20 @@
                 "id": "1",
                 "name": [
                     {
-                        "given": "Helga",
+                        "given": [
+                            "Helga"
+                        ],
                         "family": "Musterärztin",
-                        "prefix": "Dr."
+                        "prefix": [
+                            "Dr."
+                        ]
                     }
                 ],
                 "address": [
                     {
-                        "line": "Ernst-Melchior-Gasse 22",
+                        "line": [
+                            "Ernst-Melchior-Gasse 22"
+                        ],
                         "city": "Wien",
                         "postalCode": "1020",
                         "state": "W",
@@ -157,7 +167,9 @@
                 "name": "Ordination Dr. Musterärztin",
                 "address": [
                     {
-                        "line": "Ernst-Melchior-Gasse 22",
+                        "line": [
+                            "Ernst-Melchior-Gasse 22"
+                        ],
                         "city": "Wien",
                         "postalCode": "1020",
                         "state": "W",
@@ -185,7 +197,7 @@
                 ],
                 "status": "completed", //fix value
                 "occurrenceDateTime": "2020-05-09",
-                "vaccineCode": [ 
+                "vaccineCode": [
                     {
                         "coding": [
                             {
@@ -200,14 +212,20 @@
                     "doseNumberString": "D1", //vaccination part
                     "authority": { //practitioner, which is responsible for vaccination
                         "reference": "PractitionerRole/2",
-                        "type": "PractitionerRole"       
+                        "type": "PractitionerRole"
                     }
                 },
                 "expirationDate": "2025-04-30",
-                "programEligibility": {
-                    "code": "1234", //voucher code
-                    "system": "" //OID of Land Steiermark for example
-                },
+                "programEligibility": [
+                    {
+                        "coding": [
+                            {
+                                "code": "1234", //voucher code
+                                "system": "" //OID of Land Steiermark for example
+                            }
+                        ]
+                    }
+                ],
                 "recorded": "2020-05-09",
                 "performer": [
                     {

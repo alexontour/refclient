@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_URLScheme"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.25"
+             name="ELGA_URLScheme"
+             statusCode="deprecated">
+      <sourceCodeSystem id="2.16.840.1.113883.5.143"
+                        identifierName="Universal Resource Locator Scheme"
+                        canonicalUri="urn:oid:2.16.840.1.113883.5.143"
+                        canonicalUriDSTU2="urn:oid:2.16.840.1.113883.5.143"
+                        canonicalUriSTU3="urn:oid:2.16.840.1.113883.5.143"
+                        canonicalUriR4="urn:oid:2.16.840.1.113883.5.143"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="fax"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="Fax"
+                  level="0"
+                  type="L"/>
+                <concept code="file"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="File"
+                  level="0"
+                  type="L"/>
+                <concept code="ftp"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="FTP"
+                  level="0"
+                  type="L"/>
+                <concept code="mllp"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="HL7 Minimal Lower Layer Protocol"
+                  level="0"
+                  type="L"/>
+                <concept code="http"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="HTTP"
+                  level="0"
+                  type="L"/>
+                <concept code="mailto"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="Mailto"
+                  level="0"
+                  type="L"/>
+                <concept code="me"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="ME-Nummer"
+                  level="0"
+                  type="L"/>
+                <concept code="modem"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="Modem"
+                  level="0"
+                  type="L"/>
+                <concept code="nfs"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="NFS"
+                  level="0"
+                  type="L"/>
+                <concept code="tel"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="Telephone"
+                  level="0"
+                  type="L"/>
+                <concept code="telnet"
+                  codeSystem="2.16.840.1.113883.5.143"
+                  displayName="Telnet"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

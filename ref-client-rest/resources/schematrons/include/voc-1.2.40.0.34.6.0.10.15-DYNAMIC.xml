@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.15" name="eImpf_SpecialSituationIndication_VS" displayName="eImpf_SpecialSituationIndication_VS" effectiveDate="2019-10-15T00:00:00" statusCode="draft" versionLabel="201910(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Angabe der Expositionsrisiko-Indikation.<br clear="none"/>
+            <b>Anmerkung:</b>&#160;Die Vorgaben des Nationalen Impfgremiums folgen.<br clear="none"/>
+        </desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.183" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.183" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.183" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.183" canonicalUriR4="urn:oid:1.2.40.0.34.5.183"/>
+        <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED&#160;Clinical&#160;Terms" canonicalUri="http://snomed.info/sct" canonicalUriDSTU2="http://snomed.info/sct" canonicalUriSTU3="http://snomed.info/sct" canonicalUriR4="http://snomed.info/sct"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <copyright language="en-US">This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</copyright>
+        <conceptList>
+            <concept code="_AllgemeineBevölkerung" codeSystem="1.2.40.0.34.5.183" displayName="Allgemeine Bevölkerung" level="0" type="A"/>
+            <concept code="224627004" codeSystem="2.16.840.1.113883.6.96" displayName="Allgemeine Kategorisierung von Personen" level="1" type="L"/>
+            <concept code="_SpezielleRisikogruppefür" codeSystem="1.2.40.0.34.5.183" displayName="Spezielle Risikogruppe für" level="0" type="A"/>
+            <concept code="35736007" codeSystem="2.16.840.1.113883.6.96" displayName="Cholera Impfstoff" level="1" type="L"/>
+            <concept code="428214002" codeSystem="2.16.840.1.113883.6.96" displayName="Diphtherie Impfstoff" level="1" type="L"/>
+            <concept code="333699008" codeSystem="2.16.840.1.113883.6.96" displayName="Frühsommer-Meningoencephalitis Impfstoff" level="1" type="L"/>
+            <concept code="56844000" codeSystem="2.16.840.1.113883.6.96" displayName="Gelbfieber Impfstoff" level="1" type="L"/>
+            <concept code="333680004" codeSystem="2.16.840.1.113883.6.96" displayName="Haemophilus influenzae Typ B Impfstoff" level="1" type="L"/>
+            <concept code="14745005" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis A Impfstoff" level="1" type="L"/>
+            <concept code="34689006" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis B Impfstoff" level="1" type="L"/>
+            <concept code="407737004" codeSystem="2.16.840.1.113883.6.96" displayName="Herpes Zoster Impfstoff" level="1" type="L"/>
+            <concept code="424519000" codeSystem="2.16.840.1.113883.6.96" displayName="Humane Papillomaviren Impfstoff" level="1" type="L"/>
+            <concept code="46233009" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza Impfstoff" level="1" type="L"/>
+            <concept code="443651005" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza (H1N1) Impfstoff" level="1" type="L"/>
+            <concept code="427036009" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza (H5N1) Impfstoff" level="1" type="L"/>
+            <concept code="333697005" codeSystem="2.16.840.1.113883.6.96" displayName="Japanische Encephalitis Impfstoff" level="1" type="L"/>
+            <concept code="386012008" codeSystem="2.16.840.1.113883.6.96" displayName="Masern Impfstoff" level="1" type="L"/>
+            <concept code="423531006" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Impfstoff" level="1" type="L"/>
+            <concept code="785864002" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp B Impfstoff" level="1" type="L"/>
+            <concept code="422069000" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp C Impfstoff" level="1" type="L"/>
+            <concept code="421281005" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp A+C Impfstoff" level="1" type="L"/>
+            <concept code="420261000" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp A+C+W135+Y Impfstoff" level="1" type="L"/>
+            <concept code="90043005" codeSystem="2.16.840.1.113883.6.96" displayName="Mumps Impfstoff" level="1" type="L"/>
+            <concept code="61602008" codeSystem="2.16.840.1.113883.6.96" displayName="Pertussis Impfstoff" level="1" type="L"/>
+            <concept code="333598008" codeSystem="2.16.840.1.113883.6.96" displayName="Pneumokokken Impfstoff" level="1" type="L"/>
+            <concept code="33234009" codeSystem="2.16.840.1.113883.6.96" displayName="Pocken Impfstoff" level="1" type="L"/>
+            <concept code="111164008" codeSystem="2.16.840.1.113883.6.96" displayName="Poliomyelitis Impfstoff" level="1" type="L"/>
+            <concept code="116077000" codeSystem="2.16.840.1.113883.6.96" displayName="Rotavirus Impfstoff" level="1" type="L"/>
+            <concept code="386013003" codeSystem="2.16.840.1.113883.6.96" displayName="Röteln Impfstoff" level="1" type="L"/>
+            <concept code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus Impfstoff" level="1" type="L"/>
+            <concept code="333606008" codeSystem="2.16.840.1.113883.6.96" displayName="Tollwut Impfstoff" level="1" type="L"/>
+            <concept code="89428009" codeSystem="2.16.840.1.113883.6.96" displayName="Typhus Impfstoff" level="1" type="L"/>
+            <concept code="108729007" codeSystem="2.16.840.1.113883.6.96" displayName="Varizellen Impfstoff" level="1" type="L"/>
+            <concept code="420538001" codeSystem="2.16.840.1.113883.6.96" displayName="Tuberkulose Impfstoff" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

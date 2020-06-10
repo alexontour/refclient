@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_EntityNamePartQualifier"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.8"
+             name="ELGA_EntityNamePartQualifier"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.5.43"
+                        identifierName="Entity Name Part Qualifier"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-EntityNamePartQualifier"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/EntityNamePartQualifier"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/EntityNamePartQualifier"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-EntityNamePartQualifier"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="LS"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="legal status"
+                  level="0"
+                  type="L"/>
+                <concept code="AC"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="academic"
+                  level="0"
+                  type="L"/>
+                <concept code="NB"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="nobility"
+                  level="0"
+                  type="L"/>
+                <concept code="PR"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="professional"
+                  level="0"
+                  type="L"/>
+                <concept code="VV"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="voorvoegsel"
+                  level="0"
+                  type="L"/>
+                <concept code="AD"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="adopted"
+                  level="0"
+                  type="L"/>
+                <concept code="BR"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="birth"
+                  level="0"
+                  type="L"/>
+                <concept code="SP"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="spouse"
+                  level="0"
+                  type="L"/>
+                <concept code="CL"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="callme"
+                  level="0"
+                  type="L"/>
+                <concept code="IN"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="initial"
+                  level="0"
+                  type="L"/>
+                <concept code="TITLE"
+                  codeSystem="2.16.840.1.113883.5.43"
+                  displayName="title"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

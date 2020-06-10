@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.176"
+             name="ELGA_Seitenlokalisation"
+             displayName="ELGA_Seitenlokalisation"
+             effectiveDate="2017-02-17T00:00:00"
+             statusCode="final"
+             versionLabel="4.0"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <sourceCodeSystem id="2.16.840.1.113883.3.7.1.7"
+                        identifierName=""
+                        canonicalUri="urn:oid:2.16.840.1.113883.3.7.1.7"
+                        canonicalUriDSTU2="urn:oid:2.16.840.1.113883.3.7.1.7"
+                        canonicalUriSTU3="urn:oid:2.16.840.1.113883.3.7.1.7"
+                        canonicalUriR4="urn:oid:2.16.840.1.113883.3.7.1.7"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008"
+                        identifierName="Null Flavor"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="R"
+                  codeSystem="2.16.840.1.113883.3.7.1.7"
+                  displayName="rechts"
+                  level="0"
+                  type="L"/>
+                <concept code="L"
+                  codeSystem="2.16.840.1.113883.3.7.1.7"
+                  displayName="links"
+                  level="0"
+                  type="L"/>
+                <concept code="B"
+                  codeSystem="2.16.840.1.113883.3.7.1.7"
+                  displayName="beidseits"
+                  level="0"
+                  type="L"/>
+                <concept code="M"
+                  codeSystem="2.16.840.1.113883.3.7.1.7"
+                  displayName="Mittellinienzone"
+                  level="0"
+                  type="L"/>
+                <exception code="NA"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="nicht zutreffend"
+                    level="0"
+                    type="L"/>
+                <exception code="UNK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="unbekannt"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_NullFlavor"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.2"
+             name="ELGA_NullFlavor"
+             statusCode="deprecated">
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008"
+                        identifierName="Null Flavor"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <exception code="NI"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="NoInformation"
+                    level="0"
+                    type="S"/>
+                <exception code="OTH"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Other"
+                    level="2"
+                    type="S"/>
+                <exception code="NINF"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Negative infinity"
+                    level="3"
+                    type="L"/>
+                <exception code="PINF"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Positive infinity"
+                    level="3"
+                    type="L"/>
+                <exception code="MSK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Masked"
+                    level="1"
+                    type="L"/>
+                <exception code="NA"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Not applicable"
+                    level="1"
+                    type="L"/>
+                <exception code="UNK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Unknown"
+                    level="1"
+                    type="S"/>
+                <exception code="ASKU"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Asked, but unknown"
+                    level="2"
+                    type="S"/>
+                <exception code="NAV"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Temporarily unavailable"
+                    level="3"
+                    type="L"/>
+                <exception code="NASK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Not asked"
+                    level="2"
+                    type="L"/>
+                <exception code="TRC"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Trace"
+                    level="2"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

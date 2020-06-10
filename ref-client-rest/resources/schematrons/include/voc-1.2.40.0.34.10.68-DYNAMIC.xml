@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.68"
+             name="ELGA_MedikationRezeptart"
+             displayName="ELGA_MedikationRezeptart"
+             effectiveDate="2015-05-21T00:00:00"
+             statusCode="final">
+      <desc language="de-DE">ELGA ValueSet für RezeptArt</desc>
+      <sourceCodeSystem id="1.2.40.0.10.1.4.3.4.3.3"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.10.1.4.3.4.3.3"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.10.1.4.3.4.3.3"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.10.1.4.3.4.3.3"
+                        canonicalUriR4="urn:oid:1.2.40.0.10.1.4.3.4.3.3"/>
+      <sourceCodeSystem id="2.16.840.1.113883.5.1008"
+                        identifierName="Null Flavor"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/NullFlavor"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-NullFlavor"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="KASSEN"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.3"
+                  displayName="Kassenrezept"
+                  level="0"
+                  type="L"/>
+                <concept code="PRIVAT"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.3"
+                  displayName="Privatrezept"
+                  level="0"
+                  type="L"/>
+                <concept code="SUBST"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.3"
+                  displayName="Substitutionsrezept"
+                  level="0"
+                  type="L"/>
+                <exception code="MSK"
+                    codeSystem="2.16.840.1.113883.5.1008"
+                    displayName="Masked"
+                    level="0"
+                    type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

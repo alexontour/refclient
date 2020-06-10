@@ -9,6 +9,13 @@
             "resource": {
                 "resourceType": "DocumentReference", //fix value
                 "status": "current", //fix value for creating new immunization
+                "type": {
+                    "coding": [
+                        {
+                            "code": "87273-9" //fix value for creating new immunization
+                        }
+                    ]
+                },
                 "context": {
                     "facilityType": [
                         {
@@ -32,16 +39,18 @@
                 "content": [
                     {
                         "attachment": {
-                            "contentType": "application/fhir+json", 
+                            "contentType": "application/fhir+json",
                             "data": "base64encodedComposition"
-                        }, 
-                        "format": "urn:hl7-at:eImpf:2019" //fix value
+                        },
+                        "format": {
+                            "code": "urn:hl7-at:eImpf:2019" //fix value
+                        }
                     }
                 ],
                 "subject": {
-                    "type": "Patient", //fix value 
+                    "type": "Patient", //fix value
                     "identifier": {
-                        "value": "1001210995", 
+                        "value": "1001210995",
                         "system": "1.2.40.0.10.1.4.3.1" //OID of ssno
                     }
                 }

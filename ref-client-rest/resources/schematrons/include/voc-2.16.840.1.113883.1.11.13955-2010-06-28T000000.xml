@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ActEncounterCode"
+             effectiveDate="2010-06-28T00:00:00"
+             id="2.16.840.1.113883.1.11.13955"
+             name="ActEncounterCode"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.5.4"
+                        identifierName="Act Code"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ActCode"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/ActCode"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/ActCode"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="AMB"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Ambulanter Aufenthalt"
+                  level="0"
+                  type="L"/>
+                <concept code="EMER"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Notfall"
+                  level="0"
+                  type="L"/>
+                <concept code="FLD"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Feld"
+                  level="0"
+                  type="L"/>
+                <concept code="HH"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="zu Hause"
+                  level="0"
+                  type="L"/>
+                <concept code="IMP"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Stationärer Aufenthalt"
+                  level="0"
+                  type="L"/>
+                <concept code="ACUTE"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Stationärer Aufenthalt, akut"
+                  level="0"
+                  type="L"/>
+                <concept code="NONAC"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Stationärer Aufenthalt, nicht akut"
+                  level="0"
+                  type="L"/>
+                <concept code="SS"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Kurzaufenthalt"
+                  level="0"
+                  type="L"/>
+                <concept code="VR"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Virtual Kontakt ohne tatsächliche Begegnung der Personen vor Ort (z. B. Telefongespräch)"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

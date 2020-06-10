@@ -24,6 +24,7 @@ Writes a document in ELGA area. Implemented according to <http://hl7.org/fhir/R4
 - `resource` *(Object)* *(required)* - document to write as <http://hl7.org/fhir/R4/documentreference.html>
   - `resourceType` *(String)* *(required)* - type of resource here it is always `"DocumentReference"`
   - `status` *(String)* *(required)* - status of document. Possible values: `"current"` and `"superseded"`
+  - `type` *(Object)* - type of document. Structure is described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>. Possible values for parameter type are second level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
   - `context` *(Object)* *(required)* - context of document
     - `facilityType` *(Object)* *(required)* - document's healthcare facility code. Structure described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
     - `practiceSetting` *(Object)* *(required)* - document's practice setting code. Structure described under <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
@@ -55,6 +56,13 @@ Writes a document in ELGA area. Implemented according to <http://hl7.org/fhir/R4
             "resource": {
                 "resourceType": "DocumentReference", //fix value
                 "status": "current", //fix value for creating new immunization
+                "type": {
+                    "coding": [
+                        {
+                            "code": "87273-9" //fix value for creating new immunization
+                        }
+                    ]
+                },
                 "context": {
                     "facilityType": [
                         {
@@ -81,7 +89,9 @@ Writes a document in ELGA area. Implemented according to <http://hl7.org/fhir/R4
                             "contentType": "application/fhir+json",
                             "data": "base64encodedComposition"
                         },
-                        "format": "urn:hl7-at:eImpf:2019" //fix value
+                        "format": {
+                            "code": "urn:hl7-at:eImpf:2019" //fix value
+                        }
                     }
                 ],
                 "subject": {
@@ -418,7 +428,7 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&p
 - Headers: `Authorization`
 - Response: JSON-Object
 
-Queries the ELGA medication list or the complete immunization record of one patient. Patient identifier must match the following pattern OID|ID. An example for an identifier search is the social security number 1.2.40.0.10.1.4.3.1|1001210995. Possible values for parameter status are `"current"` and `"superseded"`. Possible values for parameter type are `"82593-5"` for complete immunization state and `"56445-0"` for meciation list. Possible content types are `"application/fhir+xml"` and `"application/fhir+json"`.
+Queries the ELGA medication list or the complete immunization record of one patient. Patient identifier must match the following pattern OID|ID. An example for an identifier search is the social security number 1.2.40.0.10.1.4.3.1|1001210995. Possible values for parameter status are `"current"` and `"superseded"`. Possible values for parameter type are `"82593-5"` for complete immunization state and `"56445-0"` for medication list. Possible content types are `"application/fhir+xml"` and `"application/fhir+json"`.
 
 Example request: <http://localhost:50051/api/v1/DocumentReference?type=82593-5&patient.identifier=1.2.40.0.10.1.4.3.1|1001210995&status=current&content.attachment.contentType=application/fhir+json>
 

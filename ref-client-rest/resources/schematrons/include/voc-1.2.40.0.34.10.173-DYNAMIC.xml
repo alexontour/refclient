@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.173" name="ELGA_HumanLanguage" displayName="ELGA_HumanLanguage" effectiveDate="2016-11-24T00:00:00" statusCode="final" versionLabel="4.0" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <sourceCodeSystem id="2.16.840.1.113883.6.121" identifierName="Tags&#160;for&#160;the&#160;Identification&#160;of&#160;Languages" canonicalUri="urn:oid:2.16.840.1.113883.6.121" canonicalUriDSTU2="urn:oid:2.16.840.1.113883.6.121" canonicalUriSTU3="urn:oid:2.16.840.1.113883.6.121" canonicalUriR4="urn:oid:2.16.840.1.113883.6.121"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="aa" codeSystem="2.16.840.1.113883.6.121" displayName="Danakil-Sprache" level="0" type="L"/>
+            <concept code="ab" codeSystem="2.16.840.1.113883.6.121" displayName="Abchasisch" level="0" type="L"/>
+            <concept code="ace" codeSystem="2.16.840.1.113883.6.121" displayName="Aceh-Sprache" level="0" type="L"/>
+            <concept code="ach" codeSystem="2.16.840.1.113883.6.121" displayName="Acholi-Sprache" level="0" type="L"/>
+            <concept code="ada" codeSystem="2.16.840.1.113883.6.121" displayName="Adangme-Sprache" level="0" type="L"/>
+            <concept code="ady" codeSystem="2.16.840.1.113883.6.121" displayName="Adygisch" level="0" type="L"/>
+            <concept code="ae" codeSystem="2.16.840.1.113883.6.121" displayName="Avestisch" level="0" type="L"/>
+            <concept code="af" codeSystem="2.16.840.1.113883.6.121" displayName="Afrikaans" level="0" type="L"/>
+            <concept code="afa" codeSystem="2.16.840.1.113883.6.121" displayName="Hamitosemitische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="afh" codeSystem="2.16.840.1.113883.6.121" displayName="Afrihili" level="0" type="L"/>
+            <concept code="ain" codeSystem="2.16.840.1.113883.6.121" displayName="Ainu-Sprache" level="0" type="L"/>
+            <concept code="ak" codeSystem="2.16.840.1.113883.6.121" displayName="Akan-Sprache" level="0" type="L"/>
+            <concept code="akk" codeSystem="2.16.840.1.113883.6.121" displayName="Akkadisch" level="0" type="L"/>
+            <concept code="ale" codeSystem="2.16.840.1.113883.6.121" displayName="Aleutisch" level="0" type="L"/>
+            <concept code="alg" codeSystem="2.16.840.1.113883.6.121" displayName="Algonkin-Sprachen (Andere)" level="0" type="L"/>
+            <concept code="alt" codeSystem="2.16.840.1.113883.6.121" displayName="Altaisch" level="0" type="L"/>
+            <concept code="am" codeSystem="2.16.840.1.113883.6.121" displayName="Amharisch" level="0" type="L"/>
+            <concept code="an" codeSystem="2.16.840.1.113883.6.121" displayName="Aragonesisch" level="0" type="L"/>
+            <concept code="ang" codeSystem="2.16.840.1.113883.6.121" displayName="Altenglisch" level="0" type="L"/>
+            <concept code="anp" codeSystem="2.16.840.1.113883.6.121" displayName="Anga-Sprache" level="0" type="L"/>
+            <concept code="apa" codeSystem="2.16.840.1.113883.6.121" displayName="Apachen-Sprachen" level="0" type="L"/>
+            <concept code="ar" codeSystem="2.16.840.1.113883.6.121" displayName="Arabisch" level="0" type="L"/>
+            <concept code="arc" codeSystem="2.16.840.1.113883.6.121" displayName="Aramäisch" level="0" type="L"/>
+            <concept code="arn" codeSystem="2.16.840.1.113883.6.121" displayName="Arauka-Sprachen" level="0" type="L"/>
+            <concept code="arp" codeSystem="2.16.840.1.113883.6.121" displayName="Arapaho-Sprache" level="0" type="L"/>
+            <concept code="art" codeSystem="2.16.840.1.113883.6.121" displayName="Kunstsprachen (Andere)" level="0" type="L"/>
+            <concept code="arw" codeSystem="2.16.840.1.113883.6.121" displayName="Arawak-Sprachen" level="0" type="L"/>
+            <concept code="as" codeSystem="2.16.840.1.113883.6.121" displayName="Assamesisch" level="0" type="L"/>
+            <concept code="ast" codeSystem="2.16.840.1.113883.6.121" displayName="Asturisch" level="0" type="L"/>
+            <concept code="ath" codeSystem="2.16.840.1.113883.6.121" displayName="Athapaskische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="aus" codeSystem="2.16.840.1.113883.6.121" displayName="Australische Sprachen" level="0" type="L"/>
+            <concept code="av" codeSystem="2.16.840.1.113883.6.121" displayName="Awarisch" level="0" type="L"/>
+            <concept code="awa" codeSystem="2.16.840.1.113883.6.121" displayName="Awadhi" level="0" type="L"/>
+            <concept code="ay" codeSystem="2.16.840.1.113883.6.121" displayName="Aymará-Sprache" level="0" type="L"/>
+            <concept code="az" codeSystem="2.16.840.1.113883.6.121" displayName="Aserbeidschanisch" level="0" type="L"/>
+            <concept code="ba" codeSystem="2.16.840.1.113883.6.121" displayName="Baschkirisch" level="0" type="L"/>
+            <concept code="bad" codeSystem="2.16.840.1.113883.6.121" displayName="Banda-Sprachen (Ubangi-Sprachen)" level="0" type="L"/>
+            <concept code="bai" codeSystem="2.16.840.1.113883.6.121" displayName="Bamileke-Sprachen" level="0" type="L"/>
+            <concept code="bal" codeSystem="2.16.840.1.113883.6.121" displayName="Belutschisch" level="0" type="L"/>
+            <concept code="ban" codeSystem="2.16.840.1.113883.6.121" displayName="Balinesisch" level="0" type="L"/>
+            <concept code="bas" codeSystem="2.16.840.1.113883.6.121" displayName="Basaa-Sprache" level="0" type="L"/>
+            <concept code="bat" codeSystem="2.16.840.1.113883.6.121" displayName="Baltische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="be" codeSystem="2.16.840.1.113883.6.121" displayName="Weißrussisch" level="0" type="L"/>
+            <concept code="bej" codeSystem="2.16.840.1.113883.6.121" displayName="Bedauye" level="0" type="L"/>
+            <concept code="bem" codeSystem="2.16.840.1.113883.6.121" displayName="Bemba-Sprache" level="0" type="L"/>
+            <concept code="ber" codeSystem="2.16.840.1.113883.6.121" displayName="Berbersprachen (Andere)" level="0" type="L"/>
+            <concept code="bg" codeSystem="2.16.840.1.113883.6.121" displayName="Bulgarisch" level="0" type="L"/>
+            <concept code="bh" codeSystem="2.16.840.1.113883.6.121" displayName="Bihari (Andere)" level="0" type="L"/>
+            <concept code="bho" codeSystem="2.16.840.1.113883.6.121" displayName="Bhojpuri" level="0" type="L"/>
+            <concept code="bi" codeSystem="2.16.840.1.113883.6.121" displayName="Beach-la-mar" level="0" type="L"/>
+            <concept code="bik" codeSystem="2.16.840.1.113883.6.121" displayName="Bikol-Sprache" level="0" type="L"/>
+            <concept code="bin" codeSystem="2.16.840.1.113883.6.121" displayName="Edo-Sprache" level="0" type="L"/>
+            <concept code="bla" codeSystem="2.16.840.1.113883.6.121" displayName="Blackfoot-Sprache" level="0" type="L"/>
+            <concept code="bm" codeSystem="2.16.840.1.113883.6.121" displayName="Bambara-Sprache" level="0" type="L"/>
+            <concept code="bn" codeSystem="2.16.840.1.113883.6.121" displayName="Bengali" level="0" type="L"/>
+            <concept code="bnt" codeSystem="2.16.840.1.113883.6.121" displayName="Bantusprachen (Andere)" level="0" type="L"/>
+            <concept code="bo" codeSystem="2.16.840.1.113883.6.121" displayName="Tibetisch" level="0" type="L"/>
+            <concept code="br" codeSystem="2.16.840.1.113883.6.121" displayName="Bretonisch" level="0" type="L"/>
+            <concept code="bra" codeSystem="2.16.840.1.113883.6.121" displayName="Braj-Bhakha" level="0" type="L"/>
+            <concept code="bs" codeSystem="2.16.840.1.113883.6.121" displayName="Bosnisch" level="0" type="L"/>
+            <concept code="btk" codeSystem="2.16.840.1.113883.6.121" displayName="Batak-Sprache" level="0" type="L"/>
+            <concept code="bua" codeSystem="2.16.840.1.113883.6.121" displayName="Burjatisch" level="0" type="L"/>
+            <concept code="bug" codeSystem="2.16.840.1.113883.6.121" displayName="Bugi-Sprache" level="0" type="L"/>
+            <concept code="byn" codeSystem="2.16.840.1.113883.6.121" displayName="Bilin-Sprache" level="0" type="L"/>
+            <concept code="ca" codeSystem="2.16.840.1.113883.6.121" displayName="Katalanisch" level="0" type="L"/>
+            <concept code="cad" codeSystem="2.16.840.1.113883.6.121" displayName="Caddo-Sprachen" level="0" type="L"/>
+            <concept code="cai" codeSystem="2.16.840.1.113883.6.121" displayName="Indianersprachen, Zentralamerika (Andere)" level="0" type="L"/>
+            <concept code="car" codeSystem="2.16.840.1.113883.6.121" displayName="Karibische Sprachen" level="0" type="L"/>
+            <concept code="cau" codeSystem="2.16.840.1.113883.6.121" displayName="Kaukasische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="ce" codeSystem="2.16.840.1.113883.6.121" displayName="Tschetschenisch" level="0" type="L"/>
+            <concept code="ceb" codeSystem="2.16.840.1.113883.6.121" displayName="Cebuano" level="0" type="L"/>
+            <concept code="cel" codeSystem="2.16.840.1.113883.6.121" displayName="Keltische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="ch" codeSystem="2.16.840.1.113883.6.121" displayName="Chamorro-Sprache" level="0" type="L"/>
+            <concept code="chb" codeSystem="2.16.840.1.113883.6.121" displayName="Chibcha-Sprachen" level="0" type="L"/>
+            <concept code="chg" codeSystem="2.16.840.1.113883.6.121" displayName="Tschagataisch" level="0" type="L"/>
+            <concept code="chk" codeSystem="2.16.840.1.113883.6.121" displayName="Trukesisch" level="0" type="L"/>
+            <concept code="chm" codeSystem="2.16.840.1.113883.6.121" displayName="Tscheremissisch" level="0" type="L"/>
+            <concept code="chn" codeSystem="2.16.840.1.113883.6.121" displayName="Chinook-Jargon" level="0" type="L"/>
+            <concept code="cho" codeSystem="2.16.840.1.113883.6.121" displayName="Choctaw-Sprache" level="0" type="L"/>
+            <concept code="chp" codeSystem="2.16.840.1.113883.6.121" displayName="Chipewyan-Sprache" level="0" type="L"/>
+            <concept code="chr" codeSystem="2.16.840.1.113883.6.121" displayName="Cherokee-Sprache" level="0" type="L"/>
+            <concept code="chy" codeSystem="2.16.840.1.113883.6.121" displayName="Cheyenne-Sprache" level="0" type="L"/>
+            <concept code="cmc" codeSystem="2.16.840.1.113883.6.121" displayName="Cham-Sprachen" level="0" type="L"/>
+            <concept code="co" codeSystem="2.16.840.1.113883.6.121" displayName="Korsisch" level="0" type="L"/>
+            <concept code="cop" codeSystem="2.16.840.1.113883.6.121" displayName="Koptisch" level="0" type="L"/>
+            <concept code="cpe" codeSystem="2.16.840.1.113883.6.121" displayName="Kreolisch-Englisch (Andere)" level="0" type="L"/>
+            <concept code="cpf" codeSystem="2.16.840.1.113883.6.121" displayName="Kreolisch-Französisch (Andere)" level="0" type="L"/>
+            <concept code="cpp" codeSystem="2.16.840.1.113883.6.121" displayName="Kreolisch-Portugiesisch (Andere)" level="0" type="L"/>
+            <concept code="cr" codeSystem="2.16.840.1.113883.6.121" displayName="Cree-Sprache" level="0" type="L"/>
+            <concept code="crh" codeSystem="2.16.840.1.113883.6.121" displayName="Krimtatarisch" level="0" type="L"/>
+            <concept code="crp" codeSystem="2.16.840.1.113883.6.121" displayName="Kreolische Sprachen; Pidginsprachen (Andere)" level="0" type="L"/>
+            <concept code="cs" codeSystem="2.16.840.1.113883.6.121" displayName="Tschechisch" level="0" type="L"/>
+            <concept code="csb" codeSystem="2.16.840.1.113883.6.121" displayName="Kaschubisch" level="0" type="L"/>
+            <concept code="cu" codeSystem="2.16.840.1.113883.6.121" displayName="Kirchenslawisch" level="0" type="L"/>
+            <concept code="cus" codeSystem="2.16.840.1.113883.6.121" displayName="Kuschitische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="cv" codeSystem="2.16.840.1.113883.6.121" displayName="Tschuwaschisch" level="0" type="L"/>
+            <concept code="cy" codeSystem="2.16.840.1.113883.6.121" displayName="Kymrisch" level="0" type="L"/>
+            <concept code="da" codeSystem="2.16.840.1.113883.6.121" displayName="Dänisch" level="0" type="L"/>
+            <concept code="dak" codeSystem="2.16.840.1.113883.6.121" displayName="Dakota-Sprache" level="0" type="L"/>
+            <concept code="dar" codeSystem="2.16.840.1.113883.6.121" displayName="Darginisch" level="0" type="L"/>
+            <concept code="day" codeSystem="2.16.840.1.113883.6.121" displayName="Dajakisch" level="0" type="L"/>
+            <concept code="de" codeSystem="2.16.840.1.113883.6.121" displayName="Deutsch" level="0" type="L"/>
+            <concept code="del" codeSystem="2.16.840.1.113883.6.121" displayName="Delaware-Sprache" level="0" type="L"/>
+            <concept code="den" codeSystem="2.16.840.1.113883.6.121" displayName="Slave-Sprache" level="0" type="L"/>
+            <concept code="dgr" codeSystem="2.16.840.1.113883.6.121" displayName="Dogrib-Sprache" level="0" type="L"/>
+            <concept code="din" codeSystem="2.16.840.1.113883.6.121" displayName="Dinka-Sprache" level="0" type="L"/>
+            <concept code="doi" codeSystem="2.16.840.1.113883.6.121" displayName="Dogri" level="0" type="L"/>
+            <concept code="dra" codeSystem="2.16.840.1.113883.6.121" displayName="Drawidische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="dsb" codeSystem="2.16.840.1.113883.6.121" displayName="Niedersorbisch" level="0" type="L"/>
+            <concept code="dua" codeSystem="2.16.840.1.113883.6.121" displayName="Duala-Sprachen" level="0" type="L"/>
+            <concept code="dum" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelniederländisch" level="0" type="L"/>
+            <concept code="dv" codeSystem="2.16.840.1.113883.6.121" displayName="Maledivisch" level="0" type="L"/>
+            <concept code="dyu" codeSystem="2.16.840.1.113883.6.121" displayName="Dyula-Sprache" level="0" type="L"/>
+            <concept code="dz" codeSystem="2.16.840.1.113883.6.121" displayName="Dzongkha" level="0" type="L"/>
+            <concept code="ee" codeSystem="2.16.840.1.113883.6.121" displayName="Ewe-Sprache" level="0" type="L"/>
+            <concept code="efi" codeSystem="2.16.840.1.113883.6.121" displayName="Efik" level="0" type="L"/>
+            <concept code="egy" codeSystem="2.16.840.1.113883.6.121" displayName="Ägyptisch" level="0" type="L"/>
+            <concept code="eka" codeSystem="2.16.840.1.113883.6.121" displayName="Ekajuk" level="0" type="L"/>
+            <concept code="el" codeSystem="2.16.840.1.113883.6.121" displayName="Neugriechisch" level="0" type="L"/>
+            <concept code="elx" codeSystem="2.16.840.1.113883.6.121" displayName="Elamisch" level="0" type="L"/>
+            <concept code="en" codeSystem="2.16.840.1.113883.6.121" displayName="Englisch" level="0" type="L"/>
+            <concept code="enm" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelenglisch" level="0" type="L"/>
+            <concept code="eo" codeSystem="2.16.840.1.113883.6.121" displayName="Esperanto" level="0" type="L"/>
+            <concept code="es" codeSystem="2.16.840.1.113883.6.121" displayName="Spanisch" level="0" type="L"/>
+            <concept code="et" codeSystem="2.16.840.1.113883.6.121" displayName="Estnisch" level="0" type="L"/>
+            <concept code="eu" codeSystem="2.16.840.1.113883.6.121" displayName="Baskisch" level="0" type="L"/>
+            <concept code="ewo" codeSystem="2.16.840.1.113883.6.121" displayName="Ewondo" level="0" type="L"/>
+            <concept code="fa" codeSystem="2.16.840.1.113883.6.121" displayName="Persisch" level="0" type="L"/>
+            <concept code="fan" codeSystem="2.16.840.1.113883.6.121" displayName="Pangwe-Sprache" level="0" type="L"/>
+            <concept code="fat" codeSystem="2.16.840.1.113883.6.121" displayName="Fante-Sprache" level="0" type="L"/>
+            <concept code="ff" codeSystem="2.16.840.1.113883.6.121" displayName="Ful" level="0" type="L"/>
+            <concept code="fi" codeSystem="2.16.840.1.113883.6.121" displayName="Finnisch" level="0" type="L"/>
+            <concept code="fil" codeSystem="2.16.840.1.113883.6.121" displayName="Pilipino" level="0" type="L"/>
+            <concept code="fiu" codeSystem="2.16.840.1.113883.6.121" displayName="Finnougrische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="fj" codeSystem="2.16.840.1.113883.6.121" displayName="Fidschi-Sprache" level="0" type="L"/>
+            <concept code="fo" codeSystem="2.16.840.1.113883.6.121" displayName="Färöisch" level="0" type="L"/>
+            <concept code="fon" codeSystem="2.16.840.1.113883.6.121" displayName="Fon-Sprache" level="0" type="L"/>
+            <concept code="fr" codeSystem="2.16.840.1.113883.6.121" displayName="Französisch" level="0" type="L"/>
+            <concept code="frm" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelfranzösisch" level="0" type="L"/>
+            <concept code="fro" codeSystem="2.16.840.1.113883.6.121" displayName="Altfranzösisch" level="0" type="L"/>
+            <concept code="frr" codeSystem="2.16.840.1.113883.6.121" displayName="Nordfriesisch" level="0" type="L"/>
+            <concept code="frs" codeSystem="2.16.840.1.113883.6.121" displayName="Ostfriesisch" level="0" type="L"/>
+            <concept code="fur" codeSystem="2.16.840.1.113883.6.121" displayName="Friulisch" level="0" type="L"/>
+            <concept code="fy" codeSystem="2.16.840.1.113883.6.121" displayName="Friesisch" level="0" type="L"/>
+            <concept code="ga" codeSystem="2.16.840.1.113883.6.121" displayName="Irisch" level="0" type="L"/>
+            <concept code="gaa" codeSystem="2.16.840.1.113883.6.121" displayName="Ga-Sprache" level="0" type="L"/>
+            <concept code="gay" codeSystem="2.16.840.1.113883.6.121" displayName="Gayo-Sprache" level="0" type="L"/>
+            <concept code="gba" codeSystem="2.16.840.1.113883.6.121" displayName="Gbaya-Sprache" level="0" type="L"/>
+            <concept code="gd" codeSystem="2.16.840.1.113883.6.121" displayName="Gälisch-Schottisch" level="0" type="L"/>
+            <concept code="gem" codeSystem="2.16.840.1.113883.6.121" displayName="Germanische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="gez" codeSystem="2.16.840.1.113883.6.121" displayName="Altäthiopisch" level="0" type="L"/>
+            <concept code="gil" codeSystem="2.16.840.1.113883.6.121" displayName="Gilbertesisch" level="0" type="L"/>
+            <concept code="gl" codeSystem="2.16.840.1.113883.6.121" displayName="Galicisch" level="0" type="L"/>
+            <concept code="gmh" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelhochdeutsch" level="0" type="L"/>
+            <concept code="gn" codeSystem="2.16.840.1.113883.6.121" displayName="Guaraní-Sprache" level="0" type="L"/>
+            <concept code="goh" codeSystem="2.16.840.1.113883.6.121" displayName="Althochdeutsch" level="0" type="L"/>
+            <concept code="gon" codeSystem="2.16.840.1.113883.6.121" displayName="Gondi-Sprache" level="0" type="L"/>
+            <concept code="gor" codeSystem="2.16.840.1.113883.6.121" displayName="Gorontalesisch" level="0" type="L"/>
+            <concept code="got" codeSystem="2.16.840.1.113883.6.121" displayName="Gotisch" level="0" type="L"/>
+            <concept code="grb" codeSystem="2.16.840.1.113883.6.121" displayName="Grebo-Sprache" level="0" type="L"/>
+            <concept code="grc" codeSystem="2.16.840.1.113883.6.121" displayName="Griechisch" level="0" type="L"/>
+            <concept code="gsw" codeSystem="2.16.840.1.113883.6.121" displayName="Schweizerdeutsch" level="0" type="L"/>
+            <concept code="gu" codeSystem="2.16.840.1.113883.6.121" displayName="Gujarati-Sprache" level="0" type="L"/>
+            <concept code="gv" codeSystem="2.16.840.1.113883.6.121" displayName="Manx" level="0" type="L"/>
+            <concept code="gwi" codeSystem="2.16.840.1.113883.6.121" displayName="Kutchin-Sprache" level="0" type="L"/>
+            <concept code="ha" codeSystem="2.16.840.1.113883.6.121" displayName="Haussa-Sprache" level="0" type="L"/>
+            <concept code="hai" codeSystem="2.16.840.1.113883.6.121" displayName="Haida-Sprache" level="0" type="L"/>
+            <concept code="haw" codeSystem="2.16.840.1.113883.6.121" displayName="Hawaiisch" level="0" type="L"/>
+            <concept code="he" codeSystem="2.16.840.1.113883.6.121" displayName="Hebräisch" level="0" type="L"/>
+            <concept code="hi" codeSystem="2.16.840.1.113883.6.121" displayName="Hindi" level="0" type="L"/>
+            <concept code="hil" codeSystem="2.16.840.1.113883.6.121" displayName="Hiligaynon-Sprache" level="0" type="L"/>
+            <concept code="him" codeSystem="2.16.840.1.113883.6.121" displayName="Himachali" level="0" type="L"/>
+            <concept code="hit" codeSystem="2.16.840.1.113883.6.121" displayName="Hethitisch" level="0" type="L"/>
+            <concept code="hmn" codeSystem="2.16.840.1.113883.6.121" displayName="Miao-Sprachen" level="0" type="L"/>
+            <concept code="ho" codeSystem="2.16.840.1.113883.6.121" displayName="Hiri-Motu" level="0" type="L"/>
+            <concept code="hr" codeSystem="2.16.840.1.113883.6.121" displayName="Kroatisch" level="0" type="L"/>
+            <concept code="hsb" codeSystem="2.16.840.1.113883.6.121" displayName="Obersorbisch" level="0" type="L"/>
+            <concept code="ht" codeSystem="2.16.840.1.113883.6.121" displayName="Haïtien (Haiti-Kreolisch)" level="0" type="L"/>
+            <concept code="hu" codeSystem="2.16.840.1.113883.6.121" displayName="Ungarisch" level="0" type="L"/>
+            <concept code="hup" codeSystem="2.16.840.1.113883.6.121" displayName="Hupa-Sprache" level="0" type="L"/>
+            <concept code="hy" codeSystem="2.16.840.1.113883.6.121" displayName="Armenisch" level="0" type="L"/>
+            <concept code="hz" codeSystem="2.16.840.1.113883.6.121" displayName="Herero-Sprache" level="0" type="L"/>
+            <concept code="ia" codeSystem="2.16.840.1.113883.6.121" displayName="Interlingua" level="0" type="L"/>
+            <concept code="iba" codeSystem="2.16.840.1.113883.6.121" displayName="Iban-Sprache" level="0" type="L"/>
+            <concept code="id" codeSystem="2.16.840.1.113883.6.121" displayName="Bahasa Indonesia" level="0" type="L"/>
+            <concept code="ie" codeSystem="2.16.840.1.113883.6.121" displayName="Interlingue" level="0" type="L"/>
+            <concept code="ig" codeSystem="2.16.840.1.113883.6.121" displayName="Ibo-Sprache" level="0" type="L"/>
+            <concept code="ii" codeSystem="2.16.840.1.113883.6.121" displayName="Lalo-Sprache" level="0" type="L"/>
+            <concept code="ijo" codeSystem="2.16.840.1.113883.6.121" displayName="Ijo-Sprache" level="0" type="L"/>
+            <concept code="ik" codeSystem="2.16.840.1.113883.6.121" displayName="Inupik" level="0" type="L"/>
+            <concept code="ilo" codeSystem="2.16.840.1.113883.6.121" displayName="Ilokano-Sprache" level="0" type="L"/>
+            <concept code="inc" codeSystem="2.16.840.1.113883.6.121" displayName="Indoarische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="ine" codeSystem="2.16.840.1.113883.6.121" displayName="Indogermanische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="inh" codeSystem="2.16.840.1.113883.6.121" displayName="Inguschisch" level="0" type="L"/>
+            <concept code="io" codeSystem="2.16.840.1.113883.6.121" displayName="Ido" level="0" type="L"/>
+            <concept code="ira" codeSystem="2.16.840.1.113883.6.121" displayName="Iranische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="iro" codeSystem="2.16.840.1.113883.6.121" displayName="Irokesische Sprachen" level="0" type="L"/>
+            <concept code="is" codeSystem="2.16.840.1.113883.6.121" displayName="Isländisch" level="0" type="L"/>
+            <concept code="it" codeSystem="2.16.840.1.113883.6.121" displayName="Italienisch" level="0" type="L"/>
+            <concept code="iu" codeSystem="2.16.840.1.113883.6.121" displayName="Inuktitut" level="0" type="L"/>
+            <concept code="ja" codeSystem="2.16.840.1.113883.6.121" displayName="Japanisch" level="0" type="L"/>
+            <concept code="jbo" codeSystem="2.16.840.1.113883.6.121" displayName="Lojban" level="0" type="L"/>
+            <concept code="jpr" codeSystem="2.16.840.1.113883.6.121" displayName="Jüdisch-Persisch" level="0" type="L"/>
+            <concept code="jrb" codeSystem="2.16.840.1.113883.6.121" displayName="Jüdisch-Arabisch" level="0" type="L"/>
+            <concept code="jv" codeSystem="2.16.840.1.113883.6.121" displayName="Javanisch" level="0" type="L"/>
+            <concept code="ka" codeSystem="2.16.840.1.113883.6.121" displayName="Georgisch" level="0" type="L"/>
+            <concept code="kaa" codeSystem="2.16.840.1.113883.6.121" displayName="Karakalpakisch" level="0" type="L"/>
+            <concept code="kab" codeSystem="2.16.840.1.113883.6.121" displayName="Kabylisch" level="0" type="L"/>
+            <concept code="kac" codeSystem="2.16.840.1.113883.6.121" displayName="Kachin-Sprache" level="0" type="L"/>
+            <concept code="kam" codeSystem="2.16.840.1.113883.6.121" displayName="Kamba-Sprache" level="0" type="L"/>
+            <concept code="kar" codeSystem="2.16.840.1.113883.6.121" displayName="Karenisch" level="0" type="L"/>
+            <concept code="kaw" codeSystem="2.16.840.1.113883.6.121" displayName="Kawi" level="0" type="L"/>
+            <concept code="kbd" codeSystem="2.16.840.1.113883.6.121" displayName="Kabardinisch" level="0" type="L"/>
+            <concept code="kg" codeSystem="2.16.840.1.113883.6.121" displayName="Kongo-Sprache" level="0" type="L"/>
+            <concept code="kha" codeSystem="2.16.840.1.113883.6.121" displayName="Khasi-Sprache" level="0" type="L"/>
+            <concept code="khi" codeSystem="2.16.840.1.113883.6.121" displayName="Khoisan-Sprachen (Andere)" level="0" type="L"/>
+            <concept code="kho" codeSystem="2.16.840.1.113883.6.121" displayName="Sakisch" level="0" type="L"/>
+            <concept code="ki" codeSystem="2.16.840.1.113883.6.121" displayName="Kikuyu-Sprache" level="0" type="L"/>
+            <concept code="kj" codeSystem="2.16.840.1.113883.6.121" displayName="Kwanyama-Sprache" level="0" type="L"/>
+            <concept code="kk" codeSystem="2.16.840.1.113883.6.121" displayName="Kasachisch" level="0" type="L"/>
+            <concept code="kl" codeSystem="2.16.840.1.113883.6.121" displayName="Grönländisch" level="0" type="L"/>
+            <concept code="km" codeSystem="2.16.840.1.113883.6.121" displayName="Kambodschanisch" level="0" type="L"/>
+            <concept code="kmb" codeSystem="2.16.840.1.113883.6.121" displayName="Kimbundu-Sprache" level="0" type="L"/>
+            <concept code="kn" codeSystem="2.16.840.1.113883.6.121" displayName="Kannada" level="0" type="L"/>
+            <concept code="ko" codeSystem="2.16.840.1.113883.6.121" displayName="Koreanisch" level="0" type="L"/>
+            <concept code="kok" codeSystem="2.16.840.1.113883.6.121" displayName="Konkani" level="0" type="L"/>
+            <concept code="kos" codeSystem="2.16.840.1.113883.6.121" displayName="Kosraeanisch" level="0" type="L"/>
+            <concept code="kpe" codeSystem="2.16.840.1.113883.6.121" displayName="Kpelle-Sprache" level="0" type="L"/>
+            <concept code="kr" codeSystem="2.16.840.1.113883.6.121" displayName="Kanuri-Sprache" level="0" type="L"/>
+            <concept code="krc" codeSystem="2.16.840.1.113883.6.121" displayName="Karatschaiisch-Balkarisch" level="0" type="L"/>
+            <concept code="krl" codeSystem="2.16.840.1.113883.6.121" displayName="Karelisch" level="0" type="L"/>
+            <concept code="kro" codeSystem="2.16.840.1.113883.6.121" displayName="Kru-Sprachen (Andere)" level="0" type="L"/>
+            <concept code="kru" codeSystem="2.16.840.1.113883.6.121" displayName="Oraon-Sprache" level="0" type="L"/>
+            <concept code="ks" codeSystem="2.16.840.1.113883.6.121" displayName="Kaschmiri" level="0" type="L"/>
+            <concept code="ku" codeSystem="2.16.840.1.113883.6.121" displayName="Kurdisch" level="0" type="L"/>
+            <concept code="kum" codeSystem="2.16.840.1.113883.6.121" displayName="Kumükisch" level="0" type="L"/>
+            <concept code="kut" codeSystem="2.16.840.1.113883.6.121" displayName="Kutenai-Sprache" level="0" type="L"/>
+            <concept code="kv" codeSystem="2.16.840.1.113883.6.121" displayName="Komi-Sprache" level="0" type="L"/>
+            <concept code="kw" codeSystem="2.16.840.1.113883.6.121" displayName="Kornisch" level="0" type="L"/>
+            <concept code="ky" codeSystem="2.16.840.1.113883.6.121" displayName="Kirgisisch" level="0" type="L"/>
+            <concept code="la" codeSystem="2.16.840.1.113883.6.121" displayName="Latein" level="0" type="L"/>
+            <concept code="lad" codeSystem="2.16.840.1.113883.6.121" displayName="Judenspanisch" level="0" type="L"/>
+            <concept code="lah" codeSystem="2.16.840.1.113883.6.121" displayName="Lahnda" level="0" type="L"/>
+            <concept code="lam" codeSystem="2.16.840.1.113883.6.121" displayName="Lamba-Sprache (Bantusprache)" level="0" type="L"/>
+            <concept code="lb" codeSystem="2.16.840.1.113883.6.121" displayName="Luxemburgisch" level="0" type="L"/>
+            <concept code="lez" codeSystem="2.16.840.1.113883.6.121" displayName="Lesgisch" level="0" type="L"/>
+            <concept code="lg" codeSystem="2.16.840.1.113883.6.121" displayName="Ganda-Sprache" level="0" type="L"/>
+            <concept code="li" codeSystem="2.16.840.1.113883.6.121" displayName="Limburgisch" level="0" type="L"/>
+            <concept code="ln" codeSystem="2.16.840.1.113883.6.121" displayName="Lingala" level="0" type="L"/>
+            <concept code="lo" codeSystem="2.16.840.1.113883.6.121" displayName="Laotisch" level="0" type="L"/>
+            <concept code="lol" codeSystem="2.16.840.1.113883.6.121" displayName="Mongo-Sprache" level="0" type="L"/>
+            <concept code="loz" codeSystem="2.16.840.1.113883.6.121" displayName="Rotse-Sprache" level="0" type="L"/>
+            <concept code="lt" codeSystem="2.16.840.1.113883.6.121" displayName="Litauisch" level="0" type="L"/>
+            <concept code="lu" codeSystem="2.16.840.1.113883.6.121" displayName="Luba-Katanga-Sprache" level="0" type="L"/>
+            <concept code="lua" codeSystem="2.16.840.1.113883.6.121" displayName="Lulua-Sprache" level="0" type="L"/>
+            <concept code="lui" codeSystem="2.16.840.1.113883.6.121" displayName="Luiseño-Sprache" level="0" type="L"/>
+            <concept code="lun" codeSystem="2.16.840.1.113883.6.121" displayName="Lunda-Sprache" level="0" type="L"/>
+            <concept code="luo" codeSystem="2.16.840.1.113883.6.121" displayName="Luo-Sprache" level="0" type="L"/>
+            <concept code="lus" codeSystem="2.16.840.1.113883.6.121" displayName="Lushai-Sprache" level="0" type="L"/>
+            <concept code="lv" codeSystem="2.16.840.1.113883.6.121" displayName="Lettisch" level="0" type="L"/>
+            <concept code="mad" codeSystem="2.16.840.1.113883.6.121" displayName="Maduresisch" level="0" type="L"/>
+            <concept code="mag" codeSystem="2.16.840.1.113883.6.121" displayName="Khotta" level="0" type="L"/>
+            <concept code="mai" codeSystem="2.16.840.1.113883.6.121" displayName="Maithili" level="0" type="L"/>
+            <concept code="mak" codeSystem="2.16.840.1.113883.6.121" displayName="Makassarisch" level="0" type="L"/>
+            <concept code="man" codeSystem="2.16.840.1.113883.6.121" displayName="Malinke-Sprache" level="0" type="L"/>
+            <concept code="map" codeSystem="2.16.840.1.113883.6.121" displayName="Austronesische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="mas" codeSystem="2.16.840.1.113883.6.121" displayName="Massai-Sprache" level="0" type="L"/>
+            <concept code="mdf" codeSystem="2.16.840.1.113883.6.121" displayName="Mokscha-Sprache" level="0" type="L"/>
+            <concept code="mdr" codeSystem="2.16.840.1.113883.6.121" displayName="Mandaresisch" level="0" type="L"/>
+            <concept code="men" codeSystem="2.16.840.1.113883.6.121" displayName="Mende-Sprache" level="0" type="L"/>
+            <concept code="mg" codeSystem="2.16.840.1.113883.6.121" displayName="Malagassi-Sprache" level="0" type="L"/>
+            <concept code="mga" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelirisch" level="0" type="L"/>
+            <concept code="mh" codeSystem="2.16.840.1.113883.6.121" displayName="Marschallesisch" level="0" type="L"/>
+            <concept code="mi" codeSystem="2.16.840.1.113883.6.121" displayName="Maori-Sprache" level="0" type="L"/>
+            <concept code="mic" codeSystem="2.16.840.1.113883.6.121" displayName="Micmac-Sprache" level="0" type="L"/>
+            <concept code="min" codeSystem="2.16.840.1.113883.6.121" displayName="Minangkabau-Sprache" level="0" type="L"/>
+            <concept code="mis" codeSystem="2.16.840.1.113883.6.121" displayName="Einzelne andere Sprachen" level="0" type="L"/>
+            <concept code="mk" codeSystem="2.16.840.1.113883.6.121" displayName="Makedonisch" level="0" type="L"/>
+            <concept code="mkh" codeSystem="2.16.840.1.113883.6.121" displayName="Mon-Khmer-Sprachen (Andere)" level="0" type="L"/>
+            <concept code="ml" codeSystem="2.16.840.1.113883.6.121" displayName="Malayalam" level="0" type="L"/>
+            <concept code="mn" codeSystem="2.16.840.1.113883.6.121" displayName="Mongolisch" level="0" type="L"/>
+            <concept code="mnc" codeSystem="2.16.840.1.113883.6.121" displayName="Mandschurisch" level="0" type="L"/>
+            <concept code="mni" codeSystem="2.16.840.1.113883.6.121" displayName="Meithei-Sprache" level="0" type="L"/>
+            <concept code="mno" codeSystem="2.16.840.1.113883.6.121" displayName="Manobo-Sprachen" level="0" type="L"/>
+            <concept code="moh" codeSystem="2.16.840.1.113883.6.121" displayName="Mohawk-Sprache" level="0" type="L"/>
+            <concept code="mos" codeSystem="2.16.840.1.113883.6.121" displayName="Mossi-Sprache" level="0" type="L"/>
+            <concept code="mr" codeSystem="2.16.840.1.113883.6.121" displayName="Marathi" level="0" type="L"/>
+            <concept code="ms" codeSystem="2.16.840.1.113883.6.121" displayName="Malaiisch" level="0" type="L"/>
+            <concept code="mt" codeSystem="2.16.840.1.113883.6.121" displayName="Maltesisch" level="0" type="L"/>
+            <concept code="mul" codeSystem="2.16.840.1.113883.6.121" displayName="Mehrere Sprachen" level="0" type="L"/>
+            <concept code="mun" codeSystem="2.16.840.1.113883.6.121" displayName="Mundasprachen (Andere)" level="0" type="L"/>
+            <concept code="mus" codeSystem="2.16.840.1.113883.6.121" displayName="Muskogisch" level="0" type="L"/>
+            <concept code="mwl" codeSystem="2.16.840.1.113883.6.121" displayName="Mirandesisch" level="0" type="L"/>
+            <concept code="mwr" codeSystem="2.16.840.1.113883.6.121" displayName="Marwari" level="0" type="L"/>
+            <concept code="my" codeSystem="2.16.840.1.113883.6.121" displayName="Birmanisch" level="0" type="L"/>
+            <concept code="myn" codeSystem="2.16.840.1.113883.6.121" displayName="Maya-Sprachen" level="0" type="L"/>
+            <concept code="myv" codeSystem="2.16.840.1.113883.6.121" displayName="Erza-Mordwinisch" level="0" type="L"/>
+            <concept code="na" codeSystem="2.16.840.1.113883.6.121" displayName="Nauruanisch" level="0" type="L"/>
+            <concept code="nah" codeSystem="2.16.840.1.113883.6.121" displayName="Nahuatl" level="0" type="L"/>
+            <concept code="nai" codeSystem="2.16.840.1.113883.6.121" displayName="Indianersprachen, Nordamerika (Andere)" level="0" type="L"/>
+            <concept code="nap" codeSystem="2.16.840.1.113883.6.121" displayName="Neapel / Mundart" level="0" type="L"/>
+            <concept code="nb" codeSystem="2.16.840.1.113883.6.121" displayName="Bokmål" level="0" type="L"/>
+            <concept code="nd" codeSystem="2.16.840.1.113883.6.121" displayName="Ndebele-Sprache (Simbabwe)" level="0" type="L"/>
+            <concept code="nds" codeSystem="2.16.840.1.113883.6.121" displayName="Niederdeutsch" level="0" type="L"/>
+            <concept code="ne" codeSystem="2.16.840.1.113883.6.121" displayName="Nepali" level="0" type="L"/>
+            <concept code="new" codeSystem="2.16.840.1.113883.6.121" displayName="Newari" level="0" type="L"/>
+            <concept code="ng" codeSystem="2.16.840.1.113883.6.121" displayName="Ndonga" level="0" type="L"/>
+            <concept code="nia" codeSystem="2.16.840.1.113883.6.121" displayName="Nias-Sprache" level="0" type="L"/>
+            <concept code="nic" codeSystem="2.16.840.1.113883.6.121" displayName="Nigerkordofanische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="niu" codeSystem="2.16.840.1.113883.6.121" displayName="Niue-Sprache" level="0" type="L"/>
+            <concept code="nl" codeSystem="2.16.840.1.113883.6.121" displayName="Niederländisch" level="0" type="L"/>
+            <concept code="nn" codeSystem="2.16.840.1.113883.6.121" displayName="Nynorsk" level="0" type="L"/>
+            <concept code="no" codeSystem="2.16.840.1.113883.6.121" displayName="Norwegisch" level="0" type="L"/>
+            <concept code="nog" codeSystem="2.16.840.1.113883.6.121" displayName="Nogaisch" level="0" type="L"/>
+            <concept code="non" codeSystem="2.16.840.1.113883.6.121" displayName="Altnorwegisch" level="0" type="L"/>
+            <concept code="nqo" codeSystem="2.16.840.1.113883.6.121" displayName="N'Ko" level="0" type="L"/>
+            <concept code="nr" codeSystem="2.16.840.1.113883.6.121" displayName="Ndebele-Sprache (Transvaal)" level="0" type="L"/>
+            <concept code="nso" codeSystem="2.16.840.1.113883.6.121" displayName="Pedi-Sprache" level="0" type="L"/>
+            <concept code="nub" codeSystem="2.16.840.1.113883.6.121" displayName="Nubische Sprachen" level="0" type="L"/>
+            <concept code="nv" codeSystem="2.16.840.1.113883.6.121" displayName="Navajo-Sprache" level="0" type="L"/>
+            <concept code="nwc" codeSystem="2.16.840.1.113883.6.121" displayName="Alt-Newari" level="0" type="L"/>
+            <concept code="ny" codeSystem="2.16.840.1.113883.6.121" displayName="Nyanja-Sprache" level="0" type="L"/>
+            <concept code="nym" codeSystem="2.16.840.1.113883.6.121" displayName="Nyamwezi-Sprache" level="0" type="L"/>
+            <concept code="nyn" codeSystem="2.16.840.1.113883.6.121" displayName="Nkole-Sprache" level="0" type="L"/>
+            <concept code="nyo" codeSystem="2.16.840.1.113883.6.121" displayName="Nyoro-Sprache" level="0" type="L"/>
+            <concept code="nzi" codeSystem="2.16.840.1.113883.6.121" displayName="Nzima-Sprache" level="0" type="L"/>
+            <concept code="oc" codeSystem="2.16.840.1.113883.6.121" displayName="Okzitanisch" level="0" type="L"/>
+            <concept code="oj" codeSystem="2.16.840.1.113883.6.121" displayName="Ojibwa-Sprache" level="0" type="L"/>
+            <concept code="om" codeSystem="2.16.840.1.113883.6.121" displayName="Galla-Sprache" level="0" type="L"/>
+            <concept code="or" codeSystem="2.16.840.1.113883.6.121" displayName="Oriya-Sprache" level="0" type="L"/>
+            <concept code="os" codeSystem="2.16.840.1.113883.6.121" displayName="Ossetisch" level="0" type="L"/>
+            <concept code="osa" codeSystem="2.16.840.1.113883.6.121" displayName="Osage-Sprache" level="0" type="L"/>
+            <concept code="ota" codeSystem="2.16.840.1.113883.6.121" displayName="Osmanisch" level="0" type="L"/>
+            <concept code="oto" codeSystem="2.16.840.1.113883.6.121" displayName="Otomangue-Sprachen" level="0" type="L"/>
+            <concept code="pa" codeSystem="2.16.840.1.113883.6.121" displayName="Pandschabi-Sprache" level="0" type="L"/>
+            <concept code="paa" codeSystem="2.16.840.1.113883.6.121" displayName="Papuasprachen (Andere)" level="0" type="L"/>
+            <concept code="pag" codeSystem="2.16.840.1.113883.6.121" displayName="Pangasinan-Sprache" level="0" type="L"/>
+            <concept code="pal" codeSystem="2.16.840.1.113883.6.121" displayName="Mittelpersisch" level="0" type="L"/>
+            <concept code="pam" codeSystem="2.16.840.1.113883.6.121" displayName="Pampanggan-Sprache" level="0" type="L"/>
+            <concept code="pap" codeSystem="2.16.840.1.113883.6.121" displayName="Papiamento" level="0" type="L"/>
+            <concept code="pau" codeSystem="2.16.840.1.113883.6.121" displayName="Palau-Sprache" level="0" type="L"/>
+            <concept code="peo" codeSystem="2.16.840.1.113883.6.121" displayName="Altpersisch" level="0" type="L"/>
+            <concept code="phi" codeSystem="2.16.840.1.113883.6.121" displayName="Philippinisch-Austronesisch (Andere)" level="0" type="L"/>
+            <concept code="phn" codeSystem="2.16.840.1.113883.6.121" displayName="Phönikisch" level="0" type="L"/>
+            <concept code="pi" codeSystem="2.16.840.1.113883.6.121" displayName="Pali" level="0" type="L"/>
+            <concept code="pl" codeSystem="2.16.840.1.113883.6.121" displayName="Polnisch" level="0" type="L"/>
+            <concept code="pon" codeSystem="2.16.840.1.113883.6.121" displayName="Ponapeanisch" level="0" type="L"/>
+            <concept code="pra" codeSystem="2.16.840.1.113883.6.121" displayName="Prakrit" level="0" type="L"/>
+            <concept code="pro" codeSystem="2.16.840.1.113883.6.121" displayName="Altokzitanisch" level="0" type="L"/>
+            <concept code="ps" codeSystem="2.16.840.1.113883.6.121" displayName="Paschtu" level="0" type="L"/>
+            <concept code="pt" codeSystem="2.16.840.1.113883.6.121" displayName="Portugiesisch" level="0" type="L"/>
+            <concept code="qaa" codeSystem="2.16.840.1.113883.6.121" displayName="Reserviert für lokale Verwendung" level="0" type="L"/>
+            <concept code="qu" codeSystem="2.16.840.1.113883.6.121" displayName="Quechua-Sprache" level="0" type="L"/>
+            <concept code="raj" codeSystem="2.16.840.1.113883.6.121" displayName="Rajasthani" level="0" type="L"/>
+            <concept code="rap" codeSystem="2.16.840.1.113883.6.121" displayName="Osterinsel-Sprache" level="0" type="L"/>
+            <concept code="rar" codeSystem="2.16.840.1.113883.6.121" displayName="Rarotonganisch" level="0" type="L"/>
+            <concept code="rm" codeSystem="2.16.840.1.113883.6.121" displayName="Rätoromanisch" level="0" type="L"/>
+            <concept code="rn" codeSystem="2.16.840.1.113883.6.121" displayName="Rundi-Sprache" level="0" type="L"/>
+            <concept code="ro" codeSystem="2.16.840.1.113883.6.121" displayName="Rumänisch" level="0" type="L"/>
+            <concept code="roa" codeSystem="2.16.840.1.113883.6.121" displayName="Romanische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="rom" codeSystem="2.16.840.1.113883.6.121" displayName="Romani (Sprache)" level="0" type="L"/>
+            <concept code="ru" codeSystem="2.16.840.1.113883.6.121" displayName="Russisch" level="0" type="L"/>
+            <concept code="rup" codeSystem="2.16.840.1.113883.6.121" displayName="Aromunisch" level="0" type="L"/>
+            <concept code="rw" codeSystem="2.16.840.1.113883.6.121" displayName="Rwanda-Sprache" level="0" type="L"/>
+            <concept code="sa" codeSystem="2.16.840.1.113883.6.121" displayName="Sanskrit" level="0" type="L"/>
+            <concept code="sad" codeSystem="2.16.840.1.113883.6.121" displayName="Sandawe-Sprache" level="0" type="L"/>
+            <concept code="sah" codeSystem="2.16.840.1.113883.6.121" displayName="Jakutisch" level="0" type="L"/>
+            <concept code="sai" codeSystem="2.16.840.1.113883.6.121" displayName="Indianersprachen, Südamerika (Andere)" level="0" type="L"/>
+            <concept code="sal" codeSystem="2.16.840.1.113883.6.121" displayName="Salish-Sprache" level="0" type="L"/>
+            <concept code="sam" codeSystem="2.16.840.1.113883.6.121" displayName="Samaritanisch" level="0" type="L"/>
+            <concept code="sas" codeSystem="2.16.840.1.113883.6.121" displayName="Sasak" level="0" type="L"/>
+            <concept code="sat" codeSystem="2.16.840.1.113883.6.121" displayName="Santali" level="0" type="L"/>
+            <concept code="sc" codeSystem="2.16.840.1.113883.6.121" displayName="Sardisch" level="0" type="L"/>
+            <concept code="scn" codeSystem="2.16.840.1.113883.6.121" displayName="Sizilianisch" level="0" type="L"/>
+            <concept code="sco" codeSystem="2.16.840.1.113883.6.121" displayName="Schottisch" level="0" type="L"/>
+            <concept code="sd" codeSystem="2.16.840.1.113883.6.121" displayName="Sindhi-Sprache" level="0" type="L"/>
+            <concept code="se" codeSystem="2.16.840.1.113883.6.121" displayName="Nordsaamisch" level="0" type="L"/>
+            <concept code="sel" codeSystem="2.16.840.1.113883.6.121" displayName="Selkupisch" level="0" type="L"/>
+            <concept code="sem" codeSystem="2.16.840.1.113883.6.121" displayName="Semitische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="sg" codeSystem="2.16.840.1.113883.6.121" displayName="Sango-Sprache" level="0" type="L"/>
+            <concept code="sga" codeSystem="2.16.840.1.113883.6.121" displayName="Altirisch" level="0" type="L"/>
+            <concept code="sgn" codeSystem="2.16.840.1.113883.6.121" displayName="Zeichensprachen" level="0" type="L"/>
+            <concept code="shn" codeSystem="2.16.840.1.113883.6.121" displayName="Schan-Sprache" level="0" type="L"/>
+            <concept code="si" codeSystem="2.16.840.1.113883.6.121" displayName="Singhalesisch" level="0" type="L"/>
+            <concept code="sid" codeSystem="2.16.840.1.113883.6.121" displayName="Sidamo-Sprache" level="0" type="L"/>
+            <concept code="sio" codeSystem="2.16.840.1.113883.6.121" displayName="Sioux-Sprachen (Andere)" level="0" type="L"/>
+            <concept code="sit" codeSystem="2.16.840.1.113883.6.121" displayName="Sinotibetische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="sk" codeSystem="2.16.840.1.113883.6.121" displayName="Slowakisch" level="0" type="L"/>
+            <concept code="sl" codeSystem="2.16.840.1.113883.6.121" displayName="Slowenisch" level="0" type="L"/>
+            <concept code="sla" codeSystem="2.16.840.1.113883.6.121" displayName="Slawische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="sm" codeSystem="2.16.840.1.113883.6.121" displayName="Samoanisch" level="0" type="L"/>
+            <concept code="sma" codeSystem="2.16.840.1.113883.6.121" displayName="Südsaamisch" level="0" type="L"/>
+            <concept code="smi" codeSystem="2.16.840.1.113883.6.121" displayName="Saamisch" level="0" type="L"/>
+            <concept code="smj" codeSystem="2.16.840.1.113883.6.121" displayName="Lulesaamisch" level="0" type="L"/>
+            <concept code="smn" codeSystem="2.16.840.1.113883.6.121" displayName="Inarisaamisch" level="0" type="L"/>
+            <concept code="sms" codeSystem="2.16.840.1.113883.6.121" displayName="Skoltsaamisch" level="0" type="L"/>
+            <concept code="sn" codeSystem="2.16.840.1.113883.6.121" displayName="Schona-Sprache" level="0" type="L"/>
+            <concept code="snk" codeSystem="2.16.840.1.113883.6.121" displayName="Soninke-Sprache" level="0" type="L"/>
+            <concept code="so" codeSystem="2.16.840.1.113883.6.121" displayName="Somali" level="0" type="L"/>
+            <concept code="sog" codeSystem="2.16.840.1.113883.6.121" displayName="Sogdisch" level="0" type="L"/>
+            <concept code="son" codeSystem="2.16.840.1.113883.6.121" displayName="Songhai-Sprache" level="0" type="L"/>
+            <concept code="sq" codeSystem="2.16.840.1.113883.6.121" displayName="Albanisch" level="0" type="L"/>
+            <concept code="sr" codeSystem="2.16.840.1.113883.6.121" displayName="Serbisch" level="0" type="L"/>
+            <concept code="srn" codeSystem="2.16.840.1.113883.6.121" displayName="Sranantongo" level="0" type="L"/>
+            <concept code="srr" codeSystem="2.16.840.1.113883.6.121" displayName="Serer-Sprache" level="0" type="L"/>
+            <concept code="ss" codeSystem="2.16.840.1.113883.6.121" displayName="Swasi-Sprache" level="0" type="L"/>
+            <concept code="ssa" codeSystem="2.16.840.1.113883.6.121" displayName="Nilosaharanische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="st" codeSystem="2.16.840.1.113883.6.121" displayName="Süd-Sotho-Sprache" level="0" type="L"/>
+            <concept code="su" codeSystem="2.16.840.1.113883.6.121" displayName="Sundanesisch" level="0" type="L"/>
+            <concept code="suk" codeSystem="2.16.840.1.113883.6.121" displayName="Sukuma-Sprache" level="0" type="L"/>
+            <concept code="sus" codeSystem="2.16.840.1.113883.6.121" displayName="Susu" level="0" type="L"/>
+            <concept code="sux" codeSystem="2.16.840.1.113883.6.121" displayName="Sumerisch" level="0" type="L"/>
+            <concept code="sv" codeSystem="2.16.840.1.113883.6.121" displayName="Schwedisch" level="0" type="L"/>
+            <concept code="sw" codeSystem="2.16.840.1.113883.6.121" displayName="Swahili" level="0" type="L"/>
+            <concept code="syc" codeSystem="2.16.840.1.113883.6.121" displayName="Syrisch" level="0" type="L"/>
+            <concept code="syr" codeSystem="2.16.840.1.113883.6.121" displayName="Neuostaramäisch" level="0" type="L"/>
+            <concept code="ta" codeSystem="2.16.840.1.113883.6.121" displayName="Tamil" level="0" type="L"/>
+            <concept code="tai" codeSystem="2.16.840.1.113883.6.121" displayName="Thaisprachen (Andere)" level="0" type="L"/>
+            <concept code="te" codeSystem="2.16.840.1.113883.6.121" displayName="Telugu-Sprache" level="0" type="L"/>
+            <concept code="tem" codeSystem="2.16.840.1.113883.6.121" displayName="Temne-Sprache" level="0" type="L"/>
+            <concept code="ter" codeSystem="2.16.840.1.113883.6.121" displayName="Tereno-Sprache" level="0" type="L"/>
+            <concept code="tet" codeSystem="2.16.840.1.113883.6.121" displayName="Tetum-Sprache" level="0" type="L"/>
+            <concept code="tg" codeSystem="2.16.840.1.113883.6.121" displayName="Tadschikisch" level="0" type="L"/>
+            <concept code="th" codeSystem="2.16.840.1.113883.6.121" displayName="Thailändisch" level="0" type="L"/>
+            <concept code="ti" codeSystem="2.16.840.1.113883.6.121" displayName="Tigrinja-Sprache" level="0" type="L"/>
+            <concept code="tig" codeSystem="2.16.840.1.113883.6.121" displayName="Tigre-Sprache" level="0" type="L"/>
+            <concept code="tiv" codeSystem="2.16.840.1.113883.6.121" displayName="Tiv-Sprache" level="0" type="L"/>
+            <concept code="tk" codeSystem="2.16.840.1.113883.6.121" displayName="Turkmenisch" level="0" type="L"/>
+            <concept code="tkl" codeSystem="2.16.840.1.113883.6.121" displayName="Tokelauanisch" level="0" type="L"/>
+            <concept code="tl" codeSystem="2.16.840.1.113883.6.121" displayName="Tagalog" level="0" type="L"/>
+            <concept code="tlh" codeSystem="2.16.840.1.113883.6.121" displayName="Klingonisch" level="0" type="L"/>
+            <concept code="tli" codeSystem="2.16.840.1.113883.6.121" displayName="Tlingit-Sprache" level="0" type="L"/>
+            <concept code="tmh" codeSystem="2.16.840.1.113883.6.121" displayName="Tamašeq" level="0" type="L"/>
+            <concept code="tn" codeSystem="2.16.840.1.113883.6.121" displayName="Tswana-Sprache" level="0" type="L"/>
+            <concept code="to" codeSystem="2.16.840.1.113883.6.121" displayName="Tongaisch" level="0" type="L"/>
+            <concept code="tog" codeSystem="2.16.840.1.113883.6.121" displayName="Tonga (Bantusprache, Sambia)" level="0" type="L"/>
+            <concept code="tpi" codeSystem="2.16.840.1.113883.6.121" displayName="Neumelanesisch" level="0" type="L"/>
+            <concept code="tr" codeSystem="2.16.840.1.113883.6.121" displayName="Türkisch" level="0" type="L"/>
+            <concept code="ts" codeSystem="2.16.840.1.113883.6.121" displayName="Tsonga-Sprache" level="0" type="L"/>
+            <concept code="tsi" codeSystem="2.16.840.1.113883.6.121" displayName="Tsimshian-Sprache" level="0" type="L"/>
+            <concept code="tt" codeSystem="2.16.840.1.113883.6.121" displayName="Tatarisch" level="0" type="L"/>
+            <concept code="tum" codeSystem="2.16.840.1.113883.6.121" displayName="Tumbuka-Sprache" level="0" type="L"/>
+            <concept code="tup" codeSystem="2.16.840.1.113883.6.121" displayName="Tupi-Sprache" level="0" type="L"/>
+            <concept code="tut" codeSystem="2.16.840.1.113883.6.121" displayName="Altaische Sprachen (Andere)" level="0" type="L"/>
+            <concept code="tvl" codeSystem="2.16.840.1.113883.6.121" displayName="Elliceanisch" level="0" type="L"/>
+            <concept code="tw" codeSystem="2.16.840.1.113883.6.121" displayName="Twi-Sprache" level="0" type="L"/>
+            <concept code="ty" codeSystem="2.16.840.1.113883.6.121" displayName="Tahitisch" level="0" type="L"/>
+            <concept code="tyv" codeSystem="2.16.840.1.113883.6.121" displayName="Tuwinisch" level="0" type="L"/>
+            <concept code="udm" codeSystem="2.16.840.1.113883.6.121" displayName="Udmurtisch" level="0" type="L"/>
+            <concept code="ug" codeSystem="2.16.840.1.113883.6.121" displayName="Uigurisch" level="0" type="L"/>
+            <concept code="uga" codeSystem="2.16.840.1.113883.6.121" displayName="Ugaritisch" level="0" type="L"/>
+            <concept code="uk" codeSystem="2.16.840.1.113883.6.121" displayName="Ukrainisch" level="0" type="L"/>
+            <concept code="umb" codeSystem="2.16.840.1.113883.6.121" displayName="Mbundu-Sprache" level="0" type="L"/>
+            <concept code="und" codeSystem="2.16.840.1.113883.6.121" displayName="Nicht zu entscheiden" level="0" type="L"/>
+            <concept code="ur" codeSystem="2.16.840.1.113883.6.121" displayName="Urdu" level="0" type="L"/>
+            <concept code="uz" codeSystem="2.16.840.1.113883.6.121" displayName="Usbekisch" level="0" type="L"/>
+            <concept code="vai" codeSystem="2.16.840.1.113883.6.121" displayName="Vai-Sprache" level="0" type="L"/>
+            <concept code="ve" codeSystem="2.16.840.1.113883.6.121" displayName="Venda-Sprache" level="0" type="L"/>
+            <concept code="vi" codeSystem="2.16.840.1.113883.6.121" displayName="Vietnamesisch" level="0" type="L"/>
+            <concept code="vo" codeSystem="2.16.840.1.113883.6.121" displayName="Volapük" level="0" type="L"/>
+            <concept code="vot" codeSystem="2.16.840.1.113883.6.121" displayName="Wotisch" level="0" type="L"/>
+            <concept code="wa" codeSystem="2.16.840.1.113883.6.121" displayName="Wallonisch" level="0" type="L"/>
+            <concept code="wak" codeSystem="2.16.840.1.113883.6.121" displayName="Wakash-Sprachen" level="0" type="L"/>
+            <concept code="wal" codeSystem="2.16.840.1.113883.6.121" displayName="Walamo-Sprache" level="0" type="L"/>
+            <concept code="war" codeSystem="2.16.840.1.113883.6.121" displayName="Waray" level="0" type="L"/>
+            <concept code="was" codeSystem="2.16.840.1.113883.6.121" displayName="Washo-Sprache" level="0" type="L"/>
+            <concept code="wen" codeSystem="2.16.840.1.113883.6.121" displayName="Sorbisch (Andere)" level="0" type="L"/>
+            <concept code="wo" codeSystem="2.16.840.1.113883.6.121" displayName="Wolof-Sprache" level="0" type="L"/>
+            <concept code="xal" codeSystem="2.16.840.1.113883.6.121" displayName="Kalmückisch" level="0" type="L"/>
+            <concept code="xh" codeSystem="2.16.840.1.113883.6.121" displayName="Xhosa-Sprache" level="0" type="L"/>
+            <concept code="yao" codeSystem="2.16.840.1.113883.6.121" displayName="Yao-Sprache (Bantusprache)" level="0" type="L"/>
+            <concept code="yap" codeSystem="2.16.840.1.113883.6.121" displayName="Yapesisch" level="0" type="L"/>
+            <concept code="yi" codeSystem="2.16.840.1.113883.6.121" displayName="Jiddisch" level="0" type="L"/>
+            <concept code="yo" codeSystem="2.16.840.1.113883.6.121" displayName="Yoruba-Sprache" level="0" type="L"/>
+            <concept code="ypk" codeSystem="2.16.840.1.113883.6.121" displayName="Ypik-Sprachen" level="0" type="L"/>
+            <concept code="za" codeSystem="2.16.840.1.113883.6.121" displayName="Zhuang" level="0" type="L"/>
+            <concept code="zap" codeSystem="2.16.840.1.113883.6.121" displayName="Zapotekisch" level="0" type="L"/>
+            <concept code="zbl" codeSystem="2.16.840.1.113883.6.121" displayName="Bliss-Symbol" level="0" type="L"/>
+            <concept code="zen" codeSystem="2.16.840.1.113883.6.121" displayName="Zenaga" level="0" type="L"/>
+            <concept code="zgh" codeSystem="2.16.840.1.113883.6.121" displayName="Tamazight" level="0" type="L"/>
+            <concept code="zh" codeSystem="2.16.840.1.113883.6.121" displayName="Chinesisch" level="0" type="L"/>
+            <concept code="znd" codeSystem="2.16.840.1.113883.6.121" displayName="Zande-Sprachen" level="0" type="L"/>
+            <concept code="zu" codeSystem="2.16.840.1.113883.6.121" displayName="Zulu-Sprache" level="0" type="L"/>
+            <concept code="zun" codeSystem="2.16.840.1.113883.6.121" displayName="Zuñi-Sprache" level="0" type="L"/>
+            <concept code="zxx" codeSystem="2.16.840.1.113883.6.121" displayName="Kein linguistischer Inhalt" level="0" type="L"/>
+            <concept code="zza" codeSystem="2.16.840.1.113883.6.121" displayName="Zazaki" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

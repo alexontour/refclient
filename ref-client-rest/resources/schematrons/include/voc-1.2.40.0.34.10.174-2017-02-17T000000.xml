@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.174"
+             name="ELGA_ProficiencyLevelCode"
+             displayName="ELGA_ProficiencyLevelCode"
+             effectiveDate="2017-02-17T00:00:00"
+             statusCode="final"
+             versionLabel="4.1"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <desc language="de-DE">Codes zur Angabe der Sprachfähigkeit von Patienten (Sprachkenntnisse)</desc>
+      <sourceCodeSystem id="2.16.840.1.113883.5.61"
+                        identifierName="Language Ability Proficiency"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-LanguageAbilityProficiency"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/LanguageAbilityProficiency"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/LanguageAbilityProficiency"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-LanguageAbilityProficiency"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="E"
+                  codeSystem="2.16.840.1.113883.5.61"
+                  displayName="Excellent"
+                  level="0"
+                  type="L"/>
+                <concept code="F"
+                  codeSystem="2.16.840.1.113883.5.61"
+                  displayName="Fair"
+                  level="0"
+                  type="L"/>
+                <concept code="G"
+                  codeSystem="2.16.840.1.113883.5.61"
+                  displayName="Good"
+                  level="0"
+                  type="L"/>
+                <concept code="P"
+                  codeSystem="2.16.840.1.113883.5.61"
+                  displayName="Poor"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

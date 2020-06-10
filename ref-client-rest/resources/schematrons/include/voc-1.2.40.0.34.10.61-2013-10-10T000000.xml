@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.61"
+             name="ELGA_FormatCode"
+             displayName="ELGA_FormatCode"
+             effectiveDate="2013-10-10T00:00:00"
+             statusCode="deprecated">
+      <desc language="de-DE">Zur Verwendung in ELGA erlaubte Werte für den FormatCode in den XDS-Metadaten. Liegt ein CDA Dokument in ELGA Interoperabilitätsstufe „Enhanced“ oder „Full Support“ vor und enthält das Dokument zusätzliche selbst-definierte maschinenlesbare Elemente, so ist dies durch ein '+' (Plus-Zeichen) als Zusatz im Formatcode gekennzeichnet werden. ZB:
+                'urn:elga:dissum:2011:EIS_FullSupport+'</desc>
+      <sourceCodeSystem id="1.2.40.0.34.5.37"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.37"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.37"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.37"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.37"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="urn:elga:2014:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Dokument"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:2013:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Dokument"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:dissum:2014:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L">
+                    <desc language="de-DE">Gilt für EIS 'Basic' und 'Structured'</desc>
+                </concept>
+                <concept code="urn:elga:dissum:2014:EIS_Enhanced"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:dissum:2014:EIS_FullSupport"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:dissum:2013:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L">
+                    <desc language="de-DE">Gilt für EIS 'Basic' und 'Structured'</desc>
+                </concept>
+                <concept code="urn:elga:dissum:2013:EIS_Enhanced"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:dissum:2013:EIS_FullSupport"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Entlassungsbrief"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:lab:2014:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Labor"
+                  level="0"
+                  type="L">
+                    <desc language="de-DE">Gilt für EIS 'Basic' und 'Structured'</desc>
+                </concept>
+                <concept code="urn:elga:lab:2014:EIS_Enhanced"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Labor"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:lab:2014:EIS_FullSupport"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Labor"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:radio:2013:EIS_Basic"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Radiologie"
+                  level="0"
+                  type="L">
+                    <desc language="de-DE">Gilt für EIS 'Basic' und 'Structured'</desc>
+                </concept>
+                <concept code="urn:elga:radio:2013:EIS_Enhanced"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Radiologie"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:radio:2013:EIS_FullSupport"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA Befundbericht Radiologie"
+                  level="0"
+                  type="L"/>
+                <concept code="urn:elga:emedat:2014:EIS_FullSupport"
+                  codeSystem="1.2.40.0.34.5.37"
+                  displayName="ELGA e-Medikation"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.166"
+             name="ELGA_Dosisparameter"
+             displayName="ELGA_Dosisparameter"
+             effectiveDate="2015-07-15T00:00:00"
+             statusCode="deprecated"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <desc language="de-DE">Codes für Dosisparameter zur Ermittlung der Patientendosis</desc>
+      <sourceCodeSystem id="1.2.840.10008.2.16.4"
+                        identifierName="DICOM Controlled Terminology"
+                        canonicalUri="http://dicom.nema.org/resources/ontology/DCM"
+                        canonicalUriDSTU2="http://nema.org/dicom/dicm"
+                        canonicalUriSTU3="http://dicom.nema.org/resources/ontology/DCM"
+                        canonicalUriR4="http://dicom.nema.org/resources/ontology/DCM"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="113507"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="Administered activity"
+                  level="0"
+                  type="L"/>
+                <concept code="111636"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="Entrance Exposure at RP"
+                  level="0"
+                  type="L"/>
+                <concept code="111637"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="Accumulated Average Glandular Dose"
+                  level="0"
+                  type="L"/>
+                <concept code="113722"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="Dose Area Product Total"
+                  level="0"
+                  type="L"/>
+                <concept code="113813"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="CT Dose Length Product Total"
+                  level="0"
+                  type="L"/>
+                <concept code="113839"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="Effective Dose"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

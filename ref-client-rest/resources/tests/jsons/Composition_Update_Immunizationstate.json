@@ -1,0 +1,250 @@
+{
+	"resourceType": "Bundle",
+	"type": "document",
+	"identifier": {
+		"value": "44929e4e-048e-03fc-be6b-108f72287c59_20200609092703",
+		"system": "1.2.40.0.34.99.3.2.1046167"
+	},
+	"entry": [
+		{
+			"resource": {
+				"resourceType": "Composition",
+				"type": [
+					{
+						"code": "87273-9"
+					}
+				],
+				"category": [
+					{
+						"code": "11369-6"
+					}
+				],
+				"title": "Update Immunisierungsstatus",
+				"status": "final",
+				"date": "2020-05-10T12:30:02Z",
+				"subject": {
+					"reference": "Patient/1",
+					"type": "Patient"
+				},
+				"author": [
+					{
+						"reference": "PractitionerRole/2",
+						"type": "PractitionerRole"
+					}
+				],
+				"custodian": {
+					"reference": "Organization/1",
+					"type": "Organization"
+				},
+				"attester": [
+					{
+						"mode": "legal",
+						"time": "2020-05-10T10:30:02Z",
+						"party": {
+							"reference": "PractitionerRole/2",
+							"type": "PractitionerRole"
+						}
+					}
+				],
+				"event": [
+					{
+						"period": {
+							"start": "2020-05-09",
+							"end": "2020-05-10"
+						}
+					}
+				],
+				"section": [
+					{
+						"entry": [
+							{
+								"reference": "Immunization/1",
+								"type": "Immunization"
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"resource": {
+				"resourceType": "Patient",
+				"id": "1",
+				"identifier": [
+					{
+						"value": "1001210995",
+						"system": "1.2.40.0.10.1.4.3.1"
+					}
+				],
+				"name": [
+					{
+						"given": [
+							"Max"
+						],
+						"family": "Musterpatient"
+					}
+				],
+				"birthDate": "1995-09-21",
+				"gender": "male",
+				"address": [
+					{
+						"line": [
+							"Testgasse 35"
+						],
+						"city": "Graz",
+						"postalCode": "8020",
+						"state": "STMK",
+						"country": "AT"
+					}
+				],
+				"telecom": [
+					{
+						"system": "phone",
+						"value": "03168899521",
+						"use": "home"
+					}
+				]
+			}
+		},
+		{
+			"resource": {
+				"resourceType": "PractitionerRole",
+				"id": "2",
+				"organization": {
+					"reference": "Organization/1",
+					"type": "Organization"
+				},
+				"practitioner": {
+					"reference": "Practitioner/1",
+					"type": "Practitioner"
+				}
+			}
+		},
+		{
+			"resource": {
+				"resourceType": "Practitioner",
+				"id": "1",
+				"name": [
+					{
+						"given": [
+							"Helga"
+						],
+						"family": "Musterärztin",
+						"prefix": [
+							"Dr."
+						]
+					}
+				],
+				"address": [
+					{
+						"line": [
+							"Ernst-Melchior-Gasse 22"
+						],
+						"city": "Wien",
+						"postalCode": "1020",
+						"state": "W",
+						"country": "AT"
+					}
+				],
+				"telecom": [
+					{
+						"system": "phone",
+						"value": "0154168899521",
+						"use": "work"
+					}
+				]
+			}
+		},
+		{
+			"resource": {
+				"resourceType": "Organization",
+				"id": "1",
+				"identifier": [
+					{
+						"value": "1.2.40.0.34.99.3.2.1046167"
+					}
+				],
+				"name": "Ordination Dr. Musterärztin",
+				"address": [
+					{
+						"line": [
+							"Ernst-Melchior-Gasse 22"
+						],
+						"city": "Wien",
+						"postalCode": "1020",
+						"state": "W",
+						"country": "AT"
+					}
+				],
+				"telecom": [
+					{
+						"system": "phone",
+						"value": "0154168899521",
+						"use": "work"
+					}
+				]
+			}
+		},
+		{
+			"resource": {
+				"resourceType": "Immunization",
+				"id": "1",
+				"identifier": [
+					{
+						"system": "1.2.40.0.34.99.3.2.1046167",
+						"value": "1"
+					}
+				],
+				"status": "completed",
+				"occurrenceDateTime": "2020-05-09",
+				"vaccineCode": [
+					{
+						"coding": [
+							{
+								"code": "0515738"
+							}
+						]
+					}
+				],
+				"lotNumber": "12345",
+				"protocolApplied": {
+					"series": "SCHEM03",
+					"doseNumberString": "D1",
+					"authority": {
+						"reference": "PractitionerRole/2",
+						"type": "PractitionerRole"
+					}
+				},
+				"expirationDate": "2025-04-30",
+				"programEligibility": [
+					{
+						"coding": [
+							{
+								"code": "1234",
+								"system": ""
+							}
+						]
+					}
+				],
+				"recorded": "2020-05-09",
+				"performer": [
+					{
+						"function": [
+							{
+								"coding": [
+									{
+										"code": "100"
+									}
+								]
+							}
+						],
+						"actor": {
+							"reference": "PractitionerRole/2",
+							"type": "PractitionerRole"
+						}
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.74"
+             name="ELGA_MedikationRezeptpflichtstatus"
+             displayName="ELGA_MedikationRezeptpflichtstatus"
+             effectiveDate="2019-12-19T12:22:23"
+             statusCode="draft"
+             versionLabel="3.2">
+      <sourceCodeSystem id="1.2.40.0.10.1.4.3.4.3.7"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.10.1.4.3.4.3.7"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.10.1.4.3.4.3.7"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.10.1.4.3.4.3.7"
+                        canonicalUriR4="urn:oid:1.2.40.0.10.1.4.3.4.3.7"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="100000072076"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur Abgabe ohne aerztliche Verschreibung"
+                  level="0"
+                  type="L"/>
+                <concept code="100000072077"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur einmaligen oder wiederholten Abgabe gegen aerztliche Verschreibung"
+                  level="0"
+                  type="L"/>
+                <concept code="100000072078"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur eingeschraenkten Abgabe gegen aerztliche Verschreibung, deren Anwendung definierten Spezialisten vorbehalten ist"
+                  level="0"
+                  type="L"/>
+                <concept code="100000072079"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur einmaligen Abgabe auf aerztliche Verschreibung"
+                  level="0"
+                  type="L"/>
+                <concept code="100000072084"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur Abgabe gegen aerztliche Verschreibung"
+                  level="0"
+                  type="L"/>
+                <concept code="100000072086"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur wiederholten Abgabe gegen aerztliche Verschreibung"
+                  level="0"
+                  type="L"/>
+                <concept code="900000000001"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur Abgabe gegen besondere aerztliche Verschreibung, Suchtgifte"
+                  level="0"
+                  type="L"/>
+                <concept code="900000000002"
+                  codeSystem="1.2.40.0.10.1.4.3.4.3.7"
+                  displayName="Arzneimittel zur Abgabe gegen besondere aerztliche Verschreibung, Substitution"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

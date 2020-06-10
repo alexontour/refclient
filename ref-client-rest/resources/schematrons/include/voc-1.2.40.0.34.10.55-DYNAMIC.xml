@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.55"
+             name="ELGA_MammogramAssessment"
+             displayName="ELGA_MammogramAssessment"
+             effectiveDate="2015-10-05T00:00:00"
+             statusCode="final"
+             versionLabel="3.3"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <sourceCodeSystem id="1.2.40.0.34.5.49"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.49"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.49"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.49"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.49"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="II.AC.a"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="0 - Need additional imaging evaluation"
+                  level="0"
+                  type="L"/>
+                <concept code="II.AC.b.1"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="1 – Negative"
+                  level="0"
+                  type="L"/>
+                <concept code="II.AC.b.2"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="2 – Benign Finding"
+                  level="0"
+                  type="L"/>
+                <concept code="II.AC.b.3"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="3 - Probably Benign Finding – short interval followup"
+                  level="0"
+                  type="L"/>
+                <concept code="II.AC.b.4"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="4 - Suspicious abnormality, biopsy should be considered"
+                  level="0"
+                  type="S"/>
+                <concept code="MA.II.A.5.4A"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="4A – Low suspicion"
+                  level="1"
+                  type="L"/>
+                <concept code="MA.II.A.5.4B"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="4B – Intermediate suspicion"
+                  level="1"
+                  type="L"/>
+                <concept code="MA.II.A.5.4C"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="4C – Moderate suspicion"
+                  level="1"
+                  type="L"/>
+                <concept code="II.AC.b.5"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="5 - Highly suggestive of malignancy, take appropriate action"
+                  level="0"
+                  type="L"/>
+                <concept code="MA.II.A.5.6"
+                  codeSystem="1.2.40.0.34.5.49"
+                  displayName="6 - Known biopsy proven malignancy"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

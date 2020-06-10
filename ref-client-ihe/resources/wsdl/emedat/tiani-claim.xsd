@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema elementFormDefault="qualified" version="1.1" targetNamespace="urn:tiani-spirit:ts" xmlns:ts="urn:tiani-spirit:ts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="ClaimType" type="ts:ClaimTypeType"/>
+	<xs:complexType name="ClaimTypeType">
+		<xs:annotation>
+			<xs:documentation>This element represents the ClaimType, which is part of the dialect 
+        urn:elga:bes:2013:claims, that is a single element containing a claim value
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1" >
+				<xs:element name="ClaimValue" type="ts:ClaimValue" nillable="false"/>
+				<xs:element name="ServiceRestrictionList" type="ts:ServiceRestrictionListType" nillable="false"/>
+				<xs:element name="ServiceOptOutList" type="ts:ServiceOptOutListType" nillable="false"/>
+				<xs:element name="ServiceDeletionList" type="ts:ServiceDeletionListType" nillable="false"/>
+				<xs:element name="ProviderRestrictionList" type="ts:ProviderRestrictionListType" nillable="false"/>
+				<xs:element name="DocumentRestrictionList" type="ts:DocumentRestrictionListType" nillable="false"/>
+				<xs:element name="DocumentDeletionList" type="ts:DocumentDeletionListType" nillable="false"/>
+				<xs:element name="SignedDocumentList" type="ts:SignedDocumentListType" nillable="false"/>
+				<xs:sequence>
+					<xs:element name="StateID" type="xs:string" nillable="false"/>
+					<xs:element name="GeneratedPolicies" type="ts:GeneratedPoliciesType" nillable="false"/>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="DataType" type="ts:ClaimType_DataType" use="required" />
+		<xs:attribute name="name" type="ts:ClaimType_Name" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ClaimValue">
+		<xs:simpleContent>
+			<xs:extension base="xs:anySimpleType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="ClaimType_DataType">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#PoliciesType" />
+			<xs:enumeration value="http://www.w3.org/2001/XMLSchema#base64Binary" />
+			<xs:enumeration value="http://www.w3.org/2001/XMLSchema#string" />
+			<xs:enumeration value="http://www.w3.org/2001/XMLSchema#boolean" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#service-restriction-list" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#service-opt-out-list" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#service-deletion-list" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#provider-restriction-list" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#document-restriction-list" />
+			<xs:enumeration value="http://www.tiani-spirit.com/2013/BeS/TRSchema#document-deletion-list" />
+			<xs:enumeration value="http://www.w3.org/2001/XMLSchema#anyURI" />
+			<xs:enumeration value="http://www.w3.org/2001/XMLSchema#dateTime" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClaimType_Name">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:oasis:names:tc:xacml:1.0:resource:resource-id" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:is-opt-out" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:service-restriction-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:service-opt-out-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:service-deletion-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:provider-restriction-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:document-restriction-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:document-deletion-list" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:tr-type" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:ident-method" />
+			<xs:enumeration value="urn:oasis:names:tc:xspa:1.0:subject:organization-id" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:tr-date" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:ecardkb" />
+			<xs:enumeration value="urn:tiani-spirit:bes:OrganizationIDDelegate" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:signed-document" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:requested-role" />
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:patient-id"	/>
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims:state-id" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Query Consent -->
+	<xs:element name="ConsentQuery" type="ts:ELGAPAPConsentQueryType"/>
+	<xs:complexType name="ELGAPAPConsentQueryType" mixed="false">
+		<xs:sequence>
+			<xs:element name="PatientID" type="ts:PatIDType"/>
+			<xs:element name="ReturnConsentData" type="xs:boolean" default="true"/>
+			<xs:element name="ReturnSignedDoc" type="xs:boolean" default="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ConsentRetrieve" type="ts:ELGAPAPConsentRetrieveType"/>
+	<xs:complexType name="ELGAPAPConsentRetrieveType" mixed="false">
+		<xs:sequence>
+			<xs:element name="PatientID" type="ts:PatIDType"/>
+			<xs:element name="SignedDocument" type="ts:SignedDocType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignedDocType">
+		<xs:attribute name="id" type="xs:anyURI" use="required"/>
+	</xs:complexType>
+
+	<!-- ELGA Anwendungen -->
+	<xs:simpleType name="ServiceType">
+		<xs:restriction base="xs:string">
+			<!-- eBefunde -->
+			<xs:enumeration value="101"/>
+			<!-- eMedikation -->
+			<xs:enumeration value="102"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Service Restriction List -->
+	<xs:element name="ServiceRestrictionList" type="ts:ServiceRestrictionListType"/>
+	<xs:complexType name="ServiceRestrictionListType">
+		<xs:sequence>
+			<xs:element name="ServiceRestriction" type="ts:ServiceRestrictionType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ServiceRestriction -->
+	<xs:element name="ServiceRestriction" type="ts:ServiceRestrictionType"/>
+	<xs:complexType name="ServiceRestrictionType">
+		<xs:attribute name="service" type="ts:ServiceType" use="required"/>
+	</xs:complexType>
+
+	<!-- Service OptOut List -->
+	<xs:element name="ServiceOptOutList" type="ts:ServiceOptOutListType"/>
+	<xs:complexType name="ServiceOptOutListType">
+		<xs:sequence>
+			<xs:element name="ServiceOptOut" type="ts:ServiceOptOutType" maxOccurs="unbounded" 
+        minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ServiceOptOut -->
+	<xs:element name="ServiceOptOut" type="ts:ServiceOptOutType"/>
+	<xs:complexType name="ServiceOptOutType">
+		<xs:attribute name="service" type="ts:ServiceType" use="required"/>
+		<xs:attribute name="reOptInDateTime" type="xs:dateTime" use="optional"/>
+	</xs:complexType>
+
+	<!-- Service Deletion List -->
+	<xs:element name="ServiceDeletionList" type="ts:ServiceDeletionListType"/>
+	<xs:complexType name="ServiceDeletionListType">
+		<xs:sequence>
+			<xs:element name="ServiceDeletion" type="ts:ServiceDeletionType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ServiceDeletion -->
+	<xs:element name="ServiceDeletion" type="ts:ServiceDeletionType"/>
+	<xs:complexType name="ServiceDeletionType">
+		<xs:attribute name="service" type="ts:ServiceType" use="required"/>
+		<xs:attribute name="deletionDateTime" type="xs:dateTime" use="required"/>
+	</xs:complexType>
+
+	<!-- Provider Restriction List -->
+	<xs:element name="ProviderRestrictionList" type="ts:ProviderRestrictionListType"/>
+	<xs:complexType name="ProviderRestrictionListType">
+		<xs:sequence>
+			<xs:element name="ProviderRestriction" type="ts:ProviderRestrictionType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Provider Restriction -->
+	<xs:element name="ProviderRestriction" type="ts:ProviderRestrictionType"/>
+	<xs:complexType name="ProviderRestrictionType">
+		<xs:attribute name="days" type="xs:positiveInteger" use="required"/>
+		<xs:attribute name="providerID" type="xs:anyURI" use="required"/>
+	</xs:complexType>
+
+	<!-- Document Restriction List -->
+	<xs:element name="DocumentRestrictionList" type="ts:DocumentRestrictionListType"/>
+	<xs:complexType name="DocumentRestrictionListType">
+		<xs:sequence>
+			<xs:element name="DocumentRestriction" type="ts:DocumentRestrictionType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Document Restriction -->
+	<xs:element name="DocumentRestriction" type="ts:DocumentRestrictionType"/>
+	<xs:complexType name="DocumentRestrictionType">
+		<xs:attribute name="id" type="xs:anyURI" use="required"/>
+	</xs:complexType>
+
+	<!-- Document Deletion List -->
+	<xs:element name="DocumentDeletionList" type="ts:DocumentDeletionListType"/>
+	<xs:complexType name="DocumentDeletionListType">
+		<xs:sequence>
+			<xs:element name="DocumentDeletion" type="ts:DocumentDeletionType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Document Deletion -->
+	<xs:element name="DocumentDeletion" type="ts:DocumentDeletionType"/>
+	<xs:complexType name="DocumentDeletionType">
+		<xs:attribute name="id" type="xs:anyURI" use="required"/>
+	</xs:complexType>
+
+	<!-- Signed Document List -->
+	<xs:element name="SignedDocumentList" type="ts:SignedDocumentListType"/>
+	<xs:complexType name="SignedDocumentListType">
+		<xs:sequence>
+			<xs:element name="SignedDocument" type="ts:SignedDocumentType" 
+        maxOccurs="unbounded" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Signed Document -->
+	<xs:element name="SignedDocument" type="ts:SignedDocumentType"/>
+	<xs:complexType name="SignedDocumentType">
+		<xs:attribute name="id" type="xs:anyURI" use="required"/>
+		<xs:attribute name="creationDateTime" type="xs:dateTime" use="required"/>
+	</xs:complexType>
+
+	<!-- Generated Policies -->
+	<xs:element name="GeneratedPolicies" type="ts:GeneratedPoliciesType"/>
+	<xs:complexType name="GeneratedPoliciesType">
+		<xs:sequence>
+			<xs:element name="IndividualRequestPolicy" type="ts:IndividualRequestPolicyType" 
+        maxOccurs="1" minOccurs="1" nillable="false"/>
+			<xs:element name="IndividualResponsePolicy" type="ts:IndividualResponsePolicyType" 
+        maxOccurs="1" minOccurs="1" nillable="false"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Individual Request Policy -->
+	<xs:element name="IndividualRequestPolicy" type="ts:IndividualRequestPolicyType"/>
+	<xs:complexType name="IndividualRequestPolicyType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" 
+          maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Individual Request Policy -->
+	<xs:element name="IndividualResponsePolicy" type="ts:IndividualResponsePolicyType"/>
+	<xs:complexType name="IndividualResponsePolicyType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" 
+          maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Definition of the authentication methods  -->
+	<xs:element name="TRType" type="ts:TRTypeType"/>
+	<xs:simpleType name="TRTypeType">
+		<xs:restriction base="xs:anyURI">
+			<!--Stationär-->
+			<xs:enumeration value="K101"/>
+			<!--Ambulant-->
+			<xs:enumeration value="K102"/>
+			<!--Entlassung-->
+			<xs:enumeration value="K103"/>
+			<!--Delegiert-->
+			<xs:enumeration value="K104"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Definition of the identification methods  -->
+	<xs:element name="IdentMethod" type="ts:IdentMethodType"/>
+	<xs:simpleType name="IdentMethodType">
+		<xs:restriction base="xs:anyURI">
+			<!--eCard-->
+			<xs:enumeration value="PIM101"/>
+			<!--Bürgerkarte -->
+			<xs:enumeration value="PIM102"/>
+			<!-- LPID -->
+			<xs:enumeration value="PIM103"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- TRID -->
+	<xs:element name="TRID" type ="ts:TRIDType"/>
+	<xs:complexType name="TRIDType">
+		<xs:simpleContent>
+			<xs:extension base="xs:anyURI"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- PatID -->
+	<xs:element name="PatientID" type="ts:PatIDType"/>
+	<xs:complexType name="PatIDType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- dummy ClaimsType for empty Claims -->
+	<xs:complexType name="ELGAClaimsType_default">
+		<xs:attribute name="Dialect" type="xs:anyURI" fixed="urn:tiani-spirit:bes:2013:claims" />
+	</xs:complexType>
+
+	<!--TR -->
+	<xs:element name="TR" type ="ts:TRType"/>
+	<xs:complexType name="TRType">
+		<xs:sequence>
+			<xs:element name="IdentMethod" type="ts:IdentMethodType"/>
+			<xs:element name="ProviderOID" type="xs:string"/>
+			<xs:element name="PatientID" type="xs:string"/>
+			<xs:element name="TRDate" type="xs:dateTime"/>
+			<xs:element name="TRType" type="ts:TRTypeType"/>
+			<xs:element name="TRStatus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--ElgaToken-->
+	<xs:element name="ElgaToken" type ="ts:ElgaTokenType"/>
+	<xs:complexType name="ElgaTokenType">
+		<xs:sequence>
+		    <xs:element name="StateID" type="xs:string" nillable="true"/>
+			<xs:element name="IsOptOut" type="xs:boolean" nillable="true"/>
+			<xs:element name="ServiceRestrictionList" type="ts:ServiceRestrictionListType" nillable="true"/>
+			<xs:element name="ServiceOptOutList" type="ts:ServiceOptOutListType" nillable="true"/>
+			<xs:element name="ServiceDeletionList" type="ts:ServiceDeletionListType" nillable="true"/>
+			<xs:element name="ProviderRestrictionList" type="ts:ProviderRestrictionListType" nillable="true"/>
+			<xs:element name="DocumentRestrictionList" type="ts:DocumentRestrictionListType" nillable="true"/>
+			<xs:element name="DocumentDeletionList" type="ts:DocumentDeletionListType" nillable="true"/>
+			<xs:element name="SignedDocumentList" type="ts:SignedDocumentListType" nillable="true"/>
+			<xs:element name="SignedDocData" type="xs:base64Binary" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

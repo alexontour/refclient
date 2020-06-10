@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.1" name="eImpf_Impfabrechnungsrolle_VS" displayName="eImpf_Impfabrechnungsrolle_VS" statusCode="rejected" versionLabel="2019" effectiveDate="2019-01-17T13:33:25">
+        <desc language="de-DE">Abrechungsrelevante Rollen für das "kostenlose Kinderimpfprogramm"
+    </desc>
+        <desc language="en-US">Billing roles for the free children's vaccination program ("kostenlose Kinderimpfprogramm")
+    </desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.183" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.183" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.183" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.183" canonicalUriR4="urn:oid:1.2.40.0.34.5.183"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="AR01" codeSystem="1.2.40.0.34.5.183" displayName="Niedergelassene(r) Facharzt/-ärztin für Kinder- und Jugendheilkunde" level="0" type="L"/>
+            <concept code="AR02" codeSystem="1.2.40.0.34.5.183" displayName="Niedergelassene(r) praktische(r) Arzt/Ärztin" level="0" type="L"/>
+            <concept code="AR03" codeSystem="1.2.40.0.34.5.183" displayName="Amts- und Jugendfürsorgearzt/-ärztin der Bezirksverwaltungsbehörden" level="0" type="L"/>
+            <concept code="AR04" codeSystem="1.2.40.0.34.5.183" displayName="Allgemeinmediziner/-in ohne Hausapotheke" level="0" type="L"/>
+            <concept code="AR05" codeSystem="1.2.40.0.34.5.183" displayName="Allgemeinmediziner/-in mit Hausapotheke" level="0" type="L"/>
+            <concept code="AR06" codeSystem="1.2.40.0.34.5.183" displayName="Facharzt/-ärztin für Kinder und Jugendheilkunde" level="0" type="L"/>
+            <concept code="AR07" codeSystem="1.2.40.0.34.5.183" displayName="Amtsarzt/-ärztin" level="0" type="L"/>
+            <concept code="AR08" codeSystem="1.2.40.0.34.5.183" displayName="Amtsarzt/-ärztin an Bezirkshauptmannschaften" level="0" type="L"/>
+            <concept code="AR09" codeSystem="1.2.40.0.34.5.183" displayName="Amtsarzt/-ärztin an Magistraten" level="0" type="L"/>
+            <concept code="AR10" codeSystem="1.2.40.0.34.5.183" displayName="Facharzt/-ärztin für Gynäkologie" level="0" type="L"/>
+            <concept code="AR11" codeSystem="1.2.40.0.34.5.183" displayName="Arbeitsmediziner/-in" level="0" type="L"/>
+            <concept code="AR12" codeSystem="1.2.40.0.34.5.183" displayName="Schularzt/-ärztin" level="0" type="L"/>
+            <concept code="AR13" codeSystem="1.2.40.0.34.5.183" displayName="Facharzt/-ärztin  für spezifische Prophylaxe und Tropenmedizin" level="0" type="L"/>
+            <concept code="AR14" codeSystem="1.2.40.0.34.5.183" displayName="Facharzt/-ärztin  für Infektiologie" level="0" type="L"/>
+            <concept code="AR15" codeSystem="1.2.40.0.34.5.183" displayName="Facharzt/-ärztin  sonstiger Spezialisierung" level="0" type="L"/>
+            <concept code="AR16" codeSystem="1.2.40.0.34.5.183" displayName="Beamtete(r) Kreis-/Gemeinearzt/-ärztin" level="0" type="L"/>
+            <concept code="AR17" codeSystem="1.2.40.0.34.5.183" displayName="Sonstiger Impfarzt (mit Vertrag)" level="0" type="L"/>
+            <concept code="AR18" codeSystem="1.2.40.0.34.5.183" displayName="Impfarzt 1 (ohne Vertrag)" level="0" type="L"/>
+            <concept code="AR19" codeSystem="1.2.40.0.34.5.183" displayName="Impfarzt 2 (ohne Vertrag)" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.160"
+             name="ELGA_ActCode_AbgInfo"
+             displayName="ELGA_ActCode_AbgInfo"
+             effectiveDate="2015-03-31T00:00:00"
+             statusCode="final"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <sourceCodeSystem id="1.2.40.0.34.5.103"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.103"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.103"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.103"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.103"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="ERGINFO"
+                  codeSystem="1.2.40.0.34.5.103"
+                  displayName="Ergänzende Informationen zur Abgabe"
+                  level="0"
+                  type="L"/>
+                <concept code="MAGZUB"
+                  codeSystem="1.2.40.0.34.5.103"
+                  displayName="Ergänzende Informationen zur magistralen Zubereitung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

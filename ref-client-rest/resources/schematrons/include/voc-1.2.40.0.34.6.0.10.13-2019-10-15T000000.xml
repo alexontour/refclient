@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.13" name="eImpf_Antikoerperbestimmung_VS" displayName="eImpf_Antikoerperbestimmung_VS" effectiveDate="2019-10-15T00:00:00" statusCode="draft" versionLabel="201910(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Labormedizinische Immunitätsbestimmung ("Impftiter"), gegliedert nach Impfungen. Der Code der Gruppierungen dient der Zuordnung zu den Impfungen.<br clear="none"/>
+            <b>Achtung</b>: Dieses Value Set besitzt weitere Attribute, die hier nicht darstellbar sind. Diese können vom Terminologieserver abgerufen werden: <a class="" href="https://termpub.gesundheit.gv.at" target="_blank" title="https://termpub.gesundheit.gv.at">https://termpub.gesundheit.gv.at</a>
+            <br clear="none"/>
+        </desc>
+        <desc language="en-US">Determination of immunity by laboratory medicine ("Impftiter"), structured according to vaccinations.The code of the groups serves the assignment to the vaccinations.
+    </desc>
+        <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED&#160;Clinical&#160;Terms" canonicalUri="http://snomed.info/sct" canonicalUriDSTU2="http://snomed.info/sct" canonicalUriSTU3="http://snomed.info/sct" canonicalUriR4="http://snomed.info/sct"/>
+        <sourceCodeSystem id="2.16.840.1.113883.6.1" identifierName="Logical&#160;Observation&#160;Identifier&#160;Names&#160;and&#160;Codes" canonicalUri="http://loinc.org" canonicalUriDSTU2="http://loinc.org" canonicalUriSTU3="http://loinc.org" canonicalUriR4="http://loinc.org"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <copyright language="en-US">This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</copyright>
+        <conceptList>
+            <concept code="35736007" codeSystem="2.16.840.1.113883.6.96" displayName="Cholera Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="31698-4" codeSystem="2.16.840.1.113883.6.1" displayName="Cholera AK qn." level="1" type="L"/>
+            <concept code="428214002" codeSystem="2.16.840.1.113883.6.96" displayName="Diphtherie Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="5115-1" codeSystem="2.16.840.1.113883.6.1" displayName="Di AK qn." level="1" type="L"/>
+            <concept code="333699008" codeSystem="2.16.840.1.113883.6.96" displayName="Frühsommer-Meningoencephalitis Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="31383-3" codeSystem="2.16.840.1.113883.6.1" displayName="FSME AK qn." level="1" type="L"/>
+            <concept code="56844000" codeSystem="2.16.840.1.113883.6.96" displayName="Gelbfieber Impfstoff" level="0" type="L"/>
+            <concept code="333680004" codeSystem="2.16.840.1.113883.6.96" displayName="Haemophilus influenzae Typ B Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="7931-9" codeSystem="2.16.840.1.113883.6.1" displayName="HiB AK qn." level="1" type="L"/>
+            <concept code="14745005" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis A Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="22312-3" codeSystem="2.16.840.1.113883.6.1" displayName="HAV AK qn." level="1" type="L"/>
+            <concept code="34689006" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis B Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="16935-9" codeSystem="2.16.840.1.113883.6.1" displayName="HBV s-AK qn." level="1" type="L"/>
+            <concept code="407737004" codeSystem="2.16.840.1.113883.6.96" displayName="Herpes Zoster Impfstoff" level="0" type="L"/>
+            <concept code="424519000" codeSystem="2.16.840.1.113883.6.96" displayName="Humane Papillomaviren Impfstoff" level="0" type="L"/>
+            <concept code="427036009" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza (H5N1) Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="47454-4" codeSystem="2.16.840.1.113883.6.1" displayName="Influenza H5 AK Ti." level="1" type="L"/>
+            <concept code="443651005" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza (H1N1) Impfstoff" level="0" type="L"/>
+            <concept code="46233009" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="7920-2" codeSystem="2.16.840.1.113883.6.1" displayName="Influenza A AK qn." level="1" type="L"/>
+            <concept code="333697005" codeSystem="2.16.840.1.113883.6.96" displayName="Japanische Encephalitis Impfstoff" level="0" type="L"/>
+            <concept code="386012008" codeSystem="2.16.840.1.113883.6.96" displayName="Masern Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="7961-6" codeSystem="2.16.840.1.113883.6.1" displayName="Masern AK qn." level="1" type="L"/>
+            <concept code="423531006" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Impfstoff" level="0" type="L"/>
+            <concept code="785864002" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp B Impfstoff" level="0" type="L"/>
+            <concept code="422069000" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp C Impfstoff" level="0" type="L"/>
+            <concept code="90043005" codeSystem="2.16.840.1.113883.6.96" displayName="Mumps Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="7965-7" codeSystem="2.16.840.1.113883.6.1" displayName="Mumps AK qn." level="1" type="L"/>
+            <concept code="61602008" codeSystem="2.16.840.1.113883.6.96" displayName="Pertussis Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="11585-7" codeSystem="2.16.840.1.113883.6.1" displayName="aP AK qn." level="1" type="L"/>
+            <concept code="333598008" codeSystem="2.16.840.1.113883.6.96" displayName="Pneumokokken Impfstoff" level="0" type="L"/>
+            <concept code="33234009" codeSystem="2.16.840.1.113883.6.96" displayName="Pocken Impfstoff" level="0" type="L"/>
+            <concept code="111164008" codeSystem="2.16.840.1.113883.6.96" displayName="Poliomyelitis Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="16284-2" codeSystem="2.16.840.1.113883.6.1" displayName="Polio AK qn." level="1" type="L"/>
+            <concept code="116077000" codeSystem="2.16.840.1.113883.6.96" displayName="Rotavirus Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="5328-0" codeSystem="2.16.840.1.113883.6.1" displayName="Rota AK qn." level="1" type="L"/>
+            <concept code="386013003" codeSystem="2.16.840.1.113883.6.96" displayName="Röteln Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="8013-5" codeSystem="2.16.840.1.113883.6.1" displayName="Röteln AK qn." level="1" type="L"/>
+            <concept code="41763-4" codeSystem="2.16.840.1.113883.6.1" displayName="Röteln IgG AK Ti." level="1" type="L"/>
+            <concept code="50694-9" codeSystem="2.16.840.1.113883.6.1" displayName="Röteln Ab Titr Ser HAI" level="1" type="L"/>
+            <concept code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="32775-9" codeSystem="2.16.840.1.113883.6.1" displayName="Tetanustoxin AK qn." level="1" type="L"/>
+            <concept code="333606008" codeSystem="2.16.840.1.113883.6.96" displayName="Tollwut Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="5288-6" codeSystem="2.16.840.1.113883.6.1" displayName="Tollwut AK qn." level="1" type="L"/>
+            <concept code="89428009" codeSystem="2.16.840.1.113883.6.96" displayName="Typhus Impfstoff" level="0" type="L"/>
+            <concept code="420538001" codeSystem="2.16.840.1.113883.6.96" displayName="Tuberkulose Impfstoff" level="0" type="L"/>
+            <concept code="108729007" codeSystem="2.16.840.1.113883.6.96" displayName="Varizellen Impfstoff: Serologie" level="0" type="S"/>
+            <concept code="8046-5" codeSystem="2.16.840.1.113883.6.1" displayName="Varizellen AK qn." level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

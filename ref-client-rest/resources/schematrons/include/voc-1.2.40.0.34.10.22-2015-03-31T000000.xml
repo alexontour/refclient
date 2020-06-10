@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             name="ELGA_ServiceEventsLabor"
+             displayName="ELGA_ServiceEventsLabor"
+             effectiveDate="2015-03-31T00:00:00"
+             id="1.2.40.0.34.10.22"
+             statusCode="final">
+      <sourceCodeSystem id="1.2.40.0.34.5.11"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.11"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.11"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.11"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.11"/>
+      <sourceCodeSystem id="2.16.840.1.113883.6.1"
+                        identifierName="Logical Observation Identifier Names and Codes"
+                        canonicalUri="http://loinc.org"
+                        canonicalUriDSTU2="http://loinc.org"
+                        canonicalUriSTU3="http://loinc.org"
+                        canonicalUriR4="http://loinc.org"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="1"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Allgemeiner Laborbefund"
+                  level="0"
+                  type="L"/>
+                <concept code="300"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Hämatologie"
+                  level="0"
+                  type="L"/>
+                <concept code="200"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Blutgasanalytik"
+                  level="0"
+                  type="L"/>
+                <concept code="400"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Gerinnung/Hämostaseologie"
+                  level="0"
+                  type="L"/>
+                <concept code="500"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Klinische Chemie/Proteindiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="900"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Toxikologie"
+                  level="0"
+                  type="L"/>
+                <concept code="1000"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Medikamente"
+                  level="0"
+                  type="L"/>
+                <concept code="600"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Hormone/Vitamine/Tumormarker"
+                  level="0"
+                  type="L"/>
+                <concept code="1300"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Autoimmundiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="1800"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Allergiediagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="1400"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Harndiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="1500"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Stuhldiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="1600"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Liquordiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="1100"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Infektionsdiagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="2300"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Molekulare Diagnostik"
+                  level="0"
+                  type="L"/>
+                <concept code="100"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Blutgruppenserologie"
+                  level="0"
+                  type="L"/>
+                <concept code="18725-2"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Microbiology studies"
+                  level="0"
+                  type="L"/>
+                <concept code="2500"
+                  codeSystem="1.2.40.0.34.5.11"
+                  displayName="Sonstige"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

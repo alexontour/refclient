@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.6" name="eImpf_Impfdosis_VS" displayName="eImpf_Impfdosis_VS" effectiveDate="2020-01-09T00:00:00" statusCode="draft" versionLabel="202001(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Impfdosen bzw. Teilimpfungen zur Immunisierung, Grundimmunisierung und Auffrischung</desc>
+        <desc language="en-US">Vaccine doses or partial vaccinations for immunisation, basic immunisation and boosters</desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.183" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.183" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.183" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.183" canonicalUriR4="urn:oid:1.2.40.0.34.5.183"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="D1" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 1" level="0" type="L"/>
+            <concept code="D2" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 2" level="0" type="L"/>
+            <concept code="D3" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 3" level="0" type="L"/>
+            <concept code="D4" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 4" level="0" type="L"/>
+            <concept code="D5" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 5" level="0" type="L"/>
+            <concept code="D6" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 6" level="0" type="L"/>
+            <concept code="D7" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 7" level="0" type="L"/>
+            <concept code="D8" codeSystem="1.2.40.0.34.5.183" displayName="Dosis 8" level="0" type="L"/>
+            <concept code="B" codeSystem="1.2.40.0.34.5.183" displayName="Auffrischungsimpfung" level="0" type="L"/>
+            <concept code="B.I" codeSystem="1.2.40.0.34.5.183" displayName="Auffrischungsserie Teil 1" level="0" type="L"/>
+            <concept code="B.II" codeSystem="1.2.40.0.34.5.183" displayName="Auffrischungsserie Teil 2" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

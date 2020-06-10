@@ -1,0 +1,256 @@
+package arztis.econnector.rest.model.fhir;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ehealth_connector.cda.at.elga.v2019.cdalab.enums.ElgaObservationInterpretation;
+import org.ehealth_connector.common.hl7cdar2.ANY;
+import org.ehealth_connector.common.hl7cdar2.BL;
+import org.ehealth_connector.common.hl7cdar2.CD;
+import org.ehealth_connector.common.hl7cdar2.CE;
+import org.ehealth_connector.common.hl7cdar2.CV;
+import org.ehealth_connector.common.hl7cdar2.II;
+import org.ehealth_connector.common.hl7cdar2.INT;
+import org.ehealth_connector.common.hl7cdar2.IVLINT;
+import org.ehealth_connector.common.hl7cdar2.IVLPQ;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Act;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component4;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Observation;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organizer;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040Reference;
+import org.ehealth_connector.common.hl7cdar2.POCDMT000040ReferenceRange;
+import org.ehealth_connector.common.hl7cdar2.PQ;
+import org.ehealth_connector.common.hl7cdar2.RTO;
+import org.ehealth_connector.common.hl7cdar2.RTOPQPQ;
+import org.ehealth_connector.common.hl7cdar2.RTOQTYQTY;
+import org.ehealth_connector.common.hl7cdar2.ST;
+import org.ehealth_connector.common.hl7cdar2.TS;
+import org.ehealth_connector.common.utils.DateUtil;
+import org.hl7.fhir.r4.model.BooleanType;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.IntegerType;
+import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.Type;
+import org.hl7.fhir.r4.model.codesystems.ObservationCategory;
+import org.hl7.fhir.r4.model.codesystems.V3ObservationInterpretation;
+
+import ca.uhn.fhir.model.api.annotation.ResourceDef;
+
+@ResourceDef(name = "Observation", profile = "http://hl7.org/fhir/StructureDefinition/Observation")
+public class FhirObservation extends Observation {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private List<Resource> resources;
+
+	/**
+	 * Default constructor
+	 */
+	public FhirObservation() {
+
+	}
+
+	public FhirObservation(POCDMT000040Act act, String id, CodeableConcept code, String text) {
+		resources = new ArrayList<>();
+		fromPOCDMT000040Act(act, id, code, text);
+	}
+
+	public List<Resource> getResources() {
+		return resources;
+	}
+
+	private void fromPOCDMT000040Act(POCDMT000040Act act, String id, CodeableConcept code, String text) {
+		if (act != null) {
+			setId(id);
+
+			if (act.getId() != null) {
+				for (II ii : act.getId()) {
+					if (ii != null) {
+						addIdentifier(new FhirIdentifier(ii));
+					}
+				}
+			}
+
+			if (act.getStatusCode() != null && act.getStatusCode().getCode() != null) {
+				if (act.getStatusCode().getCode().contains("active")) {
+					setStatus(ObservationStatus.PRELIMINARY);
+				} else if (act.getStatusCode().getCode().contains("completed")) {
+					setStatus(ObservationStatus.FINAL);
+				}
+			}
+
+			setEffective(new FhirPeriod(act.getEffectiveTime()));
+
+			if (act.getAuthor() != null) {
+				for (POCDMT000040Author author : act.getAuthor()) {
+					if (author != null) {
+						addPerformer(new Reference(String.format("PractitionerRole/%s-performer", id)));
+						FhirPractitionerRole practitionerRole = new FhirPractitionerRole(author,
+								String.format("%s-performer", id));
+						resources.add(practitionerRole);
+						resources.addAll(practitionerRole.getResources());
+					}
+				}
+			}
+
+			if (act.getReference() != null) {
+				for (POCDMT000040Reference reference : act.getReference()) {
+					if (reference != null) {
+						addDerivedFrom(new Reference(String.format("DocumentReference/%s-document", id)));
+						resources.add(new FhirDocumentReference(reference, String.format("%s-document", id)));
+					}
+				}
+			}
+
+			if (act.getEntryRelationship() != null && !act.getEntryRelationship().isEmpty()) {
+				for (POCDMT000040EntryRelationship entryRel : act.getEntryRelationship()) {
+					if (entryRel != null) {
+						if (entryRel.getObservation() != null) {
+							fromPOCDMT000040Observation(entryRel.getObservation(), text);
+						} else if (entryRel.getOrganizer() != null) {
+							fromPOCDMT000040Organizer(entryRel.getOrganizer(), text);
+						}
+					}
+				}
+			}
+
+			setCode(code);
+			addCategory(new CodeableConcept(new Coding(ObservationCategory.EXAM.getSystem(),
+					ObservationCategory.EXAM.toCode(), ObservationCategory.EXAM.getDisplay())));
+		}
+	}
+
+	private void fromPOCDMT000040Observation(POCDMT000040Observation observation, String text) {
+		if (observation != null) {
+			if (observation.getValue() != null && !observation.getValue().isEmpty()) {
+				setValue(extractValue(observation.getValue().get(0)));
+			}
+
+			if (observation.getEffectiveTime() != null) {
+				setEffective(new FhirPeriod(observation.getEffectiveTime()));
+			}
+		}
+	}
+
+	private void fromPOCDMT000040Organizer(POCDMT000040Organizer organizer, String text) {
+		if (organizer != null && organizer.getComponent() != null) {
+			for (POCDMT000040Component4 comp : organizer.getComponent()) {
+				if (comp != null && comp.getObservation() != null) {
+					ObservationComponentComponent observationComp = new ObservationComponentComponent();
+					observationComp.setCode(new FhirCodeableConcept(comp.getObservation().getCode()));
+
+					observationComp.setValue(extractValue(comp.getObservation().getValue().get(0)));
+
+					extractInterpretation(comp.getObservation().getInterpretationCode(), observationComp);
+
+					extractReferenceRange(comp.getObservation().getReferenceRange(), observationComp);
+
+					addComponent(observationComp);
+
+					if (comp.getObservation().getEffectiveTime() != null) {
+						setEffective(new FhirPeriod(comp.getObservation().getEffectiveTime()));
+					}
+				}
+			}
+		}
+	}
+
+	private void extractInterpretation(List<CE> interpratationCodes, ObservationComponentComponent observationComp) {
+		if (interpratationCodes != null) {
+			for (CE code : interpratationCodes) {
+				CodeableConcept concept = extractInterpretation(code);
+
+				if (concept != null) {
+					observationComp.addInterpretation(concept);
+				}
+			}
+		}
+	}
+
+	private CodeableConcept extractInterpretation(CE interpratationCode) {
+		if (interpratationCode != null) {
+			switch (interpratationCode.getCode()) {
+			case ElgaObservationInterpretation.POSITIVE_CODE:
+				return new CodeableConcept(new Coding(V3ObservationInterpretation.POS.getSystem(),
+						V3ObservationInterpretation.POS.name(), V3ObservationInterpretation.POS.getDisplay()));
+			case ElgaObservationInterpretation.NEGATIVE_CODE:
+				return new CodeableConcept(new Coding(V3ObservationInterpretation.NEG.getSystem(),
+						V3ObservationInterpretation.NEG.name(), V3ObservationInterpretation.NEG.getDisplay()));
+			case ElgaObservationInterpretation.INDETERMINATE_CODE:
+				return new CodeableConcept(new Coding(V3ObservationInterpretation.IND.getSystem(),
+						V3ObservationInterpretation.IND.name(), V3ObservationInterpretation.IND.getDisplay()));
+			default:
+				break;
+			}
+		}
+
+		return null;
+	}
+
+	private void extractReferenceRange(List<POCDMT000040ReferenceRange> referenceRanges,
+			ObservationComponentComponent observationComp) {
+		if (referenceRanges != null) {
+			for (POCDMT000040ReferenceRange referenceRange : referenceRanges) {
+				ObservationReferenceRangeComponent referenceRangeComp = new ObservationReferenceRangeComponent();
+
+				if (referenceRange.getObservationRange() != null) {
+					if (referenceRange.getObservationRange().getInterpretationCode() != null) {
+						referenceRangeComp.setType(
+								extractInterpretation(referenceRange.getObservationRange().getInterpretationCode()));
+					}
+
+					if (referenceRange.getObservationRange().getValue() instanceof IVLPQ) {
+						FhirRange range = new FhirRange((IVLPQ) referenceRange.getObservationRange().getValue());
+						referenceRangeComp.setLow(range.getLow());
+						referenceRangeComp.setHigh(range.getHigh());
+					} else if (referenceRange.getObservationRange().getValue() instanceof RTO) {
+						FhirRatio ratio = new FhirRatio((RTO) referenceRange.getObservationRange().getValue());
+						referenceRangeComp.setText(String.format("%d%s%d", ratio.getNumerator().getValue(),
+								ratio.getDenominator().getComparator().getDisplay(),
+								ratio.getDenominator().getValue()));
+					}
+				}
+				observationComp.addReferenceRange(referenceRangeComp);
+			}
+		}
+	}
+
+	private Type extractValue(ANY value) {
+		if (value instanceof PQ) {
+			return new FhirQuantity((PQ) value);
+		} else if (value instanceof IVLPQ) {
+			return new FhirRange((IVLPQ) value);
+		} else if (value instanceof BL) {
+			return new BooleanType(((BL) value).isValue());
+		} else if (value instanceof INT) {
+			return new IntegerType(((INT) value).getValue().intValue());
+		} else if (value instanceof IVLINT) {
+			return new FhirRange((IVLINT) value);
+		} else if (value instanceof ST) {
+			return new StringType(((ST) value).xmlContent);
+		} else if (value instanceof CD) {
+			return new FhirCodeableConcept((CD) value);
+		} else if (value instanceof CV) {
+			return new FhirCodeableConcept((CV) value);
+		} else if (value instanceof TS) {
+			return new DateTimeType(DateUtil.parseDateAndTime(((TS) value).getValue()));
+		} else if (value instanceof RTO || value instanceof RTOQTYQTY) {
+			return new FhirRatio((RTO) value);
+		} else if (value instanceof RTOPQPQ) {
+			return new FhirRatio((RTOPQPQ) value);
+		}
+
+		return null;
+	}
+
+}

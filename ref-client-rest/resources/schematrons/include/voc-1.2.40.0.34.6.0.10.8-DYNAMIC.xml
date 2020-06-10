@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.8" name="ELGA_EntityNamePartQualifier_VS" displayName="ELGA_EntityNamePartQualifier_VS" effectiveDate="2019-04-24T11:39:13" statusCode="draft" versionLabel="2019" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Werte zur Qualifizierung von Namensteilen.<br clear="none"/>
+            <b>Achtung</b>: Dieses Value Set besitzt weitere Attribute, die hier nicht darstellbar sind. Diese können vom Terminologieserver abgerufen werden:&#160;<a class="" href="https://termpub.gesundheit.gv.at/" target="_blank" title="https://termpub.gesundheit.gv.at">https://termpub.gesundheit.gv.at</a>&#160;<br clear="none"/>
+        </desc>
+        <sourceCodeSystem id="2.16.840.1.113883.5.43" identifierName="Entity&#160;Name&#160;Part&#160;Qualifier" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-EntityNamePartQualifier" canonicalUriDSTU2="http://hl7.org/fhir/v3/EntityNamePartQualifier" canonicalUriSTU3="http://hl7.org/fhir/v3/EntityNamePartQualifier" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-EntityNamePartQualifier"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="VV" codeSystem="2.16.840.1.113883.5.43" displayName="voorvoegsel" level="0" type="L"/>
+            <concept code="TITLE" codeSystem="2.16.840.1.113883.5.43" displayName="title" level="0" type="L"/>
+            <concept code="SP" codeSystem="2.16.840.1.113883.5.43" displayName="spouse" level="0" type="L"/>
+            <concept code="PR" codeSystem="2.16.840.1.113883.5.43" displayName="professional" level="0" type="L"/>
+            <concept code="NB" codeSystem="2.16.840.1.113883.5.43" displayName="nobility" level="0" type="L"/>
+            <concept code="LS" codeSystem="2.16.840.1.113883.5.43" displayName="Legal status" level="0" type="L"/>
+            <concept code="IN" codeSystem="2.16.840.1.113883.5.43" displayName="initial" level="0" type="L"/>
+            <concept code="CL" codeSystem="2.16.840.1.113883.5.43" displayName="callme" level="0" type="L"/>
+            <concept code="BR" codeSystem="2.16.840.1.113883.5.43" displayName="birth" level="0" type="L"/>
+            <concept code="AD" codeSystem="2.16.840.1.113883.5.43" displayName="adopted" level="0" type="L"/>
+            <concept code="AC" codeSystem="2.16.840.1.113883.5.43" displayName="academic" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

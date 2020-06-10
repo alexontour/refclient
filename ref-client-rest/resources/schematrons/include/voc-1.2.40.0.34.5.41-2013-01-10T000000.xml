@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.5.41"
+             displayName="ELGA_FormatCodeZusatz"
+             effectiveDate="2013-01-10T00:00:00"
+             name="ELGA_FormatCodeZusatz"
+             statusCode="deprecated">
+      <sourceCodeSystem id="1.2.40.0.34.5.41"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.41"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.41"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.41"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.41"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="TEXT"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="TEXT"
+                  level="0"
+                  type="L"/>
+                <concept code="CDAL1"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="CDAL1"
+                  level="0"
+                  type="L"/>
+                <concept code="PDF"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="PDF"
+                  level="0"
+                  type="L"/>
+                <concept code="PNG"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="PNG"
+                  level="0"
+                  type="L"/>
+                <concept code="JPG"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="JPG"
+                  level="0"
+                  type="L"/>
+                <concept code="GIF"
+                  codeSystem="1.2.40.0.34.5.41"
+                  displayName="GIF"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

@@ -1,0 +1,167 @@
+	<ExtrinsicObject home="urn:oid:1.2.40.0.34.3.9.107"
+		id="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424" mimeType="text/xml"
+		objectType="urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248"
+		status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+		<Slot name="languageCode">
+			<ValueList>
+				<Value>de-AT</Value>
+			</ValueList>
+		</Slot>
+		<Slot name="serviceStartTime">
+			<ValueList>
+				<Value>20160308170232</Value>
+			</ValueList>
+		</Slot>
+		<Slot name="serviceStopTime">
+			<ValueList>
+				<Value>20160308170232</Value>
+			</ValueList>
+		</Slot>
+		<Slot name="repositoryUniqueId">
+			<ValueList>
+				<Value>1.2.40.0.34.6.7</Value>
+			</ValueList>
+		</Slot>
+		<Slot name="sourcePatientId">
+			<ValueList>
+				<Value>BPKGH^^^&amp;1.2.40.0.10.2.1.1.149&amp;ISO</Value>
+			</ValueList>
+		</Slot>
+		<Slot name="sourcePatientInfo">
+			<ValueList>
+				<Value>PID-3|BPKGH^^^&amp;1.2.40.0.10.2.1.1.149&amp;ISO
+				</Value>
+				<Value>PID-5|Random^Tom^^^Dr.</Value>
+				<Value>PID-7|19800328000000</Value>
+				<Value>PID-8|M</Value>
+			</ValueList>
+		</Slot>
+		<Name>
+			<LocalizedString charset="UTF-8"
+				value="Medikationsliste" xml:lang="en-US" />
+		</Name>
+		<Classification
+			classificationScheme="urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:61b80f10-7b2b-419a-a2ef-c65697534f2e"
+			nodeRepresentation="">
+			<Slot name="authorPerson">
+				<ValueList>
+					<Value>^ELGA Anwendung e-Medikation^16.1.2.0</Value>
+				</ValueList>
+			</Slot>
+			<Slot name="authorInstitution">
+				<ValueList>
+					<Value>ELGA Anwendung e-Medikation^^^^^^^^^1.2.40.0.34.3.9.107</Value>
+				</ValueList>
+			</Slot>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:c775da70-4168-44c5-ad51-1dcaf3796c06"
+			nodeRepresentation="52471-0">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:2.16.840.1.113883.6.1</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8" value="Medications"
+					xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:39ebdc01-7b98-423e-9b34-8e7b14a6b7da"
+			nodeRepresentation="urn:elga:emedat:2015-v2.06">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:1.2.40.0.34.5.37</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8"
+					value="ELGA e-Medikation v2.06" xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:ad643eca-4d4e-4f0c-a10e-004ee90c1b8c"
+			nodeRepresentation="406">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:1.2.40.0.34.5.2</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8"
+					value="Sozialversicherung" xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:a6c2b483-7e6c-4987-b948-8d18984ef5a0"
+			nodeRepresentation="F023">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:1.2.40.0.34.5.12</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8"
+					value="Interdisziplinärer Bereich" xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:3c72aa7a-c9d4-4480-8ba3-cde402dca55d"
+			nodeRepresentation="56445-0">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:2.16.840.1.113883.6.1</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8"
+					value="Medication summary Document" xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<Classification
+			classificationScheme="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f"
+			classifiedObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			id="urn:uuid:0c3f21dd-bd92-4ee7-98b2-2011173150b7"
+			nodeRepresentation="N">
+			<Slot name="codingScheme">
+				<ValueList>
+					<Value>urn:oid:2.16.840.1.113883.5.25</Value>
+				</ValueList>
+			</Slot>
+			<Name>
+				<LocalizedString charset="UTF-8" value="normal"
+					xml:lang="en-US" />
+			</Name>
+		</Classification>
+		<ExternalIdentifier
+			id="urn:uuid:8ea3a3d8-6762-468f-8ea2-f2245d7fa7ea"
+			identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427"
+			registryObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			value="BPKGH^^^&amp;1.2.40.0.10.2.1.1.149&amp;ISO">
+			<Name>
+				<LocalizedString value="XDSDocumentEntry.patientId" />
+			</Name>
+		</ExternalIdentifier>
+		<ExternalIdentifier
+			id="urn:uuid:3f321f9a-c8f3-4e16-b545-39e4b196cacc"
+			identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab"
+			registryObject="urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424"
+			value="1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S">
+			<Name>
+				<LocalizedString value="XDSDocumentEntry.uniqueId" />
+			</Name>
+		</ExternalIdentifier>
+	</ExtrinsicObject>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.17" name="ELGA_PersonalRelationship" displayName="ELGA_PersonalRelationship" effectiveDate="2018-01-18T00:00:00" statusCode="final" versionLabel="4.0" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Das ValueSet dient zur Beschreibung der persönlichen Beziehung zwischen einer Person und anderen Personen.</desc>
+        <sourceCodeSystem id="2.16.840.1.113883.5.111" identifierName="Role&#160;Code" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-RoleCode" canonicalUriDSTU2="http://hl7.org/fhir/v3/RoleCode" canonicalUriSTU3="http://hl7.org/fhir/v3/RoleCode" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="FAMMEMB" codeSystem="2.16.840.1.113883.5.111" displayName="Family Member" level="0" type="S"/>
+            <concept code="SPS" codeSystem="2.16.840.1.113883.5.111" displayName="spouse" level="1" type="S"/>
+            <concept code="HUSB" codeSystem="2.16.840.1.113883.5.111" displayName="husband" level="2" type="L"/>
+            <concept code="WIFE" codeSystem="2.16.840.1.113883.5.111" displayName="wife" level="2" type="L"/>
+            <concept code="PRN" codeSystem="2.16.840.1.113883.5.111" displayName="Parent" level="1" type="S"/>
+            <concept code="FTH" codeSystem="2.16.840.1.113883.5.111" displayName="Father" level="2" type="L"/>
+            <concept code="MTH" codeSystem="2.16.840.1.113883.5.111" displayName="Mother" level="2" type="L"/>
+            <concept code="NPRN" codeSystem="2.16.840.1.113883.5.111" displayName="natural parent" level="2" type="S"/>
+            <concept code="NFTH" codeSystem="2.16.840.1.113883.5.111" displayName="natural father" level="3" type="L"/>
+            <concept code="NMTH" codeSystem="2.16.840.1.113883.5.111" displayName="natural mother" level="3" type="L"/>
+            <concept code="PRNINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="parent in-law" level="2" type="S"/>
+            <concept code="FTHINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="father-in-law" level="3" type="L"/>
+            <concept code="MTHINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="mother-in-law" level="3" type="L"/>
+            <concept code="STPPRN" codeSystem="2.16.840.1.113883.5.111" displayName="step parent" level="2" type="S"/>
+            <concept code="STPFTH" codeSystem="2.16.840.1.113883.5.111" displayName="stepfather" level="3" type="L"/>
+            <concept code="STPMTH" codeSystem="2.16.840.1.113883.5.111" displayName="stepmother" level="3" type="L"/>
+            <concept code="SIB" codeSystem="2.16.840.1.113883.5.111" displayName="Sibling" level="1" type="S"/>
+            <concept code="BRO" codeSystem="2.16.840.1.113883.5.111" displayName="Brother" level="2" type="L"/>
+            <concept code="SIS" codeSystem="2.16.840.1.113883.5.111" displayName="Sister" level="2" type="L"/>
+            <concept code="HSIB" codeSystem="2.16.840.1.113883.5.111" displayName="half-sibling" level="2" type="S"/>
+            <concept code="HBRO" codeSystem="2.16.840.1.113883.5.111" displayName="half-brother" level="3" type="L"/>
+            <concept code="HSIS" codeSystem="2.16.840.1.113883.5.111" displayName="half-sister" level="3" type="L"/>
+            <concept code="NSIB" codeSystem="2.16.840.1.113883.5.111" displayName="natural sibling" level="2" type="S"/>
+            <concept code="NBRO" codeSystem="2.16.840.1.113883.5.111" displayName="natural brother" level="3" type="L"/>
+            <concept code="NSIS" codeSystem="2.16.840.1.113883.5.111" displayName="natural sister" level="3" type="L"/>
+            <concept code="SIBINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="sibling in-law" level="2" type="S"/>
+            <concept code="BROINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="brother-in-law" level="3" type="L"/>
+            <concept code="SISINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="sister-in-law" level="3" type="L"/>
+            <concept code="STPSIB" codeSystem="2.16.840.1.113883.5.111" displayName="step sibling" level="2" type="S"/>
+            <concept code="STPBRO" codeSystem="2.16.840.1.113883.5.111" displayName="stepbrother" level="3" type="L"/>
+            <concept code="STPSIS" codeSystem="2.16.840.1.113883.5.111" displayName="stepsister" level="3" type="L"/>
+            <concept code="CHILD" codeSystem="2.16.840.1.113883.5.111" displayName="Child" level="1" type="S"/>
+            <concept code="NCHILD" codeSystem="2.16.840.1.113883.5.111" displayName="natural child" level="2" type="L"/>
+            <concept code="CHLDADOPT" codeSystem="2.16.840.1.113883.5.111" displayName="adopted child" level="2" type="L"/>
+            <concept code="CHLDFOST" codeSystem="2.16.840.1.113883.5.111" displayName="foster child" level="2" type="L"/>
+            <concept code="CHLDINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="child in-law" level="2" type="L"/>
+            <concept code="STPCHLD" codeSystem="2.16.840.1.113883.5.111" displayName="step child" level="2" type="L"/>
+            <concept code="DAUC" codeSystem="2.16.840.1.113883.5.111" displayName="Daughter" level="2" type="S"/>
+            <concept code="DAU" codeSystem="2.16.840.1.113883.5.111" displayName="natural daughter" level="3" type="L"/>
+            <concept code="DAUADOPT" codeSystem="2.16.840.1.113883.5.111" displayName="adopted daughter" level="3" type="L"/>
+            <concept code="DAUFOST" codeSystem="2.16.840.1.113883.5.111" displayName="foster daughter" level="3" type="L"/>
+            <concept code="DAUINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="daughter in-law" level="3" type="L"/>
+            <concept code="STPDAU" codeSystem="2.16.840.1.113883.5.111" displayName="stepdaughter" level="3" type="L"/>
+            <concept code="SONC" codeSystem="2.16.840.1.113883.5.111" displayName="son" level="2" type="S"/>
+            <concept code="SON" codeSystem="2.16.840.1.113883.5.111" displayName="natural son" level="3" type="L"/>
+            <concept code="SONADOPT" codeSystem="2.16.840.1.113883.5.111" displayName="adopted son" level="3" type="L"/>
+            <concept code="SONFOST" codeSystem="2.16.840.1.113883.5.111" displayName="foster son" level="3" type="L"/>
+            <concept code="SONINLAW" codeSystem="2.16.840.1.113883.5.111" displayName="son in-law" level="3" type="L"/>
+            <concept code="STPSON" codeSystem="2.16.840.1.113883.5.111" displayName="stepson" level="3" type="L"/>
+            <concept code="GRPRN" codeSystem="2.16.840.1.113883.5.111" displayName="Grandparent" level="1" type="S"/>
+            <concept code="GRFTH" codeSystem="2.16.840.1.113883.5.111" displayName="Grandfather" level="2" type="L"/>
+            <concept code="GRMTH" codeSystem="2.16.840.1.113883.5.111" displayName="Grandmother" level="2" type="L"/>
+            <concept code="GGRPRN" codeSystem="2.16.840.1.113883.5.111" displayName="great grandparent" level="1" type="S"/>
+            <concept code="GGRFTH" codeSystem="2.16.840.1.113883.5.111" displayName="great grandfather" level="2" type="L"/>
+            <concept code="GGRMTH" codeSystem="2.16.840.1.113883.5.111" displayName="great grandmother" level="2" type="L"/>
+            <concept code="GRNDCHILD" codeSystem="2.16.840.1.113883.5.111" displayName="grandchild" level="1" type="S"/>
+            <concept code="GRNDDAU" codeSystem="2.16.840.1.113883.5.111" displayName="granddaughter" level="2" type="L"/>
+            <concept code="GRNDSON" codeSystem="2.16.840.1.113883.5.111" displayName="grandson" level="2" type="L"/>
+            <concept code="AUNT" codeSystem="2.16.840.1.113883.5.111" displayName="aunt" level="1" type="L"/>
+            <concept code="UNCLE" codeSystem="2.16.840.1.113883.5.111" displayName="uncle" level="1" type="L"/>
+            <concept code="NIENEPH" codeSystem="2.16.840.1.113883.5.111" displayName="niece/nephew" level="1" type="L"/>
+            <concept code="COUSN" codeSystem="2.16.840.1.113883.5.111" displayName="cousin" level="1" type="L"/>
+            <concept code="FRND" codeSystem="2.16.840.1.113883.5.111" displayName="unrelated friend" level="0" type="L"/>
+            <concept code="SIGOTHR" codeSystem="2.16.840.1.113883.5.111" displayName="significant other" level="0" type="L"/>
+            <concept code="ROOM" codeSystem="2.16.840.1.113883.5.111" displayName="Roommate" level="0" type="L"/>
+            <concept code="DOMPART" codeSystem="2.16.840.1.113883.5.111" displayName="domestic partner" level="0" type="L"/>
+            <concept code="NBOR" codeSystem="2.16.840.1.113883.5.111" displayName="neighbor" level="0" type="L"/>
+            <concept code="SPON" codeSystem="2.16.840.1.113883.5.111" displayName="sponsored dependent" level="0" type="L"/>
+            <concept code="GUARD" codeSystem="2.16.840.1.113883.5.111" displayName="guardian" level="0" type="L"/>
+            <concept code="SELF" codeSystem="2.16.840.1.113883.5.111" displayName="self" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

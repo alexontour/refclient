@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.3" name="eImpf_SpecialCaseVaccination_VS" displayName="eImpf_SpecialCaseVaccination_VS" effectiveDate="2020-02-05T00:00:00" statusCode="draft" versionLabel="202002(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Sonderfälle für Impfeinträge (Immunization Entry, Immunization Recommendation Entry). Enthält durch SNOMED International urheberrechtlich geschützte Information. Jede Verwendung von SNOMED CT in Österreich erfordert eine aufrechte Affiliate Lizenz oder eine Sublizenz. Die entsprechende Lizenz ist kostenlos, vorausgesetzt die Verwendung findet nur in Österreich statt und erfüllt die Bedingungen des Affiliate License Agreements. Affiliate Lizenzen können über das Member Licensing and Distribution Service (MLDS) direkt beim jeweiligen NRC beantragt werden. https://mlds.ihtsdotools.org/#/landing/AT?lang=de<br clear="none"/>
+            <b>Achtung</b>: Dieses Value Set besitzt weitere Attribute, die hier nicht darstellbar sind. Diese können vom Terminologieserver abgerufen werden:&#160;<a class="" href="https://termpub.gesundheit.gv.at/" target="_blank" title="https://termpub.gesundheit.gv.at">https://termpub.gesundheit.gv.at</a>&#160;</desc>
+        <desc language="en-US">Special cases for vaccination entries (Immunization Entry, Immunization Recommendation Entry). Contains information protected by copyright of SNOMED International. Any use of SNOMED CT in Austria requires a valid affiliate license or sublicense. The corresponding license is free of charge, provided that the use only takes place in Austria and fulfills the conditions of the Affiliate License Agreement. Affiliate licenses can be requested directly from the respective NRC via the Member Licensing and Distribution Service (MLDS). https://mlds.ihtsdotools.org/#/landing/AT?lang=de</desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.183" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.183" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.183" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.183" canonicalUriR4="urn:oid:1.2.40.0.34.5.183"/>
+        <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED&#160;Clinical&#160;Terms" canonicalUri="http://snomed.info/sct" canonicalUriDSTU2="http://snomed.info/sct" canonicalUriSTU3="http://snomed.info/sct" canonicalUriR4="http://snomed.info/sct"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <copyright language="en-US">This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</copyright>
+        <conceptList>
+            <concept code="_Rot" codeSystem="1.2.40.0.34.5.183" displayName="Rot" level="0" type="A"/>
+            <concept code="424272000" codeSystem="2.16.840.1.113883.6.96" displayName="Inadequate immune status" level="1" type="L"/>
+            <concept code="789540001" codeSystem="2.16.840.1.113883.6.96" displayName="Immunization overdue" level="1" type="L"/>
+            <concept code="_Gelb" codeSystem="1.2.40.0.34.5.183" displayName="Gelb" level="0" type="A"/>
+            <concept code="171279008" codeSystem="2.16.840.1.113883.6.96" displayName="Immunization due" level="1" type="L"/>
+            <concept code="789539003" codeSystem="2.16.840.1.113883.6.96" displayName="Date immunization due" level="1" type="L"/>
+            <concept code="_Gelb-leer" codeSystem="1.2.40.0.34.5.183" displayName="Gelb-leer" level="0" type="A"/>
+            <concept code="122541000119104" codeSystem="2.16.840.1.113883.6.96" displayName="Vaccination needed" level="1" type="L"/>
+            <concept code="_Grün" codeSystem="1.2.40.0.34.5.183" displayName="Grün" level="0" type="A"/>
+            <concept code="191441008" codeSystem="2.16.840.1.113883.6.96" displayName="Acquired immunity, function" level="1" type="L"/>
+            <concept code="713404003" codeSystem="2.16.840.1.113883.6.96" displayName="Vaccination given" level="1" type="L"/>
+            <concept code="171258008" codeSystem="2.16.840.1.113883.6.96" displayName="Up-to-date with immunizations" level="1" type="L"/>
+            <concept code="_Blau" codeSystem="1.2.40.0.34.5.183" displayName="Blau" level="0" type="A"/>
+            <concept code="723620004" codeSystem="2.16.840.1.113883.6.96" displayName="Requires vaccination" level="1" type="L"/>
+            <concept code="171288004" codeSystem="2.16.840.1.113883.6.96" displayName="No immunization history record" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

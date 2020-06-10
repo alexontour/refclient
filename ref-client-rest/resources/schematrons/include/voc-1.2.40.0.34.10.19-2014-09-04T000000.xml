@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.19"
+             name="ELGA_RoleClass"
+             displayName="ELGA_RoleClass"
+             effectiveDate="2014-09-04T00:00:00"
+             statusCode="final"
+             versionLabel="2.8">
+      <sourceCodeSystem id="2.16.840.1.113883.5.110"
+                        identifierName="Role Class"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-RoleClass"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/RoleClass"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/RoleClass"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-RoleClass"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="ECON"
+                  codeSystem="2.16.840.1.113883.5.110"
+                  displayName="emergency contact"
+                  level="0"
+                  type="L"/>
+                <concept code="NOK"
+                  codeSystem="2.16.840.1.113883.5.110"
+                  displayName="next of kin"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

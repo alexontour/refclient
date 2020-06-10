@@ -147,7 +147,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
   - `recorded` *(String)* *(required)* - approval date of immunization
   - `performer`*(Array)* *(required)* - The person who carries out the vaccination, e.g. a physician or a midwife or DGKP in the transferred area of activity. If the details of performer was not given like name or organization, the data of the author will be used as default values. Only the function code have no default value.  
     - `function`*(Object)**(required) - role of vaccinating person. Possible values can be find under <https://termpub.gesundheit.gv.at> in the value set eImpf_Impfrollen_VS. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
-    - `actor`*(Object)* *(required)* - reference to performer. Structure described at <https://www.hl7.org/fhir/references.html#Reference>
+    - `actor`*(Object)* *(required)* - reference to performer. Structure described at <https://www.hl7.org/fhir/references.html#Reference>. Referenced resource must be PractitionerRole
 
 #### JSON Object immunization recommendation
 
@@ -155,7 +155,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
   - `resourceType` *(String)* *(required)* - type of resource here it is always `"ImmunizationRecommendation"`
   - `id` *(String)* *(required)* - id of immunization recommendation resource to reference from other resources
   - `identifier` *(String)* *(required)* - unique id of vaccination recommendation
-  - `date` *(String)* *(requiree)* - the date and time when vaccination was carried out
+  - `date` *(String)* *(requiree)* - the date and time when recommendation was created
   - `authority` *(Object)* *(optional)* - reference to responsible organization, who generates recommendation. Structure described at <https://www.hl7.org/fhir/references.html#Reference>
   - `patient` *(Object)* *(required)* - reference to patient. Structure described at <https://www.hl7.org/fhir/patient.html>
   - `recommendation` *(Array)* *(required)* - vaccine administration recommendations. At least one recommencation must be included.
@@ -164,6 +164,36 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `doseNumberString` *(String)* *(optional)* - information which vaccination or partial vaccination it was. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_Impfdosis_VS
     - `targetDisease` *(Object)* *(optional)* - String array with vaccination protection against specific disease or pathogen. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_ImmunizationTarget_VS. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
     - `forecastStatus` *(Object)* *(required)* - vaccine recommendation status. Possible values are available under <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=eImpf_SpecialCaseVaccination_VS>. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
+    - `dateCriterion` *(Array)* *(optional)* - recommended date
+      - `code` *(Object)* *(required)* - type of date. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>. Possible values are `"recommended"`
+      - `value` *(String)* *(required)* - recommended date. Period covered by the vaccination recommendation.
+
+#### JSON Object observation for relevant disease
+
+- `resource` *(Object)* - observation.(<https://www.hl7.org/fhir/observation.html>)
+  - `resourceType` *(String)* *(required)* - type of resource here it is always `"Observation"`
+  - `id` *(String)* *(required)* - id of observation resource to reference from other resources
+  - `identifier` *(String)* *(required)* - unique id of relevante disease
+  - `status` *(String)* *(required)* - information whether the disease is still relevant
+  - `effectivePeriod` *(Object)* *(required)* - start and end of disease. End of disease is only needed if attribute `status` is `"final"`. Structure described at <https://www.hl7.org/fhir/datatypes.html#Period>
+  - `category` *(Object)* *(optional)* - type of observation. For relevant disease it must be `"exam"`
+  - `code` *(Object)* *(required)* - type of observation. This it must be `"11348-0"` (history of past illness)
+  - `note` *(Object)* *(optional)* - remarks in free text for the purpose of entering evidence of relevant disease, e.g. preliminary or laboratory results with titre. Structure described at <https://www.hl7.org/fhir/datatypes.html#Annotation>
+  - `performer` *(Object)* *(optional)* - reference to responsible physician, who documents relevant disease. Structure described at <https://www.hl7.org/fhir/references.html#Reference>
+  - `derivedFrom` *(Object)* *(optional)* - reference to DocumentReference of the original documentation. Structure described at <https://www.hl7.org/fhir/references.html#Reference>
+
+#### JSON Object observation for exposure risks
+
+- `resource` *(Object)* - observation.(<https://www.hl7.org/fhir/observation.html>)
+  - `resourceType` *(String)* *(required)* - type of resource here it is always `"Observation"`
+  - `id` *(String)* *(required)* - id of observation resource to reference from other resources
+  - `identifier` *(String)* *(required)* - unique id of exposure risk
+  - `status` *(String)* *(required)* - information whether risk is still relevant
+  - `effectivePeriod` *(Object)* *(required)* - start and end of risk. End of risk is only needed if attribute `status` is `"final"`. Structure described at <https://www.hl7.org/fhir/datatypes.html#Period>
+  
+  - `category` *(Object)* *(optional)* - type of observation. For relevant disease it must be `"exam"`
+  - `type` *(Object)* *(required)* - type of observation. This it must be `"11339-9"` (history of major illnesses and injuries)
+  - `note` *(Object)* *(optional)* - remarks in free text for the purpose of entering evidence of relevant disease, e.g. preliminary or laboratory results with titre. Structure described at <https://www.hl7.org/fhir/datatypes.html#Annotation>
 
 **Example:**
 

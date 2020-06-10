@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.26"
+             displayName="ELGA_Rollen"
+             effectiveDate="2011-12-19T00:00:00"
+             name="ELGA_Rollen"
+             statusCode="deprecated">
+      <sourceCodeSystem id="1.2.40.0.34.5.3"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.3"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.3"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.3"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.3"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="700"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="Arzt"
+                  level="0"
+                  type="L"/>
+                <concept code="701"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="Zahnarzt"
+                  level="0"
+                  type="L"/>
+                <concept code="702"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="Krankenanstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="703"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="Einrichtung der Pflege"
+                  level="0"
+                  type="L"/>
+                <concept code="704"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="Apotheke"
+                  level="0"
+                  type="L"/>
+                <concept code="705"
+                  codeSystem="1.2.40.0.34.5.3"
+                  displayName="ELGA-Beratung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

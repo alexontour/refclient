@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.67" name="ELGA_MedikationMengenartAlternativ" displayName="ELGA_MedikationMengenartAlternativ" effectiveDate="2014-03-06T00:00:00" statusCode="final" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">ELGA ValueSet für alternative Mengenarten (zählbar)</desc>
+        <sourceCodeSystem id="1.2.40.0.10.1.4.3.4.3.2" identifierName="" canonicalUri="urn:oid:1.2.40.0.10.1.4.3.4.3.2" canonicalUriDSTU2="urn:oid:1.2.40.0.10.1.4.3.4.3.2" canonicalUriSTU3="urn:oid:1.2.40.0.10.1.4.3.4.3.2" canonicalUriR4="urn:oid:1.2.40.0.10.1.4.3.4.3.2"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="{TAB}" codeSystem="1.2.40.0.10.1.4.3.4.3.2" displayName="Tablette" level="0" type="L"/>
+            <concept code="{HUB}" codeSystem="1.2.40.0.10.1.4.3.4.3.2" displayName="Hub" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

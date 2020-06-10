@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.5" name="eImpf_Impfschema_VS" displayName="eImpf_Impfschema_VS" effectiveDate="2020-03-05T00:00:00" statusCode="draft" versionLabel="202003(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Regelwerk der Impfdosen zur Erlangung der Grundimmunisierung oder deren Auffrischung</desc>
+        <desc language="en-US">Rules on vaccine doses for obtaining or refreshing (boosting) basic immunisation</desc>
+        <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED&#160;Clinical&#160;Terms" canonicalUri="http://snomed.info/sct" canonicalUriDSTU2="http://snomed.info/sct" canonicalUriSTU3="http://snomed.info/sct" canonicalUriR4="http://snomed.info/sct"/>
+        <sourceCodeSystem id="1.2.40.0.34.5.183" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.183" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.183" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.183" canonicalUriR4="urn:oid:1.2.40.0.34.5.183"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <copyright language="en-US">This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</copyright>
+        <conceptList>
+            <concept code="428214002" codeSystem="2.16.840.1.113883.6.96" displayName="Diphtherie Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM01" codeSystem="1.2.40.0.34.5.183" displayName="Diphtherie Grundschema" level="1" type="L"/>
+            <concept code="SCHEM02" codeSystem="1.2.40.0.34.5.183" displayName="Diphtherie Indikationschema" level="1" type="L"/>
+            <concept code="333699008" codeSystem="2.16.840.1.113883.6.96" displayName="Frühsommer-Meningoencephalitis Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM03" codeSystem="1.2.40.0.34.5.183" displayName="Frühsommer-Meningoenzephalitis (FSME) Grundschema" level="1" type="L"/>
+            <concept code="SCHEM04" codeSystem="1.2.40.0.34.5.183" displayName="Frühsommer-Meningoenzephalitis (FSME) Indikationschema" level="1" type="L"/>
+            <concept code="SCHEM05" codeSystem="1.2.40.0.34.5.183" displayName="Frühsommer-Meningoenzephalitis (FSME) Schnellschema" level="1" type="L"/>
+            <concept code="333680004" codeSystem="2.16.840.1.113883.6.96" displayName="Haemophilus influenzae Typ B Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM06" codeSystem="1.2.40.0.34.5.183" displayName="Haemophilus influenzae Typ B Grundschema" level="1" type="L"/>
+            <concept code="SCHEM07" codeSystem="1.2.40.0.34.5.183" displayName="Haemophilus influenzae Typ B Indikationschema" level="1" type="L"/>
+            <concept code="14745005" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis A Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM08" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM09" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Indikationsschema" level="1" type="L"/>
+            <concept code="SCHEM10" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM11" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Schnellschema" level="1" type="L"/>
+            <concept code="SCHEM12" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis A Grundschema Typhus" level="1" type="L"/>
+            <concept code="34689006" codeSystem="2.16.840.1.113883.6.96" displayName="Hepatitis B Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM13" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis B Grundschema 4 Dosen" level="1" type="L"/>
+            <concept code="SCHEM14" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis B Indikationsschema" level="1" type="L"/>
+            <concept code="SCHEM15" codeSystem="1.2.40.0.34.5.183" displayName="Hepatitis B Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="424519000" codeSystem="2.16.840.1.113883.6.96" displayName="Humane Papillomaviren Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM16" codeSystem="1.2.40.0.34.5.183" displayName="HPV - Humane Papillomaviren Grundschema" level="1" type="L"/>
+            <concept code="SCHEM17" codeSystem="1.2.40.0.34.5.183" displayName="HPV - Humane Papillomaviren Indikationschema" level="1" type="L"/>
+            <concept code="46233009" codeSystem="2.16.840.1.113883.6.96" displayName="Influenza Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM18" codeSystem="1.2.40.0.34.5.183" displayName="Influenza (Virusgrippe) Grunschema" level="1" type="L"/>
+            <concept code="386012008" codeSystem="2.16.840.1.113883.6.96" displayName="Masern Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM19" codeSystem="1.2.40.0.34.5.183" displayName="Masern Grunschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM20" codeSystem="1.2.40.0.34.5.183" displayName="Masern Indikationschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM21" codeSystem="1.2.40.0.34.5.183" displayName="Masern Indikationschema 3 Dosen" level="1" type="L"/>
+            <concept code="90043005" codeSystem="2.16.840.1.113883.6.96" displayName="Mumps Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM22" codeSystem="1.2.40.0.34.5.183" displayName="Mumps Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM23" codeSystem="1.2.40.0.34.5.183" displayName="Mumps Indikationschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM24" codeSystem="1.2.40.0.34.5.183" displayName="Mumps Indikationschema 3 Dosen" level="1" type="L"/>
+            <concept code="386013003" codeSystem="2.16.840.1.113883.6.96" displayName="Röteln Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM25" codeSystem="1.2.40.0.34.5.183" displayName="Röteln Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM26" codeSystem="1.2.40.0.34.5.183" displayName="Röteln Indikationschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM27" codeSystem="1.2.40.0.34.5.183" displayName="Röteln Indikationschema 3 Dosen" level="1" type="L"/>
+            <concept code="785864002" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp B Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM28" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe B Grundschema 4 Dosen" level="1" type="L"/>
+            <concept code="SCHEM29" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe B Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM30" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe B Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM31" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe B Indikationschema" level="1" type="L"/>
+            <concept code="422069000" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp C Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM32" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe C Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM33" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe C Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM34" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppe C Grundschema 1 Dose" level="1" type="L"/>
+            <concept code="420261000" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp A+C+W135+Y Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM35" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppen A,C,W135 und Y (MEC-4) Grundschema" level="1" type="L"/>
+            <concept code="SCHEM36" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppen A,C,W135 und Y (MEC-4) Indikationschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM37" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken der Gruppen A,C,W135 und Y (MEC-4) Indikationschema 3 Dosen" level="1" type="L"/>
+            <concept code="333621002" codeSystem="2.16.840.1.113883.6.96" displayName="Tetanus Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM38" codeSystem="1.2.40.0.34.5.183" displayName="Tetanus Grundschema" level="1" type="L"/>
+            <concept code="SCHEM39" codeSystem="1.2.40.0.34.5.183" displayName="Tetanus Indikationschema" level="1" type="L"/>
+            <concept code="61602008" codeSystem="2.16.840.1.113883.6.96" displayName="Pertussis Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM40" codeSystem="1.2.40.0.34.5.183" displayName="Pertussis Grundschema" level="1" type="L"/>
+            <concept code="SCHEM41" codeSystem="1.2.40.0.34.5.183" displayName="Pertussis Indikationschema" level="1" type="L"/>
+            <concept code="111164008" codeSystem="2.16.840.1.113883.6.96" displayName="Poliomyelitis Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM42" codeSystem="1.2.40.0.34.5.183" displayName="Poliomyelitis Grundschema" level="1" type="L"/>
+            <concept code="SCHEM43" codeSystem="1.2.40.0.34.5.183" displayName="Poliomyelitis Indikationschema" level="1" type="L"/>
+            <concept code="333598008" codeSystem="2.16.840.1.113883.6.96" displayName="Pneumokokken Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM44" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM45" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM46" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Grundschema 1 Dose" level="1" type="L"/>
+            <concept code="SCHEM47" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Indikationschema 4 Dose" level="1" type="L"/>
+            <concept code="SCHEM48" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Indikationschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM49" codeSystem="1.2.40.0.34.5.183" displayName="Pneumokokken Indikationschema 2 Dosen" level="1" type="L"/>
+            <concept code="116077000" codeSystem="2.16.840.1.113883.6.96" displayName="Rotavirus Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM50" codeSystem="1.2.40.0.34.5.183" displayName="Rotavirus Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="SCHEM51" codeSystem="1.2.40.0.34.5.183" displayName="Rotavirus Grundschema 1 Dosis" level="1" type="L"/>
+            <concept code="SCHEM52" codeSystem="1.2.40.0.34.5.183" displayName="Rotavirus Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="108729007" codeSystem="2.16.840.1.113883.6.96" displayName="Varizellen Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM53" codeSystem="1.2.40.0.34.5.183" displayName="Varizellen (Windpocken, Feuchtblattern) Grundschema" level="1" type="L"/>
+            <concept code="SCHEM54" codeSystem="1.2.40.0.34.5.183" displayName="Varizellen (Windpocken, Feuchtblattern) Indikation" level="1" type="L"/>
+            <concept code="407737004" codeSystem="2.16.840.1.113883.6.96" displayName="Herpes Zoster Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM55" codeSystem="1.2.40.0.34.5.183" displayName="Herpes Zoster Grundschema" level="1" type="L"/>
+            <concept code="56844000" codeSystem="2.16.840.1.113883.6.96" displayName="Gelbfieber Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM56" codeSystem="1.2.40.0.34.5.183" displayName="Gelbfieber Grundschema" level="1" type="L"/>
+            <concept code="333697005" codeSystem="2.16.840.1.113883.6.96" displayName="Japanische Encephalitis Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM57" codeSystem="1.2.40.0.34.5.183" displayName="Japanische Enzephalitis Grundschema" level="1" type="L"/>
+            <concept code="SCHEM58" codeSystem="1.2.40.0.34.5.183" displayName="Japanische Enzephalitis Schnellimmunisierung" level="1" type="L"/>
+            <concept code="89428009" codeSystem="2.16.840.1.113883.6.96" displayName="Typhus Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM59" codeSystem="1.2.40.0.34.5.183" displayName="Typhus abdominalis Grundschema" level="1" type="L"/>
+            <concept code="SCHEM60" codeSystem="1.2.40.0.34.5.183" displayName="Typhus abdominalis Grundschema HepA" level="1" type="L"/>
+            <concept code="SCHEM61" codeSystem="1.2.40.0.34.5.183" displayName="Typhus abdominalis 3 Dosen" level="1" type="L"/>
+            <concept code="333606008" codeSystem="2.16.840.1.113883.6.96" displayName="Tollwut Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM62" codeSystem="1.2.40.0.34.5.183" displayName="Tollwut Grundschema" level="1" type="L"/>
+            <concept code="SCHEM63" codeSystem="1.2.40.0.34.5.183" displayName="Tollwut Schnellimmunisierung" level="1" type="L"/>
+            <concept code="35736007" codeSystem="2.16.840.1.113883.6.96" displayName="Cholera Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM64" codeSystem="1.2.40.0.34.5.183" displayName="Cholera Grundschema 3 Dosen" level="1" type="L"/>
+            <concept code="SCHEM65" codeSystem="1.2.40.0.34.5.183" displayName="Cholera Grundschema 2 Dosen" level="1" type="L"/>
+            <concept code="423531006" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM66" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken Grundschema" level="1" type="L"/>
+            <concept code="421281005" codeSystem="2.16.840.1.113883.6.96" displayName="Meningokokken Serotyp A+C Impfstoff" level="0" type="A"/>
+            <concept code="SCHEM67" codeSystem="1.2.40.0.34.5.183" displayName="Meningokokken Serotyp A+C Grundschema" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

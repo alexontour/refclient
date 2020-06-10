@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.71"
+             name="ELGA_MedikationPharmazeutischeEmpfehlungStatus"
+             displayName="ELGA_MedikationPharmazeutischeEmpfehlungStatus"
+             effectiveDate="2013-01-10T00:00:00"
+             statusCode="deprecated">
+      <sourceCodeSystem id="1.3.6.1.4.1.19376.1.9.2.1"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.3.6.1.4.1.19376.1.9.2.1"
+                        canonicalUriDSTU2="urn:oid:1.3.6.1.4.1.19376.1.9.2.1"
+                        canonicalUriSTU3="urn:oid:1.3.6.1.4.1.19376.1.9.2.1"
+                        canonicalUriR4="urn:oid:1.3.6.1.4.1.19376.1.9.2.1"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="CANCEL"
+                  codeSystem="1.3.6.1.4.1.19376.1.9.2.1"
+                  displayName="Storno/Absetzen"
+                  level="0"
+                  type="L"/>
+                <concept code="CHANGE"
+                  codeSystem="1.3.6.1.4.1.19376.1.9.2.1"
+                  displayName="Änderung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

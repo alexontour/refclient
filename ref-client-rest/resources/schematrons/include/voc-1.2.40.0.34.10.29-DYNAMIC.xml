@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.29"
+             name="ELGA_InformationRecipientType"
+             displayName="ELGA_InformationRecipientType"
+             effectiveDate="2014-09-04T00:00:00"
+             statusCode="final"
+             versionLabel="2.8"
+             url="http://art-decor.org/decor/services/"
+             ident="elgabbr-"
+             referencedFrom="elga-">
+      <sourceCodeSystem id="2.16.840.1.113883.5.90"
+                        identifierName="ParticipationType"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ParticipationType"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/ParticipationType"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/ParticipationType"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ParticipationType"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="PRCP"
+                  codeSystem="2.16.840.1.113883.5.90"
+                  displayName="primary information recipient"
+                  level="0"
+                  type="L"/>
+                <concept code="TRC"
+                  codeSystem="2.16.840.1.113883.5.90"
+                  displayName="tracker"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

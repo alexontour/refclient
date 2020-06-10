@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS's procedures with respect to rights in OASIS specifications can be found at the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementors or users of this specification, can be obtained from the OASIS Executive Director.
+OASIS invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to implement this specification. Please address the information to the OASIS Executive Director.
+Copyright © OASIS Open 2002-2006. All Rights Reserved.
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works. However, this document itself does not be modified in any way, such as by removing the copyright notice or references to OASIS, except as needed for the purpose of developing OASIS specifications, in which case the procedures for copyrights defined in the OASIS Intellectual Property Rights document must be followed, or as required to translate it into languages other than English.
+The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.
+This document and the information contained herein is provided on an AS IS basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+-->
+<xs:schema targetNamespace="http://docs.oasis-open.org/ws-sx/ws-trust/200512" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:ts="urn:tiani-spirit:ts" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:emed="urn:elga.emedid.rst" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+	<xs:import namespace="urn:tiani-spirit:ts" schemaLocation="tiani-claim.xsd"/>
+	<xs:import namespace="urn:elga.emedid.rst" schemaLocation="emed-claim.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:SAML:2.0:assertion" schemaLocation="saml-schema-assertion-2.0.xsd"/>
+	<xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+	<xs:simpleType name="ELGAETSTokenTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="urn:elga:bes:2013:HCP:assertion" />
+			<xs:enumeration value="urn:elga:bes:2013:service:assertion" />
+			<xs:enumeration value="urn:elga:bes:2013:user:assertion:1" />
+			<xs:enumeration value="urn:elga:bes:2013:mandate:assertion:1" />
+			<xs:enumeration value="urn:elga:bes:2013:mandate:assertion:WIST" />
+			<xs:enumeration value="urn:elga:bes:2013:mandate:assertion:OBST:1"/>
+			<xs:enumeration value="urn:elga:bes:2013:WIST:assertion" />
+			<xs:enumeration value="urn:elga:kbs:contact" />
+			<xs:enumeration value="urn:elga:kbs:contact:ecard" />
+			<xs:enumeration value="urn:elga:kbs:contact:delegate" />
+			<xs:enumeration value="urn:elga:kbs:contact:list" />
+			<xs:enumeration value="urn:elga:pap:query" />
+			<xs:enumeration value="urn:elga:pap:create" />
+			<xs:enumeration value="urn:elga:pap:submit" />
+			<xs:enumeration value="urn:elga:2014:EMEDID:assertion" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ELGARequestTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue" />
+			<xs:enumeration value="http://docs.oasis-open.org/ws-sx/ws-trust/200512/Cancel" />
+			<xs:enumeration value="http://docs.oasis-open.org/ws-sx/ws-trust/200512/Renew"/>
+			<xs:enumeration value="http://docs.oasis-open.org/ws-sx/ws-trust/200512/Status"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ELGAClaimsDialect">
+		<xs:restriction base="xs:anyURI">
+			<xs:enumeration value="urn:tiani-spirit:bes:2013:claims" />
+			<xs:enumeration value="urn:elga:emedid:2014:claims" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="RequestSecurityToken" type="wst:ELGARequestSecurityToken"/>
+	<xs:complexType name="ELGARequestSecurityToken">
+		<xs:all>
+			<xs:element name="TokenType" type="wst:ELGAETSTokenTypeType" nillable="true"/>
+			<xs:element name="RequestType" type="wst:ELGARequestTypeEnum" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="wst:ELGARequestSecurityTokenChoice" />
+		</xs:all>
+		<xs:attribute name="Context" type="xs:anyURI" use="optional"/>
+	</xs:complexType>
+	<xs:element name="ELGARequestSecurityTokenChoice" abstract="true"/>
+
+	<xs:element name="Claims" type='wst:ELGAClaimsType' substitutionGroup="wst:ELGARequestSecurityTokenChoice">
+		<xs:unique name="ClaimTypeNameUniqueKey">
+			<xs:selector xpath="ts:ClaimType" />
+			<xs:field xpath="@name" />
+		</xs:unique>
+	</xs:element>
+
+	<xs:complexType name="ELGAClaimsType">
+	<xs:choice minOccurs="1" maxOccurs="1">
+		<xs:sequence>
+			<xs:element ref="ts:ClaimType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:sequence>
+			<xs:element ref="emed:emedidRoot" minOccurs="0"/>
+			<xs:element ref="emed:emedidExtension" minOccurs="0"/>
+			<xs:element ref="emed:patidRoot" minOccurs="0"/>
+			<xs:element ref="emed:patidExtension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:choice>
+	<xs:attribute name="Dialect" type="wst:ELGAClaimsDialect" use="required"/>
+	</xs:complexType>
+
+	<xs:element name="CancelTarget" type="wst:ELGACancelTargetType" substitutionGroup="wst:ELGARequestSecurityTokenChoice"/>
+	<xs:element name="RenewTarget" type="wst:EGLARenewTargetType" substitutionGroup="wst:ELGARequestSecurityTokenChoice"/>
+	<xs:element name="ValidateTarget" type="wst:ELGAValidateTarget" substitutionGroup="wst:ELGARequestSecurityTokenChoice"/>
+
+	<xs:complexType name="EGLARenewTargetType">
+		<xs:sequence>
+			<xs:element ref="wsse:SecurityTokenReference"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ELGACancelTargetType">
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element ref="ts:TRID"/>
+				<xs:element ref="wsse:SecurityTokenReference"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ELGAValidateTarget">
+		<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element ref="ts:PatientID"/>
+				<xs:element ref="ts:ConsentQuery"/>
+				<xs:element ref="ts:ConsentRetrieve"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LifetimeType">
+		<xs:sequence>
+			<xs:element ref="wsu:Created" minOccurs="0" />
+			<xs:element ref="wsu:Expires" minOccurs="0" />
+			</xs:sequence>
+	</xs:complexType>
+
+	<!-- RequestSecurityTokenResponse from WS-Trust-->
+		<xs:element name="RequestSecurityTokenResponse" type="wst:RequestSecurityTokenResponseType"/>
+	<xs:complexType name="RequestSecurityTokenResponseType">
+		<xs:sequence>
+			<xs:element name="TokenType" type="wst:ELGAETSTokenTypeType" nillable="true"/>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element name="RequestedSecurityToken" type="wst:RequestedSecurityTokenType"/>
+				<xs:element name="RequestedTokenCancelled" type="xs:string" />
+			</xs:choice>
+			<xs:element name="Lifetime" type="wst:LifetimeType" minOccurs="0" />
+			<xs:element ref="emed:patidRoot" minOccurs="0" />
+			<xs:element ref="emed:patidExtension" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="Context" type="xs:anyURI" use="optional"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+
+
+	
+	<xs:complexType name="RequestedSecurityTokenType">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="1">
+				<xs:element ref="ts:TRID"/>
+				<xs:element ref="ts:TR"/>
+				<xs:element ref="ts:GeneratedPolicies"/>
+				<xs:element ref="ts:ElgaToken"/>
+				<xs:element ref="saml2:Assertion"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="RequestSecurityTokenResponseCollection" type="wst:RequestSecurityTokenResponseCollectionType"/>
+	<xs:complexType name="RequestSecurityTokenResponseCollectionType">
+		<xs:sequence>
+			<xs:element ref="wst:RequestSecurityTokenResponse" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+</xs:schema>

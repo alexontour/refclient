@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="http://ihe.spirit.com/" name="IHERegistryService" xmlns:tns="http://ihe.spirit.com/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+ xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+ xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+ xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+ xmlns:wsp="http://www.w3.org/ns/ws-policy"
+ xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"
+ xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+ xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"
+ xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"
+xmlns:mime="http://www.w3.org/2004/06/xmlmime"
+xmlns:encoding="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" 
+xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+	<types>
+		<xsd:schema>
+			<xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+			<xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+			<xsd:import namespace="http://www.w3.org/2006/05/addressing/wsdl" schemaLocation="addressing-wsdl.xsd"/>
+			<xsd:import namespace="http://www.w3.org/ns/ws-policy" schemaLocation="ws-policy.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" schemaLocation="rs.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" schemaLocation="lcm.xsd"/>
+			<xsd:import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="soap-envelope.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" schemaLocation="query.xsd"/>
+		</xsd:schema>
+	</types>
+	<message name="RegisterDocumentSetbRequest">
+		<part name="RegisterDocumentSetbRequest" element="lcm:SubmitObjectsRequest"/>
+	</message>
+	<message name="RegistryStoredQuery">
+		<part name="RegistryStoredQuery" element="query:AdhocQueryRequest"/>
+	</message>
+	<message name="RegistryResponse">
+		<part name="response" element="rs:RegistryResponse"/>
+	</message>
+	<message name="AdhocQueryResponse">
+		<part name="response" element="query:AdhocQueryResponse"/>
+	</message>
+	<message name="UpdateDocumentSetRequest">
+		<part name="UpdateDocumentSetRequest" element="lcm:SubmitObjectsRequest"/>
+	</message>
+	<message name="DeleteDocumentSetRequest">
+		<part name="DeleteDocumentSetRequest" element="lcm:RemoveObjectsRequest"/>
+	</message>
+	<message name="MsgHeader">
+		<part name="Security" element="wsse:Security"/>
+	</message>
+	<message name="AccessDeniedMessage">
+		<part name="AccessDenied" element="env:Fault"/>
+	</message>
+	<portType name="IHE">
+		<operation name="RegisterDocumentSetbRequest">
+			<input message="tns:RegisterDocumentSetbRequest" wsaw:Action="urn:ihe:iti:2007:RegisterDocumentSet-b"/>
+			<output message="tns:RegistryResponse" wsaw:Action="urn:ihe:iti:2007:RegisterDocumentSet-bResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+		<operation name="RegistryStoredQuery">
+			<input message="tns:RegistryStoredQuery" wsaw:Action="urn:ihe:iti:2007:RegistryStoredQuery"/>
+			<output message="tns:AdhocQueryResponse" wsaw:Action="urn:ihe:iti:2007:RegistryStoredQueryResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+		<operation name="UpdateDocumentSetRequest">
+			<input message="tns:UpdateDocumentSetRequest" wsaw:Action="urn:ihe:iti:2010:UpdateDocumentSet"/>
+			<output message="tns:RegistryResponse" wsaw:Action="urn:ihe:iti:2010:UpdateDocumentSetResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+		<operation name="DeleteDocumentSetRequest">
+			<input message="tns:DeleteDocumentSetRequest" wsaw:Action="urn:ihe:iti:2010:DeleteDocumentSet"/>
+			<output message="tns:RegistryResponse" wsaw:Action="urn:ihe:iti:2010:DeleteDocumentSetResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+	</portType>
+	<binding name="IHEPortBinding" type="tns:IHE">
+		<wsp:PolicyReference URI="#AddressingPolicy"/>
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		<operation name="RegisterDocumentSetbRequest">
+			<soap12:operation soapAction="urn:ihe:iti:2007:RegisterDocumentSet-b" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:RegisterDocumentSetbRequest" part="RegisterDocumentSetbRequest" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:RegistryResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+		<operation name="RegistryStoredQuery">
+			<soap12:operation soapAction="urn:ihe:iti:2007:RegistryStoredQuery" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:RegistryStoredQuery" part="RegistryStoredQuery" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:AdhocQueryResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+		<operation name="UpdateDocumentSetRequest">
+			<soap12:operation soapAction="urn:ihe:iti:2010:UpdateDocumentSet" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:UpdateDocumentSetRequest" part="UpdateDocumentSetRequest" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:RegistryResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+		<operation name="DeleteDocumentSetRequest">
+			<soap12:operation soapAction="urn:ihe:iti:2010:DeleteDocumentSet" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:DeleteDocumentSetRequest" part="DeleteDocumentSetRequest" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:RegistryResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+	</binding>
+	<service name="IHERegistryService">
+		<port name="IHEPort" binding="tns:IHEPortBinding">
+			<soap12:address location="http://zgf1:8181/ACSFacade/XDS/eBefunde"/>
+		</port>
+	</service>
+	<wsp:Policy wsu:Id="AddressingPolicy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<wsaw:UsingAddressing/>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</definitions>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.159"
+             name="ELGA_MedikationAbgabeArt"
+             displayName="ELGA_MedikationAbgabeArt"
+             effectiveDate="2015-03-31T00:00:00"
+             statusCode="final">
+      <desc language="de-DE">ELGA Value Set für die Medikations-Abgabeart</desc>
+      <sourceCodeSystem id="2.16.840.1.113883.5.4"
+                        identifierName="Act Code"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ActCode"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/ActCode"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/ActCode"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="FFC"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="First Fill - Complete"
+                  level="0"
+                  type="L"/>
+                <concept code="FFP"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="First Fill - Part Fill"
+                  level="0"
+                  type="L"/>
+                <concept code="RFP"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Refill - Part Fill"
+                  level="0"
+                  type="L"/>
+                <concept code="RFC"
+                  codeSystem="2.16.840.1.113883.5.4"
+                  displayName="Refill – Complete"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

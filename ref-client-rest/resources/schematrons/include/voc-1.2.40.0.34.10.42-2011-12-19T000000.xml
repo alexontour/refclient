@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_Medientyp"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.42"
+             name="ELGA_Medientyp"
+             statusCode="final">
+      <sourceCodeSystem id="1.2.840.10003.5.109"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.840.10003.5.109"
+                        canonicalUriDSTU2="urn:oid:1.2.840.10003.5.109"
+                        canonicalUriSTU3="urn:oid:1.2.840.10003.5.109"
+                        canonicalUriR4="urn:oid:1.2.840.10003.5.109"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="text/xml"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type text/xml"
+                  level="0"
+                  type="L"/>
+                <concept code="application/pdf"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type application/pdf"
+                  level="0"
+                  type="L"/>
+                <concept code="image/png"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type image/png"
+                  level="0"
+                  type="L"/>
+                <concept code="image/jpeg"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type image/jpeg"
+                  level="0"
+                  type="L"/>
+                <concept code="image/gif"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type image/gif"
+                  level="0"
+                  type="L"/>
+                <concept code="video/mpeg"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type video/mpeg"
+                  level="0"
+                  type="L"/>
+                <concept code="audio/mpeg"
+                  codeSystem="1.2.840.10003.5.109"
+                  displayName="Mime Type audio/mpeg"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

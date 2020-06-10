@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema elementFormDefault="qualified" version="1.1" targetNamespace="urn:elga.emedid.rst" xmlns:ts="urn:elga.emedid.rst" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="emedidRoot" type="xs:string"/>
+      <xs:element name="emedidExtension" type="xs:string"/>
+      <xs:element name="patidRoot" type="xs:string"/>
+      <xs:element name="patidExtension" type="xs:string"/>
+	<xs:complexType name="EmedClaimType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="emedidRoot" type="xs:string"/>
+      <xs:element minOccurs="0" name="emedidExtension" type="xs:string"/>
+      <xs:element minOccurs="0" name="patidRoot" type="xs:string"/>
+      <xs:element minOccurs="0" name="patidExtension" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Dialect" type="xs:anyURI" fixed="urn:elga:emedid:2014:claims" />
+  </xs:complexType>
+</xs:schema>

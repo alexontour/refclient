@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.59"
+             name="ELGA_Einnahmezeitpunkte"
+             displayName="ELGA_Einnahmezeitpunkte"
+             effectiveDate="2015-03-31T00:00:00"
+             statusCode="final">
+      <desc language="de-DE">Einnahmezeitpunkte für Medikamente</desc>
+      <desc language="en-US">Timing Events for drug administration</desc>
+      <sourceCodeSystem id="2.16.840.1.113883.5.139"
+                        identifierName="TimingEvent"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-TimingEvent"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/TimingEvent"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/TimingEvent"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-TimingEvent"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="ACM"
+                  codeSystem="2.16.840.1.113883.5.139"
+                  displayName="ACM"
+                  level="0"
+                  type="L"/>
+                <concept code="ACD"
+                  codeSystem="2.16.840.1.113883.5.139"
+                  displayName="ACD"
+                  level="0"
+                  type="L"/>
+                <concept code="ACV"
+                  codeSystem="2.16.840.1.113883.5.139"
+                  displayName="ACV"
+                  level="0"
+                  type="L"/>
+                <concept code="HS"
+                  codeSystem="2.16.840.1.113883.5.139"
+                  displayName="HS"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

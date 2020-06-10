@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.5" name="ELGA_ActEncounterCode" displayName="ELGA_ActEncounterCode" effectiveDate="2015-10-05T00:00:00" statusCode="final" versionLabel="3.1" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <sourceCodeSystem id="2.16.840.1.113883.5.4" identifierName="Act&#160;Code" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ActCode" canonicalUriDSTU2="http://hl7.org/fhir/v3/ActCode" canonicalUriSTU3="http://hl7.org/fhir/v3/ActCode" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="_ActEncounterCode" codeSystem="2.16.840.1.113883.5.4" displayName="ActEncounterCode" level="0" type="A"/>
+            <concept code="AMB" codeSystem="2.16.840.1.113883.5.4" displayName="ambulatory" level="1" type="L"/>
+            <concept code="EMER" codeSystem="2.16.840.1.113883.5.4" displayName="emergency" level="1" type="L"/>
+            <concept code="FLD" codeSystem="2.16.840.1.113883.5.4" displayName="field" level="1" type="L"/>
+            <concept code="HH" codeSystem="2.16.840.1.113883.5.4" displayName="home health" level="1" type="L"/>
+            <concept code="IMP" codeSystem="2.16.840.1.113883.5.4" displayName="inpatient encounter" level="1" type="S"/>
+            <concept code="ACUTE" codeSystem="2.16.840.1.113883.5.4" displayName="inpatient acute" level="2" type="L"/>
+            <concept code="NONAC" codeSystem="2.16.840.1.113883.5.4" displayName="inpatient non-acute" level="2" type="L"/>
+            <concept code="PRENC" codeSystem="2.16.840.1.113883.5.4" displayName="pre-admission" level="1" type="L"/>
+            <concept code="SS" codeSystem="2.16.840.1.113883.5.4" displayName="short stay" level="1" type="L"/>
+            <concept code="VR" codeSystem="2.16.840.1.113883.5.4" displayName="virtual" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

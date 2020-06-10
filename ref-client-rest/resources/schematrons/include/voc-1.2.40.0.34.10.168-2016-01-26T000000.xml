@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.168"
+             name="ELGA_Diagnosesicherheit"
+             displayName="ELGA_Diagnosesicherheit"
+             effectiveDate="2016-01-26T00:00:00"
+             statusCode="deprecated"
+             versionLabel="3.5">
+      <sourceCodeSystem id="2.16.840.1.113883.3.7.1.8"
+                        identifierName=""
+                        canonicalUri="urn:oid:2.16.840.1.113883.3.7.1.8"
+                        canonicalUriDSTU2="urn:oid:2.16.840.1.113883.3.7.1.8"
+                        canonicalUriSTU3="urn:oid:2.16.840.1.113883.3.7.1.8"
+                        canonicalUriR4="urn:oid:2.16.840.1.113883.3.7.1.8"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="G"
+                  codeSystem="2.16.840.1.113883.3.7.1.8"
+                  displayName="Gesichert"
+                  level="0"
+                  type="L"/>
+                <concept code="V"
+                  codeSystem="2.16.840.1.113883.3.7.1.8"
+                  displayName="Verdacht auf"
+                  level="0"
+                  type="L"/>
+                <concept code="Z"
+                  codeSystem="2.16.840.1.113883.3.7.1.8"
+                  displayName="Zustand nach"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

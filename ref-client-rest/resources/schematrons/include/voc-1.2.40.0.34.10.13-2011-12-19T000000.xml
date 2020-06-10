@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_ObservationInterpretation"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.13"
+             name="ELGA_ObservationInterpretation"
+             statusCode="deprecated">
+      <sourceCodeSystem id="2.16.840.1.113883.5.83"
+                        identifierName="Observation Interpretation"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/ObservationInterpretation"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/ObservationInterpretation"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="ObservationInterpretationSusceptibility"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="ObservationInterpretationSusceptibility"
+                  level="0"
+                  type="A"/>
+                <concept code="I"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Intermediate"
+                  level="1"
+                  type="L"/>
+                <concept code="R"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Resistent"
+                  level="1"
+                  type="L"/>
+                <concept code="S"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Susceptible"
+                  level="1"
+                  type="L"/>
+                <concept code="ObservationInterpretationNormality"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="ObservationInterpretationNormality"
+                  level="0"
+                  type="A"/>
+                <concept code="A"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Abnormal"
+                  level="1"
+                  type="S"/>
+                <concept code="AA"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Abnormal Alert"
+                  level="2"
+                  type="S"/>
+                <concept code="HH"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="High Alert"
+                  level="3"
+                  type="L"/>
+                <concept code="LL"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Low Alert"
+                  level="3"
+                  type="L"/>
+                <concept code="H"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="High"
+                  level="2"
+                  type="S"/>
+                <concept code="L"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="Low"
+                  level="2"
+                  type="S"/>
+                <concept code="N"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="normal"
+                  level="1"
+                  type="L"/>
+                <concept code="U"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="increased"
+                  level="1"
+                  type="L"/>
+                <concept code="D"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="decreased"
+                  level="1"
+                  type="L"/>
+                <concept code="ObservationInterpretationExceptions"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="ObservationInterpretationExceptions"
+                  level="0"
+                  type="A"/>
+                <concept code="&gt;"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="high off scale"
+                  level="1"
+                  type="L"/>
+                <concept code="&lt;"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="low off scale"
+                  level="1"
+                  type="L"/>
+                <concept code="EX"
+                  codeSystem="2.16.840.1.113883.5.83"
+                  displayName="outside threshold"
+                  level="0"
+                  type="S"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

@@ -1,0 +1,3 @@
+<ns2:CardException xmlns:ns2="http://exceptions.soap.base.client.chipkarte.at" xmlns="http://soap.base.client.chipkarte.at" xmlns:ns3="http://internal.soap.base.client.chipkarte.at"><ns2:code>CA-02111</ns2:code><ns2:errorCode>12</ns2:errorCode><ns2:message>Es ist keine Karte gesteckt. (CA-02111)</ns2:message></ns2:CardException>
+
+

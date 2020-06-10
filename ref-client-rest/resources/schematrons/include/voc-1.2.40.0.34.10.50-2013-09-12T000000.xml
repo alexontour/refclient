@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             name="ELGA_SectionsRadiologie"
+             displayName="ELGA_SectionsRadiologie"
+             effectiveDate="2013-09-12T00:00:00"
+             id="1.2.40.0.34.10.50"
+             statusCode="final">
+      <sourceCodeSystem id="1.2.840.10008.2.16.4"
+                        identifierName="DICOM Controlled Terminology"
+                        canonicalUri="http://dicom.nema.org/resources/ontology/DCM"
+                        canonicalUriDSTU2="http://nema.org/dicom/dicm"
+                        canonicalUriSTU3="http://dicom.nema.org/resources/ontology/DCM"
+                        canonicalUriR4="http://dicom.nema.org/resources/ontology/DCM"/>
+      <sourceCodeSystem id="1.2.40.0.34.5.40"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.40"/>
+      <sourceCodeSystem id="2.16.840.1.113883.6.1"
+                        identifierName="Logical Observation Identifier Names and Codes"
+                        canonicalUri="http://loinc.org"
+                        canonicalUriDSTU2="http://loinc.org"
+                        canonicalUriSTU3="http://loinc.org"
+                        canonicalUriR4="http://loinc.org"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="121181"
+                  codeSystem="1.2.840.10008.2.16.4"
+                  displayName="DICOM Object Catalog"
+                  level="0"
+                  type="L"/>
+                <concept code="BRIEFT"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Brieftext"
+                  level="0"
+                  type="L"/>
+                <concept code="55115-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Anforderung"
+                  level="0"
+                  type="L"/>
+                <concept code="11329-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Anamnese"
+                  level="0"
+                  type="L"/>
+                <concept code="18785-6"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Indikation"
+                  level="0"
+                  type="L"/>
+                <concept code="55108-5"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Patientenstatus / Patientenangaben"
+                  level="0"
+                  type="L"/>
+                <concept code="55111-9"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Aktuelle Untersuchung"
+                  level="0"
+                  type="L"/>
+                <concept code="55114-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Frühere Untersuchungen"
+                  level="0"
+                  type="L"/>
+                <concept code="18834-2"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Frühere Befunde"
+                  level="0"
+                  type="L"/>
+                <concept code="55109-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Komplikationen"
+                  level="0"
+                  type="L"/>
+                <concept code="18782-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Befund"
+                  level="0"
+                  type="L"/>
+                <concept code="55112-7"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Zusammenfassung / Ergebnis"
+                  level="0"
+                  type="L"/>
+                <concept code="19005-8"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Verdachtsdiagnose"
+                  level="0"
+                  type="L"/>
+                <concept code="55110-1"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Schlussfolgerung"
+                  level="0"
+                  type="L"/>
+                <concept code="18783-1"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Empfehlung"
+                  level="0"
+                  type="L"/>
+                <concept code="55107-7"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Addendum"
+                  level="0"
+                  type="L"/>
+                <concept code="55113-5"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Schlüsselbilder"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

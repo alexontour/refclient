@@ -1,0 +1,17 @@
+.project
+/bin/
+/target/*
+/target/
+**/target/*
+.settings/*
+/lib/*
+/lib/
+**/lib/*
+/log/*
+/log/
+**/log/*
+**/doc/*
+docs/doc/*
+/keystore/*
+**/keystore/*
+/keystore/

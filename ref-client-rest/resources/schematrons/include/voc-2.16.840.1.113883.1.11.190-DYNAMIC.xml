@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="2.16.840.1.113883.1.11.190" name="AddressUse" displayName="AddressUse" effectiveDate="2014-03-26T00:00:00" statusCode="final" versionLabel="DEFN=UV=VO=1360-20160323" url="http://art-decor.org/decor/services/" ident="ad2bbr-" referencedFrom="elgaimpf-">
+        <desc language="en-US">
+            <p>
+                <b>History description 2014-03-26: </b>Lock all vaue sets untouched since 2014-03-26 to trackingId 2014T1_2014_03_26</p>
+        </desc>
+        <sourceCodeSystem id="2.16.840.1.113883.5.1119" identifierName="Address&#160;Use" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-AddressUse" canonicalUriDSTU2="http://hl7.org/fhir/v3/AddressUse" canonicalUriSTU3="http://hl7.org/fhir/v3/AddressUse" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-AddressUse"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="_GeneralAddressUse" codeSystem="2.16.840.1.113883.5.1119" displayName="_GeneralAddressUse" level="0" type="A"/>
+            <concept code="BAD" codeSystem="2.16.840.1.113883.5.1119" displayName="bad address" level="1" type="L"/>
+            <concept code="CONF" codeSystem="2.16.840.1.113883.5.1119" displayName="confidential address" level="1" type="L"/>
+            <concept code="H" codeSystem="2.16.840.1.113883.5.1119" displayName="home address" level="1" type="S"/>
+            <concept code="HP" codeSystem="2.16.840.1.113883.5.1119" displayName="primary home" level="2" type="L"/>
+            <concept code="HV" codeSystem="2.16.840.1.113883.5.1119" displayName="vacation home" level="2" type="L"/>
+            <concept code="OLD" codeSystem="2.16.840.1.113883.5.1119" displayName="no longer in use" level="1" type="L"/>
+            <concept code="TMP" codeSystem="2.16.840.1.113883.5.1119" displayName="temporary address" level="1" type="L"/>
+            <concept code="WP" codeSystem="2.16.840.1.113883.5.1119" displayName="work place" level="1" type="S"/>
+            <concept code="DIR" codeSystem="2.16.840.1.113883.5.1119" displayName="direct" level="2" type="L"/>
+            <concept code="PUB" codeSystem="2.16.840.1.113883.5.1119" displayName="public" level="2" type="L"/>
+            <concept code="_PostalAddressUse" codeSystem="2.16.840.1.113883.5.1119" displayName="_PostalAddressUse" level="0" type="A"/>
+            <concept code="PHYS" codeSystem="2.16.840.1.113883.5.1119" displayName="physical visit address" level="1" type="L"/>
+            <concept code="PST" codeSystem="2.16.840.1.113883.5.1119" displayName="postal address" level="1" type="L"/>
+            <concept code="_TelecommunicationAddressUse" codeSystem="2.16.840.1.113883.5.1119" displayName="_TelecommunicationAddressUse" level="0" type="A"/>
+            <concept code="AS" codeSystem="2.16.840.1.113883.5.1119" displayName="answering service" level="1" type="L"/>
+            <concept code="EC" codeSystem="2.16.840.1.113883.5.1119" displayName="emergency contact" level="1" type="L"/>
+            <concept code="MC" codeSystem="2.16.840.1.113883.5.1119" displayName="mobile contact)" level="1" type="L"/>
+            <concept code="PG" codeSystem="2.16.840.1.113883.5.1119" displayName="pager" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

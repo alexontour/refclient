@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.58" name="ELGA_SignificantPathogens" displayName="ELGA_SignificantPathogens" effectiveDate="2015-03-31T00:00:00" statusCode="final" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Value Set für Erreger meldepflichtiger Infektionskrankheiten laut ""Epidemiologisches Meldesystem Benutzerhandbuch Fachlicher Teil"", 1. Auflage Oktober 2008, des BMGFJ</desc>
+        <desc language="en-US">Value Set of significant pathogens listed in ""Epidemiologisches Meldesystem Benutzerhandbuch Fachlicher Teil"", 1. edition, October 2008, BMGFJ </desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.45" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.45" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.45" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.45" canonicalUriR4="urn:oid:1.2.40.0.34.5.45"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="SP001" codeSystem="1.2.40.0.34.5.45" displayName="Adenovirus im Konjunktivalabstrich (*)" level="0" type="L"/>
+            <concept code="SP002" codeSystem="1.2.40.0.34.5.45" displayName="HIV" level="0" type="L"/>
+            <concept code="SP003" codeSystem="1.2.40.0.34.5.45" displayName="Bacillus anthracis" level="0" type="L"/>
+            <concept code="SP004" codeSystem="1.2.40.0.34.5.45" displayName="Influenza A/H5" level="0" type="L"/>
+            <concept code="SP005" codeSystem="1.2.40.0.34.5.45" displayName="Influenza A/H5N1" level="0" type="L"/>
+            <concept code="SP006" codeSystem="1.2.40.0.34.5.45" displayName="Clostridium botulinum" level="0" type="L"/>
+            <concept code="SP007" codeSystem="1.2.40.0.34.5.45" displayName="Brucella spp." level="0" type="L"/>
+            <concept code="SP008" codeSystem="1.2.40.0.34.5.45" displayName="Campylobacter spp." level="0" type="L"/>
+            <concept code="SP009" codeSystem="1.2.40.0.34.5.45" displayName="Chlamydia trachomatis" level="0" type="L"/>
+            <concept code="SP010" codeSystem="1.2.40.0.34.5.45" displayName="Vibrio cholerae" level="0" type="L"/>
+            <concept code="SP011" codeSystem="1.2.40.0.34.5.45" displayName="Denguevirus" level="0" type="L"/>
+            <concept code="SP012" codeSystem="1.2.40.0.34.5.45" displayName="Corynebacterium diphtheriae" level="0" type="L"/>
+            <concept code="SP013" codeSystem="1.2.40.0.34.5.45" displayName="Corynebacterium ulcerans" level="0" type="L"/>
+            <concept code="SP014" codeSystem="1.2.40.0.34.5.45" displayName="Ebolavirus" level="0" type="L"/>
+            <concept code="SP015" codeSystem="1.2.40.0.34.5.45" displayName="Escherichia coli, sonstige darmpathogene Stämme" level="0" type="L"/>
+            <concept code="SP016" codeSystem="1.2.40.0.34.5.45" displayName="Echinococcus spp." level="0" type="L"/>
+            <concept code="SP017" codeSystem="1.2.40.0.34.5.45" displayName="Rickettsia prowazekii" level="0" type="L"/>
+            <concept code="SP018" codeSystem="1.2.40.0.34.5.45" displayName="FSME-Virus" level="0" type="L"/>
+            <concept code="SP019" codeSystem="1.2.40.0.34.5.45" displayName="Gelbfieber-Virus" level="0" type="L"/>
+            <concept code="SP020" codeSystem="1.2.40.0.34.5.45" displayName="Giardia lamblia" level="0" type="L"/>
+            <concept code="SP021" codeSystem="1.2.40.0.34.5.45" displayName="Neisseria gonorrhoeae" level="0" type="L"/>
+            <concept code="SP022" codeSystem="1.2.40.0.34.5.45" displayName="Haemophilus influenzae" level="0" type="L"/>
+            <concept code="SP023" codeSystem="1.2.40.0.34.5.45" displayName="Hantavirus" level="0" type="L"/>
+            <concept code="SP024" codeSystem="1.2.40.0.34.5.45" displayName="Hepatitis-A-Virus" level="0" type="L"/>
+            <concept code="SP025" codeSystem="1.2.40.0.34.5.45" displayName="Hepatitis-B-Virus" level="0" type="L"/>
+            <concept code="SP026" codeSystem="1.2.40.0.34.5.45" displayName="Hepatitis-C-Virus" level="0" type="L"/>
+            <concept code="SP027" codeSystem="1.2.40.0.34.5.45" displayName="HDV - Hepatitis-D-Virus akut" level="0" type="L"/>
+            <concept code="SP028" codeSystem="1.2.40.0.34.5.45" displayName="HEV - akute Virushepatitis E" level="0" type="L"/>
+            <concept code="SP029" codeSystem="1.2.40.0.34.5.45" displayName="Influenzavirus" level="0" type="L"/>
+            <concept code="SP030" codeSystem="1.2.40.0.34.5.45" displayName="Bordetella pertussis" level="0" type="L"/>
+            <concept code="SP031" codeSystem="1.2.40.0.34.5.45" displayName="Cryptosporidium spp." level="0" type="L"/>
+            <concept code="SP032" codeSystem="1.2.40.0.34.5.45" displayName="Lassavirus" level="0" type="L"/>
+            <concept code="SP033" codeSystem="1.2.40.0.34.5.45" displayName="Borrelia recurrentis" level="0" type="L"/>
+            <concept code="SP034" codeSystem="1.2.40.0.34.5.45" displayName="Legionella spp." level="0" type="L"/>
+            <concept code="SP035" codeSystem="1.2.40.0.34.5.45" displayName="Mycobacterium leprae" level="0" type="L"/>
+            <concept code="SP036" codeSystem="1.2.40.0.34.5.45" displayName="Leptospira interrogans" level="0" type="L"/>
+            <concept code="SP037" codeSystem="1.2.40.0.34.5.45" displayName="Listeria monocytogenes" level="0" type="L"/>
+            <concept code="SP038" codeSystem="1.2.40.0.34.5.45" displayName="Plasmodium spp." level="0" type="L"/>
+            <concept code="SP039" codeSystem="1.2.40.0.34.5.45" displayName="Marburgvirus" level="0" type="L"/>
+            <concept code="SP040" codeSystem="1.2.40.0.34.5.45" displayName="Masernvirus" level="0" type="L"/>
+            <concept code="SP041" codeSystem="1.2.40.0.34.5.45" displayName="Neisseria meningitidis" level="0" type="L"/>
+            <concept code="SP042" codeSystem="1.2.40.0.34.5.45" displayName="Mumpsvirus" level="0" type="L"/>
+            <concept code="SP043" codeSystem="1.2.40.0.34.5.45" displayName="Norovirus" level="0" type="L"/>
+            <concept code="SP044" codeSystem="1.2.40.0.34.5.45" displayName="Chlamydophila psittaci" level="0" type="L"/>
+            <concept code="SP045" codeSystem="1.2.40.0.34.5.45" displayName="Yersinia pestis" level="0" type="L"/>
+            <concept code="SP046" codeSystem="1.2.40.0.34.5.45" displayName="Streptococcus pneumoniae" level="0" type="L"/>
+            <concept code="SP047" codeSystem="1.2.40.0.34.5.45" displayName="Variola-Virus" level="0" type="L"/>
+            <concept code="SP048" codeSystem="1.2.40.0.34.5.45" displayName="Poliovirus" level="0" type="L"/>
+            <concept code="SP049" codeSystem="1.2.40.0.34.5.45" displayName="Coxiella burnetii" level="0" type="L"/>
+            <concept code="SP050" codeSystem="1.2.40.0.34.5.45" displayName="Rotavirus" level="0" type="L"/>
+            <concept code="SP051" codeSystem="1.2.40.0.34.5.45" displayName="Rubella-Virus" level="0" type="L"/>
+            <concept code="SP053" codeSystem="1.2.40.0.34.5.45" displayName="Salmonella spp. außer S. Typhi und S. Paratyphi" level="0" type="L"/>
+            <concept code="SP054" codeSystem="1.2.40.0.34.5.45" displayName="SARS-Coronavirus, SARS-CoV" level="0" type="L"/>
+            <concept code="SP055" codeSystem="1.2.40.0.34.5.45" displayName="Shigella spp." level="0" type="L"/>
+            <concept code="SP056" codeSystem="1.2.40.0.34.5.45" displayName="Treponema pallidum" level="0" type="L"/>
+            <concept code="SP057" codeSystem="1.2.40.0.34.5.45" displayName="Clostridium tetani" level="0" type="L"/>
+            <concept code="SP058" codeSystem="1.2.40.0.34.5.45" displayName="Lyssa-Virus" level="0" type="L"/>
+            <concept code="SP059" codeSystem="1.2.40.0.34.5.45" displayName="Toxoplasma gondii" level="0" type="L"/>
+            <concept code="SP060" codeSystem="1.2.40.0.34.5.45" displayName="Trichinella spp." level="0" type="L"/>
+            <concept code="SP061" codeSystem="1.2.40.0.34.5.45" displayName="Mycobacterium-tuberculosis-Komplex" level="0" type="L"/>
+            <concept code="SP062" codeSystem="1.2.40.0.34.5.45" displayName="Francisella tularensis" level="0" type="L"/>
+            <concept code="SP063" codeSystem="1.2.40.0.34.5.45" displayName="Salmonella typhi" level="0" type="L"/>
+            <concept code="SP064" codeSystem="1.2.40.0.34.5.45" displayName="Salmonella paratyphi" level="0" type="L"/>
+            <concept code="SP065" codeSystem="1.2.40.0.34.5.45" displayName="West-Nil-Virus" level="0" type="L"/>
+            <concept code="SP066" codeSystem="1.2.40.0.34.5.45" displayName="Yersinia enterocolitica" level="0" type="L"/>
+            <concept code="SP067" codeSystem="1.2.40.0.34.5.45" displayName="Yersinia pseudotuberculosis" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

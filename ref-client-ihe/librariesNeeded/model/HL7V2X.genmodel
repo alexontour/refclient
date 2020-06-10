@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.openhealthtools.ihe.common.hl7v2/src"
+    modelPluginID="org.openhealthtools.ihe.common.hl7v2" modelName="HL7V2X" importerID="org.eclipse.xsd.ecore.importer">
+  <foreignModel>../schema/hl7v2_wrapper.xsd</foreignModel>
+  <genPackages prefix="Hl7v2" basePackage="org.openhealthtools.ihe.common" resource="XML"
+      disposableProviderFactory="true" ecorePackage="hl7v2.ecore#/">
+    <genDataTypes ecoreDataType="hl7v2.ecore#//DTM"/>
+    <genDataTypes ecoreDataType="hl7v2.ecore#//Oid"/>
+    <genClasses ecoreClass="hl7v2.ecore#//CX">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//CX/idNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//CX/assigningAuthorityName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//CX/assigningAuthorityUniversalId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//CX/assigningAuthorityUniversalIdType"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute hl7v2.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/cx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//DocumentRoot/dtm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/sourcePatientInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xad"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xcn"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xon"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xpn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//DocumentRoot/xtn"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//SourcePatientInfoType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//SourcePatientInfoType/patientIdentifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//SourcePatientInfoType/patientName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//SourcePatientInfoType/patientDateOfBirth"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//SourcePatientInfoType/patientSex"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//SourcePatientInfoType/patientAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//SourcePatientInfoType/patientPhoneHome"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference hl7v2.ecore#//SourcePatientInfoType/patientPhoneBusiness"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//XAD">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/streetAddress"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/otherDesignation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/city"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/stateOrProvince"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/zipOrPostalCode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XAD/countyParishCode"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//XCN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/idNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/familyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/givenName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/otherName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/suffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/assigningAuthorityName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/assigningAuthorityUniversalId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XCN/assigningAuthorityUniversalIdType"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//XON">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XON/organizationName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XON/idNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XON/assigningAuthorityName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XON/assigningAuthorityUniversalId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XON/assigningAuthorityUniversalIdType"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//XPN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XPN/familyName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XPN/givenName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XPN/otherName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XPN/suffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XPN/prefix"/>
+    </genClasses>
+    <genClasses ecoreClass="hl7v2.ecore#//XTN">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XTN/telecommunicationType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hl7v2.ecore#//XTN/telecommunicationAddress"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

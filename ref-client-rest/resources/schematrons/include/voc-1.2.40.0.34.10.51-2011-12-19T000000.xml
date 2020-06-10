@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_HealthcareFacilityTypeCode"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.51"
+             name="ELGA_HealthcareFacilityTypeCode"
+             statusCode="final">
+      <sourceCodeSystem id="1.2.40.0.34.5.5"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.5"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.5"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.5"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.5"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="REZ"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Referenzzentrum"
+                  level="0"
+                  type="L"/>
+                <concept code="ABT"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Abteilung"
+                  level="0"
+                  type="L"/>
+                <concept code="DPT"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Departement"
+                  level="0"
+                  type="L"/>
+                <concept code="FSP"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Fachschwerpunkt"
+                  level="0"
+                  type="L"/>
+                <concept code="DWK"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Dislozierte Wochenklinik"
+                  level="0"
+                  type="L"/>
+                <concept code="DTK"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Dislozierte Tagesklinik"
+                  level="0"
+                  type="L"/>
+                <concept code="ZAE"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Zentrale Aufnahme und Erstversorgungseinrichtung"
+                  level="0"
+                  type="L"/>
+                <concept code="DZE"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Dislozierte zentrale Aufnahme und Erstversorgungseinrichtung"
+                  level="0"
+                  type="L"/>
+                <concept code="LBH"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Einrichtung für Langzeitbehandlung"
+                  level="0"
+                  type="L"/>
+                <concept code="EVA"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Ambulante Erstversorgung"
+                  level="0"
+                  type="L"/>
+                <concept code="DEV"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Dislozierte ambulante Erstversorgung"
+                  level="0"
+                  type="L"/>
+                <concept code="AMB"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Ambulanz"
+                  level="0"
+                  type="L"/>
+                <concept code="KAP"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Anstaltsapotheke"
+                  level="0"
+                  type="L"/>
+                <concept code="IST"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Institut"
+                  level="0"
+                  type="L"/>
+                <concept code="ADM"
+                  codeSystem="1.2.40.0.34.5.5"
+                  displayName="Verwaltung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

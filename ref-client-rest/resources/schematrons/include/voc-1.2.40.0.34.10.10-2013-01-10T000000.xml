@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_LanguageCode"
+             effectiveDate="2013-01-10T00:00:00"
+             id="1.2.40.0.34.10.10"
+             name="ELGA_LanguageCode"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.6.121"
+                        identifierName="Tags for the Identification of Languages"
+                        canonicalUri="urn:oid:2.16.840.1.113883.6.121"
+                        canonicalUriDSTU2="urn:oid:2.16.840.1.113883.6.121"
+                        canonicalUriSTU3="urn:oid:2.16.840.1.113883.6.121"
+                        canonicalUriR4="urn:oid:2.16.840.1.113883.6.121"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="de-AT"
+                  codeSystem="2.16.840.1.113883.6.121"
+                  displayName="Österreichisches Deutsch"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

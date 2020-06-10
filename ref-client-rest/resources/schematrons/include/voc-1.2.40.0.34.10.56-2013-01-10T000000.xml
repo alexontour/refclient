@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.56"
+             displayName="ELGA_Sections"
+             effectiveDate="2013-01-10T00:00:00"
+             name="ELGA_Sections"
+             statusCode="deprecated">
+      <sourceCodeSystem id="1.2.40.0.34.5.40"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.40"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.40"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="BRIEFT"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Brieftext"
+                  level="0"
+                  type="L"/>
+                <concept code="ABBEM"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Abschließende Bemerkungen"
+                  level="0"
+                  type="L"/>
+                <concept code="TERMIN"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Termine, Kontrollen, Wiederbestellung"
+                  level="0"
+                  type="L"/>
+                <concept code="BEFAUS"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Ausstehende Befunde"
+                  level="0"
+                  type="L"/>
+                <concept code="BEFERH"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Auszüge aus erhobenen Befunden"
+                  level="0"
+                  type="L"/>
+                <concept code="BEFBEI"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Beigelegte erhobene Befunde"
+                  level="0"
+                  type="L"/>
+                <concept code="BEIL"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Beilagen"
+                  level="0"
+                  type="L"/>
+                <concept code="ANM"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Anmerkungen"
+                  level="0"
+                  type="L"/>
+                <concept code="RES"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Hilfsmittel und Ressourcen"
+                  level="0"
+                  type="L"/>
+                <concept code="PFDIAG"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Pflege- und Betreuungsdiagnosen"
+                  level="0"
+                  type="L"/>
+                <concept code="PFMOB"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Mobilität"
+                  level="0"
+                  type="L"/>
+                <concept code="PFKLEI"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Körperpflege und Kleiden"
+                  level="0"
+                  type="L"/>
+                <concept code="PFERN"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Ernährung"
+                  level="0"
+                  type="L"/>
+                <concept code="PFAUS"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Ausscheidung"
+                  level="0"
+                  type="L"/>
+                <concept code="PFHAUT"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Hautzustand"
+                  level="0"
+                  type="L"/>
+                <concept code="PFATM"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Atmung"
+                  level="0"
+                  type="L"/>
+                <concept code="PFSCHL"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Schlafen"
+                  level="0"
+                  type="L"/>
+                <concept code="PFORIE"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Orientierung und Bewusstseinslage"
+                  level="0"
+                  type="L"/>
+                <concept code="PFSOZV"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Soziales Verhalten"
+                  level="0"
+                  type="L"/>
+                <concept code="PFKOMM"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Kommunikation"
+                  level="0"
+                  type="L"/>
+                <concept code="PFROLL"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Rollenwahrnehmung und Sinnfindung"
+                  level="0"
+                  type="L"/>
+                <concept code="PFMED"
+                  codeSystem="1.2.40.0.34.5.40"
+                  displayName="Medikamentenverabreichung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

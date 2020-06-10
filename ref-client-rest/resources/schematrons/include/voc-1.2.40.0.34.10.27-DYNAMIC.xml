@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_EntityNameUse"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.27"
+             name="ELGA_EntityNameUse"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.5.45"
+                        identifierName="Entity Name Use"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-EntityNameUse"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/EntityNameUse"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/EntityNameUse"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-EntityNameUse"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="ASGN"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="assigned"
+                  level="0"
+                  type="L"/>
+                <concept code="C"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="License"
+                  level="0"
+                  type="L"/>
+                <concept code="I"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Indigenous/Tribal"
+                  level="0"
+                  type="L"/>
+                <concept code="L"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Legal"
+                  level="0"
+                  type="S"/>
+                <concept code="OR"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="official registry"
+                  level="1"
+                  type="L"/>
+                <concept code="P"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="pseudonym"
+                  level="0"
+                  type="S"/>
+                <concept code="A"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Artist/Stage"
+                  level="1"
+                  type="L"/>
+                <concept code="R"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Religious"
+                  level="0"
+                  type="L"/>
+                <concept code="SRCH"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="search v:HL7SearchUse"
+                  level="0"
+                  type="S"/>
+                <concept code="PHON"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="phonetic"
+                  level="1"
+                  type="L"/>
+                <concept code="SNDX"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Soundex"
+                  level="1"
+                  type="L"/>
+                <concept code="ABC"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Alphabetic"
+                  level="1"
+                  type="L"/>
+                <concept code="IDE"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Ideographic"
+                  level="1"
+                  type="L"/>
+                <concept code="SYL"
+                  codeSystem="2.16.840.1.113883.5.45"
+                  displayName="Syllabic"
+                  level="1"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

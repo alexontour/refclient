@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.10.43" name="ELGA_ServiceEventPerformer" displayName="ELGA_ServiceEventPerformer" effectiveDate="2015-03-31T00:00:00" statusCode="final" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Value Set zur Unterscheidung des Service Event Performers</desc>
+        <desc language="en-US">Codes to distinguish performer(s) of an event</desc>
+        <sourceCodeSystem id="2.16.840.1.113883.5.90" identifierName="ParticipationType" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ParticipationType" canonicalUriDSTU2="http://hl7.org/fhir/v3/ParticipationType" canonicalUriSTU3="http://hl7.org/fhir/v3/ParticipationType" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ParticipationType"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="PRF" codeSystem="2.16.840.1.113883.5.90" displayName="Performer" level="0" type="S"/>
+            <concept code="PPRF" codeSystem="2.16.840.1.113883.5.90" displayName="Primary Performer" level="1" type="L"/>
+            <concept code="SPRF" codeSystem="2.16.840.1.113883.5.90" displayName="Secondary Performer" level="1" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>

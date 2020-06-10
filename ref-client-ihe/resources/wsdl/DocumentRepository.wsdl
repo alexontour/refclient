@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="http://ihe.spirit.com/" name="IHEService" xmlns:tns="http://ihe.spirit.com/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+ xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+ xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+ xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+ xmlns:wsp="http://www.w3.org/ns/ws-policy"
+ xmlns:xdsb="urn:ihe:iti:xds-b:2007"
+ xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"
+ xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+ xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+ xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0"
+ xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"
+ xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" 
+xmlns:ts="urn:tiani-spirit:ts" 
+xmlns:rst="urn:elga.emedid.rst" 
+xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 
+xmlns:mime="http://www.w3.org/2004/06/xmlmime"
+xmlns:encoding="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:xop="http://www.w3.org/2004/08/xop/include">
+	<types>
+		<xsd:schema>
+			<xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+			<xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+			<xsd:import namespace="http://www.w3.org/2006/05/addressing/wsdl" schemaLocation="addressing-wsdl.xsd"/>
+			<xsd:import namespace="http://www.w3.org/ns/ws-policy" schemaLocation="ws-policy.xsd"/>
+			<xsd:import namespace="urn:ihe:iti:xds-b:2007" schemaLocation="xds-b.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" schemaLocation="rs.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" schemaLocation="lcm.xsd"/>
+			<xsd:import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="soap-envelope.xsd"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" schemaLocation="OMS.xsd"/>
+			<xsd:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" schemaLocation="query.xsd"/>
+		</xsd:schema>
+	</types>
+	<message name="ProvideAndRegisterDocumentSetbRequest">
+		<part name="ProvideAndRegisterDocumentSetbRequest" element="xdsb:ProvideAndRegisterDocumentSetRequest"/>
+	</message>
+	<message name="RegistryResponse">
+		<part name="response" element="rs:RegistryResponse"/>
+	</message>
+	<message name="RetrieveDocumentSetRequest">
+		<part name="RetrieveDocumentSetRequest" element="xdsb:RetrieveDocumentSetRequest"/>
+	</message>
+	<message name="RetrieveDocumentSetResponse">
+		<part name="RetrieveDocumentSetResponse" element="xdsb:RetrieveDocumentSetResponse"/>
+	</message>
+	<message name="MsgHeader">
+		<part name="Security" element="wsse:Security"/>
+	</message>
+	<message name="AccessDeniedMessage">
+		<part name="AccessDenied" element="env:Fault"/>
+	</message>
+	<portType name="IHE">
+		<operation name="ProvideAndRegisterDocumentSetbRequest">
+			<input message="tns:ProvideAndRegisterDocumentSetbRequest" wsaw:Action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"/>
+			<output message="tns:RegistryResponse" wsaw:Action="urn:ihe:iti:2007:RegisterDocumentSet-bResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+		<operation name="RetrieveDocumentSetRequest">
+			<input message="tns:RetrieveDocumentSetRequest" wsaw:Action="urn:ihe:iti:2007:RetrieveDocumentSet"/>
+			<output message="tns:RetrieveDocumentSetResponse" wsaw:Action="urn:ihe:iti:2007:RetrieveDocumentSetResponse"/>
+			<fault message="tns:AccessDeniedMessage" name="AccessDenied" />
+		</operation>
+	</portType>
+	<binding name="IHEPortBinding" type="tns:IHE">
+		<wsp:PolicyReference URI="#AddressingPolicy"/>
+		<wsp:PolicyReference URI="#MyPolicy"/>
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		<operation name="ProvideAndRegisterDocumentSetbRequest">
+			<soap12:operation soapAction="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:ProvideAndRegisterDocumentSetbRequest" part="ProvideAndRegisterDocumentSetbRequest" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:RegistryResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+		<operation name="RetrieveDocumentSetRequest">
+			<soap12:operation soapAction="urn:ihe:iti:2007:RetrieveDocumentSet" style="document"/>
+			<input>
+				<soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+				<soap12:body message="tns:RetrieveDocumentSetRequest" part="RetrieveDocumentSetRequest" use="literal"/>
+			</input>
+			<output>
+				<soap12:body message="tns:RetrieveDocumentSetResponse" part="response" use="literal" />
+			</output>
+			<fault name="AccessDenied">
+				<soap12:fault name="AccessDenied" use="literal" />
+			</fault>
+		</operation>
+	</binding>
+	<service name="IHEService">
+		<port name="IHEPort" binding="tns:IHEPortBinding">
+			<soap12:address location="http://zgf1:8181/ACSFacade/XDS/eBefunde"/>
+		</port>
+	</service>
+	<wsp:Policy wsu:Id="AddressingPolicy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<wsaw:UsingAddressing/>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="MyPolicy" >
+		<wsoma:OptimizedMimeSerialization /> 
+	</wsp:Policy>
+</definitions>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.72"
+             name="ELGA_HealthcareFacilityTypeCode"
+             displayName="ELGA_HealthcareFacilityTypeCode"
+             effectiveDate="2015-10-06T00:00:00"
+             statusCode="final"
+             versionLabel="3.3">
+      <sourceCodeSystem id="1.2.40.0.34.5.2"
+                        identifierName=""
+                        canonicalUri="urn:oid:1.2.40.0.34.5.2"
+                        canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.2"
+                        canonicalUriSTU3="urn:oid:1.2.40.0.34.5.2"
+                        canonicalUriR4="urn:oid:1.2.40.0.34.5.2"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="100"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Ärztin/Arzt für Allgemeinmedizin"
+                  level="0"
+                  type="L"/>
+                <concept code="101"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Approbierte Ärztin/Approbierter Arzt"
+                  level="0"
+                  type="L"/>
+                <concept code="155"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Zahnärztin/Zahnarzt"
+                  level="0"
+                  type="L"/>
+                <concept code="158"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Fachärztin/Facharzt"
+                  level="0"
+                  type="L"/>
+                <concept code="212"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Diplomierte Gesundheits- und Krankenschwester/Diplomierter Gesundheits- und Krankenpfleger"
+                  level="0"
+                  type="L"/>
+                <concept code="213"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Diplomierte Kinderkrankenschwester/Diplomierter Kinderkrankenpfleger"
+                  level="0"
+                  type="L"/>
+                <concept code="300"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Allgemeine Krankenanstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="301"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Sonderkrankenanstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="302"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Pflegeanstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="303"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Sanatorium"
+                  level="0"
+                  type="L"/>
+                <concept code="304"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Selbstständiges Ambulatorium"
+                  level="0"
+                  type="L"/>
+                <concept code="305"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Pflegeeinrichtung"
+                  level="0"
+                  type="L"/>
+                <concept code="306"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Mobile Pflege"
+                  level="0"
+                  type="L"/>
+                <concept code="307"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Kuranstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="310"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Untersuchungsanstalt"
+                  level="0"
+                  type="L"/>
+                <concept code="311"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Öffentliche Apotheke"
+                  level="0"
+                  type="L"/>
+                <concept code="319"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Zahnärztliche Gruppenpraxis"
+                  level="0"
+                  type="L"/>
+                <concept code="320"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Ärztliche Gruppenpraxis"
+                  level="0"
+                  type="L"/>
+                <concept code="406"
+                  codeSystem="1.2.40.0.34.5.2"
+                  displayName="Sozialversicherung"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

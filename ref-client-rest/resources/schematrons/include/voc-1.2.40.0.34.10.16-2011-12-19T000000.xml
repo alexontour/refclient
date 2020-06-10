@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ELGA_AddressUse"
+             effectiveDate="2011-12-19T00:00:00"
+             id="1.2.40.0.34.10.16"
+             name="ELGA_AddressUse"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.5.1119"
+                        identifierName="Address Use"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-AddressUse"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/AddressUse"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/AddressUse"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-AddressUse"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="H"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="home"
+                  level="0"
+                  type="L"/>
+                <concept code="HP"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="primary home"
+                  level="1"
+                  type="L"/>
+                <concept code="HV"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="vacation home"
+                  level="1"
+                  type="L"/>
+                <concept code="TMP"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="temporary address"
+                  level="0"
+                  type="L"/>
+                <concept code="WP"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="work place"
+                  level="0"
+                  type="L"/>
+                <concept code="DIR"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="direct"
+                  level="1"
+                  type="L"/>
+                <concept code="PUB"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="public"
+                  level="1"
+                  type="L"/>
+                <concept code="PHYS"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="physical visit address"
+                  level="0"
+                  type="L"/>
+                <concept code="PST"
+                  codeSystem="2.16.840.1.113883.5.1119"
+                  displayName="postal address"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

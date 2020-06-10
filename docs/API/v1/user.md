@@ -103,33 +103,6 @@ user id is need for nearly every request
 }
 ```
 
-## Delete a user [`DELETE`]
-
-- Endpoint: `/`
-- Headers: `Authorization` *(required)*
-- Response: JSON-Object
-
-Log off a user from the ELGA referent client. In the background it closes the related GINA dialog, if it exists. And it invalidates the
-existing Assertions for ELGA (HCP and Context Assertions).
-
-**Example:**
-
-```JSON
-{
-   "message": "Die Abmeldung war erfolgreich",
-   "type": "SUCCESS"
-}
-```
-
-**Example (with error message):**
-
-```JSON
-{
-   "message": "No dialog found to close for the user",
-   "type": "ERROR"
-}
-```
-
 ## Request a identity assertion from ELGA Area (for hospitals) [`GET`]
 
 - Endpoint: `/ida`

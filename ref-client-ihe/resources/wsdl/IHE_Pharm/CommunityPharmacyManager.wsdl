@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+xmlns:wsp="http://www.w3.org/ns/ws-policy" 
+xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+xmlns:ns2="http://schemas.xmlsoap.org/soap/http" 
+xmlns:ns1="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" 
+xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+name="CommunityPharmacyManager" 
+xmlns:tns="urn:ihe:iti:xds-b:2007" 
+targetNamespace="urn:ihe:iti:xds-b:2007"
+xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" 
+xmlns:ts="urn:tiani-spirit:ts" 
+xmlns:rst="urn:elga.emedid.rst" 
+xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 
+xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" 
+xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" 
+xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" 
+xmlns:schema="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+xmlns:mime="http://www.w3.org/2004/06/xmlmime"
+xmlns:encoding="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+    <xs:schema>
+      <!-- XSDs from BeS -->
+      <xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+      <xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+      <xs:import namespace="http://www.w3.org/ns/ws-policy" schemaLocation="ws-policy.xsd"/>
+      <xs:import namespace="http://www.w3.org/2006/05/addressing/wsdl" schemaLocation="addressing-wsdl.xsd"/>
+      <xs:import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="soap-envelope.xsd"/>
+      
+      <!-- XSDs from IPF -->
+      <xs:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" schemaLocation="query.xsd"/>
+      <xs:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" schemaLocation="lcm.xsd"/>
+      
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryPharmacyDocuments_MessageResponse">
+    <wsdl:part element="ns1:AdhocQueryResponse" name="body">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QueryPharmacyDocuments_Message">
+    <wsdl:part element="ns1:AdhocQueryRequest" name="body">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MsgHeader">
+    <wsdl:part name="Security" element="wsse:Security"/>
+  </wsdl:message>
+  <wsdl:portType name="CommunityPharmacyManager_PortType">
+    <wsdl:operation name="QueryPharmacyDocuments_Message">
+      <wsdl:input message="tns:QueryPharmacyDocuments_Message" name="QueryPharmacyDocuments_Message" wsam:Action="urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments" wsaw:Action="urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments">
+    </wsdl:input>
+      <wsdl:output message="tns:QueryPharmacyDocuments_MessageResponse" name="QueryPharmacyDocuments_MessageResponse" wsam:Action="urn:ihe:pharm:cmpd:2010:QueryPharmacyDocumentsResponse" wsaw:Action="urn:ihe:pharm:cmpd:2010:QueryPharmacyDocumentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CommunityPharmacyManagerSoapBinding" type="tns:CommunityPharmacyManager_PortType">
+  <wsp:PolicyReference URI="#AddressingPolicy"/>
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="QueryPharmacyDocuments_Message">
+      <soap12:operation soapAction="urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments" style="document"/>
+      <wsdl:input name="QueryPharmacyDocuments_Message">
+        <soap12:header message="tns:MsgHeader" part="Security" use="literal" />
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="QueryPharmacyDocuments_MessageResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CommunityPharmacyManager">
+    <wsdl:port binding="tns:CommunityPharmacyManagerSoapBinding" name="CommunityPharmacyManager_Port_Soap12">
+      <soap12:address location="http://localhost:8080/emed-app-ihe/CommunityPharmacyManager"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsp:Policy wsu:Id="AddressingPolicy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing/>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+</wsdl:definitions>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.39"
+             name="ELGA_Dokumentenklassen"
+             displayName="ELGA_Dokumentenklassen"
+             effectiveDate="2015-03-31T00:00:00"
+             statusCode="final">
+      <desc language="de-DE">Liste der für ELGA gültigen Dokumentklassen und ihrer LOINC-Codes für CDA und die XDS-Metadaten. Die oberste Hierarchieebene 0 umfasst die Hauptdokumentenklassen für ELGA Dokumente, diese ist auch in den XDSMetadaten.ClassCode zu übertragen. Die Hierarchiebene 1 enthält die Spezialisierungen der Hauptdokumentenklassen, sie können in den XDSMetadaten.TypeCode an die
+                Registry übermittelt werden. Im Element ClinicalDocument.Code (CDA) werden bevorzugt die spezialisierten Codes der Blattebene (unterste Ebene, Dokumententyp) verwendet. Der Titel eines Dokumentes wird im Dokument über das Stylesheet angezeigt (siehe Hinweise)</desc>
+      <desc language="en-US">This is a set of document classes and LOINC-Codes valid in ELGA for CDA and XDS Metadata. The top most level 0 contains the root-document classes for ELGA documents (also assigend to XDSMetadata.ClassCode). The hierarchie level 1 contains specialities of the root-document classes, which could be transferred to the registry, using XDSMetadata.TypeCode. For the field
+                ClinicalDocument.Code (CDA), it is preferred to use the most specialised code applicable (leaf elements, lowest level). The documents title is displayed via the Stylesheet (see ""Hinweise"") </desc>
+      <sourceCodeSystem id="2.16.840.1.113883.6.1"
+                        identifierName="Logical Observation Identifier Names and Codes"
+                        canonicalUri="http://loinc.org"
+                        canonicalUriDSTU2="http://loinc.org"
+                        canonicalUriSTU3="http://loinc.org"
+                        canonicalUriR4="http://loinc.org"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="18842-5"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Discharge summary"
+                  level="0"
+                  type="S"/>
+                <concept code="11490-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Physician Discharge summary"
+                  level="1"
+                  type="L"/>
+                <concept code="34745-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Nurse Discharge summary"
+                  level="1"
+                  type="L"/>
+                <concept code="11502-2"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Laboratory report"
+                  level="0"
+                  type="L"/>
+                <concept code="18748-4"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Diagnostic imaging study"
+                  level="0"
+                  type="S"/>
+                <concept code="25045-6"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Unspecified body region CT"
+                  level="1"
+                  type="L"/>
+                <concept code="25056-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Unspecified body region MRI"
+                  level="1"
+                  type="L"/>
+                <concept code="25061-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Unspecified body region US"
+                  level="1"
+                  type="L"/>
+                <concept code="49118-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Unspecified body region Scan"
+                  level="1"
+                  type="L"/>
+                <concept code="44136-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Unspecified body region PET"
+                  level="1"
+                  type="L"/>
+                <concept code="18745-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Cardiac catheterization study"
+                  level="1"
+                  type="L"/>
+                <concept code="42148-7"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Heart US"
+                  level="1"
+                  type="L"/>
+                <concept code="18782-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Radiology Study observation (narrative)"
+                  level="1"
+                  type="L"/>
+                <concept code="18746-8"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Colonoscopy study"
+                  level="1"
+                  type="L"/>
+                <concept code="18751-8"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Endoscopy study"
+                  level="1"
+                  type="L"/>
+                <concept code="11525-3"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="US Pelvis and Fetus for pregnancy"
+                  level="1"
+                  type="L"/>
+                <concept code="55113-5"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Key images Document Radiology"
+                  level="0"
+                  type="L"/>
+                <concept code="52471-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Medications"
+                  level="0"
+                  type="S"/>
+                <concept code="57833-6"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Prescription for medication"
+                  level="1"
+                  type="L"/>
+                <concept code="60593-1"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Medication dispensed.extended Document"
+                  level="1"
+                  type="L"/>
+                <concept code="56445-0"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Medication summary Document"
+                  level="1"
+                  type="L"/>
+                <concept code="61356-2"
+                  codeSystem="2.16.840.1.113883.6.1"
+                  displayName="Medication pharmaceutical advice.extended Document"
+                  level="1"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

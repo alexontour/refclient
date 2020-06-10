@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             displayName="ActStatus"
+             effectiveDate="2010-06-28T00:00:00"
+             id="2.16.840.1.113883.1.11.15933"
+             name="ActStatus"
+             statusCode="final">
+      <sourceCodeSystem id="2.16.840.1.113883.5.14"
+                        identifierName="ActStatus"
+                        canonicalUri="http://terminology.hl7.org/CodeSystem/v3-ActStatus"
+                        canonicalUriDSTU2="http://hl7.org/fhir/v3/ActStatus"
+                        canonicalUriSTU3="http://hl7.org/fhir/v3/ActStatus"
+                        canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-ActStatus"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="aborted"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Aborted"
+                  level="0"
+                  type="L"/>
+                <concept code="active"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Active"
+                  level="0"
+                  type="L"/>
+                <concept code="cancelled"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Cancelled"
+                  level="0"
+                  type="L"/>
+                <concept code="completed"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Completed"
+                  level="0"
+                  type="L"/>
+                <concept code="held"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Held"
+                  level="0"
+                  type="L"/>
+                <concept code="suspended"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Suspended"
+                  level="0"
+                  type="L"/>
+                <concept code="nullified"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Nullified"
+                  level="0"
+                  type="L"/>
+                <concept code="obsolete"
+                  codeSystem="2.16.840.1.113883.5.14"
+                  displayName="Obsolete"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

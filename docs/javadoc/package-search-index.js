@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"arztis.econnector.common.model"},{"l":"arztis.econnector.ihe.model.eimpf"},{"l":"arztis.econnector.ihe.parameters"},{"l":"arztis.econnector.rest"},{"l":"arztis.econnector.rest.model"}]

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets>
+   <valueSet xmlns:hl7="urn:hl7-org:v3"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:pharm="urn:ihe:pharm:medication"
+             id="1.2.40.0.34.10.32"
+             name="ELGA_MedikationMengenart"
+             displayName="ELGA_MedikationMengenart"
+             effectiveDate="2015-03-31T00:00:00"
+             statusCode="deprecated">
+      <desc language="de-DE">ELGA ValueSet für Mengenarten in der e-Medikation. Die Spalte displayName enthält die Schreibweise für den narrativen Text.</desc>
+      <desc language="en-US">ELGA ValueSet for units of measure in e-Medikation </desc>
+      <sourceCodeSystem id="2.16.840.1.113883.6.8"
+                        identifierName="Unified Code for Units of Measure"
+                        canonicalUri="http://unitsofmeasure.org"
+                        canonicalUriDSTU2="http://unitsofmeasure.org"
+                        canonicalUriSTU3="http://unitsofmeasure.org"
+                        canonicalUriR4="http://unitsofmeasure.org"/>
+      <publishingAuthority name="ELGA GmbH">
+                <addrLine>ELGA GmbH</addrLine>
+                <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+                <addrLine>1200 Wien</addrLine>
+                <addrLine>T +43 1 212 70 50</addrLine>
+                <addrLine>E office@elga.gv.at</addrLine>
+            </publishingAuthority>
+      <conceptList>
+                <concept code="g"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="g"
+                  level="0"
+                  type="L"/>
+                <concept code="GBq"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="GBq"
+                  level="0"
+                  type="L"/>
+                <concept code="IE"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="IE"
+                  level="0"
+                  type="L"/>
+                <concept code="L"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="l"
+                  level="0"
+                  type="L"/>
+                <concept code="mg"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="mg"
+                  level="0"
+                  type="L"/>
+                <concept code="mL"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="ml"
+                  level="0"
+                  type="L"/>
+                <concept code="ug"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="µg"
+                  level="0"
+                  type="L"/>
+                <concept code="{Stueck}"
+                  codeSystem="2.16.840.1.113883.6.8"
+                  displayName="Stück"
+                  level="0"
+                  type="L"/>
+            </conceptList>
+   </valueSet>
+</valueSets>

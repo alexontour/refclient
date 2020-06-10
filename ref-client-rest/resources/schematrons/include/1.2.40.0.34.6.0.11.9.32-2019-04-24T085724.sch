@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Template derived pattern
+===========================================
+ID: 1.2.40.0.34.6.0.11.9.32
+Name: Vaccine Product
+Description: 
+-->
+<pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="template-1.2.40.0.34.6.0.11.9.32-2019-04-24T085724">
+    <title>Vaccine Product</title>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+
+<!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]" id="d133e9598-false-d164206e0">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@classCode) = ('MANU') or not(@classCode)">(atcdabbr_other_vaccineProduct): Der Wert von classCode MUSS 'MANU' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32'] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32'] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:id[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:id[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:manufacturerOrganization) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:manufacturerOrganization kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']" id="d133e9607-false-d164284e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@root) = ('1.2.40.0.34.6.0.11.9.32')">(atcdabbr_other_vaccineProduct): Der Wert von root MUSS '1.2.40.0.34.6.0.11.9.32' sein. Gefunden: "<value-of select="@root"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='1.2.40.0.34.6.0.11.9.32'][not(@nullFlavor)]" id="d133e9612-false-d164295e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@root) = ('1.2.40.0.34.6.0.11.9.32')">(atcdabbr_other_vaccineProduct): Der Wert von root MUSS '1.2.40.0.34.6.0.11.9.32' sein. Gefunden: "<value-of select="@root"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='1.3.6.1.4.1.19376.1.5.3.1.4.7.2'][not(@nullFlavor)]" id="d133e9620-false-d164306e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@root) = ('1.3.6.1.4.1.19376.1.5.3.1.4.7.2')">(atcdabbr_other_vaccineProduct): Der Wert von root MUSS '1.3.6.1.4.1.19376.1.5.3.1.4.7.2' sein. Gefunden: "<value-of select="@root"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:templateId[@root='2.16.840.1.113883.10.20.1.53'][not(@nullFlavor)]" id="d133e9629-false-d164317e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@root) = ('2.16.840.1.113883.10.20.1.53')">(atcdabbr_other_vaccineProduct): Der Wert von root MUSS '2.16.840.1.113883.10.20.1.53' sein. Gefunden: "<value-of select="@root"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:id[not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:id[not(@nullFlavor)]" id="d133e9637-false-d164328e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]" id="d133e9643-false-d164341e0">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@classCode) = ('MMAT') or not(@classCode)">(atcdabbr_other_vaccineProduct): Der Wert von classCode MUSS 'MMAT' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@determinerCode) = ('KIND') or not(@determinerCode)">(atcdabbr_other_vaccineProduct): Der Wert von determinerCode MUSS 'KIND' sein. Gefunden: "<value-of select="@determinerCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="not(/hl7:ClinicalDocument/hl7:templateId[@root = '1.2.40.0.34.6.0.11.0.2'] and ancestor::*/hl7:participant/hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.14']) or (hl7:lotNumberText/text() or hl7:lotNumberText/@nullFlavor='UNK')">(atcdabbr_other_vaccineProduct): Zulässiger nullFlavor ist "UNK"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="not(ancestor::*/hl7:templateId[@root='1.2.40.0.34.6.0.11.3.3']) or hl7:lotNumberText[@nullFlavor='NA']">(atcdabbr_other_vaccineProduct): Das Element lotNumberText MUSS mit @nullFlavor "NA" strukturiert sein.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1'] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1'] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor] ist required [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:name) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:name kommt zu häufig vor [max 1x].</assert>
+        <let name="elmcount" value="count(hl7:lotNumberText[not(@nullFlavor)] | hl7:lotNumberText[@nullFlavor='NA'] | hl7:lotNumberText[@nullFlavor='UNK'])"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="$elmcount &gt;= 1">(atcdabbr_other_vaccineProduct): Auswahl (hl7:lotNumberText[not(@nullFlavor)]  oder  hl7:lotNumberText[@nullFlavor='NA']  oder  hl7:lotNumberText[@nullFlavor='UNK']) enthält nicht genügend Elemente [min 1x]</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="$elmcount &lt;= 1">(atcdabbr_other_vaccineProduct): Auswahl (hl7:lotNumberText[not(@nullFlavor)]  oder  hl7:lotNumberText[@nullFlavor='NA']  oder  hl7:lotNumberText[@nullFlavor='UNK']) enthält zu viele Elemente [max 1x]</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:lotNumberText[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:lotNumberText[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:lotNumberText[@nullFlavor='NA']) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:lotNumberText[@nullFlavor='NA'] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:lotNumberText[@nullFlavor='UNK']) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:lotNumberText[@nullFlavor='UNK'] kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']" id="d133e9649-false-d164409e0">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@root) = ('1.3.6.1.4.1.19376.1.9.1.3.1')">(atcdabbr_other_vaccineProduct): Der Wert von root MUSS '1.3.6.1.4.1.19376.1.9.1.3.1' sein. Gefunden: "<value-of select="@root"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]" id="d133e9657-false-d164430e0">
+        <extends rule="CE"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <let name="theCode" value="@code"/>
+        <let name="theCodeSystem" value="@codeSystem"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="@nullFlavor or exists(doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1][conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem]]) or exists(doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1][conceptList/concept[@code = $theCode][@codeSystem = $theCodeSystem]])">(atcdabbr_other_vaccineProduct): Der Elementinhalt MUSS einer von '1.2.40.0.34.6.0.10.14 eImpf_Impfstoffe_VS (DYNAMIC) oder 1.2.40.0.34.6.0.10.10 eImpf_HistorischeImpfstoffe_VS (DYNAMIC)' sein.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="not(@nullFlavor) or @nullFlavor=('OTH')">(atcdabbr_other_vaccineProduct): Der fehlende Wert '<value-of select="@nullFlavor"/>' für @code MUSS gewählt werden aus dem Set gültiger null flavors für dieses Attribut oder denen assoziiert mit Value Set 1.2.40.0.34.6.0.10.14 eImpf_Impfstoffe_VS (DYNAMIC) oder 1.2.40.0.34.6.0.10.10 eImpf_HistorischeImpfstoffe_VS (DYNAMIC).</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="not(/hl7:ClinicalDocument/hl7:templateId[@root = '1.2.40.0.34.6.0.11.0.4'] and ancestor::*/hl7:substanceAdministration/hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.3']) or (@nullFlavor='OTH' and hl7:translation)">(atcdabbr_other_vaccineProduct): Das Attribut code/@nullFlavor= "OTH" MUSS angeführt und in code/translation die Zulassungsnummer strukturiert sein.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:originalText) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:originalText kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.2
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:originalText
+Item: (atcdabbr_other_OriginalTextReference)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:originalText" id="d164433e33-false-d164476e0">
+        <extends rule="ED"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ED' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_OriginalTextReference): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ED" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="count(hl7:reference[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_OriginalTextReference): Element hl7:reference[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="count(hl7:reference[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_OriginalTextReference): Element hl7:reference[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.2
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:originalText/hl7:reference[not(@nullFlavor)]
+Item: (atcdabbr_other_OriginalTextReference)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:originalText/hl7:reference[not(@nullFlavor)]" id="d164433e37-false-d164494e0">
+        <extends rule="TEL"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='TEL' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_OriginalTextReference): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:TEL" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="@value">(atcdabbr_other_OriginalTextReference): Attribut @value MUSS vorkommen.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.2" test="starts-with(@value,'#')">(atcdabbr_other_OriginalTextReference): The @value attribute content MUST conform to the format '#xxx', where xxx is the ID of the corresponding 'content'-element.</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:translation
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:code[concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.14-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or concat(@code, @codeSystem) = doc('include/voc-1.2.40.0.34.6.0.10.10-DYNAMIC.xml')//valueSet[1]/conceptList/concept/concat(@code, @codeSystem) or @nullFlavor]/hl7:translation" id="d133e9696-false-d164507e0">
+        <extends rule="CE"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:name
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:name" id="d133e9708-false-d164516e0">
+        <extends rule="EN"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='EN' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:EN" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[not(@nullFlavor)]" id="d133e9753-false-d164523e0">
+        <extends rule="ST"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ST' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ST" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[@nullFlavor='NA']
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[@nullFlavor='NA']" id="d133e9761-false-d164530e0">
+        <extends rule="ST"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ST' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ST" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@nullFlavor) = ('NA')">(atcdabbr_other_vaccineProduct): Der Wert von nullFlavor MUSS 'NA' sein. Gefunden: "<value-of select="@nullFlavor"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[@nullFlavor='UNK']
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/hl7:lotNumberText[@nullFlavor='UNK']" id="d133e9769-false-d164541e0">
+        <extends rule="ST"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ST' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ST" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@nullFlavor) = ('UNK')">(atcdabbr_other_vaccineProduct): Der Wert von nullFlavor MUSS 'UNK' sein. Gefunden: "<value-of select="@nullFlavor"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]" id="d133e9778-false-d164554e0">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@classCode) = ('ACTI') or not(@classCode)">(atcdabbr_other_vaccineProduct): Der Wert von classCode MUSS 'ACTI' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(pharm:ingredient[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_vaccineProduct): Element pharm:ingredient[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(pharm:ingredient[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element pharm:ingredient[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]" id="d133e9785-false-d164573e0">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@classCode) = ('MMAT') or not(@classCode)">(atcdabbr_other_vaccineProduct): Der Wert von classCode MUSS 'MMAT' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="string(@determinerCode) = ('KIND') or not(@determinerCode)">(atcdabbr_other_vaccineProduct): Der Wert von determinerCode MUSS 'KIND' sein. Gefunden: "<value-of select="@determinerCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]) &lt;= 1">(atcdabbr_other_vaccineProduct): Element pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(pharm:name) &lt;= 1">(atcdabbr_other_vaccineProduct): Element pharm:name kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]" id="d133e9794-false-d164602e0">
+        <extends rule="CE"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="@nullFlavor or (@codeSystem='2.16.840.1.113883.6.73') or (@codeSystem='1.2.40.0.34.5.156')">(atcdabbr_other_vaccineProduct): Der Elementinhalt MUSS einer von 'codeSystem '2.16.840.1.113883.6.73' oder codeSystem '1.2.40.0.34.5.156'' sein.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="count(hl7:originalText) &lt;= 1">(atcdabbr_other_vaccineProduct): Element hl7:originalText kommt zu häufig vor [max 1x].</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]/hl7:originalText
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]/hl7:originalText" id="d133e9806-false-d164628e0">
+        <extends rule="ED"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ED' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ED" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]/hl7:translation
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:code[@codeSystem = '2.16.840.1.113883.6.73' or @codeSystem = '1.2.40.0.34.5.156' or @nullFlavor]/hl7:translation" id="d133e9813-false-d164637e0">
+        <extends rule="CE"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:name
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturedMaterial[hl7:templateId[@root = '1.3.6.1.4.1.19376.1.9.1.3.1']]/pharm:ingredient[pharm:ingredient]/pharm:ingredient[not(@nullFlavor)]/pharm:name" id="d133e9816-false-d164646e0">
+        <extends rule="EN"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.32" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='EN' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_vaccineProduct): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:EN" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.32
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization
+Item: (atcdabbr_other_vaccineProduct)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization">
+        <extends rule="d164689e0-false-d164705e0"/>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.9
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization
+Item: (atcdabbr_other_OrganizationCompilationWithName)
+-->
+    <rule id="d164689e0-false-d164705e0" abstract="true">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="string(@classCode) = ('ORG') or not(@classCode)">(atcdabbr_other_OrganizationCompilationWithName): Der Wert von classCode MUSS 'ORG' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="string(@determinerCode) = ('INSTANCE') or not(@determinerCode)">(atcdabbr_other_OrganizationCompilationWithName): Der Wert von determinerCode MUSS 'INSTANCE' sein. Gefunden: "<value-of select="@determinerCode"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="count(hl7:telecom)&lt;2 or (count(hl7:telecom) = count(hl7:telecom[@use]))">(atcdabbr_other_OrganizationCompilationWithName): Das Attribut telecom/@use MUSS bei allen telecom Elementen strukturiert sein.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="count(hl7:name[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_OrganizationCompilationWithName): Element hl7:name[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="count(hl7:name[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_OrganizationCompilationWithName): Element hl7:name[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="count(hl7:addr[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_OrganizationCompilationWithName): Element hl7:addr[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.9
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:id[not(@nullFlavor)]
+Item: (atcdabbr_other_OrganizationCompilationWithName)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:id[not(@nullFlavor)]">
+        <extends rule="II"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_OrganizationCompilationWithName): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.9
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:name[not(@nullFlavor)]
+Item: (atcdabbr_other_OrganizationCompilationWithName)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:name[not(@nullFlavor)]">
+        <extends rule="ON"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ON' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_OrganizationCompilationWithName): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ON" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.9
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:telecom[not(@nullFlavor)]
+Item: (atcdabbr_other_OrganizationCompilationWithName)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:telecom[not(@nullFlavor)]">
+        <extends rule="TEL.AT"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='TEL' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_OrganizationCompilationWithName): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:TEL" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="@value">(atcdabbr_other_OrganizationCompilationWithName): Attribut @value MUSS vorkommen.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="not(@value) or string-length(@value)&gt;0">(atcdabbr_other_OrganizationCompilationWithName): Attribute @value MUSS vom Datentyp 'st' sein  - '<value-of select="@value"/>'</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.9" test="not(@use) or string-length(@use) &gt; 0">(atcdabbr_other_OrganizationCompilationWithName): Attribute @use MUSS vom Datentyp 'set_cs' sein  - '<value-of select="@use"/>'</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.9
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]
+Item: (atcdabbr_other_OrganizationCompilationWithName)
+-->
+
+<!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]">
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="not(@use) or (string-length(@use) &gt; 0 and not(matches(@use,'\s')))">(atcdabbr_other_AddressCompilation): Attribute @use MUSS vom Datentyp 'cs' sein  - '<value-of select="@use"/>'</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(hl7:streetAddressLine or (hl7:streetName and hl7:houseNumber)) and not(hl7:streetAddressLine and hl7:streetName and hl7:houseNumber)">(atcdabbr_other_AddressCompilation): Es muss entweder streetAddressLine oder streetName UND houseNumber angegeben werden.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetAddressLine) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetAddressLine kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetName) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetName kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:houseNumber) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:houseNumber kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:postalCode[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:postalCode[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:postalCode[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:postalCode[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:city[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:city[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:city[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:city[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:state) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:state kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:country[not(@nullFlavor)]) &gt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:country[not(@nullFlavor)] ist mandatory [min 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:country[not(@nullFlavor)]) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:country[not(@nullFlavor)] kommt zu häufig vor [max 1x].</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:additionalLocator) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:additionalLocator kommt zu häufig vor [max 1x].</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:streetAddressLine
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:streetAddressLine">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:streetName
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:streetName">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:houseNumber
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:houseNumber">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:postalCode[not(@nullFlavor)]
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:postalCode[not(@nullFlavor)]">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:city[not(@nullFlavor)]
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:city[not(@nullFlavor)]">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:state
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:state">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:country[not(@nullFlavor)]
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:country[not(@nullFlavor)]">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="info" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="string-length(text()) = 3">(atcdabbr_other_AddressCompilation): Es wird EMPFOHLEN, den Staat im ISO 3 Ländercode anzugeben.</assert>
+    </rule>
+
+   <!--
+Template derived rules for ID: 1.2.40.0.34.6.0.11.9.25
+Context: *[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:additionalLocator
+Item: (atcdabbr_other_AddressCompilation)
+-->
+    <rule context="*[hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]]/hl7:manufacturedProduct[hl7:templateId[@root = '1.2.40.0.34.6.0.11.9.32']]/hl7:manufacturerOrganization/hl7:addr[not(@nullFlavor)]/hl7:additionalLocator">
+        <extends rule="ADXP"/>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ADXP' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(atcdabbr_other_AddressCompilation): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ADXP" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+    </rule>
+</pattern>

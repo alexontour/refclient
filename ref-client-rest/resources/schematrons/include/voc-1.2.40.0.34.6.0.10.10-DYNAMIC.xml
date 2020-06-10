@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <valueSet xmlns="" id="1.2.40.0.34.6.0.10.10" name="eImpf_HistorischeImpfstoffe_VS" displayName="eImpf_HistorischeImpfstoffe_VS" effectiveDate="2019-12-23T00:00:00" statusCode="draft" versionLabel="201912(-beta)" url="http://art-decor.org/decor/services/" ident="at-cda-bbr-" referencedFrom="elgaimpf-">
+        <desc language="de-DE">Liste der historischen Impfstoffe.<br clear="none"/>
+            <b>Achtung</b>: Dieses Value Set besitzt weitere Attribute, die hier nicht darstellbar sind. Diese können vom Terminologieserver abgerufen werden:&#160;<a class="" href="https://termpub.gesundheit.gv.at/" target="_blank" title="https://termpub.gesundheit.gv.at">https://termpub.gesundheit.gv.at</a>&#160;<br clear="none"/>
+        </desc>
+        <sourceCodeSystem id="1.2.40.0.34.5.186" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.186" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.186" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.186" canonicalUriR4="urn:oid:1.2.40.0.34.5.186"/>
+        <publishingAuthority name="ELGA GmbH">
+            <addrLine>ELGA GmbH</addrLine>
+            <addrLine>Treustraße 35-43, Stg. 4</addrLine>
+            <addrLine>1200 Wien</addrLine>
+            <addrLine>T +43 1 212 70 50</addrLine>
+            <addrLine>E office@elga.gv.at</addrLine>
+        </publishingAuthority>
+        <conceptList>
+            <concept code="AHI001" codeSystem="1.2.40.0.34.5.186" displayName="Acel - P Lederle" level="0" type="L"/>
+            <concept code="AHI002" codeSystem="1.2.40.0.34.5.186" displayName="Act-HIB+DPT" level="0" type="L"/>
+            <concept code="AHI003" codeSystem="1.2.40.0.34.5.186" displayName="Addigrip" level="0" type="L"/>
+            <concept code="AHI004" codeSystem="1.2.40.0.34.5.186" displayName="Arepanrix" level="0" type="L"/>
+            <concept code="AHI005" codeSystem="1.2.40.0.34.5.186" displayName="Arilvax" level="0" type="L"/>
+            <concept code="AHI006" codeSystem="1.2.40.0.34.5.186" displayName="Batrevac" level="0" type="L"/>
+            <concept code="AHI007" codeSystem="1.2.40.0.34.5.186" displayName="BCG Vaccine 'Mérieux'" level="0" type="L"/>
+            <concept code="AHI008" codeSystem="1.2.40.0.34.5.186" displayName="Begrivac" level="0" type="L"/>
+            <concept code="AHI009" codeSystem="1.2.40.0.34.5.186" displayName="Celvapan" level="0" type="L"/>
+            <concept code="AHI010" codeSystem="1.2.40.0.34.5.186" displayName="Cholera - Impfstoff 'Berna'" level="0" type="L"/>
+            <concept code="AHI011" codeSystem="1.2.40.0.34.5.186" displayName="Cholera - Vakzine 'Sero'" level="0" type="L"/>
+            <concept code="AHI012" codeSystem="1.2.40.0.34.5.186" displayName="Daronrix" level="0" type="L"/>
+            <concept code="AHI013" codeSystem="1.2.40.0.34.5.186" displayName="Diftetall" level="0" type="L"/>
+            <concept code="AHI014" codeSystem="1.2.40.0.34.5.186" displayName="Diphtherie Adsorbat Impfstoff 'Behring'" level="0" type="L"/>
+            <concept code="AHI015" codeSystem="1.2.40.0.34.5.186" displayName="Ditanrix" level="0" type="L"/>
+            <concept code="AHI016" codeSystem="1.2.40.0.34.5.186" displayName="DiTe Anatoxal Berna" level="0" type="L"/>
+            <concept code="AHI017" codeSystem="1.2.40.0.34.5.186" displayName="DiTe Anatoxal(dT) Berna" level="0" type="L"/>
+            <concept code="AHI018" codeSystem="1.2.40.0.34.5.186" displayName="DiTePer Anatoxal Berna" level="0" type="L"/>
+            <concept code="AHI019" codeSystem="1.2.40.0.34.5.186" displayName="DT Adsorbat 'Mérieux'" level="0" type="L"/>
+            <concept code="AHI020" codeSystem="1.2.40.0.34.5.186" displayName="DPT Adsorbat 'Mérieux'" level="0" type="L"/>
+            <concept code="AHI021" codeSystem="1.2.40.0.34.5.186" displayName="DTaP Vakzine SSI" level="0" type="L"/>
+            <concept code="AHI022" codeSystem="1.2.40.0.34.5.186" displayName="D.T.Vax" level="0" type="L"/>
+            <concept code="AHI023" codeSystem="1.2.40.0.34.5.186" displayName="Epaxal" level="0" type="L"/>
+            <concept code="AHI024" codeSystem="1.2.40.0.34.5.186" displayName="Ervevax" level="0" type="L"/>
+            <concept code="AHI025" codeSystem="1.2.40.0.34.5.186" displayName="Fluarix" level="0" type="L"/>
+            <concept code="AHI026" codeSystem="1.2.40.0.34.5.186" displayName="Fluenz" level="0" type="L"/>
+            <concept code="AHI027" codeSystem="1.2.40.0.34.5.186" displayName="Fluvirin" level="0" type="L"/>
+            <concept code="AHI028" codeSystem="1.2.40.0.34.5.186" displayName="Focetria" level="0" type="L"/>
+            <concept code="AHI029" codeSystem="1.2.40.0.34.5.186" displayName="Gen-HB-vax 10 ug" level="0" type="L"/>
+            <concept code="AHI030" codeSystem="1.2.40.0.34.5.186" displayName="Havrix 360 E.I.U./ml" level="0" type="L"/>
+            <concept code="AHI031" codeSystem="1.2.40.0.34.5.186" displayName="Hepacare" level="0" type="L"/>
+            <concept code="AHI032" codeSystem="1.2.40.0.34.5.186" displayName="Hepatyrix" level="0" type="L"/>
+            <concept code="AHI033" codeSystem="1.2.40.0.34.5.186" displayName="Hevac B 'Pasteur'" level="0" type="L"/>
+            <concept code="AHI034" codeSystem="1.2.40.0.34.5.186" displayName="Hexavac" level="0" type="L"/>
+            <concept code="AHI035" codeSystem="1.2.40.0.34.5.186" displayName="HIB-Titer" level="0" type="L"/>
+            <concept code="AHI036" codeSystem="1.2.40.0.34.5.186" displayName="Hiberix" level="0" type="L"/>
+            <concept code="AHI037" codeSystem="1.2.40.0.34.5.186" displayName="Humenza" level="0" type="L"/>
+            <concept code="AHI038" codeSystem="1.2.40.0.34.5.186" displayName="IDflu" level="0" type="L"/>
+            <concept code="AHI039" codeSystem="1.2.40.0.34.5.186" displayName="Immugrip" level="0" type="L"/>
+            <concept code="AHI040" codeSystem="1.2.40.0.34.5.186" displayName="Immovax Polio" level="0" type="L"/>
+            <concept code="AHI041" codeSystem="1.2.40.0.34.5.186" displayName="Infanrix" level="0" type="L"/>
+            <concept code="AHI042" codeSystem="1.2.40.0.34.5.186" displayName="Infanrix Penta" level="0" type="L"/>
+            <concept code="AHI043" codeSystem="1.2.40.0.34.5.186" displayName="Infanrix Tetra" level="0" type="L"/>
+            <concept code="AHI044" codeSystem="1.2.40.0.34.5.186" displayName="Infanrix + HepB" level="0" type="L"/>
+            <concept code="AHI045" codeSystem="1.2.40.0.34.5.186" displayName="Infanrix + HiB" level="0" type="L"/>
+            <concept code="AHI046" codeSystem="1.2.40.0.34.5.186" displayName="Inflexal V" level="0" type="L"/>
+            <concept code="AHI047" codeSystem="1.2.40.0.34.5.186" displayName="Intanza" level="0" type="L"/>
+            <concept code="AHI048" codeSystem="1.2.40.0.34.5.186" displayName="Invivac" level="0" type="L"/>
+            <concept code="AHI049" codeSystem="1.2.40.0.34.5.186" displayName="IPV Mérieux" level="0" type="L"/>
+            <concept code="AHI050" codeSystem="1.2.40.0.34.5.186" displayName="JE - Vax" level="0" type="L"/>
+            <concept code="AHI051" codeSystem="1.2.40.0.34.5.186" displayName="Japan B Encephalitis Vaccine" level="0" type="L"/>
+            <concept code="AHI052" codeSystem="1.2.40.0.34.5.186" displayName="Laevactin" level="0" type="L"/>
+            <concept code="AHI053" codeSystem="1.2.40.0.34.5.186" displayName="Masern Vaccine 'Mérieux'" level="0" type="L"/>
+            <concept code="AHI054" codeSystem="1.2.40.0.34.5.186" displayName="Menomune ACWY" level="0" type="L"/>
+            <concept code="AHI055" codeSystem="1.2.40.0.34.5.186" displayName="Mumps Vaccine 'Merieux'" level="0" type="L"/>
+            <concept code="AHI056" codeSystem="1.2.40.0.34.5.186" displayName="MMR Triplovax" level="0" type="L"/>
+            <concept code="AHI057" codeSystem="1.2.40.0.34.5.186" displayName="Mencevax ACWY" level="0" type="L"/>
+            <concept code="AHI058" codeSystem="1.2.40.0.34.5.186" displayName="Meningovax A+C" level="0" type="L"/>
+            <concept code="AHI059" codeSystem="1.2.40.0.34.5.186" displayName="Menactra" level="0" type="L"/>
+            <concept code="AHI060" codeSystem="1.2.40.0.34.5.186" displayName="Meningokokken-Impfstoff A+C Mérieux" level="0" type="L"/>
+            <concept code="AHI061" codeSystem="1.2.40.0.34.5.186" displayName="Meninvact C" level="0" type="L"/>
+            <concept code="AHI062" codeSystem="1.2.40.0.34.5.186" displayName="Mutagrip" level="0" type="L"/>
+            <concept code="AHI063" codeSystem="1.2.40.0.34.5.186" displayName="Optaflu" level="0" type="L"/>
+            <concept code="AHI064" codeSystem="1.2.40.0.34.5.186" displayName="Orochol" level="0" type="L"/>
+            <concept code="AHI065" codeSystem="1.2.40.0.34.5.186" displayName="PAC-Mérieux" level="0" type="L"/>
+            <concept code="AHI066" codeSystem="1.2.40.0.34.5.186" displayName="Pandemrix" level="0" type="L"/>
+            <concept code="AHI067" codeSystem="1.2.40.0.34.5.186" displayName="Pariorix" level="0" type="L"/>
+            <concept code="AHI068" codeSystem="1.2.40.0.34.5.186" displayName="Pediacel" level="0" type="L"/>
+            <concept code="AHI069" codeSystem="1.2.40.0.34.5.186" displayName="Pent-Act-HiB" level="0" type="L"/>
+            <concept code="AHI070" codeSystem="1.2.40.0.34.5.186" displayName="Pentavac" level="0" type="L"/>
+            <concept code="AHI071" codeSystem="1.2.40.0.34.5.186" displayName="Pertoral" level="0" type="L"/>
+            <concept code="AHI072" codeSystem="1.2.40.0.34.5.186" displayName="Pocken Vaccine" level="0" type="L"/>
+            <concept code="AHI073" codeSystem="1.2.40.0.34.5.186" displayName="Polio Sabin SB" level="0" type="L"/>
+            <concept code="AHI074" codeSystem="1.2.40.0.34.5.186" displayName="Poliomyelitis Vaccine 'Berna'" level="0" type="L"/>
+            <concept code="AHI075" codeSystem="1.2.40.0.34.5.186" displayName="Pneumo&#160;23&#160;'Merieux'" level="0" type="L"/>
+            <concept code="AHI076" codeSystem="1.2.40.0.34.5.186" displayName="PNU-Imune" level="0" type="L"/>
+            <concept code="AHI077" codeSystem="1.2.40.0.34.5.186" displayName="Präpandemischer&#160;Impfstoff&#160;(H5N1)&#160;GSK" level="0" type="L"/>
+            <concept code="AHI078" codeSystem="1.2.40.0.34.5.186" displayName="Präpandemischer&#160;Impfstoff&#160;(H5N1)&#160;Novartis" level="0" type="L"/>
+            <concept code="AHI079" codeSystem="1.2.40.0.34.5.186" displayName="Prévigrip" level="0" type="L"/>
+            <concept code="AHI080" codeSystem="1.2.40.0.34.5.186" displayName="Prevenar&#160;(7-valent)" level="0" type="L"/>
+            <concept code="AHI081" codeSystem="1.2.40.0.34.5.186" displayName="Primavax" level="0" type="L"/>
+            <concept code="AHI082" codeSystem="1.2.40.0.34.5.186" displayName="Procomvax" level="0" type="L"/>
+            <concept code="AHI083" codeSystem="1.2.40.0.34.5.186" displayName="Provarivax" level="0" type="L"/>
+            <concept code="AHI084" codeSystem="1.2.40.0.34.5.186" displayName="ProHIBiT" level="0" type="L"/>
+            <concept code="AHI085" codeSystem="1.2.40.0.34.5.186" displayName="Pumarix" level="0" type="L"/>
+            <concept code="AHI086" codeSystem="1.2.40.0.34.5.186" displayName="Quatrovirelon" level="0" type="L"/>
+            <concept code="AHI087" codeSystem="1.2.40.0.34.5.186" displayName="Quintanrix" level="0" type="L"/>
+            <concept code="AHI088" codeSystem="1.2.40.0.34.5.186" displayName="Quintovirelon" level="0" type="L"/>
+            <concept code="AHI089" codeSystem="1.2.40.0.34.5.186" displayName="Rabies&#160;Imovax" level="0" type="L"/>
+            <concept code="AHI090" codeSystem="1.2.40.0.34.5.186" displayName="Rimparix" level="0" type="L"/>
+            <concept code="AHI091" codeSystem="1.2.40.0.34.5.186" displayName="Rimevax" level="0" type="L"/>
+            <concept code="AHI092" codeSystem="1.2.40.0.34.5.186" displayName="Rouvax" level="0" type="L"/>
+            <concept code="AHI093" codeSystem="1.2.40.0.34.5.186" displayName="Rudivax" level="0" type="L"/>
+            <concept code="AHI094" codeSystem="1.2.40.0.34.5.186" displayName="RotaShield" level="0" type="L"/>
+            <concept code="AHI095" codeSystem="1.2.40.0.34.5.186" displayName="Röteln-Impfstoff&#160;HDC&#160;Mérieux" level="0" type="L"/>
+            <concept code="AHI096" codeSystem="1.2.40.0.34.5.186" displayName="Rubeaten&#160;'Berna'" level="0" type="L"/>
+            <concept code="AHI097" codeSystem="1.2.40.0.34.5.186" displayName="Spirolept" level="0" type="L"/>
+            <concept code="AHI098" codeSystem="1.2.40.0.34.5.186" displayName="Tanrix" level="0" type="L"/>
+            <concept code="AHI099" codeSystem="1.2.40.0.34.5.186" displayName="Te-Anatoxal&#160;'Berna'" level="0" type="L"/>
+            <concept code="AHI100" codeSystem="1.2.40.0.34.5.186" displayName="Tetanol" level="0" type="L"/>
+            <concept code="AHI101" codeSystem="1.2.40.0.34.5.186" displayName="Tetanus-Adsorbat&#160;'Merieux'" level="0" type="L"/>
+            <concept code="AHI102" codeSystem="1.2.40.0.34.5.186" displayName="Td-Rix" level="0" type="L"/>
+            <concept code="AHI103" codeSystem="1.2.40.0.34.5.186" displayName="Tetagrip" level="0" type="L"/>
+            <concept code="AHI104" codeSystem="1.2.40.0.34.5.186" displayName="Tetracoq" level="0" type="L"/>
+            <concept code="AHI105" codeSystem="1.2.40.0.34.5.186" displayName="Triacelluvax" level="0" type="L"/>
+            <concept code="AHI106" codeSystem="1.2.40.0.34.5.186" displayName="Triaxis&#160;Polio" level="0" type="L"/>
+            <concept code="AHI107" codeSystem="1.2.40.0.34.5.186" displayName="Ticovac&#160;junior" level="0" type="L"/>
+            <concept code="AHI108" codeSystem="1.2.40.0.34.5.186" displayName="Ticovac" level="0" type="L"/>
+            <concept code="AHI109" codeSystem="1.2.40.0.34.5.186" displayName="Tollwut&#160;Vakzine&#160;'Pasteur&#160;Merieux'" level="0" type="L"/>
+            <concept code="AHI110" codeSystem="1.2.40.0.34.5.186" displayName="Tritanrix&#160;DTPw" level="0" type="L"/>
+            <concept code="AHI111" codeSystem="1.2.40.0.34.5.186" displayName="Tollwut&#160;Vaccine&#160;HDC" level="0" type="L"/>
+            <concept code="AHI112" codeSystem="1.2.40.0.34.5.186" displayName="Tritanrix&#160;HepB" level="0" type="L"/>
+            <concept code="AHI113" codeSystem="1.2.40.0.34.5.186" displayName="Tyavax" level="0" type="L"/>
+            <concept code="AHI114" codeSystem="1.2.40.0.34.5.186" displayName="Typherix" level="0" type="L"/>
+            <concept code="AHI115" codeSystem="1.2.40.0.34.5.186" displayName="Typhoral" level="0" type="L"/>
+            <concept code="AHI116" codeSystem="1.2.40.0.34.5.186" displayName="Vaccin&#160;Rabique&#160;inactivé&#160;Mérieux&#160;HDCV" level="0" type="L"/>
+            <concept code="AHI117" codeSystem="1.2.40.0.34.5.186" displayName="Vaccin&#160;GenHevac&#160;B&#160;Pasteur" level="0" type="L"/>
+            <concept code="AHI118" codeSystem="1.2.40.0.34.5.186" displayName="Vaccine&#160;Rabique&#160;Pasteur" level="0" type="L"/>
+            <concept code="AHI119" codeSystem="1.2.40.0.34.5.186" displayName="Vaccine&#160;Tétamique&#160;Pasteur" level="0" type="L"/>
+            <concept code="AHI120" codeSystem="1.2.40.0.34.5.186" displayName="Vaccine&#160;Boostrixtetra" level="0" type="L"/>
+            <concept code="AHI121" codeSystem="1.2.40.0.34.5.186" displayName="Varicella&#160;Impfstoff&#160;SB" level="0" type="L"/>
+            <concept code="AHI122" codeSystem="1.2.40.0.34.5.186" displayName="Vaxigrip&#160;junior" level="0" type="L"/>
+            <concept code="AHI123" codeSystem="1.2.40.0.34.5.186" displayName="Vaxigrip" level="0" type="L"/>
+        </conceptList>
+    </valueSet>
+</valueSets>
