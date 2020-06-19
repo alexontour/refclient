@@ -1010,7 +1010,7 @@ public class ElgaConnectionCaller {
 		try {
 			file = new File("resources/cda_immunization_entry_example.xml");
 			updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
-			String document = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+			String document = FileUtils.readFileToString(file, StandardCharsets.UTF_8.name());
 
 			if (document.indexOf(PHARM_NAMESPACE) != -1) {
 				document = StringUtils.replaceAll(document, PHARM_NAMESPACE, PHARM_MEDICATION_NAMESPACE);
@@ -1044,7 +1044,7 @@ public class ElgaConnectionCaller {
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfUpdateImmunization(byte[] document) throws IOException {
 		File file = new File("resources/update_immunization_example.xml");
-		FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+		FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 		try {
 			return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
 		} catch (JAXBException e) {
