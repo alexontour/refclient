@@ -1028,6 +1028,7 @@ public class ElgaConnectionCaller {
 
 		try {
 			file = new File("resources/cda_immunization_entry_example.xml");
+
 			synchronized (file) {
 				updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
 				document = FileUtils.readFileToString(file, StandardCharsets.UTF_8.name());
@@ -1067,7 +1068,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/update_immunization_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1084,7 +1085,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/lab_report_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return Laborbefund.loadFromFile(file);
 			} catch (JAXBException e) {
