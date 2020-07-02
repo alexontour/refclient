@@ -60,16 +60,16 @@ public class FhirObservation extends Observation {
 
 	}
 
-	public FhirObservation(POCDMT000040Act act, String id, CodeableConcept code, String text) {
+	public FhirObservation(POCDMT000040Act act, String id, CodeableConcept code) {
 		resources = new ArrayList<>();
-		fromPOCDMT000040Act(act, id, code, text);
+		fromPOCDMT000040Act(act, id, code);
 	}
 
 	public List<Resource> getResources() {
 		return resources;
 	}
 
-	private void fromPOCDMT000040Act(POCDMT000040Act act, String id, CodeableConcept code, String text) {
+	private void fromPOCDMT000040Act(POCDMT000040Act act, String id, CodeableConcept code) {
 		if (act != null) {
 			setId(id);
 
@@ -116,9 +116,9 @@ public class FhirObservation extends Observation {
 				for (POCDMT000040EntryRelationship entryRel : act.getEntryRelationship()) {
 					if (entryRel != null) {
 						if (entryRel.getObservation() != null) {
-							fromPOCDMT000040Observation(entryRel.getObservation(), text);
+							fromPOCDMT000040Observation(entryRel.getObservation());
 						} else if (entryRel.getOrganizer() != null) {
-							fromPOCDMT000040Organizer(entryRel.getOrganizer(), text);
+							fromPOCDMT000040Organizer(entryRel.getOrganizer());
 						}
 					}
 				}
@@ -130,7 +130,7 @@ public class FhirObservation extends Observation {
 		}
 	}
 
-	private void fromPOCDMT000040Observation(POCDMT000040Observation observation, String text) {
+	private void fromPOCDMT000040Observation(POCDMT000040Observation observation) {
 		if (observation != null) {
 			if (observation.getValue() != null && !observation.getValue().isEmpty()) {
 				setValue(extractValue(observation.getValue().get(0)));
@@ -142,7 +142,7 @@ public class FhirObservation extends Observation {
 		}
 	}
 
-	private void fromPOCDMT000040Organizer(POCDMT000040Organizer organizer, String text) {
+	private void fromPOCDMT000040Organizer(POCDMT000040Organizer organizer) {
 		if (organizer != null && organizer.getComponent() != null) {
 			for (POCDMT000040Component4 comp : organizer.getComponent()) {
 				if (comp != null && comp.getObservation() != null) {

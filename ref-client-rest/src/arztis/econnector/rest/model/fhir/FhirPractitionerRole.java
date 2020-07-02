@@ -36,6 +36,7 @@ import org.ehealth_connector.common.hl7cdar2.POCDMT000040ResponsibleParty;
 import org.ehealth_connector.common.hl7cdar2.ParticipationPhysicalPerformer;
 import org.ehealth_connector.common.hl7cdar2.TEL;
 import org.ehealth_connector.common.hl7cdar2.TS;
+import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.ContactPoint;
@@ -330,6 +331,10 @@ public class FhirPractitionerRole extends PractitionerRole {
 	public static POCDMT000040Author getAuthorBodyPs(Date authTime, PractitionerRole practitioner) {
 		return getPOCDMT000040Author(new AuthorBodyPs(), authTime, practitioner);
 	}
+	
+	public static POCDMT000040Author getAuthorBodyEImpf(Date authTime, PractitionerRole practitioner) {
+		return getPOCDMT000040Author(new AtcdabbrOtherAuthorBodyEImpfpass(), authTime, practitioner);
+	}
 
 	private static POCDMT000040Author getPOCDMT000040Author(POCDMT000040Author author, Date timeAuthor,
 			PractitionerRole practitioner) {
@@ -342,7 +347,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 		if (practitioner.hasCode()) {
 			author.setFunctionCode(FhirCodeableConcept.createHl7CdaR2Ce(practitioner.getCodeFirstRep(), null, null));
 		}
-
+		
 		author.setAssignedAuthor(getHl7CdaR2Pocdmt000040AssignedAuthor(author.getAssignedAuthor(), practitioner));
 		return author;
 	}
@@ -702,7 +707,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	public static POCDMT000040AssignedEntity getHl7CdaR2Pocdmt000040AssignedEntity(
-			POCDMT000040AssignedEntity assignedEntity, PractitionerRole practitioner) {
+			POCDMT000040AssignedEntity assignedEntity, PractitionerRole practitioner, AddressUse defaultAddressUse) {
 		if (assignedEntity == null || practitioner == null) {
 			return assignedEntity;
 		}
@@ -721,6 +726,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 				FhirCodeableConcept.createHl7CdaR2Ce(practitioner.getCodeFirstRep(), NullFlavor.UNKNOWN, null));
 
 		if (practitioner.hasOrganization()) {
+			practitioner.getOrganizationTarget().getAddressFirstRep().setUse(defaultAddressUse);
 			assignedEntity.setRepresentedOrganization(
 					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(practitioner.getOrganizationTarget()));
 		}
@@ -736,7 +742,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 			if (practitioner.getPractitionerTarget().hasAddress()) {
 				for (org.hl7.fhir.r4.model.Address address : practitioner.getPractitionerTarget().getAddress()) {
-					if (address != null) {
+					if (address != null) {						
 						assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(address, null));
 					}
 				}

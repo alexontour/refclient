@@ -55,7 +55,17 @@ import ca.uhn.fhir.context.FhirContext;
 public class UpdateImmunizationStateTest extends TestUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateImmunizationStateTest.class.getName());
-
+	private static final String OID_AUTHOR = "1.2.40.0.34.99.3.2.1046167";
+	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
+	private static final String ASSIGNED = "ASSIGNED";
+	private static final String AUTHOR_ADDRESS = "Ernst-Melchior-Gasse 22";
+	private static final String EXAMPLE_TEL = "tel:0154168899521";
+	private static final String INSTANCE = "INSTANCE";
+	private static final String AUTHOR_GIVEN_NAME = "Helga";
+	private static final String AUTHOR_FAMILY_NAME = "Musterärztin";
+	private static final String ORGANIZATION_NAME = "Ordination Dr. Musterärztin";
+	private static final String COMPLETED = "completed";
+	
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.ihe.model.eimpf.UpdateImmunizationState()}.
@@ -64,7 +74,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 	 * @throws IOException
 	 */
 	@Test
-	public void testUpdateImmunizationState() throws ParseException, IOException {
+	public void testUpdateImmunizationState() throws IOException {
 		String json = getJsonFromFile("resources/tests/jsons/Composition_Update_Immunizationstate.json");
 		Bundle bundle = FhirContext.forR4().newJsonParser().parseResource(Bundle.class, json);
 
@@ -95,16 +105,16 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("POCD_HD000040", immunizationState.getTypeId().getExtension());
 
 		assertNotNull(immunizationState.getId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167", immunizationState.getId().getRoot());
+		assertEquals(OID_AUTHOR, immunizationState.getId().getRoot());
 		assertEquals("44929e4e-048e-03fc-be6b-108f72287c59_20200221092703", immunizationState.getId().getExtension());
 
 		assertNotNull(immunizationState.getCode());
-		assertEquals("2.16.840.1.113883.6.1", immunizationState.getCode().getCodeSystem());
+		assertEquals(OID_LOINC, immunizationState.getCode().getCodeSystem());
 		assertEquals("11369-6", immunizationState.getCode().getCode());
 		assertEquals("HISTORY OF IMMUNIZATIONS", immunizationState.getCode().getDisplayName());
 		assertNotNull(immunizationState.getCode().getTranslation());
 		assertEquals(1, immunizationState.getCode().getTranslation().size());
-		assertEquals("2.16.840.1.113883.6.1", immunizationState.getCode().getTranslation().get(0).getCodeSystem());
+		assertEquals(OID_LOINC, immunizationState.getCode().getTranslation().get(0).getCodeSystem());
 		assertEquals("87273-9", immunizationState.getCode().getTranslation().get(0).getCode());
 		assertEquals("Immunization note", immunizationState.getCode().getTranslation().get(0).getDisplayName());
 
@@ -121,7 +131,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("de-AT", immunizationState.getLanguageCode().getCode());
 
 		assertNotNull(immunizationState.getSetId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167", immunizationState.getSetId().getRoot());
+		assertEquals(OID_AUTHOR, immunizationState.getSetId().getRoot());
 		assertNotNull(immunizationState.getSetId().getExtension());
 
 		assertNotNull(immunizationState.getVersionNumber());
@@ -187,7 +197,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("UNK", authors.get(0).getTime().getNullFlavor().get(0));
 
 		assertNotNull(authors.get(0).getAssignedAuthor());
-		assertEquals("ASSIGNED", authors.get(0).getAssignedAuthor().getClassCode());
+		assertEquals(ASSIGNED, authors.get(0).getAssignedAuthor().getClassCode());
 		assertNotNull(authors.get(0).getAssignedAuthor().getId());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getId().size());
 		assertEquals("NI", authors.get(0).getAssignedAuthor().getId().get(0).getNullFlavor().get(0));
@@ -195,36 +205,36 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(authors.get(0).getAssignedAuthor().getAddr());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getAddr().size());
 		testAddress(authors.get(0).getAssignedAuthor().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getTelecom());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getTelecom().size());
-		assertEquals("tel:0154168899521", authors.get(0).getAssignedAuthor().getTelecom().get(0).getValue());
+		assertEquals(EXAMPLE_TEL, authors.get(0).getAssignedAuthor().getTelecom().get(0).getValue());
 		assertEquals("WP", authors.get(0).getAssignedAuthor().getTelecom().get(0).getUse().get(0));
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getAssignedPerson());
 		assertEquals("PSN", authors.get(0).getAssignedAuthor().getAssignedPerson().getClassCode().get(0));
-		assertEquals("INSTANCE", authors.get(0).getAssignedAuthor().getAssignedPerson().getDeterminerCode());
+		assertEquals(INSTANCE, authors.get(0).getAssignedAuthor().getAssignedPerson().getDeterminerCode());
 		assertNotNull(authors.get(0).getAssignedAuthor().getAssignedPerson().getName());
 		testName(authors.get(0).getAssignedAuthor().getAssignedPerson().getName().get(0).getContent(), "Dr.", null,
-				"Helga", "Musterärztin");
+				AUTHOR_GIVEN_NAME, AUTHOR_FAMILY_NAME);
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization());
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167",
+		assertEquals(OID_AUTHOR,
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getName());
-		assertEquals("Ordination Dr. Musterärztin",
+		assertEquals(ORGANIZATION_NAME,
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getName().get(0).xmlContent);
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getAddr());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getRepresentedOrganization().getAddr().size());
 		testAddress(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getTelecom());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getRepresentedOrganization().getTelecom().size());
-		assertEquals("tel:0154168899521",
+		assertEquals(EXAMPLE_TEL,
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getTelecom().get(0).getValue());
 		assertEquals("WP",
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getTelecom().get(0).getUse().get(0));
@@ -234,24 +244,24 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(custodian);
 		assertEquals("CST", custodian.getTypeCode().get(0));
 		assertNotNull(custodian.getAssignedCustodian());
-		assertEquals("ASSIGNED", custodian.getAssignedCustodian().getClassCode());
+		assertEquals(ASSIGNED, custodian.getAssignedCustodian().getClassCode());
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization());
 		assertEquals("ORG", custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getClassCode());
-		assertEquals("INSTANCE",
+		assertEquals(INSTANCE,
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getDeterminerCode());
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167",
+		assertEquals(OID_AUTHOR,
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getId().get(0).getExtension());
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName());
-		assertEquals("Ordination Dr. Musterärztin",
+		assertEquals(ORGANIZATION_NAME,
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName().xmlContent);
 
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getAddr());
 		testAddress(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getAddr().getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getTelecom());
-		assertEquals("tel:0154168899521",
+		assertEquals(EXAMPLE_TEL,
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getTelecom().getValue());
 		assertEquals("WP",
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getTelecom().getUse().get(0));
@@ -266,7 +276,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(legalAuthenticator.getSignatureCode());
 		assertEquals("S", legalAuthenticator.getSignatureCode().getCode());
 		assertNotNull(legalAuthenticator.getAssignedEntity());
-		assertEquals("ASSIGNED", legalAuthenticator.getAssignedEntity().getClassCode());
+		assertEquals(ASSIGNED, legalAuthenticator.getAssignedEntity().getClassCode());
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getId());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getId().size());
@@ -275,36 +285,36 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(legalAuthenticator.getAssignedEntity().getAddr());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getAddr().size());
 		testAddress(legalAuthenticator.getAssignedEntity().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getTelecom());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getTelecom().size());
-		assertEquals("tel:0154168899521", legalAuthenticator.getAssignedEntity().getTelecom().get(0).getValue());
+		assertEquals(EXAMPLE_TEL, legalAuthenticator.getAssignedEntity().getTelecom().get(0).getValue());
 		assertEquals("WP", legalAuthenticator.getAssignedEntity().getTelecom().get(0).getUse().get(0));
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getAssignedPerson());
 		assertEquals("PSN", legalAuthenticator.getAssignedEntity().getAssignedPerson().getClassCode().get(0));
-		assertEquals("INSTANCE", legalAuthenticator.getAssignedEntity().getAssignedPerson().getDeterminerCode());
+		assertEquals(INSTANCE, legalAuthenticator.getAssignedEntity().getAssignedPerson().getDeterminerCode());
 		assertNotNull(legalAuthenticator.getAssignedEntity().getAssignedPerson().getName());
 		testName(legalAuthenticator.getAssignedEntity().getAssignedPerson().getName().get(0).getContent(), "Dr.", null,
-				"Helga", "Musterärztin");
+				AUTHOR_GIVEN_NAME, AUTHOR_FAMILY_NAME);
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization());
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167",
+		assertEquals(OID_AUTHOR,
 				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getName());
-		assertEquals("Ordination Dr. Musterärztin",
+		assertEquals(ORGANIZATION_NAME,
 				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getAddr());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getAddr().size());
 		testAddress(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getTelecom());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getTelecom().size());
-		assertEquals("tel:0154168899521",
+		assertEquals(EXAMPLE_TEL,
 				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0).getValue());
 		assertEquals("WP", legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0)
 				.getUse().get(0));
@@ -355,7 +365,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("1.3.6.1.4.1.19376.1.5.3.1.3.23", section.getTemplateId().get(2).getRoot());
 		assertNotNull(section.getCode());
 		assertEquals("11369-6", section.getCode().getCode());
-		assertEquals("2.16.840.1.113883.6.1", section.getCode().getCodeSystem());
+		assertEquals(OID_LOINC, section.getCode().getCodeSystem());
 		assertEquals("HISTORY OF IMMUNIZATIONS", section.getCode().getDisplayName());
 		assertEquals("Impfungen", section.getTitle().xmlContent);
 
@@ -373,7 +383,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(substance.getId());
 		assertEquals(1, substance.getId().size());
 		assertEquals("1", substance.getId().get(0).getExtension());
-		assertEquals("1.2.40.0.34.99.3.2.1046167", substance.getId().get(0).getRoot());
+		assertEquals(OID_AUTHOR, substance.getId().get(0).getRoot());
 
 		assertNotNull(substance.getCode());
 		assertEquals("IMMUNIZ", substance.getCode().getCode());
@@ -381,7 +391,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("ActCode", substance.getCode().getCodeSystemName());
 
 		assertNotNull(substance.getStatusCode());
-		assertEquals("completed", substance.getStatusCode().getCode());
+		assertEquals(COMPLETED, substance.getStatusCode().getCode());
 
 		assertNotNull(substance.getEffectiveTime());
 		assertEquals(1, substance.getEffectiveTime().size());
@@ -449,7 +459,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("2.16.840.1.113883.6.96", entryRel.getObservation().getCode().getCodeSystem());
 		assertEquals("Frühsommer-Meningoencephalitis Impfstoff", entryRel.getObservation().getCode().getDisplayName());
 		assertNotNull(entryRel.getObservation().getStatusCode());
-		assertEquals("completed", entryRel.getObservation().getStatusCode().getCode());
+		assertEquals(COMPLETED, entryRel.getObservation().getStatusCode().getCode());
 
 		// test immunization billability
 		entryRel = substance.getEntryRelationship().get(1);
@@ -466,7 +476,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("1234", entryRel.getAct().getId().get(0).getExtension());
 		assertEquals(null, entryRel.getAct().getId().get(0).getRoot());
 		assertNotNull(entryRel.getAct().getStatusCode());
-		assertEquals("completed", entryRel.getAct().getStatusCode().getCode());
+		assertEquals(COMPLETED, entryRel.getAct().getStatusCode().getCode());
 		assertNotNull(entryRel.getAct().getEffectiveTime());
 		assertEquals("20250430", entryRel.getAct().getEffectiveTime().getValue());
 
@@ -487,7 +497,6 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("D1", ((CD) precondition.getCriterion().getValue()).getCode());
 
 		testPerformer(substance.getPerformer());
-		//testAuthors(substance.getAuthor());
 	}
 
 	private void testPerformer(List<POCDMT000040Performer2> performers) {
@@ -504,7 +513,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("20200509000000+0200", performer.getTime().getValue());
 		
 		assertNotNull(performer.getAssignedEntity());
-		assertEquals("ASSIGNED", performer.getAssignedEntity().getClassCode());
+		assertEquals(ASSIGNED, performer.getAssignedEntity().getClassCode());
 		
 		assertEquals(1, performer.getAssignedEntity().getId().size());
 		assertEquals("NI", performer.getAssignedEntity().getId().get(0).getNullFlavor().get(0));
@@ -515,36 +524,36 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertNotNull(performer.getAssignedEntity().getAddr());
 		assertEquals(1, performer.getAssignedEntity().getAddr().size());
 		testAddress(performer.getAssignedEntity().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(performer.getAssignedEntity().getTelecom());
 		assertEquals(1, performer.getAssignedEntity().getTelecom().size());
-		assertEquals("tel:0154168899521",performer.getAssignedEntity().getTelecom().get(0).getValue());
+		assertEquals(EXAMPLE_TEL,performer.getAssignedEntity().getTelecom().get(0).getValue());
 		assertEquals("WP", performer.getAssignedEntity().getTelecom().get(0).getUse().get(0));
 
 		assertNotNull(performer.getAssignedEntity().getAssignedPerson());
 		assertEquals("PSN", performer.getAssignedEntity().getAssignedPerson().getClassCode().get(0));
-		assertEquals("INSTANCE", performer.getAssignedEntity().getAssignedPerson().getDeterminerCode());
+		assertEquals(INSTANCE, performer.getAssignedEntity().getAssignedPerson().getDeterminerCode());
 		assertNotNull(performer.getAssignedEntity().getAssignedPerson().getName());
 		testName(performer.getAssignedEntity().getAssignedPerson().getName().get(0).getContent(), "Dr.", null,
-				"Helga", "Musterärztin");
+				AUTHOR_GIVEN_NAME, AUTHOR_FAMILY_NAME);
 
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization());
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getId());
-		assertEquals("1.2.40.0.34.99.3.2.1046167",
+		assertEquals(OID_AUTHOR,
 				performer.getAssignedEntity().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getName());
-		assertEquals("Ordination Dr. Musterärztin",
+		assertEquals(ORGANIZATION_NAME,
 				performer.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
 
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getAddr());
 		assertEquals(1, performer.getAssignedEntity().getRepresentedOrganization().getAddr().size());
 		testAddress(performer.getAssignedEntity().getRepresentedOrganization().getAddr().get(0).getContent(),
-				List.of(new StringType("Ernst-Melchior-Gasse 22")), "1020", "Wien", "W", "AT");
+				List.of(new StringType(AUTHOR_ADDRESS)), "1020", "Wien", "W", "AT");
 
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getTelecom());
 		assertEquals(1, performer.getAssignedEntity().getRepresentedOrganization().getTelecom().size());
-		assertEquals("tel:0154168899521",
+		assertEquals(EXAMPLE_TEL,
 				performer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0).getValue());
 		assertEquals("WP",
 				performer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0).getUse().get(0));

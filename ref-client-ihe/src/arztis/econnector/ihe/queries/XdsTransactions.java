@@ -9,14 +9,17 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.jcs.access.exception.InvalidArgumentException;
 import org.apache.xmlbeans.XmlException;
 import org.ehealth_connector.common.Address;
 import org.ehealth_connector.common.Code;
 import org.ehealth_connector.common.Identificator;
 import org.ehealth_connector.common.at.PatientAt;
 import org.ehealth_connector.common.at.enums.ClassCode;
+import org.ehealth_connector.common.at.enums.ConfidentialityCode;
 import org.ehealth_connector.common.at.enums.PracticeSettingCode;
 import org.ehealth_connector.common.at.enums.TypeCode;
 import org.ehealth_connector.common.at.utils.XdsMetadataUtilAt;
@@ -29,6 +32,7 @@ import org.ehealth_connector.communication.at.DocumentMetadataAt;
 import org.ehealth_connector.communication.at.xd.storedquery.FindDocumentsQuery;
 import org.ehealth_connector.fhir.structures.gen.FhirCommon;
 import org.ehealth_connector.fhir.structures.gen.FhirPatient;
+import org.ehealth_connector.validation.service.config.ConfigurationException;
 import org.hl7.fhir.dstu3.model.Identifier;
 import org.openhealthtools.ihe.xds.document.DocumentDescriptor;
 import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
@@ -49,6 +53,7 @@ import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext.SecurityHeaderType;
 import arztis.econnector.ihe.generatedClasses.rs.ebxml_regrep.tc.names.oasis.RegistryResponseType;
 import arztis.econnector.ihe.queries.common.IheQueryTransformer;
+import arztis.econnector.ihe.queries.common.InvalidCdaException;
 import arztis.econnector.ihe.utilities.AssertionTypeUtil;
 import arztis.econnector.ihe.utilities.ElgaAreaConfig;
 import arztis.econnector.ihe.utilities.ElgaAreaConfigReader;
@@ -233,10 +238,14 @@ public class XdsTransactions {
 	public XDSResponseType provideAndRegisterDocuments(AvailabilityStatusType status, String typeCode,
 			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
 			CodedMetadataType formatCode, Identificator patientId, String parentDoc, POCDMT000040ClinicalDocument cda,
-			byte[] bytesDoc, String oid, String ownOid) throws Exception {
+			byte[] bytesDoc, String oid, String ownOid, boolean validate) throws Exception {
 		ConvenienceCommunicationAt communication = getConvenienceCommunication(typeCode, false);
 
 		final InputStream inputStream = new ByteArrayInputStream(bytesDoc);
+		
+		if (validate) {
+			validateCdaDocument(bytesDoc);
+		}
 
 		DocumentMetadataAt metaData = extractMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode,
 				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid);
@@ -260,6 +269,27 @@ public class XdsTransactions {
 		}
 
 		throw new IllegalArgumentException("No metadata found");
+	}
+
+	private void validateCdaDocument(byte[] document) throws InvalidCdaException {
+		try {
+			String validationResult = ValidationTransactions.validateCDADocument(true, true, false,
+					document);
+
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("CDA doc: {}", new String(document));
+				LOGGER.info("Result of CDA validation: {}", validationResult);
+			}
+
+			if (validationResult.toUpperCase().contains("FAILED")) {
+				throw new InvalidCdaException(HttpServletResponse.SC_BAD_REQUEST, validationResult);
+			} else if(validationResult.toUpperCase().contains("WARNING")){
+				LOGGER.warn(validationResult);
+			}
+				
+		} catch (ConfigurationException e1) {
+			LOGGER.error(e1.getMessage(), e1);			
+		}
 	}
 
 	private CodedMetadataType getContentTypeCode(String typeCode, String oid) {

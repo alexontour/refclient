@@ -5,7 +5,11 @@ import org.ehealth_connector.common.Identificator;
 import arztis.econnector.common.model.Parameter;
 
 public class RetrieveEmedId extends Parameter {
-    Identificator ssno;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Identificator ssno;
     boolean dataMatrixRequired;
 
     public Identificator getSsno() {

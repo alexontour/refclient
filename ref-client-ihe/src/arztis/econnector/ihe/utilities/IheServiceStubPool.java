@@ -27,6 +27,9 @@ import org.ehealth_connector.communication.Destination;
 import org.ehealth_connector.communication.DocumentMetadata.DocumentMetadataExtractionMode;
 import org.ehealth_connector.communication.SubmissionSetMetadata.SubmissionSetMetadataExtractionMode;
 import org.ehealth_connector.communication.at.ConvenienceCommunicationAt;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.jasypt.util.text.BasicTextEncryptor;
+import org.jasypt.util.text.StrongTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +48,10 @@ import arztis.econnector.ihe.generatedClasses.kbs.KBSServiceStub;
 import arztis.econnector.ihe.generatedClasses.pharm.CommunityPharmacyManagerStub;
 
 public class IheServiceStubPool extends BaseServiceStubPool {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9172740153910371304L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(IheServiceStubPool.class.getName());
 	private static final String NIST_KEY_STORE = "keystore/cacerts1_keystore.jks";
 	private static final String NIST_TRUST_STORE = "keystore/cacerts1_truststore.jks";
@@ -103,8 +110,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	private ETSServiceStub idaElgaAreaServiceStub;
 	private ETSServiceStub etsEhealthPlusServiceStub;
 	private ETSServiceStub etsEhealthPlusEImmunizationServiceStub;
+	private static IheServiceStubPool instance;
+	private String keystorePass;
 
-	private IheServiceStubPool(Map<String, String> mapServiceEndpoints) {
+	private IheServiceStubPool(Map<String, String> mapServiceEndpoints, String keystorePass) {
+		if (instance != null) {
+			throw new RuntimeException("Use getInstance() method to get the single instance of IHE service stub pool");
+		}
+
 		portAddressEts = mapServiceEndpoints.get(IheConstants.ETS_SERVICE);
 		portAddressKbs = mapServiceEndpoints.get(IheConstants.KBS_SERVICE);
 		portAddressEmedAt = mapServiceEndpoints.get(IheConstants.EMED_AT_SERVICE);
@@ -129,6 +142,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		portAddressBase = mapServiceEndpoints.get(IheConstants.BASE_SERVICE);
 		portAddressGina = mapServiceEndpoints.get(IheConstants.GINA_SERVICE);
 		portAddressSts = mapServiceEndpoints.get(IheConstants.STS_SERVICE);
+		this.keystorePass = keystorePass;
 
 		httpConnectionManager = new MultiThreadedHttpConnectionManager();
 		HttpConnectionManagerParams params = httpConnectionManager.getParams();
@@ -153,27 +167,25 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	private static class LazyHolder {
-		static IheServiceStubPool instance = null;
-	}
-
-	public static IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints) {
-		if (LazyHolder.instance == null) {
+	public synchronized static IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints, String encryptedKeystorePass) {
+		if (instance == null) {
 			if (mapServiceEndpoints == null) {
 				throw new IllegalStateException(
 						"Either serviceManagerTargetEndpoint or servicesVersionMap is not set. Cannot create instance");
 			}
-			LazyHolder.instance = new IheServiceStubPool(mapServiceEndpoints);
+
+			instance = new IheServiceStubPool(mapServiceEndpoints, encryptedKeystorePass);
 		}
-		return LazyHolder.instance;
+
+		return instance;
 	}
 
 	public static IheServiceStubPool getInstance() {
-		if (LazyHolder.instance == null) {
+		if (instance == null) {
 			throw new IllegalStateException(
 					"Either serviceManagerTargetEndpoint or servicesVersionMap is not set. Cannot create instance");
 		}
-		return LazyHolder.instance;
+		return instance;
 	}
 
 	public GdaIndexWsStub getGdaIndexService() {
@@ -1134,13 +1146,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 	}
 
-	private AffinityDomain createAffinityDomain(String organizationId, String endpoint) throws URISyntaxException {
+	private AffinityDomain createAffinityDomain(String organizationId, String endpoint) throws URISyntaxException {		
 		Destination elgaDocumentRegistryAndRepository = new Destination(organizationId, new URI(endpoint),
-				NIST_KEY_STORE, IheConstants.KEY_STORE_PASS, NIST_TRUST_STORE, IheConstants.KEY_STORE_PASS);
+				NIST_KEY_STORE, keystorePass, NIST_TRUST_STORE, keystorePass);
 		Destination pix = new Destination(organizationId, new URI(portAddressPix), NIST_KEY_STORE,
-				IheConstants.KEY_STORE_PASS, NIST_TRUST_STORE, IheConstants.KEY_STORE_PASS);
+				keystorePass, NIST_TRUST_STORE, keystorePass);
 		Destination pdq = new Destination(organizationId, new URI(portAddressPdq), NIST_KEY_STORE,
-				IheConstants.KEY_STORE_PASS, NIST_TRUST_STORE, IheConstants.KEY_STORE_PASS);
+				keystorePass, NIST_TRUST_STORE, keystorePass);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(

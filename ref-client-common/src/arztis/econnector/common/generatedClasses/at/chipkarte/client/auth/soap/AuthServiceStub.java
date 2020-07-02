@@ -6,6 +6,7 @@
  */
 package arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.axis2.AxisFault;
@@ -19,7 +20,11 @@ import arztis.econnector.common.utilities.SoapUtil;
 /*
  *  AuthServiceStub java implementation
  */
-public class AuthServiceStub extends org.apache.axis2.client.Stub {
+public class AuthServiceStub extends org.apache.axis2.client.Stub implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3767165478219077831L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthServiceStub.class.getName());
 	private static final String SET_DIALOG_ADDRESS_LITERAL = "setDialogAddress";
 	private static final String SET_DIALOG_ADDRESS_RESPONSE_LITERAL = "setDialogAddressResponse";

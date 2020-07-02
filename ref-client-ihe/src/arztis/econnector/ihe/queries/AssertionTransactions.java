@@ -2,6 +2,7 @@ package arztis.econnector.ihe.queries;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.time.Instant;
 
@@ -80,28 +81,20 @@ public class AssertionTransactions {
 	 * This method requests the Identity Assertion, which confirms the identity of
 	 * the physician. This assertion is needed to request the HCP Assertion.
 	 *
-	 * @param pRealname       String
-	 * @param pDialogId       String id of the built dialog
-	 * @param pVpnr           String number of the contracting party
-	 * @param pGinaAddress    String ip address of the gina client like 10.196.3.66
-	 * @param pTargetEndpoint String path of the endpoint of the sts service like
-	 *                        /elga-proxy/1/ETS
+	 * @param dialogId       String id of the built dialog
+	 * @param ticketSubject   SVC ticket URL for requesting IDA (defined in config file)
 	 *
 	 * @return if a saml ticket can be generated the saml ticket will be returned as
 	 *         String, otherwise a empty String will be returned
 	 */
-	public Object requestIdentityAssertion(String given, String family, String prefix, String suffix, String pDialogId,
-			String pVpnr) {
+	public Object requestIdentityAssertion(String dialogId, String ticketSubject) {
 
 		try {
-			String ticketSubject = String.format(
-					"http://ns.svc.co.at/sts/elga-auth_1.0/Vertragspartner?VPNR=%s&GDAMA=%s", pVpnr,
-					getRealNameForUrl(prefix, suffix, given, family));
 			RequestSamlAssertionReq samlAssertionRequest = new RequestSamlAssertionReq();
 			samlAssertionRequest.setTicketSubject(ticketSubject);
 			RequestSamlAssertionE requestSamlAssertionE = new RequestSamlAssertionE();
 			RequestSamlAssertion requestSamlAssertion = new RequestSamlAssertion();
-			requestSamlAssertion.setDialogId(pDialogId);
+			requestSamlAssertion.setDialogId(dialogId);
 			requestSamlAssertion.setRequestSamlAssertionReq(samlAssertionRequest);
 			requestSamlAssertionE.setRequestSamlAssertion(requestSamlAssertion);
 			RequestSamlAssertionResponseE samlAssertionResponseE = IheServiceStubPool.getInstance().getStsService()
@@ -137,7 +130,7 @@ public class AssertionTransactions {
 		}
 	}
 
-	private String getRealNameForUrl(String prefix, String suffix, String given, String family) {
+	public String getRealNameForUrl(String prefix, String suffix, String given, String family) {
 		StringBuilder realName = new StringBuilder();
 		if (prefix != null && !prefix.isEmpty()) {
 			realName.append(prefix);
@@ -508,7 +501,7 @@ public class AssertionTransactions {
 					QueryPartFactory.generateClaimValue("http://www.w3.org/2001/XMLSchema#dateTime", CLAIMS_TR_DATE,
 							timeOfPatientContact),
 					QueryPartFactory.generateClaimValue("http://www.w3.org/2001/XMLSchema#base64Binary",
-							"urn:tiani-spirit:bes:2013:claims:ecardkb", XMLUtils.base64encode(samlTicket.getBytes())));
+							"urn:tiani-spirit:bes:2013:claims:ecardkb", XMLUtils.base64encode(samlTicket.getBytes(StandardCharsets.UTF_8))));
 		} else {
 			reqSecToken = QueryPartFactory.generateRequestSecurityTokenDocument(tokenType,
 					ELGARequestTypeEnum.HTTP_DOCS_OASIS_OPEN_ORG_WS_SX_WS_TRUST_200512_ISSUE, CLAIMS_DIALECT_2013,
@@ -551,15 +544,9 @@ public class AssertionTransactions {
 	 * @throws StsException
 	 * @throws AccessException
 	 */
-	public Object requestEcardOnlyAssertion(String pVpnr, String pCardToken, String pDialogId, String pSvnr) {
+	public Object requestEcardOnlyAssertion(String pCardToken, String pDialogId, String ticketSubject) {
 
 		try {
-			String ticketSubject = "";
-			if (pSvnr != null && pSvnr.length() == 10) {
-				ticketSubject = "http://ns.svc.co.at/sts/elga-ecardonly_1.0/Patientenkontakt?VPNR=" + pVpnr + "&VSNR="
-						+ pSvnr;
-			}
-
 			LOGGER.debug(ticketSubject);
 			RequestSamlAssertionReq samlAssertionRequest = new RequestSamlAssertionReq();
 			samlAssertionRequest.setTicketSubject(ticketSubject);

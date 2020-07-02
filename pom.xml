@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>elga</groupId>
 	<artifactId>ref-client</artifactId>
@@ -9,8 +11,8 @@
 	<modules>
 		<module>ref-client-common</module>
 		<module>ref-client-ihe</module>
-    	<module>ref-client-rest</module>
-  </modules>
+		<module>ref-client-rest</module>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +24,7 @@
 		<maven.enforcer.plugin.version>3.0.0-M3</maven.enforcer.plugin.version>
 		<maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
 		<maven.dependency.plugin.version>3.1.1</maven.dependency.plugin.version>
+		<version.maven-plugin-plugin>3.6.0</version.maven-plugin-plugin>
 		<skip.assembly>true</skip.assembly>
 	</properties>
 	<build>
@@ -41,164 +44,210 @@
 				</includes>
 			</resource>
 		</resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>copy_schemaorg_apache_xmlbeans</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/classes/schemaorg_apache_xmlbeans</outputDirectory>
+								<resources>
+									<resource>
+										<directory>${project.basedir}/resources/schemaorg_apache_xmlbeans</directory>
+										<filtering>false</filtering>
+									</resource>
+								</resources>
+								<encoding>${project.build.sourceEncoding}</encoding>
+							</configuration>
+						</execution>
+						<execution>
+							<id>copy_message_properties</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<overwrite>true</overwrite>
+								<outputDirectory>${project.build.directory}/classes</outputDirectory>
+								<resources>
+									<resource>
+										<directory>${project.basedir}/resources</directory>
+										<filtering>false</filtering>
+										<includes>
+											<include>**/*.properties</include>
+										</includes>
+										<excludes>
+											<exclude>**/*.xsd</exclude>
+											<exclude>**/*.wsdl</exclude>
+											<exclude>**/*.xml</exclude>
+											<exclude>**/*.html</exclude>
+											<exclude>**/*.xsl</exclude>
+											<exclude>**/*.ucls</exclude>
+											<exclude>**/*.config</exclude>
+										</excludes>
+									</resource>
+								</resources>
+								<encoding>${project.build.sourceEncoding}</encoding>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<forceJavacCompilerUse>true</forceJavacCompilerUse>
+						<source>12</source>
+						<target>12</target>
+						<release>12</release>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven.enforcer.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>enforce-versions</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<rules>
+									<bannedPlugins>
+										<!-- will only display a warning but does not fail the build. -->
+										<level>WARN</level>
+										<excludes>
+											<exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
+										</excludes>
+										<message>Please consider using the maven-invoker-plugin
+											(http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+									</bannedPlugins>
+									<requireMavenVersion>
+										<version>3.5.0</version>
+									</requireMavenVersion>
+									<requireJavaVersion>
+										<version>12</version>
+									</requireJavaVersion>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven.jar.plugin.version}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
+								<classpathPrefix>lib/</classpathPrefix>
+							</manifest>
+						</archive>
+						<forceCreation>true</forceCreation>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven.dependency.plugin.version}</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/lib</outputDirectory>
+								<!-- optional -->
+								<!-- exclude copying test and provided dependencies -->
+								<includeScope>runtime</includeScope>
+								<excludeScope>provided</excludeScope>
+								<!-- optional -->
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
+							</manifest>
+						</archive>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<skipAssembly>${skip.assembly}</skipAssembly>
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${version.maven-plugin-plugin}</version>
+					<configuration>
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+						<goalPrefix>dependency-check</goalPrefix>
+					</configuration>
+					<executions>
+						<execution>
+							<id>mojo-descriptor</id>
+							<goals>
+								<goal>descriptor</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>generated-helpmojo</id>
+							<goals>
+								<goal>helpmojo</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<packaging>pom</packaging>
+	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven.resources.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>copy_schemaorg_apache_xmlbeans</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes/schemaorg_apache_xmlbeans</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/resources/schemaorg_apache_xmlbeans</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-							<encoding>${project.build.sourceEncoding}</encoding>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy_message_properties</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<overwrite>true</overwrite>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/resources</directory>
-									<filtering>false</filtering>
-									<includes>
-										<include>**/*.properties</include>
-									</includes>
-									<excludes>
-										<exclude>**/*.xsd</exclude>
-										<exclude>**/*.wsdl</exclude>
-										<exclude>**/*.xml</exclude>
-										<exclude>**/*.html</exclude>
-										<exclude>**/*.xsl</exclude>
-										<exclude>**/*.ucls</exclude>
-										<exclude>**/*.config</exclude>
-									</excludes>
-								</resource>
-							</resources>
-							<encoding>${project.build.sourceEncoding}</encoding>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>${version.maven-plugin-plugin}</version>
 				<configuration>
-					<forceJavacCompilerUse>true</forceJavacCompilerUse>
-					<source>12</source>
-					<target>12</target>
-					<release>12</release>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<goalPrefix>dependency-check</goalPrefix>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>${maven.enforcer.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>enforce-versions</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<bannedPlugins>
-									<!-- will only display a warning but does not fail the build. -->
-									<level>WARN</level>
-									<excludes>
-										<exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
-									</excludes>
-									<message>Please consider using the maven-invoker-plugin
-										(http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
-								</bannedPlugins>
-								<requireMavenVersion>
-									<version>3.5.0</version>
-								</requireMavenVersion>
-								<requireJavaVersion>
-									<version>12</version>
-								</requireJavaVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven.jar.plugin.version}</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
-							<classpathPrefix>lib/</classpathPrefix>
-						</manifest>
-					</archive>
-					<forceCreation>true</forceCreation>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven.dependency.plugin.version}</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<!-- optional -->
-							<!-- exclude copying test and provided dependencies -->
-							<includeScope>runtime</includeScope>
-							<excludeScope>provided</excludeScope>
-							<!-- optional -->
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>						
-					</descriptorRefs>
-					<skipAssembly>${skip.assembly}</skipAssembly>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
-	</build>
-	<packaging>pom</packaging>
+	</reporting>
+	<dependencies>
+		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>dependency-check-maven</artifactId>
+			<version>5.3.2</version>
+			<type>maven-plugin</type>
+		</dependency>
+
+	</dependencies>
 </project>

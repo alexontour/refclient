@@ -34,6 +34,7 @@ public class MetadataConverterTest {
 
 	private static final String SAMPLE_OID = "1.2.40.0.34.6.7";
 	private static final String SAMPLE_ID = "urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424";
+	private static final String SAMPLE_E_MED_ID = "1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S";
 	private static final String SAMPLE_HOME_COMMUNITY_ID = "urn:oid:1.2.40.0.34.3.9.107";
 	private static final String SNOMED_CT_OID = "2.16.840.1.113883.6.1";
 	private static final String OBJECT_ID = "urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248";
@@ -231,7 +232,7 @@ public class MetadataConverterTest {
 		extrinsicObject.addNewExternalIdentifier();
 		extrinsicObject.setExternalIdentifierArray(1,
 				QueryPartFactory.generateExternalIdentifier(ObjectIds.EXTERNAL_IDENTIFIER_UNIQUEID_DOCUMENT_CODE,
-						SAMPLE_ID, "1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S", null,
+						SAMPLE_ID, SAMPLE_E_MED_ID, null,
 						QueryPartFactory.generateInternationalString("XDSDocumentEntry.uniqueId", null, null)));
 
 		registryObject.addNewExtrinsicObject();
@@ -367,8 +368,7 @@ public class MetadataConverterTest {
 					DocumentReference documentReference = (DocumentReference) comp.getResource();
 
 					Assert.assertEquals("de-AT", documentReference.getLanguage());
-					Assert.assertEquals("1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S",
-							documentReference.getMasterIdentifier().getValue());
+					Assert.assertEquals(SAMPLE_E_MED_ID, documentReference.getMasterIdentifier().getValue());
 					Assert.assertEquals("Medikationsliste", documentReference.getDescription());
 
 					Assert.assertEquals("52471-0",
@@ -394,8 +394,8 @@ public class MetadataConverterTest {
 
 					assertTrue(documentReference.hasContent());
 					assertTrue(documentReference.getContentFirstRep().hasAttachment());
-					assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl()
-							.contains("1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S"));
+					assertTrue(
+							documentReference.getContentFirstRep().getAttachment().getUrl().contains(SAMPLE_E_MED_ID));
 					assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl().contains(SAMPLE_OID));
 					assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl()
 							.contains(SAMPLE_HOME_COMMUNITY_ID));
@@ -579,15 +579,15 @@ public class MetadataConverterTest {
 
 					Assert.assertEquals(DocumentReferenceStatus.CURRENT, documentReference.getStatus());
 
-					assertEquals(new Date(1457452952000L),documentReference.getDate());
+					assertEquals(new Date(1457452952000L), documentReference.getDate());
 
 					assertTrue(documentReference.hasContent());
 					assertTrue(documentReference.getContentFirstRep().hasAttachment());
 					assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl()
 							.contains(SAMPLE_HOME_COMMUNITY_ID));
 
-					assertEquals(new Date(1457456552000L),documentReference.getContext().getPeriod().getStart());
-					assertEquals(new Date(1457456552000L),documentReference.getContext().getPeriod().getEnd());
+					assertEquals(new Date(1457456552000L), documentReference.getContext().getPeriod().getStart());
+					assertEquals(new Date(1457456552000L), documentReference.getContext().getPeriod().getEnd());
 
 				} else if (comp.getResource().getResourceType().equals(org.hl7.fhir.r4.model.ResourceType.Patient)) {
 					Patient patient = (Patient) comp.getResource();
@@ -600,13 +600,13 @@ public class MetadataConverterTest {
 
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					Assert.assertEquals("1980-03-28", sdf.format(patient.getBirthDate()));
-					
+
 					assertEquals(org.hl7.fhir.r4.model.Enumerations.AdministrativeGender.MALE, patient.getGender());
-					
+
 					assertNotNull(patient.getAddressFirstRep());
 					assertEquals("[Mustergasse 11]", patient.getAddressFirstRep().getLine().toString());
 					assertEquals("Wien", patient.getAddressFirstRep().getCity());
-					
+
 				}
 			}
 		}
@@ -621,26 +621,27 @@ public class MetadataConverterTest {
 		assertEquals(3, bundle.getEntry().size());
 
 		for (BundleEntryComponent comp : bundle.getEntry()) {
-			if (comp != null && comp.getResource() != null) {
-				if (comp.getResource().getResourceType().equals(org.hl7.fhir.r4.model.ResourceType.DocumentReference)) {
-					DocumentReference documentReference = (DocumentReference) comp.getResource();
+			if (comp != null && comp.getResource() != null && comp.getResource().getResourceType()
+					.equals(org.hl7.fhir.r4.model.ResourceType.DocumentReference)) {
+				DocumentReference documentReference = (DocumentReference) comp.getResource();
 
-					Assert.assertEquals(DocumentReferenceStatus.CURRENT, documentReference.getStatus());
+				Assert.assertEquals(DocumentReferenceStatus.CURRENT, documentReference.getStatus());
 
-					assertTrue(documentReference.hasContent());
-					assertNotNull(documentReference.getContentFirstRep().getFormat());
-					assertEquals(FORMAT_CODE_EMEDAT, documentReference.getContentFirstRep().getFormat().getCode());
-					assertEquals(ELGA_MEDIKATION_NAME, documentReference.getContentFirstRep().getFormat().getDisplay());
-					
-					assertTrue(documentReference.hasContext());
-					assertEquals("406", documentReference.getContext().getFacilityType().getCodingFirstRep().getCode());
-					assertEquals(SOZIALVERSICHERUNG, documentReference.getContext().getFacilityType().getCodingFirstRep().getDisplay());
-					
-					assertTrue(documentReference.hasContent());
-					assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl().contains(SAMPLE_HOME_COMMUNITY_ID));
-				} 
+				assertTrue(documentReference.hasContent());
+				assertNotNull(documentReference.getContentFirstRep().getFormat());
+				assertEquals(FORMAT_CODE_EMEDAT, documentReference.getContentFirstRep().getFormat().getCode());
+				assertEquals(ELGA_MEDIKATION_NAME, documentReference.getContentFirstRep().getFormat().getDisplay());
+
+				assertTrue(documentReference.hasContext());
+				assertEquals("406", documentReference.getContext().getFacilityType().getCodingFirstRep().getCode());
+				assertEquals(SOZIALVERSICHERUNG,
+						documentReference.getContext().getFacilityType().getCodingFirstRep().getDisplay());
+
+				assertTrue(documentReference.hasContent());
+				assertTrue(documentReference.getContentFirstRep().getAttachment().getUrl()
+						.contains(SAMPLE_HOME_COMMUNITY_ID));
 			}
-		}	
+		}
 	}
 
 	@Test

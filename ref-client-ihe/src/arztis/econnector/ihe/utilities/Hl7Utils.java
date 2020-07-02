@@ -3,7 +3,7 @@ package arztis.econnector.ihe.utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RegExUtils;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
@@ -68,7 +68,7 @@ public class Hl7Utils {
 		CX patientId = HL7V2MessageFormat.buildCXFromMessageString(value, MessageDelimiters.COMPONENT,
 				MessageDelimiters.SUBCOMPONENT);
 		patientId.setAssigningAuthorityUniversalId(
-				StringUtils.replaceAll(patientId.getAssigningAuthorityUniversalId(), "&amp;|amp;", ""));
+				RegExUtils.replaceAll(patientId.getAssigningAuthorityUniversalId(), "&amp;|amp;", ""));
 		Identifier id = new Identifier();
 		id.setSystem(patientId.getAssigningAuthorityUniversalId());
 		id.setValue(patientId.getIdNumber());

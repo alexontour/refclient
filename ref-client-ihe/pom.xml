@@ -224,14 +224,19 @@
 			<artifactId>ehealth_connector-security-gen-impl</artifactId>
 			<version>1.8-SNAPSHOT_EC</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.opensaml/opensaml-saml-impl -->
 		<dependency>
 			<groupId>org.opensaml</groupId>
 			<artifactId>opensaml-saml-impl</artifactId>
-			<version>3.3.1</version>
+			<version>3.4.5</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.httpcomponents</groupId>
 					<artifactId>httpclient</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-collections</groupId>
+					<artifactId>commons-collections</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -490,12 +495,6 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
 
 		<!-- libraries needed for cda validation -->
 		<dependency>
@@ -513,6 +512,13 @@
 			<groupId>org.verapdf</groupId>
 			<artifactId>core</artifactId>
 			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.3</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

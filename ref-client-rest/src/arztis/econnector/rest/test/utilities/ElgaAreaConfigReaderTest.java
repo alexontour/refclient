@@ -28,7 +28,7 @@ public class ElgaAreaConfigReaderTest {
 	 *
 	 */
 	@Before
-	public void setUp() throws XmlException {
+	public void setUp() {
 		ElgaAreaConfigReader reader = ElgaAreaConfigReader.getInstance();
 		map = reader.getElgaAreaConfigMap();
 	}

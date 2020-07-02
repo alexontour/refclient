@@ -1,6 +1,8 @@
 package arztis.econnector.rest.model.fhir;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -377,7 +379,7 @@ public class FhirDocumentReference extends DocumentReference {
 
 			if (documentEntry.getDocumentEntry().getAvailabilityStatus() != null
 					&& documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral() != null) {
-				setStatus(documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral().toLowerCase()
+				setStatus(documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral().toLowerCase(Locale.ENGLISH)
 						.contains("approved") ? DocumentReferenceStatus.CURRENT : DocumentReferenceStatus.SUPERSEDED);
 			}
 

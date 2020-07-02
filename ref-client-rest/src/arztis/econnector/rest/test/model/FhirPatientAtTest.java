@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.text.ParseException;
 import java.util.Arrays;
 
 import org.ehealth_connector.cda.at.elga.v2019.HeaderRecordTarget;
@@ -28,16 +27,16 @@ import arztis.econnector.rest.model.fhir.FhirPatientAt;
  */
 public class FhirPatientAtTest extends TestUtils {
 
+	private static final String MAILTO = "mailto:";
 	private Patient testRecordTargetEImpfpass;
 	private Patient testRecordTarget;
 
 	/**
 	 * Method implementing
 	 *
-	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testRecordTargetEImpfpass = getPatient1();
 		Identifier id = new Identifier();
@@ -72,10 +71,9 @@ public class FhirPatientAtTest extends TestUtils {
 	 * Test method for
 	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getAtcdabbrHeaderRecordTargetEImpfpass()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testGetAtcdabbrHeaderRecordTargetEImpfpass() throws ParseException {
+	public void testGetAtcdabbrHeaderRecordTargetEImpfpass() {
 		final AtcdabbrHeaderRecordTargetEImpfpass recordTarget = FhirPatientAt
 				.getAtcdabbrHeaderRecordTargetEImpfpass(testRecordTargetEImpfpass);
 		testFixedValues(recordTarget);
@@ -93,10 +91,10 @@ public class FhirPatientAtTest extends TestUtils {
 		assertNotNull(recordTarget.getPatientRole().getTelecom().get(3));
 		assertNotNull(recordTarget.getPatientRole().getTelecom().get(4));
 		assertNotNull(recordTarget.getPatientRole().getTelecom().get(5));
-		assertEquals("mailto:" + getTelS1(), recordTarget.getPatientRole().getTelecom().get(0).getValue());
+		assertEquals(MAILTO + getTelS1(), recordTarget.getPatientRole().getTelecom().get(0).getValue());
 		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
 				recordTarget.getPatientRole().getTelecom().get(0).getUse().get(0));
-		assertEquals("mailto:" + getTelS2(), recordTarget.getPatientRole().getTelecom().get(1).getValue());
+		assertEquals(MAILTO + getTelS2(), recordTarget.getPatientRole().getTelecom().get(1).getValue());
 		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
 				recordTarget.getPatientRole().getTelecom().get(1).getUse().get(0));
 		assertEquals("fax:" + getTelS1(), recordTarget.getPatientRole().getTelecom().get(2).getValue());
@@ -125,10 +123,9 @@ public class FhirPatientAtTest extends TestUtils {
 	 * Test method for
 	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getHeaderRecordTarget()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testGetHeaderRecordTarget() throws ParseException {
+	public void testGetHeaderRecordTarget() {
 		final HeaderRecordTarget headerRecordTarget = FhirPatientAt.getHeaderRecordTarget(testRecordTarget);
 		testFixedValues(headerRecordTarget);
 
@@ -145,10 +142,10 @@ public class FhirPatientAtTest extends TestUtils {
 		assertNotNull(headerRecordTarget.getPatientRole().getTelecom().get(3));
 		assertNotNull(headerRecordTarget.getPatientRole().getTelecom().get(4));
 		assertNotNull(headerRecordTarget.getPatientRole().getTelecom().get(5));
-		assertEquals("mailto:" + getTelS1(), headerRecordTarget.getPatientRole().getTelecom().get(0).getValue());
+		assertEquals(MAILTO + getTelS1(), headerRecordTarget.getPatientRole().getTelecom().get(0).getValue());
 		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
 				headerRecordTarget.getPatientRole().getTelecom().get(0).getUse().get(0));
-		assertEquals("mailto:" + getTelS2(), headerRecordTarget.getPatientRole().getTelecom().get(1).getValue());
+		assertEquals(MAILTO + getTelS2(), headerRecordTarget.getPatientRole().getTelecom().get(1).getValue());
 		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
 				headerRecordTarget.getPatientRole().getTelecom().get(1).getUse().get(0));
 		assertEquals("fax:" + getTelS1(), headerRecordTarget.getPatientRole().getTelecom().get(2).getValue());

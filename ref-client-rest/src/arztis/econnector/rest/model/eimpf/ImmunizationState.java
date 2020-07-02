@@ -1,6 +1,7 @@
 package arztis.econnector.rest.model.eimpf;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDocumentReplacementRelatedDocument;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDocumentationOfServiceEventEImpfpass;
@@ -11,6 +12,7 @@ import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Composition;
 import org.hl7.fhir.r4.model.Immunization;
+import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.ResourceType;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
@@ -75,7 +77,7 @@ public class ImmunizationState extends Composition {
 	}
 
 	public static POCDMT000040StructuredBody getHl7CdaR2Pocdmt000040StructuredBodyImmunizationState(
-			Composition composition, List<Immunization> immunizations) {
+			Composition composition, Map<Immunization, PractitionerRole> immunizations) {
 		POCDMT000040StructuredBody structuredBody = new POCDMT000040StructuredBody();
 		structuredBody.getClassCode().add("DOCBODY");
 		structuredBody.getMoodCode().add("EVN");

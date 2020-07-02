@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunization;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunizationBillability;
@@ -52,6 +53,7 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.Address.AddressUse;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.eimpf.Vaccine;
@@ -65,7 +67,7 @@ public class FhirImmunization extends Immunization {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String REFERENCE_TEXT_EIMPF_DOSE = "#impfEmpf-schedule-dose-";
+	private static final String REFERENCE_TEXT_EIMPF_DOSE = "#schedule-immunization-";
 	private static final String REFERENCE_IMMUNIZATION_INDEX = "immunization-%d";
 	private static Map<String, Vaccine> vaccines = ImmunizationMapping.getInstance().getVaccineMap();
 	private List<Resource> resources;
@@ -120,13 +122,6 @@ public class FhirImmunization extends Immunization {
 					immunizationProtocolApplied);
 
 			addProtocolApplied(immunizationProtocolApplied);
-
-			if (entry.getSubstanceAdministration().getReference() != null
-					&& !entry.getSubstanceAdministration().getReference().isEmpty()
-					&& entry.getSubstanceAdministration().getReference().get(0) != null) {
-				// setReportOrigin(new CodeableConcept(new Coding(theSystem, theCode,
-				// theDisplay)));
-			}
 
 			fromPerformer(entry.getSubstanceAdministration().getPerformer(), index);
 		}
@@ -231,7 +226,7 @@ public class FhirImmunization extends Immunization {
 		setExpirationDate(expDate);
 	}
 
-	public static AtcdabbrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(List<Immunization> immunizations) {
+	public static AtcdabbrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(Map<Immunization, PractitionerRole> immunizations) {
 		if (immunizations == null || immunizations.isEmpty()) {
 			return null;
 		}
@@ -240,17 +235,9 @@ public class FhirImmunization extends Immunization {
 		vaccinationSection.setTitle(CdaUtil.createTitle("Impfungen"));
 
 		int index = 0;
-		for (Immunization immunization : immunizations) {
-			if (immunization != null) {
-				vaccinationSection.getEntry().add(getImmunizationEntry(immunization, index++));
-
-				/*
-				 * if (immunization.getTranslations() != null) { for (Translation translation :
-				 * immunization.getTranslations()) { if (translation != null) {
-				 * vaccinationSection.getComponent()
-				 * .add(createComp5WithCompleteSection(ActRelationshipHasComponent.COMP, true,
-				 * translation.getAtcdabbrSectionUebersetzung())); } } }
-				 */
+		for (Entry<Immunization, PractitionerRole> immunization : immunizations.entrySet()) {
+			if (immunization != null && immunization.getValue() != null && immunization.getKey() != null) {
+				vaccinationSection.getEntry().add(getImmunizationEntry(immunization.getKey(), index++, immunization.getValue()));
 			}
 		}
 
@@ -261,10 +248,10 @@ public class FhirImmunization extends Immunization {
 		Map<String, EImpfImpfschemaVs> immunizationScheme = new HashMap<>();
 
 		int immIndex = 0;
-		for (Immunization immunization : immunizations) {
-			if (immunization != null) {
+		for (Entry<Immunization, PractitionerRole> immunization : immunizations.entrySet()) {
+			if (immunization != null && immunization.getKey() != null) {
 				fillMapsForTextBuilder(targets, immunizationDose, immunizationScheme, historicImmunizations,
-						immunizationsCodes, immunization, immIndex);
+						immunizationsCodes, immunization.getKey(), immIndex);
 			}
 		}
 
@@ -330,7 +317,7 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
-	public static POCDMT000040Entry getImmunizationEntry(Immunization immunization, int index) {
+	public static POCDMT000040Entry getImmunizationEntry(Immunization immunization, int index, PractitionerRole practitionerRole) {
 		POCDMT000040Entry entry = new POCDMT000040Entry();
 		entry.setTypeCode(XActRelationshipEntry.DRIV);
 		entry.setContextConductionInd(true);
@@ -341,12 +328,12 @@ public class FhirImmunization extends Immunization {
 
 		if (immunization.hasVaccineCode()) {
 			AtcdabbrEntryImmunization entryImmunization = new AtcdabbrEntryImmunization();
-			setProperties(entryImmunization, index, false, immunization);
-			entryImmunization.setConsumable(getVaccineProduct(index, false, immunization));
+			setProperties(entryImmunization, index, false, immunization, practitionerRole);
+			entryImmunization.setConsumable(getVaccineProduct(false, immunization));
 			entry.setSubstanceAdministration(entryImmunization);
 		} else {
 			AtcdabbrEntryImmunizationImpfungNichtAngegeben immunizationNotDeclared = new AtcdabbrEntryImmunizationImpfungNichtAngegeben();
-			setProperties(immunizationNotDeclared, index, true, immunization);
+			setProperties(immunizationNotDeclared, index, true, immunization, practitionerRole);
 			POCDMT000040Consumable consumable = new POCDMT000040Consumable();
 			consumable.getTypeCode().add("CSM");
 			AtcdabbrOtherVaccineProductNichtAngegeben otherVaccineProduct = new AtcdabbrOtherVaccineProductNichtAngegeben();
@@ -359,7 +346,7 @@ public class FhirImmunization extends Immunization {
 	}
 
 	private static void setImmunizationProperties(POCDMT000040SubstanceAdministration substanceAdministration,
-			int index, Immunization immunization) {
+			int index, Immunization immunization, PractitionerRole practitionerRole) {
 		if (immunization == null) {
 			return;
 		}
@@ -385,13 +372,7 @@ public class FhirImmunization extends Immunization {
 
 			if (immunization.getProtocolAppliedFirstRep().hasAuthority()) {
 				substanceAdministration.getAuthor().clear();
-
-				/*
-				 * substanceAdministration.getAuthor().add(FhirPractitionerRole.
-				 * getAtcdabbrOtherAuthorBodyEImpfpass( immunization.getRecorded(),
-				 * immunization.getProtocolAppliedFirstRep().getAuthorityTarget()));
-				 */
-
+				substanceAdministration.getAuthor().add(FhirPractitionerRole.getAuthorBodyPs(immunization.getRecorded(), practitionerRole));
 			}
 
 			if (immunization.getProtocolAppliedFirstRep().hasTargetDisease()) {
@@ -443,7 +424,7 @@ public class FhirImmunization extends Immunization {
 	}
 
 	private static void setProperties(POCDMT000040SubstanceAdministration substanceAdministration, int index,
-			boolean noImmunization, Immunization immunization) {
+			boolean noImmunization, Immunization immunization, PractitionerRole practitionerRole) {
 		if (immunization == null) {
 			return;
 		}
@@ -459,7 +440,7 @@ public class FhirImmunization extends Immunization {
 		substanceAdministration.setText(CdaUtil.createReference("#immunization-entry-" + index));
 
 		if (!noImmunization) {
-			setImmunizationProperties(substanceAdministration, index, immunization);
+			setImmunizationProperties(substanceAdministration, index, immunization, practitionerRole);
 		}
 	}
 
@@ -472,7 +453,7 @@ public class FhirImmunization extends Immunization {
 		}
 
 		immunizationTargetObservation.setText(CdaUtil.createReference(
-				String.format("#target-immunization-%d-%d", indexTarget, indexImmunization)));
+				String.format("#target-immunization-%d", indexImmunization)));
 
 		return immunizationTargetObservation;
 	}
@@ -490,7 +471,7 @@ public class FhirImmunization extends Immunization {
 		if (fhirPerformer.getActorTarget() != null
 				&& ResourceType.PractitionerRole.equals(fhirPerformer.getActorTarget().getResourceType())) {
 			performer.setAssignedEntity(FhirPractitionerRole.getHl7CdaR2Pocdmt000040AssignedEntity(
-					performer.getAssignedEntity(), (PractitionerRole) fhirPerformer.getActorTarget()));
+					performer.getAssignedEntity(), (PractitionerRole) fhirPerformer.getActorTarget(), AddressUse.NULL));					
 		}
 
 		performer.getAssignedEntity()
@@ -565,7 +546,7 @@ public class FhirImmunization extends Immunization {
 		return precondition;
 	}
 
-	public static POCDMT000040Consumable getVaccineProduct(int index, boolean immunizationRecommendaction,
+	public static POCDMT000040Consumable getVaccineProduct(boolean immunizationRecommendaction,
 			Immunization immunization) {
 		POCDMT000040Consumable consumable = new POCDMT000040Consumable();
 		consumable.getTypeCode().clear();
@@ -596,21 +577,6 @@ public class FhirImmunization extends Immunization {
 		} else {
 			material.setLotNumberText(CdaUtil.createTitleNullFlavor(null, "UNK"));
 		}
-
-		/*
-		 * if (this.ingredients != null && !this.ingredients.isEmpty()) { for
-		 * (Ingredient ingredient : ingredients) { if (ingredient != null) {
-		 * material.getIngredient().add(ingredient.getCOCTMT230100UVIngredient()); } } }
-		 * 
-		 * Name pharmName = new Name(); if (this.name != null) {
-		 * pharmName.setName(this.name); } else if (this.vaccination != null) {
-		 * pharmName.setName(vaccination.getDisplayName()); } else if
-		 * (this.historicVaccination != null) {
-		 * pharmName.setName(historicVaccination.getDisplayName()); }
-		 */
-
-		// material.getCode().setOriginalText(createReference("#prodcode-" + index));
-		// material.setName(pharmName.getHl7CdaR2En());
 
 		vaccineProd.setManufacturedMaterial(material);
 

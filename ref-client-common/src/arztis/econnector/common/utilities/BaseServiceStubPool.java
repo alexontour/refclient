@@ -1,5 +1,7 @@
 package arztis.econnector.common.utilities;
 
+import java.io.Serializable;
+
 import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,12 @@ import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.G
  * @author ET-Innovations
  *
  */
-public class BaseServiceStubPool {
+public class BaseServiceStubPool implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceStubPool.class.getName());
 	protected BaseServiceStub baseServiceStub;
 	protected AuthServiceStub authServiceStub;

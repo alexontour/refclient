@@ -54,40 +54,43 @@ public class ElgaTypeConverterTest {
 	private static final String HOME_COMMUNITY_ID = "1234.23";
 	private static final String REPOSITORY_ID = "1234.22";
 	private static final String DOCUMENT_ID = "1234";
+	private static final String UNIQUE_ID = "122334";
+	private static final String ID_PATH = "/1234/1234.22/1234.23";
+	private static final String APPLICATION_XML = "application/xml";
 
 	@Test
-	public void testCastDocument() throws ParserConfigurationException, SAXException, IOException {
+	public void testCastDocument() {
 		XDSDocument xdsDocument = getDocumentFromFile("resources/tests/xml/ELGA-Entlassungsbrief-Beispiel.xml");
 
-		FhirDocumentReference reference = new FhirDocumentReference("/1234/1234.22/1234.23", "application/xml");
+		FhirDocumentReference reference = new FhirDocumentReference(ID_PATH, APPLICATION_XML);
 		FhirElgaConnectionCaller.getInstance().addXdsDocumentToDocumentReference(List.of(xdsDocument), reference, "");
 
 		Assert.assertNotNull(reference);
 		Assert.assertTrue(reference.hasContent());
 		Assert.assertNotNull(reference.getContentFirstRep().getAttachment());
 		Assert.assertNotNull(reference.getContentFirstRep().getAttachment().getData());
-		Assert.assertEquals("/1234/1234.22/1234.23", reference.getContentFirstRep().getAttachment().getUrl());
+		Assert.assertEquals(ID_PATH, reference.getContentFirstRep().getAttachment().getUrl());
 	}
 
 	@Test
-	public void testCastDocumentPrescription() throws ParserConfigurationException, SAXException, IOException {
+	public void testCastDocumentPrescription() {
 		XDSDocument xdsDocument = getDocumentFromFile(
 				"resources/tests/xml/ELGA-083-e-Medikation_1-Rezept_mit_Verordnungen1-4 Dosierungsvarianten an EINEM Tag.xml");
 
-		FhirDocumentReference reference = new FhirDocumentReference("/1234/1234.22/1234.23", "application/xml");
+		FhirDocumentReference reference = new FhirDocumentReference(ID_PATH, APPLICATION_XML);
 		FhirElgaConnectionCaller.getInstance().addXdsDocumentToDocumentReference(List.of(xdsDocument), reference, "");
 
 		Assert.assertNotNull(reference);
 		Assert.assertTrue(reference.hasContent());
 		Assert.assertNotNull(reference.getContentFirstRep().getAttachment());
 		Assert.assertNotNull(reference.getContentFirstRep().getAttachment().getData());
-		Assert.assertEquals("/1234/1234.22/1234.23", reference.getContentFirstRep().getAttachment().getUrl());
+		Assert.assertEquals(ID_PATH, reference.getContentFirstRep().getAttachment().getUrl());
 
 	}
 
 	private XDSDocument getDocumentFromFile(String path) {
 		try (InputStream documentStream = new FileInputStream(path)) {
-			DocumentDescriptor descriptor = new DocumentDescriptor("xml", "application/xml");
+			DocumentDescriptor descriptor = new DocumentDescriptor("xml", APPLICATION_XML);
 			XDSDocumentFromStream document = new XDSDocumentFromStream(descriptor, documentStream);
 			document.setHomeCommunityId(HOME_COMMUNITY_ID);
 			document.setDocumentUniqueId(DOCUMENT_ID);
@@ -214,7 +217,7 @@ public class ElgaTypeConverterTest {
 
 		documentEntry.setSize("12334");
 		documentEntry.setTitle(XdsMetadataUtil.createInternationalString("Arztbrief"));
-		documentEntry.setUniqueId("122334");
+		documentEntry.setUniqueId(UNIQUE_ID);
 
 		documentEntryResponse.setDocumentEntry(documentEntry);
 
@@ -222,10 +225,8 @@ public class ElgaTypeConverterTest {
 
 		assertNotNull(actualDocument);
 
-		// Assert.assertEquals("asdfg",
-		// actualDocument.getText().getDiv().getFirstElement().getValue());
 		Assert.assertEquals("urn:uuid:34234234234", actualDocument.getIdentifierFirstRep().getValue());
-		Assert.assertEquals("122334", actualDocument.getMasterIdentifier().getValue());
+		Assert.assertEquals(UNIQUE_ID, actualDocument.getMasterIdentifier().getValue());
 		Assert.assertEquals(DocumentReferenceStatus.CURRENT, actualDocument.getStatus());
 		Assert.assertEquals("Arztbrief", actualDocument.getDescription());
 		Assert.assertEquals("34745-0", actualDocument.getType().getCodingFirstRep().getCode());
@@ -253,7 +254,7 @@ public class ElgaTypeConverterTest {
 		assertNotNull(actualDocument.getContentFirstRep().getAttachment());
 		assertTrue(actualDocument.getContentFirstRep().getAttachment().getUrl().contains("1.2.3.4.5.56.7"));
 		assertTrue(actualDocument.getContentFirstRep().getAttachment().getUrl().contains("1.2.3.4.5"));
-		assertTrue(actualDocument.getContentFirstRep().getAttachment().getUrl().contains("122334"));
+		assertTrue(actualDocument.getContentFirstRep().getAttachment().getUrl().contains(UNIQUE_ID));
 		Assert.assertEquals("xml", actualDocument.getContentFirstRep().getAttachment().getContentType());
 		Assert.assertEquals("urn:elga:dissum-n:2015:EIS_FullSupport",
 				actualDocument.getContentFirstRep().getFormat().getCode());

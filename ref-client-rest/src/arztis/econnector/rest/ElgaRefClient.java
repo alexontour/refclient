@@ -9,6 +9,8 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.ehealth_connector.common.utils.FileUtil;
 import org.ehealth_connector.common.utils.Util;
+import org.jasypt.util.text.BasicTextEncryptor;
+import org.jasypt.util.text.StrongTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,35 +37,45 @@ public class ElgaRefClient {
 	/**
 	 * Main method to start the WEB Server of the ELGA reference client
 	 * 
-	 * @param args
+	 * @param args at position 0 key store password encrypted with algorithm PBEWithMD5AndDES
 	 */
 	public static void main(String[] args) {
 		setLogFile();
-		setConfigFile();
-		createTempFolder();
 
 		Logger logger = LoggerFactory.getLogger(ElgaRefClient.class.getName());
 		logger.debug("Start main!");
 		logger.info(org.apache.axis2.Version.getVersion());
 
+		setConfigFile();
+		createTempFolder(logger);
+		
+		BasicTextEncryptor passwordEncryptor = new BasicTextEncryptor();
+		passwordEncryptor.setPassword(System.getenv("ELGA_REF_CLIENT_PASSWORD"));
+		String encryptedKeystorePass = null;
+		String keystorePass = null;
+		if(args != null && args.length > 0) {
+			encryptedKeystorePass = args[0];
+			keystorePass = passwordEncryptor.decrypt(encryptedKeystorePass);
+		}
+
 		// keyStore
 		System.setProperty("javax.net.ssl.keyStore", "keystore/cacerts1_keystore.jks");
-		System.setProperty("javax.net.ssl.keyStorePassword", IheConstants.KEY_STORE_PASS);
+		System.setProperty("javax.net.ssl.keyStorePassword", keystorePass);
 		System.setProperty(IheConstants.SSL_TRUSTSTORE, "keystore/cacerts1_truststore.jks");
-		System.setProperty(IheConstants.SSL_TRUSTSTORE_PASS_PACKAGE, IheConstants.KEY_STORE_PASS);
+		System.setProperty(IheConstants.SSL_TRUSTSTORE_PASS_PACKAGE, keystorePass);
 
 		logger.info("Truststore: {}", System.getProperty(IheConstants.SSL_TRUSTSTORE));
 
-		ConfigReader config = ConfigReader.getInstance();		
+		ConfigReader config = ConfigReader.getInstance();
 		try {
-			IheServiceStubPool.getInstance(createServiceEndpointMap(config));
+			IheServiceStubPool.getInstance(createServiceEndpointMap(config), keystorePass);
 			BaseServiceStubPool.getInstance().setBaseService(IheServiceStubPool.getInstance().getBaseService());
 			BaseServiceStubPool.getInstance().setAuthServiceStub(IheServiceStubPool.getInstance().getAuthServiceStub());
 			BaseServiceStubPool.getInstance().setGinaService(IheServiceStubPool.getInstance().getGinaServiceStub());
 		} catch (Exception e1) {
 			logger.error("Could not initialize the soap services", e1);
 		}
-		
+
 		try {
 			HttpConfiguration http = new HttpConfiguration();
 			http.setSecurePort(config.getServerPort());
@@ -88,14 +100,19 @@ public class ElgaRefClient {
 		ConfigReader.getInstance().setConfigFilePath("config_elga_ref_client");
 	}
 
-	private static void createTempFolder() {
-		String path = Util.getTempDirectory() + FileUtil.getPlatformSpecificPathSeparator() + "EConnectorTemp";
-		File directory = new File(path);
-		if (!directory.exists()) {
-			directory.mkdir();
-		}
+	private static void createTempFolder(Logger logger) {
+		try {
+			String path = Util.getTempDirectory() + FileUtil.getPlatformSpecificPathSeparator() + "EConnectorTemp";
+			File directory = new File(path);
+			
+			if (!directory.exists()) {
+				directory.mkdir();
+			}
 
-		System.setProperty("java.io.tmpdir", path);
+			System.setProperty("java.io.tmpdir", path);
+		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+		}
 	}
 
 	private static Map<String, String> createServiceEndpointMap(ConfigReader config) {

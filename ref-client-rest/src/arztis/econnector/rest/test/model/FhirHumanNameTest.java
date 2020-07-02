@@ -3,8 +3,6 @@ package arztis.econnector.rest.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.text.ParseException;
-
 import org.ehealth_connector.common.enums.NullFlavor;
 import org.ehealth_connector.common.hl7cdar2.EN;
 import org.ehealth_connector.common.hl7cdar2.ON;
@@ -27,10 +25,9 @@ public class FhirHumanNameTest extends TestUtils {
 	/**
 	 * Method implementing
 	 *
-	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testName = getName1();
 	}
@@ -39,10 +36,9 @@ public class FhirHumanNameTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2En()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2En() throws ParseException {
+	public void testCreateHl7CdaR2En()  {
 		final EN en = FhirHumanName.createHl7CdaR2En(testName, null);
 		
 		assertNotNull(en);
@@ -53,10 +49,9 @@ public class FhirHumanNameTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2En()} with a null flavor.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2EnNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2EnNullFlavor()  {
 		final EN en = FhirHumanName.createHl7CdaR2En(null, NullFlavor.NOINFORMATION);
 		
 		assertNotNull(en);
@@ -69,10 +64,9 @@ public class FhirHumanNameTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2On()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaROn() throws ParseException {
+	public void testCreateHl7CdaROn()  {
 		final ON on = FhirHumanName.createHl7CdaR2On("Ordination Dr. Musterärztin");
 		
 		assertNotNull(on);		
@@ -84,10 +78,9 @@ public class FhirHumanNameTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2Pn()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Pn() throws ParseException {
+	public void testCreateHl7CdaR2Pn()  {
 		final PN pn = FhirHumanName.createHl7CdaR2Pn(testName, null);
 		
 		assertNotNull(pn);
@@ -98,10 +91,9 @@ public class FhirHumanNameTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2Pn()} with a null flavor.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2PnNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2PnNullFlavor()  {
 		final PN pn = FhirHumanName.createHl7CdaR2Pn(null, NullFlavor.UNKNOWN);
 		
 		assertNotNull(pn);

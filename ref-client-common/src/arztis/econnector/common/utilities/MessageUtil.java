@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 /**
  * 
- * Utilities for messages 
+ * Utilities for messages
  * 
  * @author ET-Innovations
  *
@@ -14,22 +14,26 @@ import java.util.ResourceBundle;
 
 public class MessageUtil {
 	private static ResourceBundle bundle = ResourceBundle.getBundle("messages_de");
-	
+
 	private MessageUtil() {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * reads property values of the <b>resources/messages_de.properties</b> file
-	 * @param key of the property
-	 * @param arguments to pass to the message value like the social security number for 
-	 * "Es wurden keine Dokumente für den Patienten mit der SVNR {0} gefunden."
 	 * 
-	 * @return the retrieved value, if no value could be retrieved a empty string will be returned
+	 * @param key       of the property
+	 * @param arguments to pass to the message value like the social security number
+	 *                  for "Es wurden keine Dokumente für den Patienten mit der
+	 *                  SVNR {0} gefunden."
+	 * 
+	 * @return the retrieved value, if no value could be retrieved a empty string
+	 *         will be returned
 	 */
 	public static String getMessageFromProperties(String key, Object arguments) {
 		try {
-			return MessageFormat.format(bundle.getString(key), arguments);
+			MessageFormat messageFormat = new MessageFormat(bundle.getString(key));
+			return messageFormat.format(arguments);
 		} catch (MissingResourceException ex) {
 			return "";
 		}

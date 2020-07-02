@@ -1,5 +1,6 @@
 package arztis.econnector.ihe.utilities;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.MissingResourceException;
@@ -36,6 +37,7 @@ public class ConfigReader {
 	private static final String KEY_PRODUKT_ID = "PRODUKT_ID";
 	private static final String KEY_PRODUKT_VERSION = "PRODUKT_VERSION";
 	private static final String KEY_OID_ELGA_AREA = "OID_ELGA_AREA";
+	private static final String KEY_VALIDATE_CDA = "VALIDATE_CDA";
 	private static final String KEY_TARGETENDPOINT_PDQ = "TARGETENDPOINT_PDQ";
 	private static final String KEY_TARGETENDPOINT_PIX = "TARGETENDPOINT_PIX";
 	private static final String KEY_ENABLE_PVN = "ENABLE_PVN";
@@ -44,6 +46,8 @@ public class ConfigReader {
 	private static final String KEY_EIMMUN_ID = "EIMMUN_ID";
 	private static final String KEY_HERSTELLER_ID = "HERSTELLER_ID";
 	private static final String KEY_ONLY_CONTEXT = "ONLY_CONTEXT";
+	private static final String SVC_E_CARD_IDA_TICKET = "SVC_E_CARD_IDA_TICKET";
+	private static final String SVC_IDA_TICKET = "SVC_IDA_TICKET";
 
 	private static final List<ElgaEHealthApplication> APPLICATIONS = Arrays.asList(
 			new ElgaEHealthApplication("eImmunization", "103", "urn:oid:1.2.40.0.34.3.9.114"),
@@ -92,6 +96,9 @@ public class ConfigReader {
 	private String eImmunizationId;
 	private String herstellerId;
 	private Boolean onlyContext;
+	private Boolean validateCda;
+	private String eCardIdaTicket;
+	private String svcIdaTicket;
 
 	private static ConfigReader oConfigReader = new ConfigReader();
 
@@ -355,6 +362,14 @@ public class ConfigReader {
 
 		return oidElgaAreaToSave.trim();
 	}
+	
+	public Boolean isValidateCda() {
+		if(validateCda == null) {
+			validateCda = "true".equalsIgnoreCase(getValueFromProperties(KEY_VALIDATE_CDA));
+		}
+		
+		return validateCda;
+	}
 
 	public boolean isConfigPathSet() {
 		return configPathSet;
@@ -444,6 +459,30 @@ public class ConfigReader {
 		} catch (MissingResourceException ex) {
 			return "";
 		}
+	}
+
+	public String geteCardIdaTicket(String ssno, String vpnr) {
+		if(eCardIdaTicket == null) {
+			eCardIdaTicket = getValueFromProperties(SVC_E_CARD_IDA_TICKET);
+		}
+		
+		return MessageFormat.format(eCardIdaTicket, vpnr, ssno);
+	}
+
+	public void seteCardIdaTicket(String eCardIdaTicket) {
+		this.eCardIdaTicket = eCardIdaTicket;
+	}
+
+	public String getSvcIdaTicket(String vpnr, String gdama) {
+		if(svcIdaTicket == null) {
+			svcIdaTicket = getValueFromProperties(SVC_IDA_TICKET);
+		}
+		
+		return MessageFormat.format(svcIdaTicket, vpnr, gdama);
+	}
+
+	public void setSvcIdaTicket(String svcIdaTicket) {
+		this.svcIdaTicket = svcIdaTicket;
 	}
 
 }

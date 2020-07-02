@@ -24,6 +24,7 @@ import arztis.econnector.rest.model.fhir.FhirCodeableConcept;
  */
 public class FhirCodeableConceptTest extends TestUtils {
 
+	private static final String ORIGINAL_TEXT = "Original text";
 	private CodeableConcept testCode;
 	private CodeableConcept translactionCode;
 
@@ -33,10 +34,10 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testCode = getCode1();
-		testCode.setText("Original text");
+		testCode.setText(ORIGINAL_TEXT);
 		translactionCode =  getCode2();
 	}
 
@@ -47,14 +48,14 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Cd() throws ParseException {
+	public void testCreateHl7CdaR2Cd() {
 		final CD cd = FhirCodeableConcept.createHl7CdaR2Cd(testCode, null, List.of(translactionCode));
 		
 		assertNotNull(cd);
 		assertEquals(testCode.getCodingFirstRep().getCode(), cd.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), cd.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), cd.getDisplayName());
-		assertEquals("Original text", cd.getOriginalText().xmlContent);	
+		assertEquals(ORIGINAL_TEXT, cd.getOriginalText().xmlContent);	
 		
 		assertNotNull(cd.getTranslation());
 		assertEquals(1, cd.getTranslation().size());
@@ -70,7 +71,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2CdNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2CdNullFlavor() {
 		final CD cd = FhirCodeableConcept.createHl7CdaR2Cd(null, NullFlavor.MASKED, null);
 		
 		assertNotNull(cd);
@@ -86,14 +87,14 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Cs() throws ParseException {
+	public void testCreateHl7CdaR2Cs() {
 		final CS cs = FhirCodeableConcept.createHl7CdaR2Cs(testCode, null, List.of(translactionCode));
 		
 		assertNotNull(cs);
 		assertEquals(testCode.getCodingFirstRep().getCode(), cs.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), cs.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), cs.getDisplayName());
-		assertEquals("Original text", cs.getOriginalText().xmlContent);	
+		assertEquals(ORIGINAL_TEXT, cs.getOriginalText().xmlContent);	
 		
 		assertNotNull(cs.getTranslation());
 		assertEquals(1, cs.getTranslation().size());
@@ -109,7 +110,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2CsNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2CsNullFlavor() {
 		final CS cs = FhirCodeableConcept.createHl7CdaR2Cs(null, NullFlavor.NOINFORMATION, null);
 		
 		assertNotNull(cs);
@@ -125,14 +126,14 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Ce() throws ParseException {
+	public void testCreateHl7CdaR2Ce() {
 		final CE ce = FhirCodeableConcept.createHl7CdaR2Ce(testCode, null, null);
 		
 		assertNotNull(ce);
 		assertEquals(testCode.getCodingFirstRep().getCode(), ce.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), ce.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), ce.getDisplayName());
-		assertEquals("Original text", ce.getOriginalText().xmlContent);	
+		assertEquals(ORIGINAL_TEXT, ce.getOriginalText().xmlContent);	
 		
 		assertTrue(ce.getTranslation().isEmpty());
 	}
@@ -144,7 +145,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2CeNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2CeNullFlavor() {
 		final CE ce = FhirCodeableConcept.createHl7CdaR2Ce(null, NullFlavor.NOT_APPLICABLE, null);
 		
 		assertNotNull(ce);

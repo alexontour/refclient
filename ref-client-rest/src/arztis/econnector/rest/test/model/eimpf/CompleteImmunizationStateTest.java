@@ -47,7 +47,19 @@ import arztis.econnector.rest.utilities.FhirUtil;
 public class CompleteImmunizationStateTest extends TestUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompleteImmunizationStateTest.class.getName());
-
+	private static final String SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1";
+	private static final String SET_ID_SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1.1";
+	private static final String IMMUNIZATION_SYSTEM = "1.2.40.0.34.99.4613.3.5";
+	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
+	private static final String CLASS_CODE_IMMUNIZATION = "11369-6";
+	private static final String OID_SNOMED = "2.16.840.1.113883.6.96";
+	private static final String NAME_EIMMUNIZATION = "Zentrale Anwendung e-Impfpass";
+	private static final String VACCINE_CODE = "2427872";
+	private static final String VACCINE_OID = "1.2.40.0.34.4.16.1";
+	private static final String VACCIEN_NAME = "ENCEPUR FSPR 0,25ML KIND";
+	private static final String FSME_CODE = "333699008";
+	private static final String FSME_NAME = "Frühsommer-Meningoencephalitis Impfstoff";
+	
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.ihe.model.eimpf.CompleteImmunizationState()}.
@@ -67,7 +79,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(completeImmunization instanceof Bundle);
 		assertTrue(completeImmunization.hasIdentifier());
 		assertEquals("2", completeImmunization.getIdentifier().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.1", completeImmunization.getIdentifier().getSystem());
+		assertEquals(SYSTEM_IDENTIFIER, completeImmunization.getIdentifier().getSystem());
 
 		assertTrue(completeImmunization.hasEntry());
 		assertEquals(28, completeImmunization.getEntry().size());
@@ -107,7 +119,10 @@ public class CompleteImmunizationStateTest extends TestUtils {
 			}
 		}
 
-		LOGGER.info(FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(completeImmunization));
+		if(completeImmunization != null && LOGGER.isInfoEnabled()) {
+			LOGGER.info(FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(completeImmunization));
+		}
+		
 		assertEquals(28, countTest);
 
 	}
@@ -117,21 +132,21 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// set id
 		assertTrue(composition.hasIdentifier());
-		assertEquals("1.2.40.0.34.99.4613.3.1.1", composition.getIdentifier().getSystem());
+		assertEquals(SET_ID_SYSTEM_IDENTIFIER, composition.getIdentifier().getSystem());
 		assertEquals("2", composition.getIdentifier().getValue());
 
 		// type code
 		assertTrue(composition.hasType());
 		assertTrue(composition.getType().hasCoding());
 		assertEquals("82593-5", composition.getType().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1", composition.getType().getCodingFirstRep().getSystem());
+		assertEquals(OID_LOINC, composition.getType().getCodingFirstRep().getSystem());
 		assertEquals("Immunization summary report", composition.getType().getCodingFirstRep().getDisplay());
 
 		// class code
 		assertTrue(composition.hasCategory());
 		assertTrue(composition.getCategory().get(0).hasCoding());
-		assertEquals("11369-6", composition.getCategory().get(0).getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1", composition.getCategory().get(0).getCodingFirstRep().getSystem());
+		assertEquals(CLASS_CODE_IMMUNIZATION, composition.getCategory().get(0).getCodingFirstRep().getCode());
+		assertEquals(OID_LOINC, composition.getCategory().get(0).getCodingFirstRep().getSystem());
 		assertEquals("HISTORY OF IMMUNIZATIONS", composition.getCategory().get(0).getCodingFirstRep().getDisplay());
 
 		// title
@@ -163,7 +178,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(composition.hasEvent());
 		assertEquals(1, composition.getEvent().size());
 		assertEquals("41000179103", composition.getEvent().get(0).getCodeFirstRep().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				composition.getEvent().get(0).getCodeFirstRep().getCodingFirstRep().getSystem());
 		assertEquals("Immunization record (record artifact)",
 				composition.getEvent().get(0).getCodeFirstRep().getCodingFirstRep().getDisplay());
@@ -242,9 +257,9 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// device
 		assertTrue(device.hasModelNumber());
-		assertEquals("Zentrale Anwendung e-Impfpass", device.getModelNumber());
+		assertEquals(NAME_EIMMUNIZATION, device.getModelNumber());
 		assertTrue(device.hasDeviceName());
-		assertEquals("Zentrale Anwendung e-Impfpass", device.getDeviceNameFirstRep().getName());
+		assertEquals(NAME_EIMMUNIZATION, device.getDeviceNameFirstRep().getName());
 	}
 
 	private void testOrganizationEntry(Organization organization) {
@@ -378,7 +393,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// name
 		assertTrue(organization.hasName());
-		assertEquals("Zentrale Anwendung e-Impfpass", organization.getName());
+		assertEquals(NAME_EIMMUNIZATION, organization.getName());
 
 		// address
 		assertTrue(organization.hasAddress());
@@ -444,8 +459,8 @@ public class CompleteImmunizationStateTest extends TestUtils {
 	private void testImmunizationSection(SectionComponent section) {
 		assertNotNull(section);
 		assertTrue(section.hasCode());
-		assertEquals("11369-6", section.getCode().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1", section.getCode().getCodingFirstRep().getSystem());
+		assertEquals(CLASS_CODE_IMMUNIZATION, section.getCode().getCodingFirstRep().getCode());
+		assertEquals(OID_LOINC, section.getCode().getCodingFirstRep().getSystem());
 		assertEquals("HISTORY OF IMMUNIZATIONS", section.getCode().getCodingFirstRep().getDisplay());
 		assertTrue(section.hasTitle());
 		assertEquals("Impfungen", section.getTitle());
@@ -481,7 +496,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(immunization.hasIdentifier());
 		assertEquals(1, immunization.getIdentifier().size());
 		assertEquals("1", immunization.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.5", immunization.getIdentifierFirstRep().getSystem());
+		assertEquals(IMMUNIZATION_SYSTEM, immunization.getIdentifierFirstRep().getSystem());
 
 		// status
 		assertTrue(immunization.hasStatus());
@@ -497,9 +512,9 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// vaccine
 		assertTrue(immunization.hasVaccineCode());
 		assertTrue(immunization.getVaccineCode().hasCoding());
-		assertEquals("2427872", immunization.getVaccineCode().getCodingFirstRep().getCode());
-		assertEquals("1.2.40.0.34.4.16.1", immunization.getVaccineCode().getCodingFirstRep().getSystem());
-		assertEquals("ENCEPUR FSPR 0,25ML KIND", immunization.getVaccineCode().getCodingFirstRep().getDisplay());
+		assertEquals(VACCINE_CODE, immunization.getVaccineCode().getCodingFirstRep().getCode());
+		assertEquals(VACCINE_OID, immunization.getVaccineCode().getCodingFirstRep().getSystem());
+		assertEquals(VACCIEN_NAME, immunization.getVaccineCode().getCodingFirstRep().getDisplay());
 
 		// lot number
 		assertTrue(immunization.hasLotNumber());
@@ -509,11 +524,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// target
 		assertTrue(immunization.getProtocolAppliedFirstRep().hasTargetDisease());
-		assertEquals("333699008",
+		assertEquals(FSME_CODE,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getSystem());
-		assertEquals("Frühsommer-Meningoencephalitis Impfstoff",
+		assertEquals(FSME_NAME,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getDisplay());
 
 		// dose and scheme
@@ -535,7 +550,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(immunization.hasIdentifier());
 		assertEquals(1, immunization.getIdentifier().size());
 		assertEquals("2", immunization.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.5", immunization.getIdentifierFirstRep().getSystem());
+		assertEquals(IMMUNIZATION_SYSTEM, immunization.getIdentifierFirstRep().getSystem());
 
 		// status
 		assertTrue(immunization.hasStatus());
@@ -551,9 +566,9 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// vaccine
 		assertTrue(immunization.hasVaccineCode());
 		assertTrue(immunization.getVaccineCode().hasCoding());
-		assertEquals("2427872", immunization.getVaccineCode().getCodingFirstRep().getCode());
-		assertEquals("1.2.40.0.34.4.16.1", immunization.getVaccineCode().getCodingFirstRep().getSystem());
-		assertEquals("ENCEPUR FSPR 0,25ML KIND", immunization.getVaccineCode().getCodingFirstRep().getDisplay());
+		assertEquals(VACCINE_CODE, immunization.getVaccineCode().getCodingFirstRep().getCode());
+		assertEquals(VACCINE_OID, immunization.getVaccineCode().getCodingFirstRep().getSystem());
+		assertEquals(VACCIEN_NAME, immunization.getVaccineCode().getCodingFirstRep().getDisplay());
 
 		// lot number
 		assertFalse(immunization.hasLotNumber());
@@ -562,11 +577,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// target
 		assertTrue(immunization.getProtocolAppliedFirstRep().hasTargetDisease());
-		assertEquals("333699008",
+		assertEquals(FSME_CODE,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getSystem());
-		assertEquals("Frühsommer-Meningoencephalitis Impfstoff",
+		assertEquals(FSME_NAME,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getDisplay());
 
 		// dose and scheme
@@ -587,7 +602,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(immunization.hasIdentifier());
 		assertEquals(1, immunization.getIdentifier().size());
 		assertEquals("3", immunization.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.5", immunization.getIdentifierFirstRep().getSystem());
+		assertEquals(IMMUNIZATION_SYSTEM, immunization.getIdentifierFirstRep().getSystem());
 
 		// status
 		assertTrue(immunization.hasStatus());
@@ -603,9 +618,9 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// vaccine
 		assertTrue(immunization.hasVaccineCode());
 		assertTrue(immunization.getVaccineCode().hasCoding());
-		assertEquals("2427872", immunization.getVaccineCode().getCodingFirstRep().getCode());
-		assertEquals("1.2.40.0.34.4.16.1", immunization.getVaccineCode().getCodingFirstRep().getSystem());
-		assertEquals("ENCEPUR FSPR 0,25ML KIND", immunization.getVaccineCode().getCodingFirstRep().getDisplay());
+		assertEquals(VACCINE_CODE, immunization.getVaccineCode().getCodingFirstRep().getCode());
+		assertEquals(VACCINE_OID, immunization.getVaccineCode().getCodingFirstRep().getSystem());
+		assertEquals(VACCIEN_NAME, immunization.getVaccineCode().getCodingFirstRep().getDisplay());
 
 		// lot number
 		assertFalse(immunization.hasLotNumber());
@@ -614,11 +629,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// target
 		assertTrue(immunization.getProtocolAppliedFirstRep().hasTargetDisease());
-		assertEquals("333699008",
+		assertEquals(FSME_CODE,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getSystem());
-		assertEquals("Frühsommer-Meningoencephalitis Impfstoff",
+		assertEquals(FSME_NAME,
 				immunization.getProtocolAppliedFirstRep().getTargetDiseaseFirstRep().getCodingFirstRep().getDisplay());
 
 		// dose and scheme
@@ -667,11 +682,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// target
 		assertTrue(immunization.getRecommendationFirstRep().hasTargetDisease());
-		assertEquals("333699008",
+		assertEquals(FSME_CODE,
 				immunization.getRecommendationFirstRep().getTargetDisease().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				immunization.getRecommendationFirstRep().getTargetDisease().getCodingFirstRep().getSystem());
-		assertEquals("Frühsommer-Meningoencephalitis Impfstoff",
+		assertEquals(FSME_NAME,
 				immunization.getRecommendationFirstRep().getTargetDisease().getCodingFirstRep().getDisplay());
 
 		// scheme
@@ -686,7 +701,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(immunization.getRecommendationFirstRep().hasForecastStatus());
 		assertEquals("171258008",
 				immunization.getRecommendationFirstRep().getForecastStatus().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96",
+		assertEquals(OID_SNOMED,
 				immunization.getRecommendationFirstRep().getForecastStatus().getCodingFirstRep().getSystem());
 
 		// recommended date
@@ -718,7 +733,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(observation.hasIdentifier());
 		assertEquals(1, observation.getIdentifier().size());
 		assertEquals("5", observation.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.5", observation.getIdentifierFirstRep().getSystem());
+		assertEquals(IMMUNIZATION_SYSTEM, observation.getIdentifierFirstRep().getSystem());
 
 		// status
 		assertTrue(observation.hasStatus());
@@ -740,7 +755,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// value
 		assertTrue(observation.hasValue());
 		assertEquals("420538001", observation.getValueCodeableConcept().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96", observation.getValueCodeableConcept().getCodingFirstRep().getSystem());
+		assertEquals(OID_SNOMED, observation.getValueCodeableConcept().getCodingFirstRep().getSystem());
 		assertEquals("Tuberkulose Impfstoff", observation.getValueCodeableConcept().getCodingFirstRep().getDisplay());
 
 		// note
@@ -763,7 +778,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(observation.hasIdentifier());
 		assertEquals(1, observation.getIdentifier().size());
 		assertEquals("3", observation.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.5", observation.getIdentifierFirstRep().getSystem());
+		assertEquals(IMMUNIZATION_SYSTEM, observation.getIdentifierFirstRep().getSystem());
 
 		// status
 		assertTrue(observation.hasStatus());
@@ -785,7 +800,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// value
 		assertTrue(observation.hasValue());
 		assertEquals("36653000", observation.getValueCodeableConcept().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.96", observation.getValueCodeableConcept().getCodingFirstRep().getSystem());
+		assertEquals(OID_SNOMED, observation.getValueCodeableConcept().getCodingFirstRep().getSystem());
 		assertEquals("Röteln", observation.getValueCodeableConcept().getCodingFirstRep().getDisplay());
 
 		// note
@@ -835,7 +850,7 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		// code
 		assertTrue(observation.getComponentFirstRep().hasCode());
 		assertEquals("7961-6", observation.getComponentFirstRep().getCode().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1",
+		assertEquals(OID_LOINC,
 				observation.getComponentFirstRep().getCode().getCodingFirstRep().getSystem());
 		assertEquals("Masern IG AK qn.", observation.getComponentFirstRep().getCode().getCodingFirstRep().getDisplay());
 
@@ -883,17 +898,17 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(documentReference.hasIdentifier());
 		assertEquals(1, documentReference.getIdentifier().size());
 		assertEquals("1", documentReference.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.1", documentReference.getIdentifierFirstRep().getSystem());
+		assertEquals(SYSTEM_IDENTIFIER, documentReference.getIdentifierFirstRep().getSystem());
 
 		// set id
 		assertTrue(documentReference.hasMasterIdentifier());
 		assertEquals("1", documentReference.getMasterIdentifier().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.1.1", documentReference.getMasterIdentifier().getSystem());
+		assertEquals(SET_ID_SYSTEM_IDENTIFIER, documentReference.getMasterIdentifier().getSystem());
 
 		// code
 		assertTrue(documentReference.hasType());
-		assertEquals("11369-6", documentReference.getType().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1", documentReference.getType().getCodingFirstRep().getSystem());
+		assertEquals(CLASS_CODE_IMMUNIZATION, documentReference.getType().getCodingFirstRep().getCode());
+		assertEquals(OID_LOINC, documentReference.getType().getCodingFirstRep().getSystem());
 		assertEquals("History of Immunization", documentReference.getType().getCodingFirstRep().getDisplay());
 
 	}
@@ -905,17 +920,17 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertTrue(documentReference.hasIdentifier());
 		assertEquals(1, documentReference.getIdentifier().size());
 		assertEquals("mySampleID", documentReference.getIdentifierFirstRep().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.1", documentReference.getIdentifierFirstRep().getSystem());
+		assertEquals(SYSTEM_IDENTIFIER, documentReference.getIdentifierFirstRep().getSystem());
 
 		// set id
 		assertTrue(documentReference.hasMasterIdentifier());
 		assertEquals("mySampleID", documentReference.getMasterIdentifier().getValue());
-		assertEquals("1.2.40.0.34.99.4613.3.1.1", documentReference.getMasterIdentifier().getSystem());
+		assertEquals(SET_ID_SYSTEM_IDENTIFIER, documentReference.getMasterIdentifier().getSystem());
 
 		// code
 		assertTrue(documentReference.hasType());
-		assertEquals("11369-6", documentReference.getType().getCodingFirstRep().getCode());
-		assertEquals("2.16.840.1.113883.6.1", documentReference.getType().getCodingFirstRep().getSystem());
+		assertEquals(CLASS_CODE_IMMUNIZATION, documentReference.getType().getCodingFirstRep().getCode());
+		assertEquals(OID_LOINC, documentReference.getType().getCodingFirstRep().getSystem());
 		assertEquals("History of Immunization", documentReference.getType().getCodingFirstRep().getDisplay());
 
 	}

@@ -36,9 +36,6 @@ public class IheConstants {
     // Constants for the truststore
     public static final String SSL_TRUSTSTORE = "javax.net.ssl.trustStore";
     public static final String SSL_TRUSTSTORE_PASS_PACKAGE = "javax.net.ssl.trustStorePassword";
-
-    // Constants for the keystore
-    public static final String KEY_STORE_PASS = "changeit";
     
     public static final String ETS_SERVICE = "ets";
     public static final String STS_SERVICE = "sts";

@@ -1,5 +1,6 @@
 package arztis.econnector.common;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -24,7 +25,11 @@ import arztis.econnector.common.utilities.BaseServiceStubPool;
 import arztis.econnector.common.utilities.HttpConstants;
 import arztis.econnector.common.utilities.SoapUtil;
 
-public class CardReaderTransactions {
+public class CardReaderTransactions implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1999249458704313372L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(CardReaderTransactions.class);
 	private static final String JSON_PARAM_RETURN_CARD_DATA = "returnCardData";
 	private static final String JSON_PARAM_RETURN_EHIC_DATA = "returnEhicData";
@@ -58,24 +63,28 @@ public class CardReaderTransactions {
 	private static final String DEBUG_MESSAGE_ERROR = "Something went wrong: {}";
 	private String targetEndpointGino = "";
 	private String targetEndpointStatus = "%s/%s/status";
+	private static CardReaderTransactions instance;
 
 	private CardReaderTransactions(String ginoEndpoint) {
+		if (instance != null) {
+			throw new RuntimeException(
+					"Use getInstance() method to get the single instance of card reader transactions");
+		}
+		
 		targetEndpointGino = ginoEndpoint;
 	}
 
-	private static class LazyHolder {
-		static CardReaderTransactions instance = null;
-	}
-
-	public static CardReaderTransactions getInstance(String ginoEndpoint) throws ExceptionInInitializerError {
-		if (LazyHolder.instance == null) {
+	public synchronized static CardReaderTransactions getInstance(String ginoEndpoint) throws ExceptionInInitializerError {
+		if (instance == null) {
 			if (ginoEndpoint == null) {
 				throw new ExceptionInInitializerError(
-						"Either serviceManagerTargetEndpoint or servicesVersionMap is not set. Cannot create instance");
+						"ginoEndpoint is not set. Cannot create instance");
 			}
-			LazyHolder.instance = new CardReaderTransactions(ginoEndpoint);
+			
+			instance = new CardReaderTransactions(ginoEndpoint);
 		}
-		return LazyHolder.instance;
+		
+		return instance;
 	}
 
 	public static Object requestAllCardReaders() {

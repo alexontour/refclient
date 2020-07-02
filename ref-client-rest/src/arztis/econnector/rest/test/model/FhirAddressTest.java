@@ -28,7 +28,7 @@ public class FhirAddressTest extends TestUtils {
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testAddress = getAddress1();
 	}
@@ -40,7 +40,7 @@ public class FhirAddressTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Ad() throws ParseException {
+	public void testCreateHl7CdaR2Ad() {
 		final AD ad = FhirAddress.createHl7CdaR2Ad(testAddress, null);
 		
 		assertNotNull(ad);
@@ -56,7 +56,7 @@ public class FhirAddressTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2AdNullFlavor() throws ParseException {
+	public void testCreateHl7CdaR2AdNullFlavor() {
 		final AD ad = FhirAddress.createHl7CdaR2Ad(null, NullFlavor.NOINFORMATION);
 		
 		assertNotNull(ad);

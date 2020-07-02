@@ -16,11 +16,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.json.version>20190722</org.json.version>
-		<log4j.version>2.12.1</log4j.version>
+		<log4j.version>2.13.3</log4j.version>
 		<axis2.version>1.7.9</axis2.version>
 		<org.apache.xmlbeans.version>3.1.0</org.apache.xmlbeans.version>
 		<org.apache.ws.commons.axiom.version>1.2.21</org.apache.ws.commons.axiom.version>
-		<org.eclipse.jetty.version>9.4.22.v20191022</org.eclipse.jetty.version>
+		<org.eclipse.jetty.version>9.4.30.v20200611</org.eclipse.jetty.version>
 		<skip.assembly>false</skip.assembly>
 	</properties>
 	<dependencies>
@@ -89,6 +89,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/xalan/xalan -->
+		<!-- <dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
 			<artifactId>axis2-transport-http</artifactId>

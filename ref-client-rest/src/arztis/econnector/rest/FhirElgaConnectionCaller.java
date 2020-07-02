@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
@@ -29,14 +27,11 @@ import org.ehealth_connector.common.utils.DebugUtil;
 import org.ehealth_connector.communication.DocumentRequest;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
-import org.hl7.fhir.r4.model.Bundle.BundleEntrySearchComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
-import org.hl7.fhir.r4.model.Bundle.SearchEntryMode;
 import org.hl7.fhir.r4.model.DocumentReference;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
-import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
 import org.openhealthtools.ihe.xds.document.XDSDocument;
 import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
@@ -50,11 +45,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import arztis.econnector.common.model.Message;
-import arztis.econnector.common.model.MessageTypes;
-import arztis.econnector.common.utilities.MessageUtil;
 import arztis.econnector.ihe.ElgaConnectionCaller;
 import arztis.econnector.ihe.generatedClasses.assertion._0._2.saml.tc.names.oasis.AssertionType;
-import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.ListResponse;
 import arztis.econnector.ihe.generatedClasses.ihe.registry.AccessDeniedMessage;
 import arztis.econnector.ihe.generatedClasses.query.ebxml_regrep.tc.names.oasis.AdhocQueryResponseDocument;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.RegistryObjectListType;
@@ -63,6 +55,7 @@ import arztis.econnector.ihe.generatedClasses.rs.ebxml_regrep.tc.names.oasis.Reg
 import arztis.econnector.ihe.model.ConnectionData;
 import arztis.econnector.ihe.parameters.PatientContactParameter;
 import arztis.econnector.ihe.queries.PharmTransactions;
+import arztis.econnector.ihe.queries.common.InvalidCdaException;
 import arztis.econnector.ihe.utilities.AssertionTypeUtil;
 import arztis.econnector.ihe.utilities.ElgaEHealthApplication;
 import arztis.econnector.ihe.utilities.IheConstants;
@@ -71,12 +64,9 @@ import arztis.econnector.rest.model.eimpf.CompleteImmunizationState;
 import arztis.econnector.rest.model.eimpf.UpdateImmunizationState;
 import arztis.econnector.rest.model.fhir.FhirBundle;
 import arztis.econnector.rest.model.fhir.FhirDocumentReference;
-import arztis.econnector.rest.model.fhir.FhirOperationOutcome;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
-import arztis.econnector.rest.model.fhir.FhirPractitioner;
 import arztis.econnector.rest.utilities.ElgaTypeConverter;
 import arztis.econnector.rest.utilities.FhirUtil;
-import arztis.econnector.rest.utilities.GlobalObjects;
 
 /**
  * JAVA API for the ELGA reference client. This class includes all function
@@ -105,15 +95,10 @@ import arztis.econnector.rest.utilities.GlobalObjects;
  */
 public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
-	private static final String CHECK_CARD_READER_MESSAGE_KEY = "CHECK_CARD_READER";
 	private static final String URN_OID_FORMAT = "urn:oid:";
 	private static final String NO_DOCUMENT_REFERENCE_FOUND = "No document reference found";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FhirElgaConnectionCaller.class.getName());
-
-	protected FhirElgaConnectionCaller() {
-
-	}
 
 	private static class LazyHolder {
 		static final FhirElgaConnectionCaller INSTANCE = new FhirElgaConnectionCaller();
@@ -392,7 +377,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 						.loadFromFile(file);
 				CompleteImmunizationState fhirCompleteImmunisationState = new CompleteImmunizationState(
 						completeImmunizationState);
-				return fhirCompleteImmunisationState.toJson().getBytes();
+				return fhirCompleteImmunisationState.toJson().getBytes(StandardCharsets.UTF_8);
 			} catch (JAXBException | IOException e) {
 				LOGGER.error(e.getMessage(), e);
 			} finally {
@@ -845,8 +830,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			POCDMT000040ClinicalDocument cda = null;
 			if (documentReference.getContentFirstRep() != null
 					&& documentReference.getContentFirstRep().getAttachment() != null) {
-				doc = documentReference.getContentFirstRep().getAttachment().getData();
 				cda = getCdaDetails(documentReference, connData);
+				doc = documentReference.getContentFirstRep().getAttachment().getData();
 			}
 
 			extractFhirBundleFromResponse(super.provideAndRegisterDocuments(status, typeCode, facilityTypeCode,
@@ -855,6 +840,10 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			LOGGER.error(e.getMessage(), e);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_UNAUTHORIZED,
 					IssueSeverity.ERROR, IssueType.LOGIN, OperationOutcome.MSGAUTHREQUIRED, e.getMessage());
+		} catch (InvalidCdaException e) {
+			LOGGER.error(e.getMessage(), e);
+			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, e.getCode(), IssueSeverity.ERROR,
+					IssueType.CODEINVALID, OperationOutcome.MSGBADSYNTAX, e.getMessage());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			String message = "";
@@ -898,15 +887,21 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			return getDetailsOfDocument(documentReference.getContentFirstRep().getAttachment().getData(),
 					formatCodeValue);
 		} else if (documentReference.getContentFirstRep().getAttachment().getContentType().contains("json")) {
-			return generateCdaDocument(documentReference.getContentFirstRep().getAttachment().getData(),
-					formatCodeValue, connData.getUserJwtToken());
+			return generateCdaDocument(documentReference, formatCodeValue, connData.getUserJwtToken());
 		}
 		return null;
 	}
 
-	protected POCDMT000040ClinicalDocument generateCdaDocument(byte[] bytesDoc, String formatCode, String userToken) {
+	protected POCDMT000040ClinicalDocument generateCdaDocument(DocumentReference documentReference, String formatCode,
+			String userToken) {
 		if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
-			return (POCDMT000040ClinicalDocument) generateCda(new String(bytesDoc, StandardCharsets.UTF_8), userToken);
+			EimpfDocumentUpdateImmunisierungsstatus cda = (EimpfDocumentUpdateImmunisierungsstatus) generateCda(
+					new String(documentReference.getContentFirstRep().getAttachment().getData(),
+							StandardCharsets.UTF_8),
+					userToken);
+			documentReference.getContentFirstRep().getAttachment()
+					.setData(super.getUpdateImmunizationEntryXml(cda).getBytes(StandardCharsets.UTF_8));
+			return cda;
 		}
 
 		return null;
@@ -916,6 +911,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		try {
 			if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
 				return getDetailsOfUpdateImmunization(bytesDoc);
+			} else if (FormatCode.ELGA_LAB_REPORT_FULL_SUPPORT_2015.getCodeValue().equalsIgnoreCase(formatCode)) {
+				return getDetailsOfLabReport(bytesDoc);
 			}
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);

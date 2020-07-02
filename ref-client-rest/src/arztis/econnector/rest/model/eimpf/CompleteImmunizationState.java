@@ -121,7 +121,7 @@ public class CompleteImmunizationState extends FhirBundle {
 			for (POCDMT000040Entry entry : section.getEntry()) {
 				sectionComp.addEntry(new Reference(String.format("Observation/%s-%s", type, index)));
 				FhirObservation observation = new FhirObservation(entry.getAct(), String.format("%s-%d", type, index++),
-						sectionComp.getCode(), section.getText().xmlContent);
+						sectionComp.getCode());
 
 				addResource(observation);
 
@@ -146,7 +146,7 @@ public class CompleteImmunizationState extends FhirBundle {
 				sectionComp.addEntry(new Reference(String.format("ImmunizationRecommendation/%s",
 						entry.getSubstanceAdministration().getId().get(0).getExtension())));
 				FhirImmunizationRecommendation recommendation = new FhirImmunizationRecommendation(entry,
-						composition.getDate(), section.getText().xmlContent, index++);
+						composition.getDate(), index++);
 				addResource(recommendation);
 
 				for (Resource resource : recommendation.getResources()) {

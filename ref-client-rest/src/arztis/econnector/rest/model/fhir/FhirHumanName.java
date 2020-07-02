@@ -148,7 +148,7 @@ public class FhirHumanName extends HumanName {
 		if (value != null) {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
-			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("hl7:family"), EnFamily.class, obj));
+			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -156,7 +156,7 @@ public class FhirHumanName extends HumanName {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
-					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("hl7:given"), EnGiven.class, obj));
+					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -166,7 +166,7 @@ public class FhirHumanName extends HumanName {
 				if (prefix != null) {
 					EnPrefix obj = new EnPrefix();
 					obj.xmlContent = prefix.getValue();
-					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("hl7:prefix"), EnPrefix.class, obj));
+					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -176,7 +176,7 @@ public class FhirHumanName extends HumanName {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
-					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("hl7:suffix"), EnSuffix.class, obj));
+					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}
@@ -234,7 +234,7 @@ public class FhirHumanName extends HumanName {
 		if (value != null) {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
-			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("hl7:family"), EnFamily.class, obj));
+			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -242,7 +242,7 @@ public class FhirHumanName extends HumanName {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
-					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("hl7:given"), EnGiven.class, obj));
+					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -253,7 +253,7 @@ public class FhirHumanName extends HumanName {
 					EnPrefix obj = new EnPrefix();
 					obj.xmlContent = prefix.getValue();
 					obj.getQualifier().add("AC");
-					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("hl7:prefix"), EnPrefix.class, obj));
+					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -263,7 +263,7 @@ public class FhirHumanName extends HumanName {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
-					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("hl7:suffix"), EnSuffix.class, obj));
+					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}

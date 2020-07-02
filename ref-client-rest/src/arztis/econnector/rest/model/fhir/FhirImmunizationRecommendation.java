@@ -38,16 +38,16 @@ public class FhirImmunizationRecommendation extends ImmunizationRecommendation {
 
 	}
 
-	public FhirImmunizationRecommendation(POCDMT000040Entry entry, Date creationDate, String text, int index) {
+	public FhirImmunizationRecommendation(POCDMT000040Entry entry, Date creationDate, int index) {
 		resources = new ArrayList<>();
-		fromPOCDMT000040Entry(entry, creationDate, text, String.valueOf(index));
+		fromPOCDMT000040Entry(entry, creationDate, String.valueOf(index));
 	}
 
 	public List<Resource> getResources() {
 		return resources;
 	}
 
-	private void fromPOCDMT000040Entry(POCDMT000040Entry entry, Date creationDate, String text, String index) {
+	private void fromPOCDMT000040Entry(POCDMT000040Entry entry, Date creationDate, String index) {
 		if (entry != null && entry.getSubstanceAdministration() != null) {
 			setId(entry.getSubstanceAdministration().getId().get(0).getExtension());
 
@@ -63,7 +63,7 @@ public class FhirImmunizationRecommendation extends ImmunizationRecommendation {
 			recommendation.setForecastStatus(new FhirCodeableConcept(entry.getSubstanceAdministration().getCode()));
 			fromAuthor(entry.getSubstanceAdministration().getAuthor(), index);
 			fromConsumable(entry.getSubstanceAdministration().getConsumable(), recommendation);
-			fromEntryRelationships(entry.getSubstanceAdministration().getEntryRelationship(), recommendation, text);
+			fromEntryRelationships(entry.getSubstanceAdministration().getEntryRelationship(), recommendation);
 			fromPrecondition(entry.getSubstanceAdministration().getPrecondition(), recommendation);
 			addRecommendation(recommendation);
 
@@ -127,14 +127,12 @@ public class FhirImmunizationRecommendation extends ImmunizationRecommendation {
 	}
 
 	private void fromEntryRelationships(List<POCDMT000040EntryRelationship> entryRels,
-			ImmunizationRecommendationRecommendationComponent recommendation, String text) {
+			ImmunizationRecommendationRecommendationComponent recommendation) {
 		if (entryRels != null && !entryRels.isEmpty()) {
 			for (POCDMT000040EntryRelationship entryRel : entryRels) {
-				if (entryRel != null) {
-					if (XActRelationshipEntryRelationship.RSON.equals(entryRel.getTypeCode())
-							&& entryRel.getObservation() != null) {
-						recommendation.setTargetDisease(new FhirCodeableConcept(entryRel.getObservation().getCode()));
-					}
+				if (entryRel != null && XActRelationshipEntryRelationship.RSON.equals(entryRel.getTypeCode())
+						&& entryRel.getObservation() != null) {
+					recommendation.setTargetDisease(new FhirCodeableConcept(entryRel.getObservation().getCode()));
 				}
 			}
 		}

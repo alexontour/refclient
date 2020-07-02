@@ -32,7 +32,6 @@ import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.StringType;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import arztis.econnector.ihe.tests.TestUtils;
@@ -44,6 +43,13 @@ import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
  */
 public class FhirPractitionerRoleTest extends TestUtils {
 
+	private static final String EXMAMPLE_SYSTEM = "1.2.3.4.5";
+	private static final String HOSPITAL_NAME = "Amadeus Spital - Chirurgische Abteilung";
+	private static final String MAILTO = "mailto:";
+	private static final String ASSIGNED = "ASSIGNED";
+	private static final String EXAMPLE_TEL = "tel:+43.6138.3453446.0";
+	private static final String EXAMPLE_FAX = "fax:+43.6138.3453446.4674";
+	private static final String EXAMPLE_MAILTO = "mailto:info@amadeusspital.at";
 	private PractitionerRole testAuthorBodyPs;
 	private PractitionerRole testHeaderAuthor;
 	private PractitionerRole testPerformerBodyLaboratory;
@@ -53,17 +59,15 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	/**
 	 * Method implementing
 	 *
-	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		createAuthorBodyPs();
 		createHeaderAuthor();
 		createPerformerLaboratory();
 		createResponsibleParty();
 		createAtcdabbrHeaderAuthorDevice();
-
 	}
 
 	private void createAuthorBodyPs() {
@@ -130,7 +134,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testPerformerBodyLaboratory = new PractitionerRole();
 
 		Identifier id = new Identifier();
-		id.setSystem("1.2.3.4.5");
+		id.setSystem(EXMAMPLE_SYSTEM);
 		id.setValue("11");
 		testPerformerBodyLaboratory.addIdentifier(id);
 
@@ -154,7 +158,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		Identifier idOrg = new Identifier();
 		idOrg.setSystem("1.2.40.0.34.99.4613.3");
 		organization.addIdentifier(idOrg);
-		organization.setName("Amadeus Spital - Chirurgische Abteilung");
+		organization.setName(HOSPITAL_NAME);
 		organization.addAddress(getAddress1());
 
 		List<ContactPoint> telecomBaseTypes = new ArrayList<>();
@@ -219,10 +223,10 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		assertNotNull(authorBodyPs.getAssignedAuthor().getTelecom().get(3));
 		assertNotNull(authorBodyPs.getAssignedAuthor().getTelecom().get(4));
 		assertNotNull(authorBodyPs.getAssignedAuthor().getTelecom().get(5));
-		assertEquals("mailto:" + getTelS1(), authorBodyPs.getAssignedAuthor().getTelecom().get(0).getValue());
+		assertEquals(MAILTO + getTelS1(), authorBodyPs.getAssignedAuthor().getTelecom().get(0).getValue());
 		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
 				authorBodyPs.getAssignedAuthor().getTelecom().get(0).getUse().get(0));
-		assertEquals("mailto:" + getTelS2(), authorBodyPs.getAssignedAuthor().getTelecom().get(1).getValue());
+		assertEquals(MAILTO + getTelS2(), authorBodyPs.getAssignedAuthor().getTelecom().get(1).getValue());
 		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
 				authorBodyPs.getAssignedAuthor().getTelecom().get(1).getUse().get(0));
 		assertEquals("fax:" + getTelS1(), authorBodyPs.getAssignedAuthor().getTelecom().get(2).getValue());
@@ -290,11 +294,11 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		assertEquals(expectedDate, laboratoryPerformer.getTime().getValue());
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity());
-		assertEquals("ASSIGNED", laboratoryPerformer.getAssignedEntity().getClassCode());
+		assertEquals(ASSIGNED, laboratoryPerformer.getAssignedEntity().getClassCode());
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getId());
 		assertEquals(1, laboratoryPerformer.getAssignedEntity().getId().size());
-		assertEquals("1.2.3.4.5", laboratoryPerformer.getAssignedEntity().getId().get(0).getRoot());
+		assertEquals(EXMAMPLE_SYSTEM, laboratoryPerformer.getAssignedEntity().getId().get(0).getRoot());
 		assertEquals("11", laboratoryPerformer.getAssignedEntity().getId().get(0).getExtension());
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getCode());
@@ -327,29 +331,29 @@ public class FhirPractitionerRoleTest extends TestUtils {
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName());
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName().get(0));
-		assertEquals("Amadeus Spital - Chirurgische Abteilung",
+		assertEquals(HOSPITAL_NAME,
 				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom());
 		assertEquals(3, laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().size());
 
-		assertTrue("tel:+43.6138.3453446.0".equalsIgnoreCase(
+		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
 				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0).getValue())
-				|| "fax:+43.6138.3453446.4674".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(0).getValue())
-				|| "mailto:info@amadeusspital.at".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(0).getValue()));
-		assertTrue("tel:+43.6138.3453446.0".equalsIgnoreCase(
+		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
 				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(1).getValue())
-				|| "fax:+43.6138.3453446.4674".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(1).getValue())
-				|| "mailto:info@amadeusspital.at".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(1).getValue()));
-		assertTrue("tel:+43.6138.3453446.0".equalsIgnoreCase(
+		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
 				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(2).getValue())
-				|| "fax:+43.6138.3453446.4674".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(2).getValue())
-				|| "mailto:info@amadeusspital.at".equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
+				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
 						.getRepresentedOrganization().getTelecom().get(2).getValue()));
 
 		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getAddr());
@@ -383,11 +387,11 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testGetPOCDMT000040ResponsibleParty() throws ParseException {
+	public void testGetPOCDMT000040ResponsibleParty() {
 		final POCDMT000040ResponsibleParty responsibleParty = FhirPractitionerRole.getPOCDMT000040ResponsibleParty(testResponsibleParty);
 		assertNotNull(responsibleParty);
 		assertNotNull(responsibleParty.getAssignedEntity());
-		assertEquals("ASSIGNED", responsibleParty.getAssignedEntity().getClassCode());
+		assertEquals(ASSIGNED, responsibleParty.getAssignedEntity().getClassCode());
 
 		assertNotNull(responsibleParty.getAssignedEntity().getId());
 		assertEquals(1, responsibleParty.getAssignedEntity().getId().size());
@@ -403,10 +407,10 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(3));
 		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(4));
 		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(5));
-		assertEquals("mailto:" + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(0).getValue());
+		assertEquals(MAILTO + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(0).getValue());
 		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
 				responsibleParty.getAssignedEntity().getTelecom().get(0).getUse().get(0));
-		assertEquals("mailto:" + getTelS2(), responsibleParty.getAssignedEntity().getTelecom().get(1).getValue());
+		assertEquals(MAILTO + getTelS2(), responsibleParty.getAssignedEntity().getTelecom().get(1).getValue());
 		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
 				responsibleParty.getAssignedEntity().getTelecom().get(1).getUse().get(0));
 		assertEquals("fax:" + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(2).getValue());
@@ -457,7 +461,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 
 		Organization organization = new Organization();
 		organization.addIdentifier(getId2());
-		organization.setName("Amadeus Spital - Chirurgische Abteilung");
+		organization.setName(HOSPITAL_NAME);
 		organization.addAddress(getAddress1());
 
 		List<ContactPoint> telecomBaseTypes = new ArrayList<>();
@@ -480,64 +484,6 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testAtcdabbrHeaderAuthorDevice.setOwnerTarget(organization);
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getAtcdabbrHeaderAuthor()}.
-	 * 
-	 * @throws ParseException
-	 */
-	@Ignore
-	@Test
-	public void testGetAtcdabbrHeaderAuthor() throws ParseException {
-		/*final POCDMT000040Author author = FhirPractitionerRole.getAtcdabbrHeaderAuthor(null,
-				testAtcdabbrHeaderAuthorDevice);
-		assertNotNull(author);
-		assertNotNull(author.getTypeCode());
-		assertEquals("AUT", author.getTypeCode().get(0));
-		assertEquals("OP", author.getContextControlCode());
-
-		assertNotNull(author.getTime());
-		assertNotNull(author.getTime().getNullFlavor());
-		assertEquals("UNK", author.getTime().getNullFlavor().get(0));
-
-		assertNotNull(author.getAssignedAuthor());
-		assertEquals("ASSIGNED", author.getAssignedAuthor().getClassCode());
-
-		assertNotNull(author.getAssignedAuthor().getId());
-		assertEquals(1, author.getAssignedAuthor().getId().size());
-		assertNotNull(author.getAssignedAuthor().getId().get(0));
-		assertEquals(getTs2(), author.getAssignedAuthor().getId().get(0).getRoot());
-		assertEquals("KH Eisenstadt", author.getAssignedAuthor().getId().get(0).getAssigningAuthorityName());
-
-		assertNotNull(author.getAssignedAuthor().getAssignedAuthoringDevice());
-		assertEquals(EntityClassDevice.DEV, author.getAssignedAuthor().getAssignedAuthoringDevice().getClassCode());
-		assertEquals("INSTANCE", author.getAssignedAuthor().getAssignedAuthoringDevice().getDeterminerCode());
-
-		assertNotNull(author.getAssignedAuthor().getAssignedAuthoringDevice().getManufacturerModelName());
-		assertEquals("Good Health System",
-				author.getAssignedAuthor().getAssignedAuthoringDevice().getManufacturerModelName().xmlContent);
-		assertNotNull(author.getAssignedAuthor().getAssignedAuthoringDevice().getSoftwareName());
-		assertEquals("Best Health Software Application",
-				author.getAssignedAuthor().getAssignedAuthoringDevice().getSoftwareName().xmlContent);
-
-		assertEquals(0, author.getAssignedAuthor().getTelecom().size());
-
-		assertNull(author.getAssignedAuthor().getAssignedPerson());
-
-		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization());
-		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization().getId());
-		assertEquals(getId2().getSystem(), author.getAssignedAuthor().getRepresentedOrganization().getId().get(0).getRoot());
-		assertEquals(getId2().getExtension(),
-				author.getAssignedAuthor().getRepresentedOrganization().getId().get(0).getExtension());
-
-		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization().getName());
-		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization().getName().get(0));
-		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization().getName().get(0).getContent());
-		assertEquals("Amadeus Spital - Chirurgische Abteilung",
-				author.getAssignedAuthor().getRepresentedOrganization().getName().get(0).xmlContent);*/
-
-	}
-
 	private void testFixedValues(POCDMT000040Author author, String time) {
 		assertNotNull(author);
 		assertNotNull(author.getTypeCode());
@@ -550,7 +496,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 
 		assertNotNull(author.getAssignedAuthor());
 		assertNotNull(author.getAssignedAuthor().getClassCode());
-		assertEquals("ASSIGNED", author.getAssignedAuthor().getClassCode());
+		assertEquals(ASSIGNED, author.getAssignedAuthor().getClassCode());
 
 		assertNotNull(author.getAssignedAuthor().getId());
 		assertFalse(author.getAssignedAuthor().getId().isEmpty());
@@ -565,35 +511,4 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		assertNotNull(author.getAssignedAuthor().getRepresentedOrganization().getName());
 		assertFalse(author.getAssignedAuthor().getRepresentedOrganization().getName().isEmpty());
 	}
-
-	/**
-	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getGdaIndex()}
-	 * .
-	 */
-	@Test
-	public void testGetGdaIndex() {
-		PractitionerRole author = new PractitionerRole();
-		Identifier internalId = new Identifier();
-		internalId.setSystem("1.2.3.4.5");
-		internalId.setValue("1");
-
-		Identifier gdaId = new Identifier();
-		gdaId.setSystem("1.2.3.4.5.6.7");
-
-		Identifier otherId = new Identifier();
-		otherId.setSystem("1.2.3.4.5");
-		otherId.setValue("OA");
-		author.setIdentifier(Arrays.asList(internalId, gdaId, otherId));
-
-		/*
-		 * assertEquals("1.2.3.4.5.6.7", author.getGdaIndex());
-		 * 
-		 * author.setIdentifier(Arrays.asList(internalId, otherId));
-		 * assertNull(author.getGdaIndex());
-		 * 
-		 * author.setIdentifier(null); assertNull(author.getGdaIndex());
-		 */
-	}
-
 }

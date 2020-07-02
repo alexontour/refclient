@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrSectionImpfungenKodiert;
 import org.ehealth_connector.common.hl7cdar2.CD;
 import org.ehealth_connector.common.hl7cdar2.EntityDeterminerDetermined;
@@ -29,6 +31,7 @@ import org.hl7.fhir.r4.model.Immunization;
 import org.hl7.fhir.r4.model.Immunization.ImmunizationPerformerComponent;
 import org.hl7.fhir.r4.model.Immunization.ImmunizationProtocolAppliedComponent;
 import org.hl7.fhir.r4.model.Immunization.ImmunizationStatus;
+import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
 import org.junit.Before;
@@ -43,15 +46,15 @@ import arztis.econnector.rest.model.fhir.FhirImmunization;
  */
 public class FhirImmunizationTest extends TestUtils {
 
+	private static final String COMPLETED = "completed";
 	private Immunization testImmunization;
 
 	/**
 	 * Method implementing
 	 *
-	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testImmunization = new Immunization();
 		testImmunization.setId("1");
@@ -83,12 +86,13 @@ public class FhirImmunizationTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirImmunization#getAtcdabbrSectionImpfungenKodiert()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testGetAtcdabbrSectionImpfungenKodiert() throws ParseException {
+	public void testGetAtcdabbrSectionImpfungenKodiert() {
+		Map<Immunization, PractitionerRole> immunizationMap = new HashMap<>();
+		immunizationMap.put(testImmunization, null);
 		final AtcdabbrSectionImpfungenKodiert section = FhirImmunization
-				.getAtcdabbrSectionImpfungenKodiert(List.of(testImmunization));
+				.getAtcdabbrSectionImpfungenKodiert(immunizationMap);
 
 		assertNotNull(section);
 		assertEquals("DOCSECT", section.getClassCode().get(0));
@@ -125,13 +129,11 @@ public class FhirImmunizationTest extends TestUtils {
 		assertEquals("ActCode", substance.getCode().getCodeSystemName());
 
 		assertNotNull(substance.getStatusCode());
-		assertEquals("completed", substance.getStatusCode().getCode());
+		assertEquals(COMPLETED, substance.getStatusCode().getCode());
 
 		assertNotNull(substance.getEffectiveTime());
 		assertEquals(1, substance.getEffectiveTime().size());
 		assertNotNull(substance.getEffectiveTime().get(0));
-		// assertEquals(DateUtil.formatDateOnly(startDate),
-		// substance.getEffectiveTime().get(0).getValue());
 
 		assertNotNull(substance.getRouteCode());
 		assertNotNull(substance.getRouteCode().getNullFlavor());
@@ -172,8 +174,7 @@ public class FhirImmunizationTest extends TestUtils {
 		assertNotNull(consumable.getManufacturedProduct().getManufacturedMaterial().getCode());
 		assertEquals("1.2.40.0.34.4.16.1",
 				consumable.getManufacturedProduct().getManufacturedMaterial().getCode().getCodeSystem());
-		assertEquals("2427872",
-				consumable.getManufacturedProduct().getManufacturedMaterial().getCode().getCode());
+		assertEquals("2427872", consumable.getManufacturedProduct().getManufacturedMaterial().getCode().getCode());
 		assertEquals("ENCEPUR FSPR 0,25ML KIND",
 				consumable.getManufacturedProduct().getManufacturedMaterial().getCode().getDisplayName());
 
@@ -209,7 +210,7 @@ public class FhirImmunizationTest extends TestUtils {
 		assertEquals(getCode1().getCodingFirstRep().getSystem(), entryRel.getObservation().getCode().getCodeSystem());
 		assertEquals(getCode1().getCodingFirstRep().getDisplay(), entryRel.getObservation().getCode().getDisplayName());
 		assertNotNull(entryRel.getObservation().getStatusCode());
-		assertEquals("completed", entryRel.getObservation().getStatusCode().getCode());
+		assertEquals(COMPLETED, entryRel.getObservation().getStatusCode().getCode());
 
 		// test immunization billability
 		entryRel = substance.getEntryRelationship().get(1);
@@ -226,7 +227,7 @@ public class FhirImmunizationTest extends TestUtils {
 		assertEquals(getCode2().getCodingFirstRep().getCode(), entryRel.getAct().getId().get(0).getExtension());
 		assertEquals(getCode2().getCodingFirstRep().getSystem(), entryRel.getAct().getId().get(0).getRoot());
 		assertNotNull(entryRel.getAct().getStatusCode());
-		assertEquals("completed", entryRel.getAct().getStatusCode().getCode());
+		assertEquals(COMPLETED, entryRel.getAct().getStatusCode().getCode());
 		assertNotNull(entryRel.getAct().getEffectiveTime());
 		assertEquals(DateUtil.formatDateOnly(getEndDate()), entryRel.getAct().getEffectiveTime().getValue());
 

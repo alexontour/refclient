@@ -6,11 +6,16 @@
  */
 package arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap;
 
+import java.io.Serializable;
 
 /*
  *  GinaServiceStub java implementation
  */
-public class GinaServiceStub extends org.apache.axis2.client.Stub {
+public class GinaServiceStub extends org.apache.axis2.client.Stub implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 389025312182415039L;
 	private static final String GET_FREE_DIALOGS_LITERAL = "getFreeDialogs";
 	private static final String GET_CARDREADERS_LITERAL = "getCardReaders";
 	private static final String GET_GINA_SOFTWARE_VERSION_LITERAL = "getGinaSoftwareVersion";

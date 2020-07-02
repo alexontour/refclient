@@ -14,9 +14,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.xmlbeans.XmlException;
 import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PatientAt;
+import org.ehealth_connector.cda.at.elga.v2019.cdalab.Laborbefund;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
 import org.ehealth_connector.common.Identificator;
 import org.ehealth_connector.common.at.enums.AvailabilityStatus;
@@ -244,9 +245,10 @@ public class ElgaConnectionCaller {
 			String sSamlTicket = "";
 			if (!existsBpk(contactParameter)) {
 				LOGGER.debug("Request ecard only assertion");
-				returnObject = assertionTransactions.requestEcardOnlyAssertion(
-						connData.getDialog().getVertragspartnerInfos().getVpNummer(), cardToken,
-						connData.getDialog().getDialogId(), contactParameter.getPatientId().getValue());
+				returnObject = assertionTransactions.requestEcardOnlyAssertion(cardToken,
+						connData.getDialog().getDialogId(),
+						getECardSubjectTicket(contactParameter.getPatientId().getValue(),
+								connData.getDialog().getVertragspartnerInfos().getVpNummer()));
 
 				if (!(returnObject instanceof String)) {
 					return returnObject;
@@ -254,11 +256,12 @@ public class ElgaConnectionCaller {
 					sSamlTicket = (String) returnObject;
 				}
 			}
-			
-			Object result = assertionTransactions.registerConfirmationContact(getAssertionForPatientRegistration(connData), sSamlTicket,
-					cardToken, contactParameter.getPatientId(), IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
 
-			if (isKbsForAllAreasRequired(result, contactParameter.getEhealthApps())) {
+			Object result = assertionTransactions.registerConfirmationContact(
+					getAssertionForPatientRegistration(connData), sSamlTicket, cardToken,
+					contactParameter.getPatientId(), IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
+
+			if (isKbsForAllAreasRequired(contactParameter.getEhealthApps())) {
 				return registerPatientContactForAllAreas(connData, cardToken, contactParameter.getPatientId(),
 						contactParameter.getEhealthApps());
 			} else {
@@ -268,7 +271,15 @@ public class ElgaConnectionCaller {
 			throw new UnauthorizedException(NO_HCP_ASSERTION_FOUND_LITERAL);
 		}
 	}
-	
+
+	private String getECardSubjectTicket(String ssno, String vpnr) {
+		if (ssno != null && ssno.length() == 10) {
+			return CONFIG.geteCardIdaTicket(ssno, vpnr);
+		}
+
+		return null;
+	}
+
 	private AssertionType getAssertionForPatientRegistration(ConnectionData connData) throws UnauthorizedException {
 		if (connData.getHcpAssertion() != null && !CONFIG.isOnlyContext()) {
 			return connData.getHcpAssertion();
@@ -276,17 +287,17 @@ public class ElgaConnectionCaller {
 
 		if (connData.getContextAssertions() != null && !connData.getContextAssertions().isEmpty()
 				&& CONFIG.isEImmunLoginEnabled() && CONFIG.isOnlyContext()) {
-			if(CONFIG.isOnlyContext()) {
+			if (CONFIG.isOnlyContext()) {
 				return connData.getContextAssertion(CONFIG.getEImmunizationId().getId());
 			} else {
 				return connData.getHcpEImmunizationContextAssertion();
 			}
-		} 
-		
+		}
+
 		throw new UnauthorizedException(NO_HCP_ASSERTION_FOUND_LITERAL);
 	}
 
-	private boolean isKbsForAllAreasRequired(Object result, List<ElgaEHealthApplication> ehealthApps) {
+	private boolean isKbsForAllAreasRequired(List<ElgaEHealthApplication> ehealthApps) {
 		return ehealthApps != null && !ehealthApps.isEmpty();
 	}
 
@@ -329,9 +340,9 @@ public class ElgaConnectionCaller {
 		Object returnObject = null;
 		String samlTicket = "";
 		if (patientId != null && !IheConstants.OID_BPK_IDENTIFICATION.equalsIgnoreCase(patientId.getSystem())) {
-			returnObject = assertionTransactions.requestEcardOnlyAssertion(
-					connData.getDialog().getVertragspartnerInfos().getVpNummer(), cardToken,
-					connData.getDialog().getDialogId(), patientId.getValue());
+			returnObject = assertionTransactions.requestEcardOnlyAssertion(cardToken,
+					connData.getDialog().getDialogId(), getECardSubjectTicket(patientId.getValue(),
+							connData.getDialog().getVertragspartnerInfos().getVpNummer()));
 			if (!(returnObject instanceof String)) {
 				return returnObject;
 			} else {
@@ -342,9 +353,8 @@ public class ElgaConnectionCaller {
 		Object result = null;
 		for (ElgaEHealthApplication app : ehealthApps) {
 			if (app != null && app.getId().equalsIgnoreCase("103")) {
-				result = assertionTransactions.registerConfirmationContact(
-						getAssertionForPatientRegistration(connData), samlTicket, cardToken, patientId,
-						IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
+				result = assertionTransactions.registerConfirmationContact(getAssertionForPatientRegistration(connData),
+						samlTicket, cardToken, patientId, IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
 			} else {
 				result = assertionTransactions.registerConfirmationContact(connData.getHcpContextAssertion(),
 						samlTicket, cardToken, patientId, IheConstants.KIND_OF_REQUEST_VOS);
@@ -425,9 +435,11 @@ public class ElgaConnectionCaller {
 		Object dialogCreated = registerForGina(registerUserParam, connData, ginoEndpoint);
 
 		if (dialogCreated instanceof Boolean && (boolean) dialogCreated && connData != null) {
-			return assertionTransactions.requestIdentityAssertion(registerUserParam.getGivenName(),
-					registerUserParam.getFamilyName(), registerUserParam.getPrefix(), registerUserParam.getSuffix(),
-					connData.getDialog().getDialogId(), connData.getDialog().getVertragspartnerInfos().getVpNummer());
+			String ticketSubject = CONFIG.getSvcIdaTicket(connData.getDialog().getVertragspartnerInfos().getVpNummer(),
+					assertionTransactions.getRealNameForUrl(registerUserParam.getPrefix(),
+							registerUserParam.getSuffix(), registerUserParam.getGivenName(),
+							registerUserParam.getFamilyName()));
+			return assertionTransactions.requestIdentityAssertion(connData.getDialog().getDialogId(), ticketSubject);
 		}
 
 		return dialogCreated;
@@ -811,7 +823,8 @@ public class ElgaConnectionCaller {
 		XdsTransactions oXdsTransactions = new XdsTransactions(organizationId, assertion, eHealthApplication);
 		LOGGER.debug("Method to provide and register documents is called");
 		return oXdsTransactions.provideAndRegisterDocuments(status, typeCode, healthCareFacilityCode,
-				practiceSettingCode, formatCode, patientId, parentDoc, cda, doc, oidTargetElgaArea, organizationId);
+				practiceSettingCode, formatCode, patientId, parentDoc, cda, doc, oidTargetElgaArea, organizationId,
+				CONFIG.isValidateCda());
 	}
 
 	/**
@@ -856,52 +869,57 @@ public class ElgaConnectionCaller {
 				}
 			}
 
-			List<FhirPatient> patients = PatientIndexTransactions.queryPatientDemographics(parameter, hcpAssertion);
-
-			org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
-			bundle.setType(org.hl7.fhir.dstu3.model.Bundle.BundleType.SEARCHSET);
-
-			if (patients != null) {
-				bundle.setTotal(patients.size());
-
-				for (FhirPatient resultEntry : patients) {
-					if (resultEntry != null) {
-						org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent entryComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
-						org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent searchComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent();
-						searchComponent.setMode(org.hl7.fhir.dstu3.model.Bundle.SearchEntryMode.MATCH);
-						entryComponent.setSearch(searchComponent);
-						entryComponent.setResource(resultEntry);
-						bundle.addEntry(entryComponent);
-					}
-				}
-			}
-
-			return bundle;
-
+			return getPatientDemographicsResultBundle(
+					PatientIndexTransactions.queryPatientDemographics(parameter, hcpAssertion));
 		} else {
 			LOGGER.warn("There are no parameter to query the demographics of a patient");
-
-			org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
-			org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent component = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
-			org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent responseComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent();
-			responseComponent.setStatus(String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
-			org.hl7.fhir.dstu3.model.OperationOutcome outcome = new org.hl7.fhir.dstu3.model.OperationOutcome();
-			org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent issue = new org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent();
-			issue.setSeverity(org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity.ERROR);
-			issue.setCode(org.hl7.fhir.dstu3.model.OperationOutcome.IssueType.NOTFOUND);
-
-			org.hl7.fhir.dstu3.model.CodeableConcept details = new org.hl7.fhir.dstu3.model.CodeableConcept(
-					new org.hl7.fhir.dstu3.model.Coding(OperationOutcome.MSGPARAMINVALID.getSystem(),
-							OperationOutcome.MSGPARAMINVALID.getDefinition(),
-							OperationOutcome.MSGPARAMINVALID.getDisplay()));
-			issue.setDetails(details);
-
-			outcome.addIssue(issue);
-			responseComponent.setOutcome(outcome);
-			component.setResponse(responseComponent);
-			bundle.addEntry(component);
-			return bundle;
+			return getErrorBundleEmptyPatientDemographics();
 		}
+	}
+
+	private org.hl7.fhir.dstu3.model.Bundle getPatientDemographicsResultBundle(List<FhirPatient> patients) {
+		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
+		bundle.setType(org.hl7.fhir.dstu3.model.Bundle.BundleType.SEARCHSET);
+
+		if (patients != null) {
+			bundle.setTotal(patients.size());
+
+			for (FhirPatient resultEntry : patients) {
+				if (resultEntry != null) {
+					org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent entryComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
+					org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent searchComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent();
+					searchComponent.setMode(org.hl7.fhir.dstu3.model.Bundle.SearchEntryMode.MATCH);
+					entryComponent.setSearch(searchComponent);
+					entryComponent.setResource(resultEntry);
+					bundle.addEntry(entryComponent);
+				}
+			}
+		}
+
+		return bundle;
+	}
+
+	private org.hl7.fhir.dstu3.model.Bundle getErrorBundleEmptyPatientDemographics() {
+		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
+		org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent component = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
+		org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent responseComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent();
+		responseComponent.setStatus(String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
+		org.hl7.fhir.dstu3.model.OperationOutcome outcome = new org.hl7.fhir.dstu3.model.OperationOutcome();
+		org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent issue = new org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent();
+		issue.setSeverity(org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity.ERROR);
+		issue.setCode(org.hl7.fhir.dstu3.model.OperationOutcome.IssueType.NOTFOUND);
+
+		org.hl7.fhir.dstu3.model.CodeableConcept details = new org.hl7.fhir.dstu3.model.CodeableConcept(
+				new org.hl7.fhir.dstu3.model.Coding(OperationOutcome.MSGPARAMINVALID.getSystem(),
+						OperationOutcome.MSGPARAMINVALID.getDefinition(),
+						OperationOutcome.MSGPARAMINVALID.getDisplay()));
+		issue.setDetails(details);
+
+		outcome.addIssue(issue);
+		responseComponent.setOutcome(outcome);
+		component.setResponse(responseComponent);
+		bundle.addEntry(component);
+		return bundle;
 	}
 
 	/**
@@ -934,7 +952,7 @@ public class ElgaConnectionCaller {
 		}
 
 		ElgaEHealthApplication eHealthApplication = null;
-		if (categoryCode != null && connData.getHcpAssertion() != null) {
+		if (categoryCode != null && connData.getHcpAssertion() != null) {			
 			if (CONFIG.isEImmunLoginEnabled()
 					&& ClassCode.HISTORY_IMMUNIZATION.getCodeValue().equalsIgnoreCase(categoryCode)) {
 				eHealthApplication = CONFIG.getEImmunizationId();
@@ -1004,31 +1022,34 @@ public class ElgaConnectionCaller {
 	 * @return if the xml could be generated the xml as {@link String} is returned,
 	 *         otherwise an error message {@link Message} is returned.
 	 */
-	public Object getUpdateImmunizationEntryXml(EimpfDocumentUpdateImmunisierungsstatus updateImmunizationState) {
+	public String getUpdateImmunizationEntryXml(EimpfDocumentUpdateImmunisierungsstatus updateImmunizationState) {
 		File file = null;
+		String document = "";
 
 		try {
 			file = new File("resources/cda_immunization_entry_example.xml");
-			updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
-			String document = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+			synchronized (file) {
+				updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
+				document = FileUtils.readFileToString(file, StandardCharsets.UTF_8.name());
+			}
 
 			if (document.indexOf(PHARM_NAMESPACE) != -1) {
-				document = StringUtils.replaceAll(document, PHARM_NAMESPACE, PHARM_MEDICATION_NAMESPACE);
+				document = RegExUtils.replaceAll(document, PHARM_NAMESPACE, PHARM_MEDICATION_NAMESPACE);
 			}
 
 			if (document.indexOf(SNOMEDCT_DISPLAY_NAME_WITHOUT_WHITESPACE) != -1) {
-				document = StringUtils.replaceAll(document, SNOMEDCT_DISPLAY_NAME_WITHOUT_WHITESPACE,
+				document = RegExUtils.replaceAll(document, SNOMEDCT_DISPLAY_NAME_WITHOUT_WHITESPACE,
 						SNOMEDCT_DISPLAY_NAME_WITH_WHITESPACE);
 			}
 
 			return document;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			return new Message(e.getMessage(), MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					e.getMessage());
 		} finally {
 			deleteFile(file);
 		}
+		
+		return null;
 	}
 
 	/**
@@ -1044,13 +1065,33 @@ public class ElgaConnectionCaller {
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfUpdateImmunization(byte[] document) throws IOException {
 		File file = new File("resources/update_immunization_example.xml");
-		FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
-		try {
-			return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
-		} catch (JAXBException e) {
-			LOGGER.error(e.getMessage(), e);
-		} finally {
-			java.nio.file.Files.delete(file.toPath());
+
+		synchronized (file) {
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			try {
+				return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
+			} catch (JAXBException e) {
+				LOGGER.error(e.getMessage(), e);
+			} finally {
+				java.nio.file.Files.delete(file.toPath());
+			}
+		}
+
+		return null;
+	}
+
+	public POCDMT000040ClinicalDocument getDetailsOfLabReport(byte[] document) throws IOException {
+		File file = new File("resources/lab_report_example.xml");
+
+		synchronized (file) {
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			try {
+				return Laborbefund.loadFromFile(file);
+			} catch (JAXBException e) {
+				LOGGER.error(e.getMessage(), e);
+			} finally {
+				java.nio.file.Files.delete(file.toPath());
+			}
 		}
 
 		return null;

@@ -3,8 +3,6 @@ package arztis.econnector.rest.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.text.ParseException;
-
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Custodian;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
 import org.hl7.fhir.r4.model.Organization;
@@ -25,10 +23,9 @@ public class FhirOrganizationTest extends TestUtils {
 	/**
 	 * Method implementing
 	 *
-	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.init();
 		testOrganization = getOrganization1();
 		testOrganization.addAddress(getAddress1());
@@ -38,10 +35,9 @@ public class FhirOrganizationTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirOrganization#createHeaderCustodian()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHeaderCustodian() throws ParseException {
+	public void testCreateHeaderCustodian() {
 		final POCDMT000040Custodian custodian = FhirOrganization.createHeaderCustodian(testOrganization);
 
 		assertNotNull(custodian);
@@ -72,10 +68,9 @@ public class FhirOrganizationTest extends TestUtils {
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirOrganization#createHl7CdaR2Pocdmt000040Organization()}.
 	 * 
-	 * @throws ParseException
 	 */
 	@Test
-	public void testCreateHl7CdaR2Pocdmt000040Organization() throws ParseException {
+	public void testCreateHl7CdaR2Pocdmt000040Organization() {
 		final POCDMT000040Organization organization = FhirOrganization.createHl7CdaR2Pocdmt000040Organization(testOrganization);
 
 		assertNotNull(organization);

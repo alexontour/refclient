@@ -122,7 +122,7 @@ public class FhirAddress extends Address {
 		case BILLING:
 			return PostalAddressUse.POSTAL_ADDRESS;
 		default:
-			return PostalAddressUse.BAD_ADDRESS;
+			return PostalAddressUse.PHYSICAL_VISIT_ADDRESS;
 		}
 	}
 
@@ -190,7 +190,7 @@ public class FhirAddress extends Address {
 		if (usage != null) {
 			retVal.getUse().clear();
 			retVal.getUse().add(getPostalAddressUse(usage).getCodeValue());
-		}
+		} 
 
 		return retVal;
 	}

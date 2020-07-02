@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
 import org.ehealth_connector.common.Identificator;
@@ -33,6 +34,7 @@ import arztis.econnector.rest.model.fhir.FhirIdentifier;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
 import arztis.econnector.rest.model.fhir.FhirPatientAt;
 import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
+import jdk.jfr.Percentage;
 
 public class UpdateImmunizationState {
 
@@ -43,7 +45,7 @@ public class UpdateImmunizationState {
 	private Map<String, Organization> organizations;
 	private Map<String, PractitionerRole> practitionerRoles;
 	private Map<String, Practitioner> practitioners;
-	private List<Immunization> immunizations;
+	private Map<Immunization, PractitionerRole> immunizations;
 	private Composition composition;
 	private Organization custodian;
 	private Patient patient;
@@ -56,7 +58,7 @@ public class UpdateImmunizationState {
 		organizations = new HashMap<>();
 		practitionerRoles = new HashMap<>();
 		practitioners = new HashMap<>();
-		immunizations = new ArrayList<>();
+		immunizations = new HashMap<>();
 	}
 
 	public EimpfDocumentUpdateImmunisierungsstatus getUpdateImmunizationState() {
@@ -99,12 +101,21 @@ public class UpdateImmunizationState {
 			custodian = organizations.get(composition.getCustodian().getReference());
 		}
 
-		for (Immunization immunization : immunizations) {
-			if (immunization != null && immunization.hasPerformer()) {
-				for (ImmunizationPerformerComponent performer : immunization.getPerformer()) {
-					if (performer != null && performer.hasActor()) {
-						performer.setActorTarget(practitionerRoles.get(performer.getActor().getReference()));
+		for (Entry<Immunization, PractitionerRole> immunization : immunizations.entrySet()) {
+			if (immunization != null && immunization.getKey() != null) {
+
+				if (immunization.getKey().hasPerformer()) {
+					for (ImmunizationPerformerComponent performer : immunization.getKey().getPerformer()) {
+						if (performer != null && performer.hasActor()) {
+							performer.setActorTarget(practitionerRoles.get(performer.getActor().getReference()));
+						}
 					}
+				}
+
+				if (immunization.getKey().hasProtocolApplied()
+						&& immunization.getKey().getProtocolAppliedFirstRep().hasAuthority()) {
+					immunization.setValue(practitionerRoles
+							.get(immunization.getKey().getProtocolAppliedFirstRep().getAuthority().getReference()));
 				}
 			}
 		}
@@ -136,7 +147,7 @@ public class UpdateImmunizationState {
 						break;
 					case Immunization:
 						Immunization immunization = (Immunization) compEntry.getResource();
-						immunizations.add(immunization);
+						immunizations.put(immunization, null);
 						break;
 					default:
 						LOGGER.info("Resourcen vom Typ {} werden nicht berücksichtigt",

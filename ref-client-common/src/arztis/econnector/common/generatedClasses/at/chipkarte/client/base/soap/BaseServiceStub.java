@@ -6,6 +6,8 @@
  */
 package arztis.econnector.common.generatedClasses.at.chipkarte.client.base.soap;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +16,11 @@ import arztis.econnector.common.utilities.SoapUtil;
 /*
  *  BaseServiceStub java implementation
  */
-public class BaseServiceStub extends org.apache.axis2.client.Stub {
+public class BaseServiceStub extends org.apache.axis2.client.Stub implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2770445324780722626L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceStub.class.getName());
 	private static final String GET_BERECHTIGUNGEN_LITERAL = "getBerechtigungen";
 	private static final String GET_MESSAGES_LITERAL = "getMessages";

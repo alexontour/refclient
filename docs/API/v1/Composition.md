@@ -85,6 +85,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
   - `speciality` *(Array)* *(optional)* - specialty of the practitioner. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>.
   - `organization` *(Object)* *(required)* - reference to organization on whose behalf the author of the document has written the documentation
   - `practitioner` *(Object)* *(required)* - reference to practitioner
+  - `identifier` *(Array)* *(required)* - id of practitioner
 
 #### JSON Object practitioner
 
@@ -274,6 +275,10 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                     {
                         "value": "1001210995",
                         "system": "1.2.40.0.10.1.4.3.1"
+                    },
+                    {
+                        "value": "124", //internal id
+                        "system": "1.2.40.0.34.99.3.2.1046167" //oid of system
                     }
                 ],
                 "name": [
@@ -306,6 +311,12 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
             "resource": {
                 "resourceType": "PractitionerRole", //fix value
                 "id": "2",
+                "identifier": [
+                    {
+                        "value": "1",
+                        "system": "1.2.40.0.34.99.3.2.1046167"
+                    }
+                ],
                 "organization": {
                     "reference": "Organization/1",
                     "type": "Organization" //fix value

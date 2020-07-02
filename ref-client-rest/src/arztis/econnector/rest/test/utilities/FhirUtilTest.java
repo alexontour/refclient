@@ -16,6 +16,9 @@ import arztis.econnector.rest.utilities.FhirUtil;
  *
  */
 public class FhirUtilTest {
+	
+	private static final String SSNO = "1001210995";
+	private static final String FEMALE = "female";
 
 	/**
 	 * Test method for {@link FhirUtil#extractIdentifierFromTokenType()}.
@@ -26,13 +29,13 @@ public class FhirUtilTest {
 		Identifier id = FhirUtil.extractIdentifierFromTokenType("1.2.3.4.5.6|1001210995");
 
 		assertNotNull(id);
-		assertEquals("1001210995", id.getValue());
+		assertEquals(SSNO, id.getValue());
 		assertEquals("1.2.3.4.5.6", id.getSystem());
 
-		id = FhirUtil.extractIdentifierFromTokenType("1001210995");
+		id = FhirUtil.extractIdentifierFromTokenType(SSNO);
 
 		assertNotNull(id);
-		assertEquals("1001210995", id.getValue());
+		assertEquals(SSNO, id.getValue());
 	}
 	
 	/**
@@ -45,14 +48,14 @@ public class FhirUtilTest {
 
 		assertNotNull(code);
 		assertNotNull(code.getCoding());
-		assertEquals("female", code.getCodingFirstRep().getCode());
+		assertEquals(FEMALE, code.getCodingFirstRep().getCode());
 		assertEquals("1.2.3.4.5.6", code.getCodingFirstRep().getSystem());
 
-		code = FhirUtil.extractCodeFromTokenType("female");
+		code = FhirUtil.extractCodeFromTokenType(FEMALE);
 
 		assertNotNull(code);
 		assertNotNull(code.getCoding());
-		assertEquals("female", code.getCodingFirstRep().getCode());
+		assertEquals(FEMALE, code.getCodingFirstRep().getCode());
 	}
 
 }
