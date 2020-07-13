@@ -1,6 +1,11 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.eimpf;
 
-import java.util.List;
 import java.util.Map;
 
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDocumentReplacementRelatedDocument;
@@ -20,13 +25,32 @@ import arztis.econnector.rest.model.fhir.FhirCoding;
 import arztis.econnector.rest.model.fhir.FhirIdentifier;
 import arztis.econnector.rest.model.fhir.FhirImmunization;
 
+/**
+ * This class is a subclass of {@link Composition}. Therefore it defines the
+ * structure and narrative content necessary for an immmunization state. </br>
+ * There are functionalities to generate CDA document elements of
+ * {@link Composition} resource.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class ImmunizationState extends Composition {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Generates service event for immunization states with information of passed
+	 * {@link Composition}. </br>
+	 * Code of service event is always set to
+	 * {@link ElgaEventCodeList.<code>IMMUNIZATION_RECORD</code>} (41000179103 -
+	 * Immunization record (record artifact)). Period of health service event is
+	 * extracted from passed {@link Composition}.
+	 *
+	 * @param composition with information about service event.
+	 * @return created service event for immunization states.
+	 *         {@link AtcdabbrHeaderDocumentationOfServiceEventEImpfpass}
+	 */
 	public static AtcdabbrHeaderDocumentationOfServiceEventEImpfpass getAtcdabbrHeaderDocumentationOfServiceEvent(
 			Composition composition) {
 		if (composition == null) {
@@ -60,6 +84,17 @@ public class ImmunizationState extends Composition {
 		return documentationOfServiceEvent;
 	}
 
+	/**
+	 * Generates related documents for immunization states with information of
+	 * passed {@link Composition}. </br>
+	 * Code of service event is always set to Identifier of related document is
+	 * extracted from passed {@link Composition}. Type of relationship is always set
+	 * to RPLC (replaces).
+	 *
+	 * @param composition with information about related document.
+	 * @return created related document for immunization states.
+	 *         {@link AtcdabbrHeaderDocumentReplacementRelatedDocument}
+	 */
 	public static AtcdabbrHeaderDocumentReplacementRelatedDocument getAtcdabbrHeaderDocumentReplacementRelatedDocument(
 			Composition composition) {
 		AtcdabbrHeaderDocumentReplacementRelatedDocument relatedDocument = new AtcdabbrHeaderDocumentReplacementRelatedDocument();
@@ -76,6 +111,19 @@ public class ImmunizationState extends Composition {
 		return relatedDocument;
 	}
 
+	/**
+	 * Generates structured body for immunization states with information of passed
+	 * immunizations. </br>
+	 * This method adds immunization section to structured body. All other sections
+	 * are currently not supported. Passed immunizations are added to created
+	 * section as entries.
+	 *
+	 * @param composition   to add sections
+	 * @param immunizations map of immunizations and their author
+	 *
+	 * @return created {@link POCDMT000040StructuredBody} for immunization states.
+	 *
+	 */
 	public static POCDMT000040StructuredBody getHl7CdaR2Pocdmt000040StructuredBodyImmunizationState(
 			Composition composition, Map<Immunization, PractitionerRole> immunizations) {
 		POCDMT000040StructuredBody structuredBody = new POCDMT000040StructuredBody();

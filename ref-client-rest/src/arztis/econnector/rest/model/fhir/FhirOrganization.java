@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import org.ehealth_connector.common.hl7cdar2.AD;
@@ -18,22 +24,34 @@ import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.utilities.FhirUtil;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
-@ResourceDef(name="Organization", profile="http://hl7.org/fhir/StructureDefinition/Organization")
+/**
+ * This class is a subclass of {@link Organization}. Therefore it represents a
+ * group of people formed with the aim of achieving some action.</br>
+ *
+ * It contains functionalities for converting CDA R2
+ * {@link POCDMT000040Organization} into HL7 FHIR {@link Organization} and vice
+ * versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
+@ResourceDef(name = "Organization", profile = "http://hl7.org/fhir/StructureDefinition/Organization")
 public class FhirOrganization extends Organization {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirOrganization() {
-		
+
 	}
 
 	/**
 	 * Constructor to create organization for practitioner in document response
-	 * (ITI-18)
-	 * 
+	 * (ITI-18).
+	 *
 	 * @param author author of document
 	 * @param index  index of author to create. It must be build of {document
 	 *               response index} - {author index}
@@ -45,7 +63,7 @@ public class FhirOrganization extends Organization {
 	/**
 	 * Constructor to create organization for practitioner of HL7v2 XON element.
 	 * This is included in response of PHARM-1 as author institution
-	 * 
+	 *
 	 * @param xon   xon element
 	 * @param index index of author to create. It must be build of {document
 	 *              response index} - {author index}
@@ -55,19 +73,19 @@ public class FhirOrganization extends Organization {
 	}
 
 	/**
-	 * Constructor to create organization for custodian of HL7 CDA R2 custodian organization.
-	 * This is included in CDA header.
-	 * 
-	 * @param organization   custodian organization
-	 * @param index index of custodian
+	 * Constructor to create organization for custodian of HL7 CDA R2 custodian
+	 * organization. This is included in CDA header.
+	 *
+	 * @param organization custodian organization
+	 * @param index        index of custodian
 	 */
 	public FhirOrganization(POCDMT000040CustodianOrganization organization, String index) {
 		fromPOCDMT000040CustodianOrganization(organization, index);
 	}
 
 	/**
-	 * Constructor to create organization with name
-	 * 
+	 * Constructor to create organization with name.
+	 *
 	 * @param name of institution
 	 */
 	public FhirOrganization(String name) {
@@ -75,10 +93,10 @@ public class FhirOrganization extends Organization {
 	}
 
 	/**
-	 * Constructor to create organization of HL7 CDA V2 Organization
-	 * 
+	 * Constructor to create organization of HL7 CDA V2 Organization.
+	 *
 	 * @param organization HL7 CDA V2 Organization
-	 * @param id of resource to reference to
+	 * @param id           of resource to reference to
 	 */
 	public FhirOrganization(POCDMT000040Organization organization, String id) {
 		fromPOCDMT000040Organization(organization, id);
@@ -87,13 +105,22 @@ public class FhirOrganization extends Organization {
 	/**
 	 * creates JSON of this organization instance like specified in
 	 * http://hl7.org/fhir/R4/organization.html
-	 * 
+	 *
 	 * @return JSON string
 	 */
 	public String toJson() {
 		return FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(this);
 	}
 
+	/**
+	 * Creates HL7 FHIR {@link Organization} instance from passed
+	 * {@link AuthorTypeImpl}. Passed <code>index</code> is used as resource ID.
+	 * Name and identifier are added to organization.
+	 *
+	 * @param authorTypeImpl organization details
+	 * @param index          index of organization. It must be build of {document
+	 *                       response index} - {organization index}
+	 */
 	private void fromDocumentEntryResponse(AuthorTypeImpl authorTypeImpl, String index) {
 		if (authorTypeImpl == null) {
 			return;
@@ -106,16 +133,20 @@ public class FhirOrganization extends Organization {
 			XON xon = ((XON) authorTypeImpl.getAuthorInstitution().get(0));
 
 			if (xon != null) {
-				setName(xon.getOrganizationName());
-
-				Identifier id = new Identifier();
-				id.setValue(xon.getIdNumber());
-				id.setSystem(xon.getAssigningAuthorityUniversalId());
-				addIdentifier(id);
+				fromXon(xon, index);
 			}
 		}
 	}
 
+	/**
+	 * Creates HL7 FHIR {@link Organization} instance from passed {@link XON}.
+	 * Passed <code>index</code> is used as resource ID. Name and identifier are
+	 * added to organization.
+	 *
+	 * @param institution the institution
+	 * @param index          index of organization. It must be build of {document
+	 *                       response index} - {organization index}
+	 */
 	private void fromXon(XON institution, String index) {
 		if (institution == null) {
 			return;
@@ -130,11 +161,21 @@ public class FhirOrganization extends Organization {
 		addIdentifier(identifier);
 	}
 
+	/**
+	 * Creates {@link Organization} of passed HL7 CDA R2
+	 * {@link POCDMT000040Organization}. </br>
+	 * This method adds passed <code>id</code> as resource ID. And it appends
+	 * extracted names, addresses, identifiers and contact details of passed
+	 * {@link POCDMT000040Organization}.
+	 *
+	 * @param hl7CdaR2Value to be extracted
+	 * @param id            resource id to reference to
+	 */
 	private void fromPOCDMT000040Organization(POCDMT000040Organization hl7CdaR2Value, String id) {
 		if (hl7CdaR2Value == null) {
 			return;
 		}
-		
+
 		setId(id);
 
 		for (AD item : hl7CdaR2Value.getAddr()) {
@@ -154,6 +195,16 @@ public class FhirOrganization extends Organization {
 		}
 	}
 
+	/**
+	 * Creates {@link POCDMT000040CustodianOrganization} of passed HL7 CDA R2
+	 * {@link POCDMT000040Organization}. </br>
+	 * This method adds passed <code>id</code> as resource ID. And it appends
+	 * extracted name, address, identifiers and contact details of passed
+	 * {@link POCDMT000040CustodianOrganization}.
+	 *
+	 * @param hl7CdaR2Value to be extracted
+	 * @param id            resource id to reference to
+	 */
 	private void fromPOCDMT000040CustodianOrganization(POCDMT000040CustodianOrganization hl7CdaR2Value, String id) {
 		if (hl7CdaR2Value == null) {
 			return;
@@ -170,6 +221,17 @@ public class FhirOrganization extends Organization {
 		addTelecom(new FhirContactPoint(hl7CdaR2Value.getTelecom()));
 	}
 
+	/**
+	 * Creates {@link POCDMT000040Organization} of passed {@link Organization}.
+	 * </br>
+	 * This method extracts name, addresses, identifiers and contact details of
+	 * passed {@link Organization}.
+	 *
+	 * @param org to be extracted
+	 *
+	 * @return created {@link POCDMT000040Organization}
+	 *
+	 */
 	public static org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization createHl7CdaR2Pocdmt000040Organization(
 			Organization org) {
 
@@ -200,6 +262,17 @@ public class FhirOrganization extends Organization {
 
 	}
 
+	/**
+	 * Creates {@link POCDMT000040CustodianOrganization} of passed
+	 * {@link Organization}. </br>
+	 * This method extracts name, address, identifiers and contact details of passed
+	 * {@link Organization}.
+	 *
+	 * @param org to be extracted
+	 *
+	 * @return created {@link POCDMT000040CustodianOrganization}
+	 *
+	 */
 	public static POCDMT000040CustodianOrganization createHl7CdaR2POCDMT000040CustodianOrganization(Organization org) {
 
 		POCDMT000040CustodianOrganization retVal = new POCDMT000040CustodianOrganization();
@@ -227,6 +300,12 @@ public class FhirOrganization extends Organization {
 
 	}
 
+	/**
+	 * Creates the header custodian.
+	 *
+	 * @param org the org
+	 * @return the POCDMT 000040 custodian
+	 */
 	public static POCDMT000040Custodian createHeaderCustodian(Organization org) {
 		POCDMT000040Custodian cust = new POCDMT000040Custodian();
 		cust.getTypeCode().add("CST");

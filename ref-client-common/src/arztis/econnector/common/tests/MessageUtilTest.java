@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.common.tests;
 
 import org.junit.Assert;
@@ -5,16 +11,24 @@ import org.junit.Test;
 
 import arztis.econnector.common.utilities.MessageUtil;
 
+/**
+ * Tests for {@link MessageUtil}.
+ *
+ * @author Anna Jungwirth
+ */
 public class MessageUtilTest {
 
+	/**
+	 * Test get message from properties.
+	 */
 	@Test
 	public void testGetMessageFromProperties() {
 		Assert.assertEquals("Ein oder mehrere benötigte Parameter wurden nicht übergeben.",
-				MessageUtil.getMessageFromProperties("MISSING_PARAMETERS", null));
+				MessageUtil.getMessageFromProperties("MISSING_PARAMETERS"));
 		Assert.assertEquals("Bitte überprüfen Sie Ihren Kartenleser und die gesteckte Karte.",
-				MessageUtil.getMessageFromProperties("CHECK_CARD_READER", null));
+				MessageUtil.getMessageFromProperties("CHECK_CARD_READER"));
 		Assert.assertEquals("Überprüfen Sie bitte, ob eine Anmeldung mit der ACard stattgefunden hat.",
-				MessageUtil.getMessageFromProperties("CHECK_REGISTRATION_WITH_A_CARD", null));
+				MessageUtil.getMessageFromProperties("CHECK_REGISTRATION_WITH_A_CARD"));
 		Assert.assertEquals("EKOS kann für den Sozialversicherungsträger STGKK nicht verwendet werden.",
 				MessageUtil.getMessageFromProperties("KVT_IS_NOT_POSSIBLE_IN_EBS", "STGKK"));
 		Assert.assertEquals("Es wurden keine Dokumente für den Patienten mit der SVNR 1111120345 gefunden.",
@@ -22,7 +36,7 @@ public class MessageUtilTest {
 		Assert.assertEquals("Die ELGA Dokumente werden geladen. ",
 				MessageUtil.getMessageFromProperties("DOCUMENTS_WILL_BE_LOADED", "no"));
 
-		Assert.assertEquals("", MessageUtil.getMessageFromProperties("DOCUMENT", null));
+		Assert.assertEquals("", MessageUtil.getMessageFromProperties("DOCUMENT"));
 		Assert.assertEquals("", MessageUtil.getMessageFromProperties("DOCUMENT", "12"));
 	}
 

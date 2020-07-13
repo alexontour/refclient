@@ -1,6 +1,11 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +39,7 @@ import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import arztis.econnector.common.utilities.HttpConstants;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ClassificationType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ExternalIdentifierType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ExtrinsicObjectType;
@@ -44,31 +50,48 @@ import arztis.econnector.ihe.utilities.MetadataConverter;
 import arztis.econnector.rest.utilities.FhirUtil;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
+/**
+ * This class is a subclass of {@link DocumentReference}. Therefore it provides
+ * metadata about the CDA document so that the CDA document can be retrieved and
+ * provided.</br>
+ * It contains functionalities for converting properties to SOAP messages
+ * (retrieve or provide documents) and vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @ResourceDef(name = "DocumentReference", profile = "http://hl7.org/fhir/StructureDefinition/DocumentReference")
 public class FhirDocumentReference extends DocumentReference {
-	
-	/**
-	 * 
-	 */
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FhirDocumentReference.class.getName());
+	
+	/** The Constant PATIENT_REFERENCE. */
 	private static final String PATIENT_REFERENCE = "Patient/%d-1";
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirDocumentReference() {
 
 	}
 
+	/**
+	 * Constructor to extract information from JSON.
+	 *
+	 * @param json to be extracted
+	 */
 	public FhirDocumentReference(String json) {
 		fromJson(json);
 	}
 
 	/**
 	 * Constructor to create document reference from ITI-18 response (Query document
-	 * metadata)
-	 * 
+	 * metadata).
+	 *
 	 * @param documentEntry document reference
 	 * @param index         index of document
 	 */
@@ -78,18 +101,20 @@ public class FhirDocumentReference extends DocumentReference {
 
 	/**
 	 * Constructor to create document reference from PHARM-1 response (Query
-	 * pharmaceutical document metadata)
-	 * 
-	 * @param documentEntry document reference
-	 * @param index         index of document
+	 * pharmaceutical document metadata).
+	 *
+	 * @param documentEntry   document reference
+	 * @param homeCommunityId ID that identifies the community that owns the
+	 *                        document
+	 * @param index           index of document
 	 */
 	public FhirDocumentReference(ExtrinsicObjectType documentEntry, String homeCommunityId, int index) {
 		fromExtrinsicObjectType(documentEntry, homeCommunityId, index);
 	}
 
 	/**
-	 * Constructor to create document reference to cancel ELGA document
-	 * 
+	 * Constructor to create document reference to cancel ELGA document.
+	 *
 	 * @param category   category code of document
 	 * @param patientId  ID of patient e.g. ssno or bPK
 	 * @param documentId entryUUID of document
@@ -101,8 +126,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Constructor to create document reference to query ELGA metadata
-	 * 
+	 * Constructor to create document reference to query ELGA metadata.
+	 *
 	 * @param type      type code of document
 	 * @param patientId ID of patient e.g. ssno or bPK
 	 * @param status    status of document
@@ -114,8 +139,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Constructor to create document reference to query ELGA metadata and document
-	 * 
+	 * Constructor to create document reference to query ELGA metadata and document.
+	 *
 	 * @param type        type code of document
 	 * @param patientId   ID of patient e.g. ssno or bPK
 	 * @param status      status of document
@@ -129,8 +154,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Constructor to create document reference to query single ELGA document
-	 * 
+	 * Constructor to create document reference to query single ELGA document.
+	 *
 	 * @param url         path to ELGA document consisting of
 	 *                    /uniqueId/repositoryId/homeCommunityId
 	 * @param contentType content type, which should be returned
@@ -140,8 +165,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Constructor to create document reference from Hl7 v3 CDA R2 reference
-	 * 
+	 * Constructor to create document reference from Hl7 v3 CDA R2 reference.
+	 *
 	 * @param reference Hl7 v3 CDA R2 reference
 	 * @param id        of resource to reference to
 	 */
@@ -153,7 +178,7 @@ public class FhirDocumentReference extends DocumentReference {
 	 * set category of ELGA document. Possible values for parameter category are
 	 * first level of
 	 * https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen
-	 * 
+	 *
 	 * @param code class code of document
 	 */
 	public void addCategory(String code) {
@@ -166,7 +191,7 @@ public class FhirDocumentReference extends DocumentReference {
 	 * set kind of ELGA document. Possible values for parameter type are second
 	 * level of
 	 * https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen
-	 * 
+	 *
 	 * @param code type code of document
 	 */
 	public void setType(String code) {
@@ -176,8 +201,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * set patient of document
-	 * 
+	 * set patient of document.
+	 *
 	 * @param patientId ID of patient e.g. ssno or bPK
 	 */
 	public void setPatient(Identifier patientId) {
@@ -188,8 +213,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * set status of document
-	 * 
+	 * set status of document.
+	 *
 	 * @param status status of document
 	 * @see DocumentReferenceStatus for available values
 	 */
@@ -198,8 +223,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * set content type of ELGA document to return
-	 * 
+	 * set content type of ELGA document to return.
+	 *
 	 * @param contentType content type, which should be returned
 	 */
 	public void setContentType(String contentType) {
@@ -209,8 +234,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * set attachment of ELGA document
-	 * 
+	 * set attachment of ELGA document.
+	 *
 	 * @param url         path to ELGA document consisting of
 	 *                    /uniqueId/repositoryId/homeCommunityId
 	 * @param contentType content type, which should be returned
@@ -223,8 +248,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * set attachment of ELGA document
-	 * 
+	 * set attachment of ELGA document.
+	 *
 	 * @param url         path to ELGA document consisting of
 	 *                    /uniqueId/repositoryId/homeCommunityId
 	 * @param contentType content type, which should be returned
@@ -243,8 +268,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * sets comments of ELGA metadata as narrative text
-	 * 
+	 * sets comments of ELGA metadata as narrative text.
+	 *
 	 * @param text comments
 	 */
 	public void setText(String text) {
@@ -256,8 +281,8 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * sets parent document id of ELGA document
-	 * 
+	 * sets parent document id of ELGA document.
+	 *
 	 * @param parentDocumentId ID of parent document
 	 */
 	public void setRelatesTo(String parentDocumentId) {
@@ -272,6 +297,19 @@ public class FhirDocumentReference extends DocumentReference {
 		setRelatesTo(List.of(relatesToComp));
 	}
 
+	/**
+	 * sets clinical context of ELGA document.
+	 *
+	 * @param event           main clinical services
+	 * @param period          time of service that is being documented
+	 * @param facilityType    classification of health care provider. Values are
+	 *                        available under <a href=
+	 *                        "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=ELGA_HealthcareFacilityTypeCode">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=ELGA_HealthcareFacilityTypeCode</a>
+	 * @param practiceSetting subject classification of document. Values are
+	 *                        available under <a href=
+	 *                        "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=ELGA_PracticeSetting_VS">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=ELGA_PracticeSetting_VS</a>
+	 * @param patientInfo     demographic information about patient
+	 */
 	public void setContext(CodeableConcept event, Period period, CodeableConcept facilityType,
 			CodeableConcept practiceSetting, Reference patientInfo) {
 		DocumentReferenceContextComponent docRefContextComp = new DocumentReferenceContextComponent();
@@ -287,6 +325,13 @@ public class FhirDocumentReference extends DocumentReference {
 		setContext(docRefContextComp);
 	}
 
+	/**
+	 * converts format code of passed {@link DocumentReference} to
+	 * {@link CodedMetadataType}.
+	 *
+	 * @param reference resource to be extracted
+	 * @return converted {@link CodedMetadataType}
+	 */
 	public static CodedMetadataType getFormatCode(DocumentReference reference) {
 		if (reference.getContentFirstRep() != null && reference.getContentFirstRep().getFormat() != null
 				&& reference.getContentFirstRep().getFormat().hasCode()) {
@@ -301,6 +346,13 @@ public class FhirDocumentReference extends DocumentReference {
 		return null;
 	}
 
+	/**
+	 * converts health care facility code of passed {@link DocumentReference} to
+	 * {@link CodedMetadataType}.
+	 *
+	 * @param reference resource to be extracted
+	 * @return converted {@link CodedMetadataType}
+	 */
 	public static CodedMetadataType getFacilityType(DocumentReference reference) {
 		if (reference != null && reference.getContext() != null && reference.getContext().getFacilityType() != null
 				&& reference.getContext().getFacilityType().getCodingFirstRep() != null
@@ -317,6 +369,13 @@ public class FhirDocumentReference extends DocumentReference {
 		return null;
 	}
 
+	/**
+	 * converts practice setting code of passed {@link DocumentReference} to
+	 * {@link CodedMetadataType}.
+	 *
+	 * @param reference resource to be extracted
+	 * @return converted {@link CodedMetadataType}
+	 */
 	public static CodedMetadataType getPracticeSetting(DocumentReference reference) {
 		if (reference != null && reference.getContext() != null && reference.getContext().getPracticeSetting() != null
 				&& reference.getContext().getPracticeSetting().getCodingFirstRep() != null
@@ -333,6 +392,14 @@ public class FhirDocumentReference extends DocumentReference {
 		return null;
 	}
 
+	/**
+	 * converts HL7 FHIR {@link Coding} to {@link CodedMetadataType}. Language of
+	 * display name is set to "de-AT".
+	 *
+	 * @param coding to convert
+	 *
+	 * @return converted {@link CodedMetadataType}
+	 */
 	private static CodedMetadataType getCodedMetadataType(Coding coding) {
 		final CodedMetadataType cmt = MetadataFactory.eINSTANCE.createCodedMetadataType();
 		cmt.setSchemeName(coding.getSystem());
@@ -341,14 +408,19 @@ public class FhirDocumentReference extends DocumentReference {
 		return cmt;
 	}
 
+	/**
+	 * extracts {@link DocumentReference} from JSON.
+	 *
+	 * @param json to be extracted
+	 */
 	private void fromJson(String json) {
 		FhirUtil.getFhirContext().newJsonParser().parseResource(DocumentReference.class, json);
 	}
 
 	/**
-	 * creates JSON of this document reference instance like specified in
-	 * http://hl7.org/fhir/R4/documentreference.html
-	 * 
+	 * creates JSON of this document reference instance like specified in <a href=
+	 * "http://hl7.org/fhir/R4/documentreference.html">http://hl7.org/fhir/R4/documentreference.html</a>
+	 *
 	 * @return JSON string
 	 */
 	public String toJson() {
@@ -356,9 +428,12 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Transforms the object in the parameter to the document reference
+	 * Converts passed {@link DocumentEntryResponseType} to
+	 * {@link DocumentReference}. {@link DocumentEntryResponseType} is returned from
+	 * querying document metadata with ITI-18 transaction.
 	 *
-	 * @param documentEntry generatedClasses.org.openhealthtools.ihe.xds.response.DocumentEntryResponseType
+	 * @param documentEntry object to convert.
+	 * @param index         of document
 	 */
 
 	private void fromDocumentEntryResponse(DocumentEntryResponseType documentEntry, int index) {
@@ -379,8 +454,9 @@ public class FhirDocumentReference extends DocumentReference {
 
 			if (documentEntry.getDocumentEntry().getAvailabilityStatus() != null
 					&& documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral() != null) {
-				setStatus(documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral().toLowerCase(Locale.ENGLISH)
-						.contains("approved") ? DocumentReferenceStatus.CURRENT : DocumentReferenceStatus.SUPERSEDED);
+				setStatus(documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral()
+						.toLowerCase(Locale.ENGLISH).contains("approved") ? DocumentReferenceStatus.CURRENT
+								: DocumentReferenceStatus.SUPERSEDED);
 			}
 
 			if (documentEntry.getDocumentEntry().getUniqueId() != null) {
@@ -418,6 +494,18 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 	}
 
+	/**
+	 * adds code values such as following to {@link DocumentReference}
+	 * 
+	 * <ul>
+	 * <li>class code (category)</li>
+	 * <li>type code (type)</li>
+	 * <li>confidentiality code (security label)</li>
+	 * <li>language code (language)</li>
+	 * </ul>.
+	 *
+	 * @param documentEntry to be extracted
+	 */
 	private void addCodes(DocumentEntryResponseType documentEntry) {
 		if (documentEntry.getDocumentEntry().getClassCode() != null) {
 			addCategory(new CodeableConcept(new Coding(documentEntry.getDocumentEntry().getClassCode().getSchemeUUID(),
@@ -440,6 +528,21 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 	}
 
+	/**
+	 * adds references such as following to {@link DocumentReference}
+	 *
+	 * <ul>
+	 * <li>subject (patient)</li>
+	 * <li>authenticator (legal authenticator)</li>
+	 * <li>author</li>
+	 * </ul>
+	 *
+	 * References are created in format {resource name}/{index}-{count}. For
+	 * example, a reference to patient could look like Patient/1-1.
+	 *
+	 * @param documentEntry to be extracted
+	 * @param index         of document
+	 */
 	private void addAllReferences(DocumentEntryResponseType documentEntry, int index) {
 		Reference reference = new Reference(String.format(PATIENT_REFERENCE, index));
 		reference.setType(ResourceType.PATIENT.getDefinition());
@@ -456,6 +559,23 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 	}
 
+	/**
+	 * adds content values such as following to {@link DocumentReference}
+	 *
+	 * <ul>
+	 * <li>format code (format)</li>
+	 * <li>unique ID</li>
+	 * <li>repository ID</li>
+	 * <li>home community ID</li>
+	 * <li>size</li>
+	 * <li>mime type (content type)</li>
+	 * </ul>
+	 *
+	 * Extracted IDs are concatenated as follows {unique ID}/{repository ID}/{home
+	 * community ID}. Concatenated IDs are added as URL to attachment.
+	 *
+	 * @param documentEntry to be extracted
+	 */
 	private void addContentRelatedEntries(DocumentEntryResponseType documentEntry) {
 		int size = 0;
 		String contentType = null;
@@ -480,6 +600,20 @@ public class FhirDocumentReference extends DocumentReference {
 				contentType, format, size);
 	}
 
+	/**
+	 * adds context values such as following to {@link DocumentReference}
+	 * 
+	 * <ul>
+	 * <li>service start and stop time (period)</li>
+	 * <li>health care facility type (facility type)</li>
+	 * <li>practice setting code (practice setting)</li>
+	 * <li>event code (event)</li>
+	 * <li>patient reference</li>
+	 * </ul>.
+	 *
+	 * @param documentEntry to be extracted
+	 * @param index the index
+	 */
 	private void addContextRelatedEntries(DocumentEntryResponseType documentEntry, int index) {
 		Period period = new Period();
 		if (documentEntry.getDocumentEntry().getServiceStartTime() != null) {
@@ -519,10 +653,13 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Transforms the object in the parameter to the document reference
+	 * Converts passed {@link ExtrinsicObjectType} to {@link DocumentReference}.
+	 * {@link ExtrinsicObjectType} is result of querying pharmaceutical documents
+	 * (PHARM-1 transaction).
 	 *
-	 * @param extrinsicObject part of PHARM-1 response
-	 * @param homeCommunityId home community id of response
+	 * @param extrinsicObject object to be extracted
+	 * @param homeCommunityId ID that identifies the community that owns the
+	 *                        document
 	 * @param index           index of document
 	 */
 
@@ -555,7 +692,12 @@ public class FhirDocumentReference extends DocumentReference {
 			setStatus(DocumentReferenceStatus.CURRENT);
 		}
 
-		getContentFirstRep().getAttachment().setContentType(extrinsicObject.getMimeType());
+		if (extrinsicObject.getMimeType() == null || extrinsicObject.getMimeType().isEmpty()) {
+			getContentFirstRep().getAttachment().setContentType(HttpConstants.MEDIA_TYPE_TEXT_XML);
+		} else {
+			getContentFirstRep().getAttachment().setContentType(extrinsicObject.getMimeType());
+		}
+
 		setDescription(Hl7Utils.convertInternationalStringToString(extrinsicObject.getName()));
 		setText(Hl7Utils.convertInternationalStringToString(extrinsicObject.getDescription()));
 
@@ -571,16 +713,37 @@ public class FhirDocumentReference extends DocumentReference {
 		convertClassifications(extrinsicObject.getClassificationArray(), index);
 	}
 
-	private String fromSlots(SlotType1[] aSlots, int index) {
+	/**
+	 * extracts values from passed array of {@link SlotType1}. </br>
+	 *
+	 * Following information are extracted from {@link SlotType1}:
+	 *
+	 * <ul>
+	 * <li>creation time</li>
+	 * <li>language code</li>
+	 * <li>service start time</li>
+	 * <li>service stop time</li>
+	 * <li>repository ID of document</li>
+	 * <li>legal authenticator</li>
+	 * <li>source patient ID</li>
+	 * <li>source patient information</li>
+	 * </ul>
+	 *
+	 * @param slots to be extracted
+	 * @param index of document
+	 *
+	 * @return found repository ID
+	 */
+	private String fromSlots(SlotType1[] slots, int index) {
 		String repositoryId = "";
 
-		if (aSlots == null) {
+		if (slots == null) {
 			return "";
 		}
 
 		getContext().setPeriod(new Period());
 
-		for (SlotType1 slot : aSlots) {
+		for (SlotType1 slot : slots) {
 			switch (slot.getName()) {
 			case "creationTime":
 				setDate(MetadataConverter.convertDateTime(slot));
@@ -614,6 +777,26 @@ public class FhirDocumentReference extends DocumentReference {
 		return repositoryId;
 	}
 
+	/**
+	 * extracts values from passed array of {@link ClassificationType}. </br>
+	 *
+	 * Following information are extracted from {@link ClassificationType}:
+	 *
+	 * <ul>
+	 * <li>author</li>
+	 * <li>class code</li>
+	 * <li>format code</li>
+	 * <li>health care facility type</li>
+	 * <li>practice setting</li>
+	 * <li>type code</li>
+	 * <li>confidentiality code</li>
+	 * <li>event code</li>
+	 * </ul>
+	 *
+	 * @param classifications to be extracted
+	 * @param index           of document
+	 *
+	 */
 	private void convertClassifications(ClassificationType[] classifications, int index) {
 		if (classifications == null) {
 			return;
@@ -675,6 +858,15 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 	}
 
+	/**
+	 * extracts unique ID of document from passed array of
+	 * {@link ExternalIdentifierType}.
+	 *
+	 * @param identifiers to be extracted
+	 *
+	 * @return extracted unique ID
+	 *
+	 */
 	private String getUniqueIdOfExternalIdentifiers(ExternalIdentifierType[] identifiers) {
 		if (identifiers == null) {
 			return "";
@@ -691,10 +883,24 @@ public class FhirDocumentReference extends DocumentReference {
 		return uniqueId;
 	}
 
-	public static EList emptyIfNull(EList<?> list) {
+	/**
+	 * checks if passed {@link EList} is empty or null.
+	 *
+	 * @param list to check
+	 * @return true if list is null or empty, otherwise false
+	 */
+	private static EList emptyIfNull(EList<?> list) {
 		return list == null ? ECollections.emptyEList() : list;
 	}
 
+	/**
+	 * extracts information from passed CDA R2 {@link POCDMT000040Reference}. Sets
+	 * passed ID as resource ID. Adds identifier, type and master identifier from
+	 * external document.
+	 *
+	 * @param reference to be extracted
+	 * @param id        of resource to reference to
+	 */
 	private void fromPOCDMT000040Reference(POCDMT000040Reference reference, String id) {
 		if (reference == null || reference.getExternalDocument() == null) {
 			return;

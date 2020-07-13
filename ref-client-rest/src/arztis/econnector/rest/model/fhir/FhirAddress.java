@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.io.Serializable;
@@ -22,28 +28,45 @@ import org.hl7.fhir.r4.model.StringType;
 import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
+/**
+ * This class is a subclass of {@link Address}. Therefore it expresses postal
+ * address. </br>
+ * It contains functionalities for converting CDA R2 {@link AD} into HL7 FHIR
+ * {@link Address} and vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @DatatypeDef(name = "Address")
 public class FhirAddress extends Address {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Default constructor */
+	/**
+	 *  Default constructor.
+	 */
 	public FhirAddress() {
 
 	}
 
 	/**
-	 * create fhir address from CDA address {@link AD}
-	 * 
-	 * @param pn name of CDA
+	 * creates HL7 FHIR address from CDA address {@link AD}.
+	 *
+	 * @param ad address element of CDA
 	 */
 	public FhirAddress(AD ad) {
 		fromAD(ad);
 	}
 
+	/**
+	 * create HL7 FHIR address from CDA address {@link AD}. </br>
+	 * Every element is added to FHIR resource. Street name, house number and street
+	 * address lines of {@link AD} are added as line to HL7 FHIR address. Street
+	 * name and house number are concatenated to one line.
+	 *
+	 * @param hl7CdaR2Value address element of CDA
+	 */
 	private void fromAD(AD hl7CdaR2Value) {
 		if (hl7CdaR2Value != null) {
 
@@ -96,6 +119,38 @@ public class FhirAddress extends Address {
 		}
 	}
 
+	/**
+	 * Allocates HL7 FHIR {@link AddressUse} for passed CDA R2 postal address use.
+	 * </br>
+	 *
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>CDA R2</b></td>
+	 * <td><b>HL7 FHIR</b></td>
+	 * </tr>
+	 * <tr>
+	 * <td>H</td>
+	 * <td>home</td>
+	 * </tr>
+	 * <tr>
+	 * <td>WP</td>
+	 * <td>work</td>
+	 * </tr>
+	 * <tr>
+	 * <td>TMP</td>
+	 * <td>temp</td>
+	 * </tr>
+	 * <tr>
+	 * <td>PST</td>
+	 * <td>billing</td>
+	 * </tr>
+	 * </table>
+	 *
+	 * @param use of address
+	 *
+	 * @return allocated value or {@link AddressUse.<code>null</code>} if no value
+	 *         can be allocated
+	 */
 	private AddressUse getAddressUse(PostalAddressUse use) {
 		switch (use) {
 		case HOME_ADDRESS:
@@ -111,6 +166,39 @@ public class FhirAddress extends Address {
 		}
 	}
 
+	/**
+	 * Allocates CDA R2 postal address use for passed HL7 FHIR {@link AddressUse}.
+	 * </br>
+	 *
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>CDA R2</b></td>
+	 * <td><b>HL7 FHIR</b></td>
+	 * </tr>
+	 * <tr>
+	 * <td>H</td>
+	 * <td>home</td>
+	 * </tr>
+	 * <tr>
+	 * <td>WP</td>
+	 * <td>work</td>
+	 * </tr>
+	 * <tr>
+	 * <td>TMP</td>
+	 * <td>temp</td>
+	 * </tr>
+	 * <tr>
+	 * <td>PST</td>
+	 * <td>billing</td>
+	 * </tr>
+	 * </table>
+	 *
+	 * @param use of address
+	 *
+	 * @return allocated value or
+	 *         {@link PostalAddressUse.<code>PHYSICAL_VISIT_ADDRESS</code>} (PHYS)
+	 *         if no value can be allocated
+	 */
 	private static PostalAddressUse getPostalAddressUse(AddressUse use) {
 		switch (use) {
 		case HOME:
@@ -126,6 +214,17 @@ public class FhirAddress extends Address {
 		}
 	}
 
+	/**
+	 * create CDA R2 address {@link AD} from HL7 FHIR address. </br>
+	 * Every element of FHIR resource is added to {@link AD}. HL7 FHIR address lines
+	 * are added as {@link AdxpStreetAddressLine}. If passed address null flavor is
+	 * added.
+	 *
+	 * @param address resource to be extracted
+	 * @param nf      null flavor, which should be added if passed address is null
+	 *
+	 * @return created {@link AD}
+	 */
 	public static AD createHl7CdaR2Ad(Address address, NullFlavor nf) {
 		org.ehealth_connector.common.hl7cdar2.AD retVal = new org.ehealth_connector.common.hl7cdar2.AD();
 
@@ -155,8 +254,8 @@ public class FhirAddress extends Address {
 		if (value != null) {
 			AdxpCountry obj = new AdxpCountry();
 			obj.xmlContent = value;
-			retVal.getContent()
-					.add(new JAXBElement<AdxpCountry>(new QName(CdaUtil.NAMESPACE_HL7_V3, "country"), AdxpCountry.class, obj));
+			retVal.getContent().add(new JAXBElement<AdxpCountry>(new QName(CdaUtil.NAMESPACE_HL7_V3, "country"),
+					AdxpCountry.class, obj));
 		}
 
 		value = address.getPostalCode();
@@ -171,8 +270,8 @@ public class FhirAddress extends Address {
 		if (value != null) {
 			AdxpState obj = new AdxpState();
 			obj.xmlContent = value;
-			retVal.getContent()
-					.add(new JAXBElement<AdxpState>(new QName(CdaUtil.NAMESPACE_HL7_V3, "state"), AdxpState.class, obj));
+			retVal.getContent().add(
+					new JAXBElement<AdxpState>(new QName(CdaUtil.NAMESPACE_HL7_V3, "state"), AdxpState.class, obj));
 		}
 
 		if (address.getLine() != null && !address.getLine().isEmpty()) {
@@ -180,8 +279,10 @@ public class FhirAddress extends Address {
 				if (line != null && line.getValue() != null) {
 					AdxpStreetAddressLine obj = new AdxpStreetAddressLine();
 					obj.xmlContent = line.getValue();
-					retVal.getContent().add(new JAXBElement<AdxpStreetAddressLine>(
-							new QName(CdaUtil.NAMESPACE_HL7_V3, "streetAddressLine"), AdxpStreetAddressLine.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<AdxpStreetAddressLine>(
+									new QName(CdaUtil.NAMESPACE_HL7_V3, "streetAddressLine"),
+									AdxpStreetAddressLine.class, obj));
 				}
 			}
 		}
@@ -190,7 +291,7 @@ public class FhirAddress extends Address {
 		if (usage != null) {
 			retVal.getUse().clear();
 			retVal.getUse().add(getPostalAddressUse(usage).getCodeValue());
-		} 
+		}
 
 		return retVal;
 	}

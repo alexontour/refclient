@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe;
 
 import java.io.File;
@@ -18,14 +24,19 @@ import org.apache.commons.lang3.RegExUtils;
 import org.apache.xmlbeans.XmlException;
 import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PatientAt;
 import org.ehealth_connector.cda.at.elga.v2019.cdalab.Laborbefund;
+import org.ehealth_connector.cda.at.elga.v2019.disch.CdaentlassbriefAerztlich;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
+import org.ehealth_connector.cda.at.elga.v2019.emed.Cdarezept;
+import org.ehealth_connector.cda.at.elga.v2019.phc.ElgapatientConsultationSummary;
 import org.ehealth_connector.common.Identificator;
 import org.ehealth_connector.common.at.enums.AvailabilityStatus;
 import org.ehealth_connector.common.at.enums.ClassCode;
+import org.ehealth_connector.common.at.enums.FormatCode;
 import org.ehealth_connector.common.at.enums.TypeCode;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040ClinicalDocument;
 import org.ehealth_connector.communication.at.xd.storedquery.FindDocumentsQuery;
 import org.ehealth_connector.fhir.structures.gen.FhirPatient;
+import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
@@ -43,7 +54,6 @@ import arztis.econnector.common.CardReaderTransactions;
 import arztis.econnector.common.DialogCreator;
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.GinaServiceStub.CardReader;
 import arztis.econnector.common.model.Card;
-import arztis.econnector.common.model.Document;
 import arztis.econnector.common.model.Message;
 import arztis.econnector.common.model.MessageTypes;
 import arztis.econnector.common.model.RegisterParam;
@@ -62,6 +72,7 @@ import arztis.econnector.ihe.parameters.PatientContactParameter;
 import arztis.econnector.ihe.parameters.RequestIdaParameter;
 import arztis.econnector.ihe.queries.AssertionTransactions;
 import arztis.econnector.ihe.queries.GdaSearch;
+import arztis.econnector.ihe.queries.PatientContactTransactions;
 import arztis.econnector.ihe.queries.PatientIndexTransactions;
 import arztis.econnector.ihe.queries.PharmTransactions;
 import arztis.econnector.ihe.queries.XdsTransactions;
@@ -74,59 +85,85 @@ import arztis.econnector.ihe.utilities.MetadataConverter;
 import arztis.econnector.ihe.utilities.UnauthorizedException;
 
 /**
- * JAVA API for the ELGA reference client. This class includes all function
- * calls that are required for
- * 
+ * JAVA API for ELGA reference client. This class includes all function calls
+ * that are required for
+ *
  * <ul>
- * <li>Reading the cards (e-card and Admin-Card - GINA)</li>
+ * <li>Reading inserted card in card reader (e-card and Admin-Card - GINA)</li>
  * <li>User registration for ELGA and GINA</li>
  * <li>Patient contact confirmation with e-Card and bPK</li>
- * <li>Retrieving documents from ELGA and their eHealth applications such as the
- * electronic immunization record or the virtual organizations</li>
+ * <li>Retrieving documents from ELGA and their eHealth applications such as
+ * electronic immunization record or virtual organizations</li>
  * <li>Posting and register documents in ELGA areas for different services such
- * as the electronic immunization record or the eMedication</li>
- * <li>Canceling documents in ELGA areas for different services such as the
- * electronic immunization record or the eMedication</li>
- * <li>Retrieving the ID for eMedication (eMed-Id)</li>
- * <li>Retrieving demographic patient data</li>
- * <li>List and cancel patient contacts</li>
+ * as electronic immunization record or eMedication</li>
+ * <li>Canceling documents in ELGA areas for different services such as
+ * electronic immunization record or eMedication</li>
+ * <li>Retrieving patient demographics</li>
+ * <li>List and canceling patient contacts</li>
  * </ul>
- * 
+ *
  * This class is built as singleton, so you have to call {@link getInstance} to
  * instantiate.
- * 
- * @author ET-Innovations
+ *
+ * @author Anna Jungwirth
  *
  */
 public class ElgaConnectionCaller {
 
+	/** The Constant PHARM_NAMESPACE. */
 	private static final String PHARM_NAMESPACE = "urn:ihe:pharm";
+
+	/** The Constant PHARM_MEDICATION_NAMESPACE. */
 	private static final String PHARM_MEDICATION_NAMESPACE = "urn:ihe:pharm:medication";
+
+	/** The Constant SNOMEDCT_DISPLAY_NAME_WITHOUT_WHITESPACE. */
 	private static final String SNOMEDCT_DISPLAY_NAME_WITHOUT_WHITESPACE = "SNOMEDCT";
+
+	/** The Constant SNOMEDCT_DISPLAY_NAME_WITH_WHITESPACE. */
 	private static final String SNOMEDCT_DISPLAY_NAME_WITH_WHITESPACE = "SNOMED CT";
+
+	/** The Constant CHECK_CARD_READER_MESSAGE_KEY. */
 	private static final String CHECK_CARD_READER_MESSAGE_KEY = "CHECK_CARD_READER";
+
+	/** The Constant MISSING_PARAMETER_MESSAGE_KEY. */
 	private static final String MISSING_PARAMETER_MESSAGE_KEY = "MISSING_PARAMETERS";
+
+	/** The Constant NO_HCP_ASSERTION_FOUND_LITERAL. */
 	protected static final String NO_HCP_ASSERTION_FOUND_LITERAL = "No HCP Assertion found!";
+
+	/** The Constant MISSING_PARAMETER_MESSAGE. */
 	private static final Message MISSING_PARAMETER_MESSAGE = new Message(
-			MessageUtil.getMessageFromProperties(MISSING_PARAMETER_MESSAGE_KEY, null), MessageTypes.ERROR,
+			MessageUtil.getMessageFromProperties(MISSING_PARAMETER_MESSAGE_KEY), MessageTypes.ERROR,
 			HttpServletResponse.SC_BAD_REQUEST);
+
+	/** The Constant CONFIG. */
 	private static final ConfigReader CONFIG = ConfigReader.getInstance();
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ElgaConnectionCaller.class.getName());
 
+	/** The assertion transactions. */
 	private AssertionTransactions assertionTransactions;
 
+	/**
+	 * Instantiates a new ELGA connection caller.
+	 */
 	protected ElgaConnectionCaller() {
 		assertionTransactions = new AssertionTransactions();
 	}
 
+	/**
+	 * The Class LazyHolder.
+	 */
 	private static class LazyHolder {
+
+		/** The Constant INSTANCE. */
 		static final ElgaConnectionCaller INSTANCE = new ElgaConnectionCaller();
 	}
 
 	/**
-	 * This method returns the instance of the class (Singleton)
-	 * 
+	 * This method returns the instance of {@link ElgaConnectionCaller} (Singleton).
+	 *
 	 * @return instance
 	 */
 	public static ElgaConnectionCaller getInstance() {
@@ -134,23 +171,22 @@ public class ElgaConnectionCaller {
 	}
 
 	/**
-	 * This method retrieves the document list from ELGA. The method IHE ITI-18 is
-	 * used in the background according to passed document type.
+	 * This method retrieves document list from ELGA. The method IHE ITI-18 is used
+	 * in the background according to passed document type.
 	 *
-	 * @param patientId      ID of patient for whom documents should be queried
-	 * @param typeCode       type of document
-	 * @param status         status of document
-	 * @param connData       Connection data of the respective user requesting the
-	 *                       documents
-	 * @param organizationId OID of the organization of the health care provider
-	 *
+	 * @param patientId ID of patient for whom documents should be queried
+	 * @param typeCode  type of document
+	 * @param status    availability status of document. There are values like
+	 *                  approved and deprecated available
+	 * @param connData  Connection data of the respective user requesting the
+	 *                  documents
 	 * @return found metadata of documents
-	 * @throws IOException
-	 * @throws SAXException
-	 * @throws ParserConfigurationException
-	 * @throws UnauthorizedException
-	 * @throws ServiceUnavailableException
-	 * 
+	 * @throws UnauthorizedException        the unauthorized exception
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
+	 * @throws ServiceUnavailableException  the service unavailable exception
 	 */
 	public XDSQueryResponseType requestDocumentList(Identificator patientId, String typeCode, AvailabilityStatus status,
 			ConnectionData connData) throws UnauthorizedException, ParserConfigurationException, SAXException,
@@ -169,20 +205,25 @@ public class ElgaConnectionCaller {
 	 * This method retrieves a certain document from ELGA. The method IHE ITI-43 is
 	 * used in the background.
 	 *
-	 * @param connData          Connection data of the respective user requesting
-	 *                          the document
-	 * @param organizationId    OID of the organization of the health care provider
-	 * @param documentReference contains the unique id, repository id and the home
-	 *                          community id of queried document
-	 *
+	 * @param connData        Connection data of the respective user requesting the
+	 *                        document
+	 * @param uniqueId        the unique id
+	 * @param repositoryId    the repository id
+	 * @param homeCommunityId ID that identifies the community that owns the
+	 *                        document
+	 * @param typeCode        indicates which ELGA area should be used to retrieve
+	 *                        document. There are different areas/endpoints to use
+	 *                        for electronic records and virtual organizations.
+	 *                        Values are available under
+	 *                        https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen
 	 * @return If the document was found, a list of {@link Document} is returned,
 	 *         otherwise an {@link Message} with the detailed error message is
 	 *         returned.
-	 * 
-	 * @throws UnauthorizedException
-	 * @throws IOException
-	 * @throws SAXException
-	 * @throws ParserConfigurationException
+	 * @throws UnauthorizedException        the unauthorized exception
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
 	 */
 	public XDSRetrieveResponseType retrieveDocuments(ConnectionData connData, String uniqueId, String repositoryId,
 			String homeCommunityId, String typeCode)
@@ -192,6 +233,32 @@ public class ElgaConnectionCaller {
 		return retrieveDocuments(assertion, uniqueId, repositoryId, homeCommunityId, typeCode, eHealthApplication);
 	}
 
+	/**
+	 * This method retrieves a certain document from ELGA. The method IHE ITI-43 is
+	 * used in the background.
+	 *
+	 * @param assertion          that authenticate health care provider who requests
+	 *                           documents
+	 * @param uniqueId           unique ID of document, which identifies document
+	 *                           within the repository
+	 * @param repositoryId       ID of repository from which document is to be
+	 *                           retrieved
+	 * @param homeCommunityId    ID that identifies the community that owns the
+	 *                           document
+	 * @param typeCode           indicates which ELGA area should be used to
+	 *                           retrieve document. There are different
+	 *                           areas/endpoints to use for electronic records and
+	 *                           virtual organizations. Values are available under
+	 *                           https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen
+	 * @param eHealthApplication from which documents are requested such as
+	 *                           electronic immunization record.
+	 * @return {@link XDSRetrieveResponseType} with details about success or failure
+	 *         of request
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
+	 */
 	protected XDSRetrieveResponseType retrieveDocuments(AssertionType assertion, String uniqueId, String repositoryId,
 			String homeCommunityId, String typeCode, ElgaEHealthApplication eHealthApplication)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -202,10 +269,10 @@ public class ElgaConnectionCaller {
 	}
 
 	/**
-	 * This method first retrieves the card token form the inserted e-Card.
-	 * Afterwards the identity assertion is requested by the SVC with the respective
-	 * card token. The identity assertion is sent to all ELGA areas, which are
-	 * enabled in the configuration file.
+	 * This method first retrieves card token form inserted e-Card. Afterwards
+	 * identity assertion is requested by the SVC with the respective card token.
+	 * The identity assertion is sent to all ELGA areas, which are enabled in the
+	 * configuration file.
 	 *
 	 * @param connData         Connection data of the respective user, who would
 	 *                         like to insert the contact confirmation
@@ -213,11 +280,10 @@ public class ElgaConnectionCaller {
 	 *                         register the contact confirmation
 	 * @param ginoEndpoint     endpoint of the GINO Service, it is required if the
 	 *                         patient contact should be registered with eCard
-	 *
 	 * @return If the contact confirmation was successfully submitted, true is
 	 *         returned. Otherwise false or an error message {@link Message} is
 	 *         returned.
-	 * @throws UnauthorizedException
+	 * @throws UnauthorizedException the unauthorized exception
 	 */
 	public Object registerPatientContact(ConnectionData connData, PatientContactParameter contactParameter,
 			String ginoEndpoint) throws UnauthorizedException {
@@ -257,7 +323,7 @@ public class ElgaConnectionCaller {
 				}
 			}
 
-			Object result = assertionTransactions.registerConfirmationContact(
+			Object result = PatientContactTransactions.registerConfirmationContact(
 					getAssertionForPatientRegistration(connData), sSamlTicket, cardToken,
 					contactParameter.getPatientId(), IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
 
@@ -272,6 +338,13 @@ public class ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Gets the e card subject ticket.
+	 *
+	 * @param ssno the ssno
+	 * @param vpnr the vpnr
+	 * @return the e card subject ticket
+	 */
 	private String getECardSubjectTicket(String ssno, String vpnr) {
 		if (ssno != null && ssno.length() == 10) {
 			return CONFIG.geteCardIdaTicket(ssno, vpnr);
@@ -280,6 +353,14 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * Gets the assertion for patient contact confirmation.
+	 *
+	 * @param connData the conn data
+	 *
+	 * @return the assertion for patient registration
+	 * @throws UnauthorizedException the unauthorized exception
+	 */
 	private AssertionType getAssertionForPatientRegistration(ConnectionData connData) throws UnauthorizedException {
 		if (connData.getHcpAssertion() != null && !CONFIG.isOnlyContext()) {
 			return connData.getHcpAssertion();
@@ -297,10 +378,23 @@ public class ElgaConnectionCaller {
 		throw new UnauthorizedException(NO_HCP_ASSERTION_FOUND_LITERAL);
 	}
 
+	/**
+	 * Checks if patient confirmation is for all areas required.
+	 *
+	 * @param ehealthApps the ehealth apps
+	 * @return true, if patient confirmation is for all areas required
+	 */
 	private boolean isKbsForAllAreasRequired(List<ElgaEHealthApplication> ehealthApps) {
 		return ehealthApps != null && !ehealthApps.isEmpty();
 	}
 
+	/**
+	 * Gets the ssno from E card data.
+	 *
+	 * @param cardReaderId the card reader id
+	 * @param ginoEndpoint the gino endpoint
+	 * @return the ssno from E card data
+	 */
 	private String getSsnoFromECardData(String cardReaderId, String ginoEndpoint) {
 		Object result = CardReaderTransactions.getInstance(ginoEndpoint).getCardData(cardReaderId);
 
@@ -315,6 +409,14 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * Gets the e card token.
+	 *
+	 * @param connData     the conn data
+	 * @param cardReaderId the card reader id
+	 * @param ginoEndpoint the gino endpoint
+	 * @return the e card token
+	 */
 	private Object getECardToken(ConnectionData connData, String cardReaderId, String ginoEndpoint) {
 		String vpnr = "";
 
@@ -326,11 +428,30 @@ public class ElgaConnectionCaller {
 		return CardReaderTransactions.getInstance(ginoEndpoint).getCardTokenECard(cardReaderId, null, vpnr);
 	}
 
+	/**
+	 * Checks if bpk exists in passed {@link PatientContactParameter}.
+	 *
+	 * @param contactParameter the contact parameter
+	 * @return true, if bpk exists
+	 */
 	private boolean existsBpk(PatientContactParameter contactParameter) {
 		return contactParameter.getPatientId() != null
 				&& IheConstants.OID_BPK_IDENTIFICATION.equalsIgnoreCase(contactParameter.getPatientId().getSystem());
 	}
 
+	/**
+	 * Register patient contact for all areas.
+	 *
+	 * @param connData    the connection data of user
+	 * @param cardToken   the card token of e-Card
+	 * @param patientId   the patient id (ssno or bpk)
+	 * @param ehealthApps the ehealth apps such as VO or electronic immunization
+	 *
+	 * @return true if the contact could be registered and false if contact could
+	 *         not be registered. If error was thrown Message with error details is
+	 *         returned.
+	 * @throws UnauthorizedException the unauthorized exception
+	 */
 	private Object registerPatientContactForAllAreas(ConnectionData connData, String cardToken, Identifier patientId,
 			List<ElgaEHealthApplication> ehealthApps) throws UnauthorizedException {
 		if (ehealthApps == null) {
@@ -353,10 +474,11 @@ public class ElgaConnectionCaller {
 		Object result = null;
 		for (ElgaEHealthApplication app : ehealthApps) {
 			if (app != null && app.getId().equalsIgnoreCase("103")) {
-				result = assertionTransactions.registerConfirmationContact(getAssertionForPatientRegistration(connData),
-						samlTicket, cardToken, patientId, IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
+				result = PatientContactTransactions.registerConfirmationContact(
+						getAssertionForPatientRegistration(connData), samlTicket, cardToken, patientId,
+						IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
 			} else {
-				result = assertionTransactions.registerConfirmationContact(connData.getHcpContextAssertion(),
+				result = PatientContactTransactions.registerConfirmationContact(connData.getHcpContextAssertion(),
 						samlTicket, cardToken, patientId, IheConstants.KIND_OF_REQUEST_VOS);
 			}
 		}
@@ -390,7 +512,7 @@ public class ElgaConnectionCaller {
 	 *                          <td>2</td>
 	 *                          </tr>
 	 *                          </table>
-	 * 
+	 *
 	 *
 	 * @return If the user was registered successfully, the filled connection data
 	 *         object {@link connData} is returned. If the registration failed,
@@ -431,6 +553,16 @@ public class ElgaConnectionCaller {
 		return registerUserForElga(registerUserParam.getRole(), samlTicketIdentityAssertion, connData, applications);
 	}
 
+	/**
+	 * Request identity assertion from with Admin-Card.
+	 *
+	 * @param registerUserParam the register user param
+	 * @param connData          the connection data of the user
+	 * @param ginoEndpoint      the GINO endpoint
+	 *
+	 * @return if saml ticket can be generated saml ticket is returned, otherwise
+	 *         {@link Message} with error details is returned
+	 */
 	private Object requestIdaSvc(RegisterParam registerUserParam, ConnectionData connData, String ginoEndpoint) {
 		Object dialogCreated = registerForGina(registerUserParam, connData, ginoEndpoint);
 
@@ -468,6 +600,16 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * Register for gina.
+	 *
+	 * @param registerUserParam the register user parameter
+	 * @param connData          the connection data of user
+	 * @param ginoEndpoint      the GINO endpoint
+	 *
+	 * @return true, if registration was successful. Otherwise Message with error
+	 *         details is returned.
+	 */
 	private Object registerForGina(RegisterParam registerUserParam, ConnectionData connData, String ginoEndpoint) {
 		if (registerUserParam == null) {
 			return MISSING_PARAMETER_MESSAGE;
@@ -498,6 +640,18 @@ public class ElgaConnectionCaller {
 		return oDialog.createDialog(registerUserParam, cardToken);
 	}
 
+	/**
+	 * Register user for ELGA.
+	 *
+	 * @param role                        the role
+	 * @param samlTicketIdentityAssertion the saml ticket identity assertion
+	 * @param connData                    the connection data of user
+	 * @param applications                the applications such as VO or electronic
+	 *                                    immunization
+	 *
+	 * @return {@link ConnectionData}, if registration was successful. Otherwise
+	 *         Message with error details is returned.
+	 */
 	private Object registerUserForElga(String role, String samlTicketIdentityAssertion, ConnectionData connData,
 			Map<Integer, ElgaEHealthApplication> applications) {
 		if (samlTicketIdentityAssertion != null && !samlTicketIdentityAssertion.isEmpty()) {
@@ -513,6 +667,7 @@ public class ElgaConnectionCaller {
 			}
 
 			oResult = registerUserForEhealthApplications(role, connData, samlTicketIdentityAssertion, applications);
+
 			if (!(oResult instanceof Boolean)) {
 				return oResult;
 			}
@@ -529,6 +684,16 @@ public class ElgaConnectionCaller {
 				HttpServletResponse.SC_BAD_REQUEST);
 	}
 
+	/**
+	 * Register user for ehealth applications.
+	 *
+	 * @param role                        the role of healthcare provider
+	 * @param connData                    the connection data
+	 * @param samlTicketIdentityAssertion the saml ticket identity assertion
+	 * @param applications                the applications
+	 * @return true, if registration was successful. Otherwise Message with error
+	 *         details is returned.
+	 */
 	private Object registerUserForEhealthApplications(String role, ConnectionData connData,
 			String samlTicketIdentityAssertion, Map<Integer, ElgaEHealthApplication> applications) {
 		if (applications != null && !applications.isEmpty()) {
@@ -557,6 +722,17 @@ public class ElgaConnectionCaller {
 		return true;
 	}
 
+	/**
+	 * Register user for ehealth application virtual organizations.
+	 *
+	 * @param role                        the role
+	 * @param connData                    the connection data
+	 * @param samlTicketIdentityAssertion the saml ticket identity assertion
+	 * @param application                 the application (VO)
+	 *
+	 * @return true, if registration was successful. Otherwise Message with error
+	 *         details is returned.
+	 */
 	private Object registerUserForEhealthApplicationVo(String role, ConnectionData connData,
 			String samlTicketIdentityAssertion, ElgaEHealthApplication application) {
 		if (connData == null || application == null) {
@@ -583,6 +759,16 @@ public class ElgaConnectionCaller {
 		return true;
 	}
 
+	/**
+	 * Register user for electronic immunization record.
+	 *
+	 * @param role                        the role
+	 * @param connData                    the connection data
+	 * @param samlTicketIdentityAssertion the saml ticket identity assertion
+	 * @param application                 the application (electronic immunization)
+	 * @return true, if registration was successful. Otherwise Message with error
+	 *         details is returned.
+	 */
 	private Object registerUserForEImmunizationRecord(String role, ConnectionData connData,
 			String samlTicketIdentityAssertion, ElgaEHealthApplication application) {
 		if (connData == null || application == null) {
@@ -623,20 +809,20 @@ public class ElgaConnectionCaller {
 	 * This method queries first metadata of medication list and queries afterwards
 	 * medication list.
 	 *
-	 * @param connData          connection data of respective user, who would like
-	 *                          to retrieve medication list
-	 * @param documentReference contains details for restriction of medication list
-	 *                          search
-	 * @param typeCode          type code of document to search for
-	 *
+	 * @param connData  connection data of respective user, who would like to
+	 *                  retrieve medication list
+	 * @param patientId the patient id
+	 * @param status    the status
+	 * @param typeCode  type code of document to search for
 	 * @return If the user was registered successfully and a medication list was
 	 *         found the document is returned. If the query failed, the error
 	 *         message {@link Message} why the request failed is returned.
-	 * @throws XmlException
-	 * @throws UnauthorizedException
-	 * @throws IOException
-	 * @throws SAXException
-	 * @throws ParserConfigurationException
+	 * @throws XmlException                 the xml exception
+	 * @throws UnauthorizedException        the unauthorized exception
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
 	 */
 	public XDSRetrieveResponseType findMedicationList(ConnectionData connData, Identificator patientId,
 			AvailabilityStatus status, String typeCode)
@@ -662,6 +848,12 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * Gets the unique id of external identifiers.
+	 *
+	 * @param identifiers the identifiers
+	 * @return the unique id of external identifiers
+	 */
 	private String getUniqueIdOfExternalIdentifiers(ExternalIdentifierType[] identifiers) {
 		if (identifiers == null) {
 			return "";
@@ -678,6 +870,12 @@ public class ElgaConnectionCaller {
 		return uniqueId;
 	}
 
+	/**
+	 * Extract repository id.
+	 *
+	 * @param aSlots the slots
+	 * @return repository id
+	 */
 	private String extractRepositoryId(SlotType1[] aSlots) {
 		if (aSlots == null) {
 			return "";
@@ -692,6 +890,13 @@ public class ElgaConnectionCaller {
 		return "";
 	}
 
+	/**
+	 * Extract ids such as repository id or unique id from passed
+	 * {@link RegistryObjectListType}.
+	 *
+	 * @param registryObject the registry object
+	 * @return list of ids
+	 */
 	private List<String[]> extractIds(RegistryObjectListType registryObject) {
 		List<String[]> documentList = new ArrayList<>();
 
@@ -719,23 +924,19 @@ public class ElgaConnectionCaller {
 	}
 
 	/**
-	 * This method queries all prescriptions (open and closed) of a patient
+	 * This method queries all prescriptions (open and closed) of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve prescriptions
-	 * @param documentReference contains details for the restriction of prescription
-	 *                          search such as social security number of the patient
-	 * @param forDispenses      parameter to limit the search for open or all
-	 *                          prescriptions. True if only prescriptions to be
-	 *                          dispensed should be requested. Otherwise false.
-	 *
+	 * @param connData  the conn data
+	 * @param patientId the patient id
+	 * @param status    the status
+	 * @param typeCode  the type code
 	 * @return If the user was registered successfully and prescriptions were found,
 	 *         {@link FhirBundle} with {@link FhirDocumentReference} as resource is
 	 *         returned. If the query failed, a {@link FhirBundle} with information,
 	 *         why the request failed is returned.
-	 * @throws UnauthorizedException
-	 * @throws XmlException
-	 * @throws RemoteException
+	 * @throws UnauthorizedException the unauthorized exception
+	 * @throws RemoteException       the remote exception
+	 * @throws XmlException          the xml exception
 	 */
 	public AdhocQueryResponseDocument findPrescriptions(ConnectionData connData, Identificator patientId,
 			AvailabilityStatus status, String typeCode) throws UnauthorizedException, RemoteException, XmlException {
@@ -748,18 +949,17 @@ public class ElgaConnectionCaller {
 	/**
 	 * This method queries open prescriptions of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve prescriptions
-	 * @param documentReference contains details for the restriction of prescription
-	 *                          search such as social security number of the patient
-	 *
+	 * @param connData  the conn data
+	 * @param patientId the patient id
+	 * @param status    the status
+	 * @param typeCode  the type code
 	 * @return If the user was registered successfully and prescriptions were found,
 	 *         {@link FhirBundle} with {@link FhirDocumentReference} as resource is
 	 *         returned. If the query failed, a {@link FhirBundle} with information,
 	 *         why the request failed is returned.
-	 * @throws UnauthorizedException
-	 * @throws XmlException
-	 * @throws RemoteException
+	 * @throws UnauthorizedException the unauthorized exception
+	 * @throws RemoteException       the remote exception
+	 * @throws XmlException          the xml exception
 	 */
 	public AdhocQueryResponseDocument findPrescriptionsForDispenses(ConnectionData connData, Identificator patientId,
 			AvailabilityStatus status, String typeCode) throws UnauthorizedException, RemoteException, XmlException {
@@ -773,19 +973,17 @@ public class ElgaConnectionCaller {
 	 * This method queries self created update immunization states of ELGA eHealth
 	 * application "eImpfpass" of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve immunization states
-	 * @param documentReference contains details for the restriction of immunization
-	 *                          states search such as social security number of
-	 *                          patient
-	 *
+	 * @param connData  the conn data
+	 * @param patientId the patient id
+	 * @param status    the status
+	 * @param typeCode  the type code
 	 * @return If the user was registered successfully and immunization states were
 	 *         found, {@link FhirBundle} with {@link FhirDocumentReference} as
 	 *         resource is returned. If the query failed, a {@link FhirBundle} with
 	 *         information, why the request failed is returned.
-	 * @throws XmlException
-	 * @throws RemoteException
-	 * @throws UnauthorizedException
+	 * @throws RemoteException       the remote exception
+	 * @throws XmlException          the xml exception
+	 * @throws UnauthorizedException the unauthorized exception
 	 */
 	public AdhocQueryResponseDocument findUpdateImmunisationStates(ConnectionData connData, Identificator patientId,
 			AvailabilityStatus status, String typeCode) throws RemoteException, XmlException, UnauthorizedException {
@@ -799,17 +997,23 @@ public class ElgaConnectionCaller {
 	/**
 	 * This method provides and registers a CDA document in the ELGA area. An ITI-41
 	 * transaction is executed in the background.
-	 * 
-	 * @param body              contains information about the document to be
-	 *                          registered, such as metadata and the document itself
-	 * @param connData          Connection data of the respective user providing the
-	 *                          document
-	 * @param oidTargetElgaArea OID of the ELGA area in which documents should be
-	 *                          stored
-	 * 
+	 *
+	 * @param status                 the status
+	 * @param typeCode               the type code
+	 * @param healthCareFacilityCode the health care facility code
+	 * @param practiceSettingCode    the practice setting code
+	 * @param formatCode             the format code
+	 * @param patientId              the patient id
+	 * @param doc                    the doc
+	 * @param cda                    the cda
+	 * @param parentDoc              the parent doc
+	 * @param connData               Connection data of the respective user
+	 *                               providing the document
+	 * @param oidTargetElgaArea      OID of the ELGA area in which documents should
+	 *                               be stored
 	 * @return a message {@link Message} whether the registration was successful or
 	 *         why the request failed is returned.
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public XDSResponseType provideAndRegisterDocuments(AvailabilityStatusType status, String typeCode,
 			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
@@ -829,16 +1033,18 @@ public class ElgaConnectionCaller {
 
 	/**
 	 * This method queries health service providers with the given
-	 * {@link searchParam} as filter
-	 * 
-	 * @param searchParam contains the data for filtering the health service
-	 *                    providers, such as family name of the health service
-	 *                    provider
+	 * {@link searchParam} as filter.
 	 *
+	 * @param family    the family
+	 * @param given     the given
+	 * @param maxResult the max result
+	 * @param active    the active
+	 * @param role      the role
+	 * @param address   the address
 	 * @return If the request was successful a list of {@link ListResponse} is
 	 *         returned. If the query failed, the error message {@link Message} why
 	 *         the request failed is returned.
-	 * @throws RemoteException
+	 * @throws RemoteException the remote exception
 	 */
 	public ListResponse[] searchGda(String family, String given, int maxResult, boolean active, String role,
 			Address address) throws RemoteException {
@@ -847,7 +1053,7 @@ public class ElgaConnectionCaller {
 
 	/**
 	 * This method queries the demographic data of a patient. ({@link connData}).
-	 * 
+	 *
 	 * @param connData  Connection data of the respective user requesting the
 	 *                  demographic data
 	 * @param parameter contains the data for the query of demographic data such as
@@ -877,6 +1083,12 @@ public class ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Gets the patient demographics results as a {@link Bundle}.
+	 *
+	 * @param patients search result
+	 * @return the created {@link Bundle}
+	 */
 	private org.hl7.fhir.dstu3.model.Bundle getPatientDemographicsResultBundle(List<FhirPatient> patients) {
 		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
 		bundle.setType(org.hl7.fhir.dstu3.model.Bundle.BundleType.SEARCHSET);
@@ -899,6 +1111,12 @@ public class ElgaConnectionCaller {
 		return bundle;
 	}
 
+	/**
+	 * Gets {@link Bundle} with an error if search parameters for querying patient
+	 * demographics are empty.
+	 *
+	 * @return the {@link Bundle} with error
+	 */
 	private org.hl7.fhir.dstu3.model.Bundle getErrorBundleEmptyPatientDemographics() {
 		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
 		org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent component = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
@@ -925,22 +1143,24 @@ public class ElgaConnectionCaller {
 	/**
 	 * This method cancels a document by setting the status of the document to
 	 * deprecated. An ITI-57 transaction is executed in the background.
-	 * 
+	 *
 	 * @param connData          Connection data of the respective user who wants to
 	 *                          cancel the document
-	 * @param parameter         contains information about the document to be
-	 *                          cancelled
+	 * @param uniqueId          the unique id
+	 * @param patientId         the patient id
+	 * @param categoryCode      the category code
+	 * @param authorInstitution the author institution
 	 * @param oidTargetElgaArea OID of the ELGA area in which this document should
 	 *                          be cancelled
-	 *
 	 * @return a message {@link Message} whether the cancellation was successful or
 	 *         why the request failed is returned.
-	 * @throws UnauthorizedException
-	 * @throws IOException
-	 * @throws SAXException
-	 * @throws ParserConfigurationException
-	 * @throws AccessDeniedMessage
-	 * @throws XmlException
+	 * @throws UnauthorizedException        the unauthorized exception
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
+	 * @throws XmlException                 the xml exception
+	 * @throws AccessDeniedMessage          the access denied message
 	 */
 	public RegistryResponseType cancelDocument(ConnectionData connData, String uniqueId, Identificator patientId,
 			String categoryCode, String authorInstitution, String oidTargetElgaArea) throws UnauthorizedException,
@@ -952,7 +1172,7 @@ public class ElgaConnectionCaller {
 		}
 
 		ElgaEHealthApplication eHealthApplication = null;
-		if (categoryCode != null && connData.getHcpAssertion() != null) {			
+		if (categoryCode != null && connData.getHcpAssertion() != null) {
 			if (CONFIG.isEImmunLoginEnabled()
 					&& ClassCode.HISTORY_IMMUNIZATION.getCodeValue().equalsIgnoreCase(categoryCode)) {
 				eHealthApplication = CONFIG.getEImmunizationId();
@@ -977,14 +1197,25 @@ public class ElgaConnectionCaller {
 				authorInstitution, oidTargetElgaArea);
 	}
 
+	/**
+	 * Request context assertion.
+	 *
+	 * @param hcpAssertion       the HCP assertion
+	 * @param eHealthApplication the eHealth application
+	 * @param kindOfRequest      the kind of request
+	 * @param role               the role
+	 *
+	 * @return if user registration was successful Context Assertion is returned as
+	 *         {@link AssertionType} otherwise {@link Message} with error details is returned
+	 */
 	private Object requestContextAssertion(AssertionType hcpAssertion, ElgaEHealthApplication eHealthApplication,
 			int kindOfRequest, String role) {
 		return assertionTransactions.requestKontextAssertion(eHealthApplication, hcpAssertion, kindOfRequest, role);
 	}
 
 	/**
-	 * This method queries all accessible card readers (SVC GINA)
-	 * 
+	 * This method queries all accessible card readers (SVC GINA).
+	 *
 	 * @return a list of {@link CardReader} if the request was successful, otherwise
 	 *         an error message {@link Message} is returned.
 	 */
@@ -995,10 +1226,10 @@ public class ElgaConnectionCaller {
 	/**
 	 * This method queries the data of the card that is currently inserted in the
 	 * specified card reader.
-	 * 
+	 *
 	 * @param cardReaderId id of the card reader, which should be used
 	 * @param ginoEndpoint endpoint of the GINO (card reader)
-	 * 
+	 *
 	 * @return if the request was successful, found data in {@link Card} is
 	 *         returned, otherwise an error message {@link Message} is returned.
 	 */
@@ -1016,7 +1247,7 @@ public class ElgaConnectionCaller {
 	 * This method creates the xml of the CDA document for "Update
 	 * Immunisierungsstatus" with the stylesheet (eimpf-stylesheet_v1.0.xsl). This
 	 * document is used for the electronic immunization record (eImpfpass) in ELGA.
-	 * 
+	 *
 	 * @param updateImmunizationState an instance of
 	 *                                {@link EimpfDocumentUpdateImmunisierungsstatus}
 	 * @return if the xml could be generated the xml as {@link String} is returned,
@@ -1028,7 +1259,6 @@ public class ElgaConnectionCaller {
 
 		try {
 			file = new File("resources/cda_immunization_entry_example.xml");
-
 			synchronized (file) {
 				updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
 				document = FileUtils.readFileToString(file, StandardCharsets.UTF_8.name());
@@ -1049,7 +1279,46 @@ public class ElgaConnectionCaller {
 		} finally {
 			deleteFile(file);
 		}
-		
+
+		return null;
+	}
+
+	/**
+	 * This method generates an instance of {@link POCDMT000040ClinicalDocument} in
+	 * the ehealth connector project from the XML of the CDA document. The used XML
+	 * is passed by the parameter {@link document}.
+	 * {@link POCDMT000040ClinicalDocument} is generated depending on the format.
+	 *
+	 * @param bytesDoc   bytes of the xml document (CDA document)
+	 * @param formatCode format of xml document (CDA document)
+	 * @return if the {@link POCDMT000040ClinicalDocument} could be generated from
+	 *         the xml the instance is returned, otherwise null is returned.
+	 */
+	protected POCDMT000040ClinicalDocument getDetailsOfDocument(byte[] bytesDoc, String formatCode) {
+
+		try {
+			if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
+				return getDetailsOfUpdateImmunization(bytesDoc);
+			} else if (FormatCode.ELGA_LAB_REPORT_FULL_SUPPORT_2015.getCodeValue().equalsIgnoreCase(formatCode)
+					|| FormatCode.ELGA_LAB_REPORT_BASIC_2013.getCodeValue().equalsIgnoreCase(formatCode)
+					|| FormatCode.ELGA_LAB_REPORT_ENHANCED_2013.getCodeValue().equalsIgnoreCase(formatCode)) {
+				return getDetailsOfLabReport(bytesDoc);
+			} else if (FormatCode.ELGA_MEDICAL_DISCHARGE_SUMMARY_FULL_SUPPORT_V206.getCodeValue()
+					.equalsIgnoreCase(formatCode)
+					|| FormatCode.ELGA_MEDICAL_DISCHARGE_SUMMARY_ENHANCED_V206.getCodeValue()
+							.equalsIgnoreCase(formatCode)
+					|| FormatCode.ELGA_MEDICAL_DISCHARGE_SUMMARY_BASIC_V206.getCodeValue()
+							.equalsIgnoreCase(formatCode)) {
+				return getDetailsOfDischargeLetter(bytesDoc);
+			} else if (FormatCode.ELGA_EMEDICATION_2015_V206.getCodeValue().equalsIgnoreCase(formatCode)) {
+				return getDetailsOfPrescription(bytesDoc);
+			} else if (FormatCode.ELGA_PHC_2017.getCodeValue().equalsIgnoreCase(formatCode)) {
+				return getDetailsOfPhcConsultationSummary(bytesDoc);
+			}
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+
 		return null;
 	}
 
@@ -1058,17 +1327,18 @@ public class ElgaConnectionCaller {
 	 * {@link EimpfDocumentUpdateImmunisierungsstatus} in the ehealth connector
 	 * project from the XML of the CDA document. The used XML is passed by the
 	 * parameter {@link document}
-	 * 
+	 *
 	 * @param document bytes of the xml document (CDA document)
 	 * @return if the {@link EimpfDocumentUpdateImmunisierungsstatus} could be
 	 *         generated from the xml the instance is returned, otherwise null is
 	 *         returned.
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfUpdateImmunization(byte[] document) throws IOException {
 		File file = new File("resources/update_immunization_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
 			try {
 				return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1081,11 +1351,21 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * This method generates an instance of {@link Laborbefund} in the ehealth
+	 * connector project from the XML of the CDA document. The used XML is passed by
+	 * the parameter {@link document}
+	 *
+	 * @param document bytes of the xml document (CDA document)
+	 * @return if the {@link Laborbefund} could be generated from the xml the
+	 *         instance is returned, otherwise null is returned.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public POCDMT000040ClinicalDocument getDetailsOfLabReport(byte[] document) throws IOException {
 		File file = new File("resources/lab_report_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
 			try {
 				return Laborbefund.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1098,6 +1378,99 @@ public class ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * This method generates an instance of {@link Cdarezept} in the ehealth
+	 * connector project from the XML of the CDA document. The used XML is passed by
+	 * the parameter {@link document}.
+	 *
+	 * @param document bytes of the xml document (CDA document)
+	 * @return if the {@link Cdarezept} could be generated from the xml the instance
+	 *         is returned, otherwise null is returned.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public POCDMT000040ClinicalDocument getDetailsOfPrescription(byte[] document) throws IOException {
+		File file = new File("resources/cda_prescription_example.xml");
+
+		synchronized (file) {
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			try {
+				return Cdarezept.loadFromFile(file);
+			} catch (JAXBException e) {
+				LOGGER.error(e.getMessage(), e);
+			} finally {
+				java.nio.file.Files.delete(file.toPath());
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the details of discharge letter.
+	 *
+	 * @param document the document
+	 * @return the details of discharge letter
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public POCDMT000040ClinicalDocument getDetailsOfDischargeLetter(byte[] document) throws IOException {
+		File file = new File("resources/discharge_letter_example.xml");
+
+		synchronized (file) {
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			try {
+				return CdaentlassbriefAerztlich.loadFromFile(file);
+			} catch (JAXBException e) {
+				LOGGER.error(e.getMessage(), e);
+			} finally {
+				java.nio.file.Files.delete(file.toPath());
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * This method generates an instance of {@link ElgapatientConsultationSummary}
+	 * in the ehealth connector project from the XML of the CDA document. The used
+	 * XML is passed by the parameter {@link document}.
+	 *
+	 * @param document bytes of the xml document (CDA document)
+	 * @return if the {@link ElgapatientConsultationSummary} could be generated from
+	 *         the xml the instance is returned, otherwise null is returned.
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public POCDMT000040ClinicalDocument getDetailsOfPhcConsultationSummary(byte[] document) throws IOException {
+		File file = new File("resources/phc_consultation_summary_example.xml");
+
+		synchronized (file) {
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			try {
+				return ElgapatientConsultationSummary.loadFromFile(file);
+			} catch (JAXBException e) {
+				LOGGER.error(e.getMessage(), e);
+			} finally {
+				java.nio.file.Files.delete(file.toPath());
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * This method extracts assertion, which is needed for authentication in
+	 * requests. Context or HCP assertion is extracted here. Context assertion is
+	 * needed for eHealth applications like virtual organizations or electronic
+	 * immunization record. Medical officers are only allowed to access documents of
+	 * electronic immunization record, therefore it is possible to configure, if
+	 * only context assertion can be used.
+	 *
+	 * @param eHealthApplication eHealth application like electronic immunization
+	 *                           record or virtual organizations (PVN)
+	 * @param connData           connection data of registered user
+	 * @param typeCode           type of document to be written or retrieved
+	 * @return assertion for authentication
+	 * @throws UnauthorizedException the unauthorized exception
+	 */
 	protected AssertionType getAssertion(ElgaEHealthApplication eHealthApplication, ConnectionData connData,
 			String typeCode) throws UnauthorizedException {
 		if (connData == null) {
@@ -1125,6 +1498,12 @@ public class ElgaConnectionCaller {
 		return assertion;
 	}
 
+	/**
+	 * Gets the ELGA eHealth application.
+	 *
+	 * @param typeCode the type code
+	 * @return the ELGA eHealth application
+	 */
 	protected ElgaEHealthApplication getElgaEHealthApplication(String typeCode) {
 		ElgaEHealthApplication eHealthApplication = null;
 
@@ -1141,6 +1520,11 @@ public class ElgaConnectionCaller {
 		return eHealthApplication;
 	}
 
+	/**
+	 * Delete file.
+	 *
+	 * @param file the file
+	 */
 	protected void deleteFile(File file) {
 		if (file != null) {
 			try {

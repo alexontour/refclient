@@ -1,9 +1,14 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,9 +20,6 @@ import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PractitionerAt;
 import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaAuthorSpeciality;
 import org.ehealth_connector.common.enums.TelecomAddressUse;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ResponsibleParty;
-import org.ehealth_connector.common.hl7cdar2.ParticipationPhysicalPerformer;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -30,7 +32,6 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
-import org.hl7.fhir.r4.model.StringType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,27 +39,41 @@ import arztis.econnector.ihe.tests.TestUtils;
 import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
 
 /**
- * Test of {@link PractitionerAt}
+ * Test of {@link PractitionerAt}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirPractitionerRoleTest extends TestUtils {
 
+	/** The Constant EXMAMPLE_SYSTEM. */
 	private static final String EXMAMPLE_SYSTEM = "1.2.3.4.5";
+	
+	/** The Constant HOSPITAL_NAME. */
 	private static final String HOSPITAL_NAME = "Amadeus Spital - Chirurgische Abteilung";
+	
+	/** The Constant MAILTO. */
 	private static final String MAILTO = "mailto:";
+	
+	/** The Constant ASSIGNED. */
 	private static final String ASSIGNED = "ASSIGNED";
-	private static final String EXAMPLE_TEL = "tel:+43.6138.3453446.0";
-	private static final String EXAMPLE_FAX = "fax:+43.6138.3453446.4674";
-	private static final String EXAMPLE_MAILTO = "mailto:info@amadeusspital.at";
+	
+	/** The test author body ps. */
 	private PractitionerRole testAuthorBodyPs;
+	
+	/** The test header author. */
 	private PractitionerRole testHeaderAuthor;
+	
+	/** The test performer body laboratory. */
 	private PractitionerRole testPerformerBodyLaboratory;
+	
+	/** The test responsible party. */
 	private PractitionerRole testResponsibleParty;
+	
+	/** The test atcdabbr header author device. */
 	private Device testAtcdabbrHeaderAuthorDevice;
 
 	/**
-	 * Method implementing
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
@@ -70,6 +85,9 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		createAtcdabbrHeaderAuthorDevice();
 	}
 
+	/**
+	 * Creates the author body ps.
+	 */
 	private void createAuthorBodyPs() {
 		testAuthorBodyPs = getAuthor1();
 
@@ -93,6 +111,9 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testAuthorBodyPs.setPractitionerTarget(practitioner);
 	}
 
+	/**
+	 * Creates the header author.
+	 */
 	private void createHeaderAuthor() {
 		testHeaderAuthor = new PractitionerRole();
 		CodeableConcept concept = new CodeableConcept();
@@ -130,6 +151,9 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testHeaderAuthor.setOrganizationTarget(getOrganization1());
 	}
 
+	/**
+	 * Creates the performer laboratory.
+	 */
 	private void createPerformerLaboratory() {
 		testPerformerBodyLaboratory = new PractitionerRole();
 
@@ -181,6 +205,12 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testPerformerBodyLaboratory.setOrganizationTarget(organization);
 	}
 
+	/**
+	 * Creates the code from enum.
+	 *
+	 * @param mdhtCode the mdht code
+	 * @return the codeable concept
+	 */
 	private CodeableConcept createCodeFromEnum(org.ehealth_connector.common.mdht.Code mdhtCode) {
 		CodeableConcept concept = new CodeableConcept();
 		Coding code = new Coding();
@@ -193,8 +223,8 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getAuthorBodyPs()}.
-	 * 
-	 * @throws ParseException
+	 *
+	 * @throws ParseException the parse exception
 	 */
 	@Test
 	public void testGetAuthorBodyPs() throws ParseException {
@@ -263,107 +293,8 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getAtcdabbrOtherPerformerBodyLaboratory()}.
-	 * 
-	 * @throws ParseException
+	 * Creates the responsible party.
 	 */
-	@Test
-	public void testGetAtcdabbrOtherPerformerBodyLaboratory() throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZ");
-		String date = "2020-04-14T03:02:12+0200";
-		String expectedDate = "20200414030212+0200";
-
-		final POCDMT000040Performer2 laboratoryPerformer = FhirPractitionerRole
-				.getAtcdabbrOtherPerformerBodyLaboratory(sdf.parse(date), testPerformerBodyLaboratory);
-
-		assertNotNull(laboratoryPerformer);
-		assertEquals(ParticipationPhysicalPerformer.PRF, laboratoryPerformer.getTypeCode());
-
-		assertNotNull(laboratoryPerformer.getTemplateId());
-		assertEquals(2, laboratoryPerformer.getTemplateId().size());
-		assertTrue("1.2.40.0.34.6.0.11.9.28".equalsIgnoreCase(laboratoryPerformer.getTemplateId().get(0).getRoot())
-				|| "1.3.6.1.4.1.19376.1.3.3.1.7"
-						.equalsIgnoreCase(laboratoryPerformer.getTemplateId().get(0).getRoot()));
-
-		assertTrue("1.2.40.0.34.6.0.11.9.28".equalsIgnoreCase(laboratoryPerformer.getTemplateId().get(1).getRoot())
-				|| "1.3.6.1.4.1.19376.1.3.3.1.7"
-						.equalsIgnoreCase(laboratoryPerformer.getTemplateId().get(1).getRoot()));
-
-		assertNotNull(laboratoryPerformer.getTime());
-		assertEquals(expectedDate, laboratoryPerformer.getTime().getValue());
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity());
-		assertEquals(ASSIGNED, laboratoryPerformer.getAssignedEntity().getClassCode());
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getId());
-		assertEquals(1, laboratoryPerformer.getAssignedEntity().getId().size());
-		assertEquals(EXMAMPLE_SYSTEM, laboratoryPerformer.getAssignedEntity().getId().get(0).getRoot());
-		assertEquals("11", laboratoryPerformer.getAssignedEntity().getId().get(0).getExtension());
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getCode());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getCode().getNullFlavor());
-		assertEquals("UNK", laboratoryPerformer.getAssignedEntity().getCode().getNullFlavor().get(0));
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAddr());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAddr().get(0));
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAddr().get(0).getContent());
-		
-		StringType line1 = new StringType("Wienergasse 12-17");
-		StringType line2 = new StringType("4010 Linz");
-		
-		testAddress(laboratoryPerformer.getAssignedEntity().getAddr().get(0).getContent(), Arrays.asList(line1, line2), null, null,
-				"Oberösterreich", "AUT");
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getTelecom());
-		assertEquals(0, laboratoryPerformer.getAssignedEntity().getTelecom().size());
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAssignedPerson());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAssignedPerson().getName());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getAssignedPerson().getName().get(0));
-		testName(laboratoryPerformer.getAssignedEntity().getAssignedPerson().getName().get(0).getContent(), null, null,
-				"Angelika", "Grünbach");
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization());
-		assertEquals("ORG", laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getClassCode());
-		assertEquals("INSTANCE",
-				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getDeterminerCode());
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName().get(0));
-		assertEquals(HOSPITAL_NAME,
-				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom());
-		assertEquals(3, laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().size());
-
-		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
-				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(0).getValue())
-				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(0).getValue())
-				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(0).getValue()));
-		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
-				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(1).getValue())
-				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(1).getValue())
-				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(1).getValue()));
-		assertTrue(EXAMPLE_TEL.equalsIgnoreCase(
-				laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getTelecom().get(2).getValue())
-				|| EXAMPLE_FAX.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(2).getValue())
-				|| EXAMPLE_MAILTO.equalsIgnoreCase(laboratoryPerformer.getAssignedEntity()
-						.getRepresentedOrganization().getTelecom().get(2).getValue()));
-
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getAddr());
-		assertNotNull(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getAddr().get(0));
-		
-		line1 = new StringType("Teststraße 54a");
-		testAddress(laboratoryPerformer.getAssignedEntity().getRepresentedOrganization().getAddr().get(0).getContent(),
-				Arrays.asList(line1), "1040", "Wien", null, "Austria");
-	}
-
 	private void createResponsibleParty() {
 		testResponsibleParty = new PractitionerRole();
 
@@ -381,73 +312,8 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getPOCDMT000040ResponsibleParty()}.
-	 * 
-	 * @throws ParseException
+	 * Creates the atcdabbr header author device.
 	 */
-	@Test
-	public void testGetPOCDMT000040ResponsibleParty() {
-		final POCDMT000040ResponsibleParty responsibleParty = FhirPractitionerRole.getPOCDMT000040ResponsibleParty(testResponsibleParty);
-		assertNotNull(responsibleParty);
-		assertNotNull(responsibleParty.getAssignedEntity());
-		assertEquals(ASSIGNED, responsibleParty.getAssignedEntity().getClassCode());
-
-		assertNotNull(responsibleParty.getAssignedEntity().getId());
-		assertEquals(1, responsibleParty.getAssignedEntity().getId().size());
-		assertNotNull(responsibleParty.getAssignedEntity().getId().get(0).getNullFlavor());
-		assertEquals("NI", responsibleParty.getAssignedEntity().getId().get(0).getNullFlavor().get(0));
-
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom());
-		assertEquals(6, responsibleParty.getAssignedEntity().getTelecom().size());
-
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(0));
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(1));
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(2));
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(3));
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(4));
-		assertNotNull(responsibleParty.getAssignedEntity().getTelecom().get(5));
-		assertEquals(MAILTO + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(0).getValue());
-		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(0).getUse().get(0));
-		assertEquals(MAILTO + getTelS2(), responsibleParty.getAssignedEntity().getTelecom().get(1).getValue());
-		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(1).getUse().get(0));
-		assertEquals("fax:" + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(2).getValue());
-		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(2).getUse().get(0));
-		assertEquals("fax:" + getTelS2(), responsibleParty.getAssignedEntity().getTelecom().get(3).getValue());
-		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(3).getUse().get(0));
-		assertEquals("tel:" + getTelS1(), responsibleParty.getAssignedEntity().getTelecom().get(4).getValue());
-		assertEquals(TelecomAddressUse.BUSINESS.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(4).getUse().get(0));
-		assertEquals("tel:" + getTelS2(), responsibleParty.getAssignedEntity().getTelecom().get(5).getValue());
-		assertEquals(TelecomAddressUse.PRIVATE.getCodeValue(),
-				responsibleParty.getAssignedEntity().getTelecom().get(5).getUse().get(0));
-
-		assertNotNull(responsibleParty.getAssignedEntity().getAssignedPerson());
-		assertNotNull(responsibleParty.getAssignedEntity().getAssignedPerson().getName());
-		assertFalse(responsibleParty.getAssignedEntity().getAssignedPerson().getName().isEmpty());
-		assertNotNull(responsibleParty.getAssignedEntity().getAssignedPerson().getName().get(0));
-
-		testName(responsibleParty.getAssignedEntity().getAssignedPerson().getName().get(0).getContent(),
-				getName1().getPrefixAsSingleString(), getName1().getSuffixAsSingleString(), getName1().getGivenAsSingleString(),
-				getName1().getFamily());
-
-		assertNotNull(responsibleParty.getAssignedEntity().getRepresentedOrganization());
-		assertNotNull(responsibleParty.getAssignedEntity().getRepresentedOrganization().getId());
-		assertEquals(getNumS1(),
-				responsibleParty.getAssignedEntity().getRepresentedOrganization().getId().get(0).getExtension());
-
-		assertNotNull(responsibleParty.getAssignedEntity().getRepresentedOrganization().getName());
-		assertNotNull(responsibleParty.getAssignedEntity().getRepresentedOrganization().getName().get(0));
-		assertNotNull(responsibleParty.getAssignedEntity().getRepresentedOrganization().getName().get(0).getContent());
-		assertEquals(getOrganization1().getName(),
-				responsibleParty.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
-
-	}
-
 	private void createAtcdabbrHeaderAuthorDevice() {
 		testAtcdabbrHeaderAuthorDevice = new Device();
 		Identifier deviceId = new Identifier();
@@ -484,6 +350,12 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testAtcdabbrHeaderAuthorDevice.setOwnerTarget(organization);
 	}
 
+	/**
+	 * Test fixed values.
+	 *
+	 * @param author the author
+	 * @param time the time
+	 */
 	private void testFixedValues(POCDMT000040Author author, String time) {
 		assertNotNull(author);
 		assertNotNull(author.getTypeCode());

@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.utilities;
 
 import java.net.URI;
@@ -27,9 +33,6 @@ import org.ehealth_connector.communication.Destination;
 import org.ehealth_connector.communication.DocumentMetadata.DocumentMetadataExtractionMode;
 import org.ehealth_connector.communication.SubmissionSetMetadata.SubmissionSetMetadataExtractionMode;
 import org.ehealth_connector.communication.at.ConvenienceCommunicationAt;
-import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.jasypt.util.text.BasicTextEncryptor;
-import org.jasypt.util.text.StrongTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,72 +50,217 @@ import arztis.econnector.ihe.generatedClasses.ihe.registry.IHERegistryServiceStu
 import arztis.econnector.ihe.generatedClasses.kbs.KBSServiceStub;
 import arztis.econnector.ihe.generatedClasses.pharm.CommunityPharmacyManagerStub;
 
+/**
+ * This class serves as pool for all created <b>SOAP Services</b>, which are
+ * needed for ELGA services. This is a subclass of {@link BaseServiceStubPool}.
+ * Therefore all needed services could be created at program start. In this
+ * service stub pool there are services for
+ *
+ * <ul>
+ * <li>searching health care providers in GDA-I</li>
+ * <li>requesting identity assertion (IDA) of SVC</li>
+ * <li>requesting pharmacy documents</li>
+ * <li>requesting eMed-ID</li>
+ * <li>canceling documents</li>
+ * <li>requesting documents</li>
+ * <li>writing documents</li>
+ * <li>searching patient demographics in ZPI</li>
+ * </ul>
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class IheServiceStubPool extends BaseServiceStubPool {
-	/**
-	 * 
-	 */
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 9172740153910371304L;
+
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IheServiceStubPool.class.getName());
+
+	/** The Constant NIST_KEY_STORE. */
 	private static final String NIST_KEY_STORE = "keystore/cacerts1_keystore.jks";
+
+	/** The Constant NIST_TRUST_STORE. */
 	private static final String NIST_TRUST_STORE = "keystore/cacerts1_truststore.jks";
+
+	/** The Constant ADDRESSING. */
 	private static final String ADDRESSING = "addressing";
+
+	/** The Constant ACTION. */
 	private static final String ACTION = "Action";
+
+	/** The Constant ACTION_QUERY_PHARMACY_DOCS. */
 	private static final String ACTION_QUERY_PHARMACY_DOCS = "urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments";
+
+	/** The Constant ACTION_UPDATE_DOCUMENT_SET. */
 	private static final String ACTION_UPDATE_DOCUMENT_SET = "urn:ihe:iti:2010:UpdateDocumentSet";
+
+	/** The Constant PATH_AXIS2_CONFIG. */
 	private static final String PATH_AXIS2_CONFIG = "resources/axis2.xml";
+
+	/** The port address for ETS. */
 	private String portAddressEts = "";
+
+	/** The port address for KBS. */
 	private String portAddressKbs = "";
+
+	/** The port address for EMED-AT. */
 	private String portAddressEmedAt = "";
+
+	/** The port address for EMED-AT SEC. */
 	private String portAddressEmedAtSec = "";
+
+	/** The port address for XDS. */
 	private String portAddressXds = "";
+
+	/** The port address for XDS write. */
 	private String portAddressXdsWrite = "";
+
+	/** The port address for pharmacy manager. */
 	private String portAddressPharmacyManager = "";
+
+	/** The port address for GDA-I. */
 	private String portAddressGdaI = "";
+
+	/** The port address for PDQ. */
 	private String portAddressPdq = "";
+
+	/** The port address for PIX. */
 	private String portAddressPix = "";
+
+	/** The port address ELGA plus documents. */
 	private String portAddressElgaPlusDocuments = "";
+
+	/** The port address for ELGA plus ETS. */
 	private String portAddressElgaPlusEts = "";
+
+	/** The port address for ELGA plus KBS. */
 	private String portAddressElgaPlusKbs = "";
+
+	/** The port address for ELGA electronic immunization ETS. */
 	private String portAddressElgaPlusEtsEImmunization = "";
+
+	/** The port address ELGA electronic immunization documents. */
 	private String portAddressElgaPlusDocumentsEImmunization = "";
+
+	/** The port address ELGA electronic immunization KBS. */
 	private String portAddressElgaPlusKbsEImmunization = "";
+
+	/** The port address for IDA. */
 	private String portAddressIda = "";
+
+	/** The Constant UUID_LITERAL. */
 	private static final String UUID_LITERAL = "uuid:";
+
+	/** The Constant WS_TRUST_200512_RST_ISSUE. */
 	private static final String WS_TRUST_200512_RST_ISSUE = "http://docs.oasis-open.org/"
 			+ "ws-sx/ws-trust/200512/RST/Issue";
+
+	/** The port address for BASE. */
 	private String portAddressBase = "";
+
+	/** The port address for AUTH. */
 	private String portAddressAuth = "";
+
+	/** The port address for GINA. */
 	private String portAddressGina = "";
+
+	/** The port address for STS. */
 	private String portAddressSts = "";
+
+	/** The http connection manager. */
 	private MultiThreadedHttpConnectionManager httpConnectionManager;
+
+	/** The configuration context. */
 	private ConfigurationContext configurationContext;
+
+	/** The http client. */
 	private HttpClient httpClient;
+
+	/** The STS service stub. */
 	private StsServiceStub stsServiceStub;
+
+	/** The ETS service stub. */
 	private ETSServiceStub etsServiceStub;
+
+	/** The KBS service stub. */
 	private KBSServiceStub kbsServiceStub;
+
+	/** The KBS ehealth plus electronic immunization service stub. */
 	private KBSServiceStub kbsEhealthPlusEImmunizationServiceStub;
+
+	/** The KBS ehealth plus service stub. */
 	private KBSServiceStub kbsEhealthPlusServiceStub;
+
+	/** The EMED-AT service stub. */
 	private EmedAtServiceStub emedAtServiceStub;
+
+	/** The IHE registry documents service stub. */
 	private IHERegistryServiceStub iheRegistryDocumentsServiceStub;
+
+	/** The IHE EMED registry service stub. */
 	private IHERegistryServiceStub iheEmedRegistryServiceStub;
+
+	/** The IHE ehealth plus registry service stub. */
 	private IHERegistryServiceStub iheEhealthPlusRegistryServiceStub;
+
+	/** The IHE ehealth plus electronic immunization registry service stub. */
 	private IHERegistryServiceStub iheEhealthPlusEImmunizationRegistryServiceStub;
+
+	/** The EMED at security token stub. */
 	private EmedAtSecurityTokenStub emedAtSecurityTokenStub;
+
+	/** The community pharmacy manager stub. */
 	private CommunityPharmacyManagerStub communityPharmacyManagerStub;
+
+	/** The community pharmacy manager ehealth plus electronic immunization stub. */
 	private CommunityPharmacyManagerStub communityPharmacyManagerEhealthPlusEImmunizationStub;
+
+	/** The XDS service. */
 	private ConvenienceCommunicationAt xdsService;
+
+	/** The XDS EMED service. */
 	private ConvenienceCommunicationAt xdsEmedService;
+
+	/** The XDS write service. */
 	private ConvenienceCommunicationAt xdsWriteService;
+
+	/** The XDS ehealth plus service. */
 	private ConvenienceCommunicationAt xdsEhealthPlusService;
+
+	/** The XDS ehealth plus electronic immunization service. */
 	private ConvenienceCommunicationAt xdsEhealthPlusEImmunizationService;
+
+	/** The affinity domain ZPI. */
 	private AffinityDomain affinityDomainZpi;
+
+	/** The gda service. */
 	private GdaIndexWsStub gdaService;
+
+	/** The IDA elga area service stub. */
 	private ETSServiceStub idaElgaAreaServiceStub;
+
+	/** The ETS ehealth plus service stub. */
 	private ETSServiceStub etsEhealthPlusServiceStub;
+
+	/** The ETS ehealth plus electronic immunization service stub. */
 	private ETSServiceStub etsEhealthPlusEImmunizationServiceStub;
+
+	/** The instance. */
 	private static IheServiceStubPool instance;
+
+	/** The keystore pass. */
 	private String keystorePass;
 
+	/**
+	 * Constructor to create instance of {@link IheServiceStubPool} with passed
+	 * target endpoints and initiating services. </br>
+	 *
+	 *
+	 * @param mapServiceEndpoints map of service name and service target endpoints
+	 * @param keystorePass        password for keystore
+	 */
 	private IheServiceStubPool(Map<String, String> mapServiceEndpoints, String keystorePass) {
 		if (instance != null) {
 			throw new RuntimeException("Use getInstance() method to get the single instance of IHE service stub pool");
@@ -167,7 +315,17 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public synchronized static IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints, String encryptedKeystorePass) {
+	/**
+	 * This method creates a new instance for {@link IheServiceStubPool} if there is
+	 * no instance available.
+	 *
+	 * @param mapServiceEndpoints   map of service name and service target endpoints
+	 * @param encryptedKeystorePass password for keystore
+	 *
+	 * @return instance of {@link IheServiceStubPool}
+	 */
+	public synchronized static IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints,
+			String encryptedKeystorePass) {
 		if (instance == null) {
 			if (mapServiceEndpoints == null) {
 				throw new IllegalStateException(
@@ -180,6 +338,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return instance;
 	}
 
+	/**
+	 * This method returns an existing instance for {@link IheServiceStubPool} if
+	 * there is no instance available an {@link IllegalStateException} is thrown.
+	 *
+	 * @return instance of {@link IheServiceStubPool}
+	 */
 	public static IheServiceStubPool getInstance() {
 		if (instance == null) {
 			throw new IllegalStateException(
@@ -188,70 +352,160 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return instance;
 	}
 
+	/**
+	 * gets service stub to request health care provider in GDA-I.
+	 *
+	 * @return {@link GdaIndexWsStub}
+	 */
 	public GdaIndexWsStub getGdaIndexService() {
 		return gdaService;
 	}
 
+	/**
+	 * gets service stub to request identity assertion with Admin-Card or e-Card.
+	 *
+	 * @return {@link StsServiceStub}
+	 */
 	public StsServiceStub getStsService() {
 		return stsServiceStub;
 	}
 
+	/**
+	 * gets service stub to request ID for electronic medication (prescription).
+	 *
+	 * @return {@link EmedAtServiceStub}
+	 */
 	public EmedAtServiceStub getEmedAtService() {
 		return emedAtServiceStub;
 	}
 
+	/**
+	 * gets service stub to request eMed-Assertion, which is needed for requesting
+	 * documents of electronic medication with eMed-ID of prescription.
+	 *
+	 * @return {@link EmedAtSecurityTokenStub}
+	 */
 	public EmedAtSecurityTokenStub getEmedAtSecurityTokenService() {
 		return emedAtSecurityTokenStub;
 	}
 
+	/**
+	 * gets service stub to canceling document in ELGA application eBefund.
+	 *
+	 * @return {@link IHERegistryServiceStub}
+	 */
 	public IHERegistryServiceStub getIHERegistryService() {
 		return iheRegistryDocumentsServiceStub;
 	}
 
+	/**
+	 * gets service stub to canceling document in ELGA application eMedikation.
+	 *
+	 * @return {@link IHERegistryServiceStub}
+	 */
 	public IHERegistryServiceStub getIHERegistryEmedService() {
 		return iheEmedRegistryServiceStub;
 	}
 
+	/**
+	 * gets service stub to canceling document in eHealth application virtual
+	 * organizations.
+	 *
+	 * @return {@link IHERegistryServiceStub}
+	 */
 	public IHERegistryServiceStub getIHERegistryEhealthPlusService() {
 		return iheEhealthPlusRegistryServiceStub;
 	}
 
+	/**
+	 * gets service stub to canceling document in eHealth application eImpfpass.
+	 *
+	 * @return {@link IHERegistryServiceStub}
+	 */
 	public IHERegistryServiceStub getIHERegistryEhealthPlusEImmunizationService() {
 		return iheEhealthPlusEImmunizationRegistryServiceStub;
 	}
 
+	/**
+	 * gets service stub for requesting documents in ELGA application eBefund.
+	 *
+	 * @return {@link ConvenienceCommunicationAt}
+	 */
 	public ConvenienceCommunicationAt getXdsService() {
 		return xdsService;
 	}
 
+	/**
+	 * gets service stub for providing documents in ELGA application eBefund.
+	 *
+	 * @return {@link ConvenienceCommunicationAt}
+	 */
 	public ConvenienceCommunicationAt getXdsWriteService() {
 		return xdsWriteService;
 	}
 
+	/**
+	 * gets service stub for requesting and providing documents in eHealth
+	 * application virtual organizations.
+	 *
+	 * @return {@link ConvenienceCommunicationAt}
+	 */
 	public ConvenienceCommunicationAt getXdsEHealthPlusService() {
 		return xdsEhealthPlusService;
 	}
 
+	/**
+	 * gets service stub for requesting and providing documents in eHealth
+	 * application eImpfpass.
+	 *
+	 * @return {@link ConvenienceCommunicationAt}
+	 */
 	public ConvenienceCommunicationAt getXdsEHealthPlusEImmunizationService() {
 		return xdsEhealthPlusEImmunizationService;
 	}
 
+	/**
+	 * gets service stub for requesting patient demographics of ZPI.
+	 *
+	 * @return {@link AffinityDomain}
+	 */
 	public AffinityDomain getAffinityDomainZpi() {
 		return affinityDomainZpi;
 	}
 
+	/**
+	 * gets service stub for requesting and providing documents in ELGA application
+	 * eMedikation.
+	 *
+	 * @return {@link ConvenienceCommunicationAt}
+	 */
 	public ConvenienceCommunicationAt getXdsEmedService() {
 		return xdsEmedService;
 	}
 
+	/**
+	 * gets service stub for querying document metadata in ELGA application
+	 * eMedikation.
+	 *
+	 * @return {@link CommunityPharmacyManagerStub}
+	 */
 	public CommunityPharmacyManagerStub getCommunityPharmacyManagerService() {
 		return communityPharmacyManagerStub;
 	}
 
+	/**
+	 * gets service stub for querying document metadata in eHealth application
+	 * eImpfpass.
+	 *
+	 * @return {@link CommunityPharmacyManagerStub}
+	 */
 	public CommunityPharmacyManagerStub getCommunityPharmacyManagerEhealthPlusEImmunizationStub() {
 		return communityPharmacyManagerEhealthPlusEImmunizationStub;
 	}
 
+	/**
+	 * adds addressing module for axis2.
+	 */
 	private void addAddressingModule() {
 		try {
 			configurationContext = ConfigurationContextFactory.createConfigurationContextFromFileSystem(null,
@@ -266,6 +520,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates base service with passed target endpoint. This method adds
+	 * properties to reuse same HTTP client to base service.
+	 *
+	 * @param portAddressBase target endpoint for SVC SS12 BASE service
+	 */
 	public void instantiateBaseService(String portAddressBase) {
 		try {
 			baseServiceStub = new BaseServiceStub(configurationContext, portAddressBase);
@@ -278,6 +538,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates auth service with passed target endpoint. This method adds
+	 * properties to reuse same HTTP client to auth service.
+	 *
+	 * @param portAddressBase target endpoint for SVC SS12 AUTH service
+	 */
 	public void instantiateAuthService(String portAddressBase) {
 		try {
 			authServiceStub = new AuthServiceStub(configurationContext, portAddressBase);
@@ -290,6 +556,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates GINA service with passed target endpoint. This method adds
+	 * properties to reuse same HTTP client to GINA service.
+	 *
+	 * @param portAddressGina target endpoint for SVC SS12 GINA service
+	 */
 	public void instantiateGinaService(String portAddressGina) {
 		try {
 			ginaServiceStub = new GinaServiceStub(configurationContext, portAddressGina);
@@ -302,6 +574,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates ETS service client with target endpoint of instantiation. This
+	 * method adds properties to reuse same HTTP client and enabling WS-addressing
+	 * headers to ETS service.
+	 *
+	 */
 	public void instantiateEtsService() {
 		try {
 			etsServiceStub = new ETSServiceStub(configurationContext, portAddressEts);
@@ -313,6 +591,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates ETS service client for virtual organization with target endpoint
+	 * of instantiation. This method adds properties to reuse same HTTP client and
+	 * enabling WS-addressing headers to ETS service.
+	 *
+	 */
 	public void instantiateEtsEhealthPlusService() {
 		try {
 			etsEhealthPlusServiceStub = new ETSServiceStub(configurationContext, portAddressElgaPlusEts);
@@ -324,6 +608,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates ETS service client for IDA requests with target endpoint of
+	 * instantiation. This method adds properties to reuse same HTTP client and
+	 * enabling WS-addressing headers to ETS service.
+	 *
+	 */
 	public void instantiateIdaElgaAreaService() {
 		try {
 			idaElgaAreaServiceStub = new ETSServiceStub(configurationContext, portAddressIda);
@@ -335,6 +625,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates ETS service client for electronic immunization with target
+	 * endpoint of instantiation. This method adds properties to reuse same HTTP
+	 * client and enabling WS-addressing headers to ETS service.
+	 *
+	 */
 	public void instantiateEtsEhealthPlusEImmunizationService() {
 		try {
 			etsEhealthPlusEImmunizationServiceStub = new ETSServiceStub(configurationContext,
@@ -347,6 +643,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates KBS service client with target endpoint of instantiation. This
+	 * method adds properties to reuse same HTTP client and enabling WS-addressing
+	 * headers to KBS service.
+	 *
+	 */
 	public void instantiateKbsService() {
 		try {
 			kbsServiceStub = new KBSServiceStub(configurationContext, portAddressKbs);
@@ -358,6 +660,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates KBS service client for virtual organizations with target
+	 * endpoint of instantiation. This method adds properties to reuse same HTTP
+	 * client and enabling WS-addressing headers to KBS service.
+	 *
+	 */
 	public void instantiateKbsEhealthPlusService() {
 		try {
 			kbsEhealthPlusServiceStub = new KBSServiceStub(configurationContext, portAddressElgaPlusKbs);
@@ -369,6 +677,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates KBS service client for electronic immunization record with
+	 * target endpoint of instantiation. This method adds properties to reuse same
+	 * HTTP client and enabling WS-addressing headers to KBS service.
+	 *
+	 */
 	public void instantiateKbsEhealthPlusEImmunizationService() {
 		try {
 			kbsEhealthPlusEImmunizationServiceStub = new KBSServiceStub(configurationContext,
@@ -381,6 +695,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates EMED-AT service client with target endpoint of instantiation.
+	 * This method adds properties to reuse same HTTP client and enabling
+	 * WS-addressing headers to EMED-AT service.
+	 *
+	 */
 	public void instantiateEmedAtService() {
 		try {
 			emedAtServiceStub = new EmedAtServiceStub(configurationContext, portAddressEmedAt);
@@ -392,7 +712,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public void instantiateIheRegistryDocumentService() {
+	/**
+	 * Instantiates IHE registry service client with target endpoint of
+	 * instantiation. This method adds properties to reuse same HTTP client and
+	 * enabling WS-addressing headers to IHE registry service.
+	 *
+	 */
+	private void instantiateIheRegistryDocumentService() {
 		try {
 			iheRegistryDocumentsServiceStub = new IHERegistryServiceStub(configurationContext, portAddressXdsWrite);
 			setPropertiesToIheRegistryDocumentsService(ACTION_UPDATE_DOCUMENT_SET, portAddressXdsWrite,
@@ -404,7 +730,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public void instantiateIheEmedRegistryDocumentService() {
+	/**
+	 * Instantiates IHE registry service client for electronic medication with
+	 * target endpoint of instantiation. This method adds properties to reuse same
+	 * HTTP client and enabling WS-addressing headers to IHE registry service.
+	 *
+	 */
+	private void instantiateIheEmedRegistryDocumentService() {
 		try {
 			iheEmedRegistryServiceStub = new IHERegistryServiceStub(configurationContext, portAddressPharmacyManager);
 			setPropertiesToIheRegistryDocumentsService(ACTION_UPDATE_DOCUMENT_SET, portAddressPharmacyManager,
@@ -416,7 +748,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public void instantiateIheEhealthPlusRegistryDocumentService() {
+	/**
+	 * Instantiates IHE registry service client for virtual organizations with
+	 * target endpoint of instantiation. This method adds properties to reuse same
+	 * HTTP client and enabling WS-addressing headers to IHE registry service.
+	 *
+	 */
+	private void instantiateIheEhealthPlusRegistryDocumentService() {
 		try {
 			iheEhealthPlusRegistryServiceStub = new IHERegistryServiceStub(configurationContext,
 					portAddressElgaPlusDocuments);
@@ -429,7 +767,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public void instantiateIheEhealthPlusEImmunizationRegistryDocumentService() {
+	/**
+	 * Instantiates IHE registry service client for electronic immunization record
+	 * with target endpoint of instantiation. This method adds properties to reuse
+	 * same HTTP client and enabling WS-addressing headers to IHE registry service.
+	 *
+	 */
+	private void instantiateIheEhealthPlusEImmunizationRegistryDocumentService() {
 		try {
 			iheEhealthPlusEImmunizationRegistryServiceStub = new IHERegistryServiceStub(configurationContext,
 					portAddressElgaPlusDocumentsEImmunization);
@@ -442,7 +786,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
-	public void instantiateEmedAtSecurityTokenService() {
+	/**
+	 * Instantiates EMED-AT Security service client for electronic immunization
+	 * record with target endpoint of instantiation. This method adds properties to
+	 * reuse same HTTP client and enabling WS-addressing headers to EMED-AT Security
+	 * service.
+	 *
+	 */
+	private void instantiateEmedAtSecurityTokenService() {
 		try {
 			emedAtSecurityTokenStub = new EmedAtSecurityTokenStub(configurationContext, portAddressEmedAtSec);
 			setPropertiesToEMedAtSecurityTokenService();
@@ -453,6 +804,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates community pharmacy manager service client for electronic
+	 * medication with target endpoint of instantiation. This method adds properties
+	 * to reuse same HTTP client and enabling WS-addressing headers to community
+	 * pharmacy manager service.
+	 *
+	 */
 	public void instantiateCommunityPharmacyManagerService() {
 		try {
 			communityPharmacyManagerStub = new CommunityPharmacyManagerStub(configurationContext,
@@ -465,6 +823,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates community pharmacy manager service client for electronic
+	 * immunization record with target endpoint of instantiation. This method adds
+	 * properties to reuse same HTTP client and enabling WS-addressing headers to
+	 * community pharmacy manager service.
+	 *
+	 */
 	public void instantiateCommunityPharmacyManagerEhealthPlusEImmunizationService() {
 		try {
 			communityPharmacyManagerEhealthPlusEImmunizationStub = new CommunityPharmacyManagerStub(
@@ -477,6 +842,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates SVC SS12 STS service client with target endpoint of
+	 * instantiation. This method adds properties to reuse same HTTP client to STS
+	 * service.
+	 *
+	 */
 	public void instantiateStsService() {
 		try {
 			stsServiceStub = new StsServiceStub(configurationContext, portAddressSts);
@@ -489,6 +860,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * Instantiates GDA Index service client for electronic immunization record with
+	 * target endpoint of instantiation. This method adds properties to reuse same
+	 * HTTP client to GDA Index service.
+	 *
+	 */
 	public void instantiateGdaService() {
 		try {
 			gdaService = new GdaIndexWsStub(portAddressGdaI);
@@ -501,6 +878,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * cleans up all available services.
+	 *
+	 * @return true, if cleanup was successful, otherwise false
+	 */
 	@Override
 	public boolean cleanupAll() {
 		try {
@@ -531,7 +913,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return true;
 	}
 
-	public void initiateAllServices() throws URISyntaxException {
+	/**
+	 * instantiates all defined service clients.
+	 *
+	 * @throws URISyntaxException the URI syntax exception
+	 */
+	private void initiateAllServices() throws URISyntaxException {
 		affinityDomainZpi = createAffinityDomain("", "");
 
 		initiateGinaServices();
@@ -545,6 +932,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		}
 	}
 
+	/**
+	 * instantiates all service clients for ELGA, which are needed for application eBefund.
+	 *
+	 * @throws URISyntaxException the URI syntax exception
+	 */
 	private void initiateBaseElgaServices() throws URISyntaxException {
 		instantiateGdaService();
 
@@ -561,13 +953,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		instantiateIdaElgaAreaService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created ida stub for elga areas {}", portAddressIda);
+			LOGGER.debug("created IDA stub for elga areas {}", portAddressIda);
 		}
 
 		instantiateKbsService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created kbs stub {}", portAddressKbs);
+			LOGGER.debug("created KBS stub {}", portAddressKbs);
 		}
 
 		instantiateIheRegistryDocumentService();
@@ -585,6 +977,9 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
 	}
 
+	/**
+	 * instantiates all service clients for GINA.
+	 */
 	private void initiateGinaServices() {
 		if (portAddressBase != null && !portAddressBase.isEmpty()) {
 			instantiateBaseService(portAddressBase);
@@ -613,27 +1008,32 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		instantiateStsService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created sts stub {}", portAddressSts);
+			LOGGER.debug("created STS stub {}", portAddressSts);
 		}
 	}
 
+	/**
+	 * instantiates all service clients for ELGA, which are needed for application eMedikation.
+	 *
+	 * @throws URISyntaxException the URI syntax exception
+	 */
 	private void initiateEMedServices() throws URISyntaxException {
 		instantiateIheEmedRegistryDocumentService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created ihe document registry stub for emed {}", portAddressPharmacyManager);
+			LOGGER.debug("created ihe document registry stub for EMED {}", portAddressPharmacyManager);
 		}
 
 		instantiateEmedAtService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created emed at stub {}", portAddressEmedAt);
+			LOGGER.debug("created EMED at stub {}", portAddressEmedAt);
 		}
 
 		instantiateEmedAtSecurityTokenService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created emed at security token stub {}", portAddressEmedAtSec);
+			LOGGER.debug("created EMED at security token stub {}", portAddressEmedAtSec);
 		}
 
 		instantiateCommunityPharmacyManagerService();
@@ -647,6 +1047,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
 	}
 
+	/**
+	 * instantiates all service clients for ELGA, which are needed for eHealth application virtual organizations.
+	 *
+	 * @throws URISyntaxException the URI syntax exception
+	 */
 	private void initiateVirtualOrganizationServices() throws URISyntaxException {
 		instantiateEtsEhealthPlusService();
 
@@ -657,7 +1062,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		instantiateKbsEhealthPlusService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created kbs ehealth plus stub {}", portAddressElgaPlusKbs);
+			LOGGER.debug("created KBS ehealth plus stub {}", portAddressElgaPlusKbs);
 		}
 
 		instantiateIheEhealthPlusRegistryDocumentService();
@@ -672,6 +1077,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
 	}
 
+	/**
+	 * instantiates all service clients for ELGA, which are needed for eHealth application eImpfpass.
+	 *
+	 * @throws URISyntaxException the URI syntax exception
+	 */
 	private void initiateEImmunizationServices() throws URISyntaxException {
 		instantiateEtsEhealthPlusEImmunizationService();
 
@@ -682,13 +1092,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		instantiateKbsEhealthPlusEImmunizationService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created kbs ehealth plus eImmunization stub {}", portAddressElgaPlusKbsEImmunization);
+			LOGGER.debug("created KBS ehealth plus eImmunization stub {}", portAddressElgaPlusKbsEImmunization);
 		}
 
 		instantiateIheEhealthPlusEImmunizationRegistryDocumentService();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("created ihe document registry stub for emed {}", portAddressElgaPlusDocumentsEImmunization);
+			LOGGER.debug("created ihe document registry stub for EMED {}", portAddressElgaPlusDocumentsEImmunization);
 		}
 
 		instantiateCommunityPharmacyManagerEhealthPlusEImmunizationService();
@@ -705,6 +1115,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 	}
 
+	/**
+	 * gets service stub for authentication in ELGA application eBefund and eMedikation.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link ETSServiceStub}
+	 */
 	public ETSServiceStub getEtsService(String action) {
 		if (action != null && !action.equalsIgnoreCase(etsServiceStub._getServiceClient().getOptions().getAction())) {
 			etsServiceStub._getServiceClient().removeHeaders();
@@ -715,6 +1133,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return etsServiceStub;
 	}
 
+	/**
+	 * gets service stub for requesting identity assertion from ELGA area
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link ETSServiceStub}
+	 */
 	public ETSServiceStub getIdaGdaService(String action) {
 		if (action != null
 				&& !action.equalsIgnoreCase(idaElgaAreaServiceStub._getServiceClient().getOptions().getAction())) {
@@ -726,6 +1152,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return idaElgaAreaServiceStub;
 	}
 
+	/**
+	 * gets service stub for authentication in eHealth application virtual organizations.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link ETSServiceStub}
+	 */
 	public ETSServiceStub getEtsEhealthPlusService(String action) {
 		if (action != null
 				&& !action.equalsIgnoreCase(etsEhealthPlusServiceStub._getServiceClient().getOptions().getAction())) {
@@ -740,6 +1174,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return etsEhealthPlusServiceStub;
 	}
 
+	/**
+	 * gets service stub for authentication in eHealth application eImpfpass.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link ETSServiceStub}
+	 */
 	public ETSServiceStub getEtsEhealthPlusEImmunizationService(String action) {
 		if (action != null && !action.equalsIgnoreCase(
 				etsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().getAction())) {
@@ -754,6 +1196,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return etsEhealthPlusEImmunizationServiceStub;
 	}
 
+	/**
+	 * gets service stub for confirming patient contact in ELGA application eMedikation and eBefund.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link KBSServiceStub}
+	 */
 	public KBSServiceStub getKbsService(String action) {
 		if (action != null && !action.equalsIgnoreCase(kbsServiceStub._getServiceClient().getOptions().getAction())) {
 			kbsServiceStub._getServiceClient().removeHeaders();
@@ -764,6 +1214,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return kbsServiceStub;
 	}
 
+	/**
+	 * gets service stub for confirming patient contact in eHealth application virtual organizations.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link KBSServiceStub}
+	 */
 	public KBSServiceStub getKbsEhealthPlus(String action) {
 		if (action != null
 				&& !action.equalsIgnoreCase(kbsEhealthPlusServiceStub._getServiceClient().getOptions().getAction())) {
@@ -775,6 +1233,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return kbsEhealthPlusServiceStub;
 	}
 
+	/**
+	 * gets service stub for confirming patient contact in eHealth application eImpfpass.
+	 * Passed action is set to service client header.
+	 *
+	 * @param action for service message
+	 *
+	 * @return {@link KBSServiceStub}
+	 */
 	public KBSServiceStub getKbsEhealthPlusEImmunizationService(String action) {
 		if (action != null && !action.equalsIgnoreCase(
 				kbsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().getAction())) {
@@ -786,6 +1252,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return kbsEhealthPlusEImmunizationServiceStub;
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to ETS service client. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersEts(String action, String addressService) {
 		etsServiceStub._getServiceClient().addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
 		etsServiceStub._getServiceClient().addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_TO, addressService));
@@ -793,6 +1267,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to ETS service client for virtual organizations. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersEtsEhealthPlus(String action, String addressService) {
 		etsEhealthPlusServiceStub._getServiceClient()
 				.addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
@@ -802,6 +1284,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to ETS service client for electronic immunization record. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersEtsEhealthPlusEImmunization(String action, String addressService) {
 		etsEhealthPlusEImmunizationServiceStub._getServiceClient()
 				.addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
@@ -811,6 +1301,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to ETS service client for requesting IDA of ELGA. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersIdaElgaAreas(String action, String addressService) {
 		idaElgaAreaServiceStub._getServiceClient()
 				.addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
@@ -820,6 +1318,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to KBS service client. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersKbs(String action, String addressService) {
 		kbsServiceStub._getServiceClient().removeHeaders();
 		kbsServiceStub._getServiceClient().addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
@@ -828,6 +1334,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to KBS service client client for virtual organizations. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersKbsEhealthPlus(String action, String addressService) {
 		kbsEhealthPlusServiceStub._getServiceClient().removeHeaders();
 		kbsEhealthPlusServiceStub._getServiceClient()
@@ -838,6 +1352,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to KBS service client for electronic immunization record. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 */
 	private void setSoapHeadersKbsEhealthPlusEImmunization(String action, String addressService) {
 		kbsEhealthPlusEImmunizationServiceStub._getServiceClient().removeHeaders();
 		kbsEhealthPlusEImmunizationServiceStub._getServiceClient()
@@ -848,6 +1370,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				getSOAPHeaderBlock(AddressingConstants.WSA_MESSAGE_ID, UUID_LITERAL + UUID.randomUUID().toString()));
 	}
 
+	/**
+	 * This method adds the addressing header to the ETS service client.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to ets service
+	 */
 	private void setPropertiesToEtsService(String action) {
 		setSoapHeadersEts(action, portAddressEts);
 		EndpointReference targetEP = new EndpointReference(portAddressEts);
@@ -864,6 +1406,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		etsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the ETS service client for virtual organizations.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to ets ehealth plus service
+	 */
 	private void setPropertiesToEtsEhealthPlusService(String action) {
 		setSoapHeadersEtsEhealthPlus(action, portAddressElgaPlusEts);
 		EndpointReference targetEP = new EndpointReference(portAddressElgaPlusEts);
@@ -882,6 +1444,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		etsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the ETS service client for requesting IDA of ELGA.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to IDA elga area service
+	 */
 	private void setPropertiesToIdaElgaAreaService(String action) {
 		setSoapHeadersIdaElgaAreas(action, portAddressIda);
 		idaElgaAreaServiceStub._getServiceClient().getOptions().setProperty(AddressingConstants.WS_ADDRESSING_VERSION,
@@ -898,6 +1480,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		idaElgaAreaServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the ETS service client for electronic immunization record.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to ets ehealth plus electronic immunization service
+	 */
 	private void setPropertiesToEtsEhealthPlusEImmunizationService(String action) {
 		setSoapHeadersEtsEhealthPlusEImmunization(action, portAddressElgaPlusEtsEImmunization);
 		EndpointReference targetEP = new EndpointReference(portAddressElgaPlusEtsEImmunization);
@@ -917,6 +1519,22 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				Boolean.FALSE);
 	}
 
+	/**
+	 * Creates SOAP header element with passed name and text. The SOAP header for example could look as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing">urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments</addressing:Action>
+	 *  }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * @param name the name
+	 * @param text the text
+	 * @return created SOAP header
+	 */
 	private SOAPHeaderBlock getSOAPHeaderBlock(String name, String text) {
 		OMFactory omFactory = OMAbstractFactory.getOMFactory();
 		SOAPFactory soapFactory = OMAbstractFactory.getSOAP12Factory();
@@ -927,6 +1545,22 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return soapHeaderBlock;
 	}
 
+	/**
+	 * Creates context SOAP header element. The SOAP header for example could look as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <ectx:context xmlns="http://docs.oasis-open.org/ws-caf/2005/10/wsctx" xmlns:ectx="http://elga.at/context/">
+	 *        <context-identifier>urn:oid:1.3.6.1.2.1.27.9354219</context-identifier>
+     *  </ectx:context>
+	 *  }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * @return created context SOAP header
+	 */
 	private SOAPHeaderBlock getContextSOAPHeaderBlock() {
 		OMFactory omFactory = OMAbstractFactory.getOMFactory();
 		SOAPFactory soapFactory = OMAbstractFactory.getSOAP12Factory();
@@ -942,6 +1576,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		return soapHeaderBlock;
 	}
 
+	/**
+	 * This method adds the addressing header to the KBS service client.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to KBS service
+	 */
 	private void setPropertiesToKbsService(String action) {
 		setSoapHeadersKbs(action, portAddressKbs);
 
@@ -960,6 +1614,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		kbsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the KBS service client for virtual organizations.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to KBS ehealth plus service
+	 */
 	private void setPropertiesToKbsEhealthPlusService(String action) {
 		setSoapHeadersKbs(action, portAddressElgaPlusKbs);
 
@@ -980,6 +1654,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		kbsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the KBS service client for electronic immunization record.
+	 * Moreover the addressing module gets engaged. The passed action is set to addressing header field "Action".
+	 * The added header looks as follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the new properties to KBS ehealth plus electronic immunization service
+	 */
 	private void setPropertiesToKbsEhealthPlusEImmunizationService(String action) {
 		setSoapHeadersKbsEhealthPlusEImmunization(action, portAddressElgaPlusKbsEImmunization);
 
@@ -1001,6 +1695,24 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				Boolean.FALSE);
 	}
 
+	/**
+	 * This method adds the addressing header to the EMED-AT service client.
+	 * Moreover the addressing module gets engaged. The added header looks as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 */
 	private void setPropertiesToEMedAtService() {
 		emedAtServiceStub._getServiceClient().addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION,
 				"http://ns.elga.gv.at/emedat/2014/1/eMedikation/generateDocumentId"));
@@ -1026,6 +1738,15 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				.setAction("http://ns.elga.gv.at/emedat/2014/1/eMedikation/generateDocumentId");
 	}
 
+	/**
+	 * This method adds WS-Addressing headers to IHE registry service clients. </br>
+	 * The passed parameters are added to "Action" field and to "To" field. Moreover "MessageId" field is
+	 * filled with random UUID.
+	 *
+	 * @param action for service message
+	 * @param addressService target endpoint of service client
+	 * @param service client to add headers
+	 */
 	private void setSoapHeadersIheRegistryDocumentsService(String action, String addressService,
 			IHERegistryServiceStub service) {
 		service._getServiceClient().addHeader(getSOAPHeaderBlock(AddressingConstants.WSA_ACTION, action));
@@ -1035,6 +1756,28 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		service._getServiceClient().addHeader(getContextSOAPHeaderBlock());
 	}
 
+	/**
+	 * This method adds the addressing header to the IHE registry service client.
+	 * Moreover the addressing module gets engaged. The added header looks as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 *
+	 * @param action the action
+	 * @param targetEndpoint the target endpoint
+	 * @param service the service
+	 */
 	private void setPropertiesToIheRegistryDocumentsService(String action, String targetEndpoint,
 			IHERegistryServiceStub service) {
 		setSoapHeadersIheRegistryDocumentsService(action, targetEndpoint, service);
@@ -1052,6 +1795,24 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				HttpConstants.HEADER_PROTOCOL_11);
 	}
 
+	/**
+	 * This method adds the addressing header to the EMED-AT security service client.
+	 * Moreover the addressing module gets engaged. The added header looks as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing"></addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 */
 	private void setPropertiesToEMedAtSecurityTokenService() {
 		emedAtSecurityTokenStub._getServiceClient().addHeader(getSOAPHeaderBlock(ACTION, WS_TRUST_200512_RST_ISSUE));
 		emedAtSecurityTokenStub._getServiceClient()
@@ -1076,19 +1837,22 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	}
 
 	/**
-	 * This method adds the addressing header to the CommunityPharmacyManagerStub in
-	 * the parameters. Moreover the addressing module gets engaged. The added header
-	 * looks like
+	 * This method adds the addressing header to the CommunityPharmacyManagerStub.
+	 * Moreover the addressing module gets engaged. The added header looks as
+	 * follows
 	 *
-	 * <addressing:Action xmlns:addressing=
-	 * "http://www.w3.org/2005/08/addressing">urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments</addressing:Action>
-	 * <addressing:To xmlns:addressing=
-	 * "http://www.w3.org/2005/08/addressing">https://10.196.3.66/elga-proxy/1/EMED/XDS/eMed</addressing:To>
-	 * <addressing:MessageID xmlns:addressing=
-	 * "http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing">urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments</addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing">https://IP-address/elga-proxy/1/EMED/XDS/eMed</addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
 	 *
-	 * @param pharmManagerService CommunityPharmacyManagerStub
-	 * @throws AxisFault
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
 	 */
 	private void setPropertiesToCommunityPharmacyManagerService() {
 		communityPharmacyManagerStub._getServiceClient()
@@ -1117,6 +1881,24 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 	}
 
+	/**
+	 * This method adds the addressing header to the CommunityPharmacyManagerStub for electronic immunization record.
+	 * Moreover the addressing module gets engaged. The added header looks as
+	 * follows
+	 *
+	 * <pre>
+	 *  {@code
+	 *  <addressing:Action xmlns:addressing="http://www.w3.org/2005/08/addressing">urn:ihe:pharm:cmpd:2010:QueryPharmacyDocuments</addressing:Action>
+	 *  <addressing:To xmlns:addressing="http://www.w3.org/2005/08/addressing">https://IP-address/elga-proxy/1/EMED/XDS/eMed</addressing:To>
+	 *  <addressing:MessageID xmlns:addressing="http://www.w3.org/2005/08/addressing">uuid:50ffa47c-ae5f-4bec-8b4a-4c176ce6d9d6</addressing:MessageID>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 *
+	 * Furthermore used HTTP protocol version ist set to 1.1 and MTOM and CHUNKED
+	 * are disabled. Moreover the reusage of HTTP client is enabled.
+	 */
 	private void setPropertiesToCommunityPharmacyManagerEhealthPlusEImmunizationService() {
 		communityPharmacyManagerEhealthPlusEImmunizationStub._getServiceClient()
 				.addHeader(getSOAPHeaderBlock(ACTION, ACTION_QUERY_PHARMACY_DOCS));
@@ -1146,17 +1928,26 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 	}
 
-	private AffinityDomain createAffinityDomain(String organizationId, String endpoint) throws URISyntaxException {		
+	/**
+	 * creates affinity domain for {@link ConvenienceCommunicationAt} service clients.
+	 * Added domains for PDQ, PIX and XDS transactions.
+	 *
+	 * @param organizationId OID of planned author. It is no problem if this is empty
+	 * @param endpoint URI of service client
+	 * @return created {@link AffinityDomain}
+	 * @throws URISyntaxException the URI syntax exception
+	 */
+	private AffinityDomain createAffinityDomain(String organizationId, String endpoint) throws URISyntaxException {
 		Destination elgaDocumentRegistryAndRepository = new Destination(organizationId, new URI(endpoint),
 				NIST_KEY_STORE, keystorePass, NIST_TRUST_STORE, keystorePass);
-		Destination pix = new Destination(organizationId, new URI(portAddressPix), NIST_KEY_STORE,
-				keystorePass, NIST_TRUST_STORE, keystorePass);
-		Destination pdq = new Destination(organizationId, new URI(portAddressPdq), NIST_KEY_STORE,
-				keystorePass, NIST_TRUST_STORE, keystorePass);
+		Destination pix = new Destination(organizationId, new URI(portAddressPix), NIST_KEY_STORE, keystorePass,
+				NIST_TRUST_STORE, keystorePass);
+		Destination pdq = new Destination(organizationId, new URI(portAddressPdq), NIST_KEY_STORE, keystorePass,
+				NIST_TRUST_STORE, keystorePass);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(
-					"create connvenience communiaction for xds transactions {}, pix transactions {} and pdq transactions {}",
+					"create connvenience communiaction for XDS transactions {}, pix transactions {} and pdq transactions {}",
 					endpoint, portAddressPix, portAddressPdq);
 		}
 

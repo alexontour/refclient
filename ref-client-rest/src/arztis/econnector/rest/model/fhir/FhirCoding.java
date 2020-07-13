@@ -1,37 +1,59 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
 import org.ehealth_connector.common.enums.NullFlavor;
 import org.ehealth_connector.common.hl7cdar2.CD;
+import org.ehealth_connector.common.hl7cdar2.CE;
+import org.ehealth_connector.common.hl7cdar2.CS;
 import org.hl7.fhir.r4.model.Coding;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
+/**
+ * This class is a subclass of {@link Coding}. Therefore it contains
+ * reference to a code defined by a terminology or ontology. </br>
+ *
+ * It contains functionalities for converting CDA R2 {@link CD}, CDA R2
+ * {@link CE} and CDA R2 {@link CS} into HL7 FHIR {@link Coding} and
+ * vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @DatatypeDef(name="Coding")
 public class FhirCoding extends Coding {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirCoding() {
-		
+
 	}
-	
+
 	/**
-	 * Constructor to create coding of HL7 CDA R2 CD data type
-	 * 
+	 * Constructor to create coding of HL7 CDA R2 CD data type.
+	 *
 	 * @param cd HL7 CDA R2 data type
 	 */
 	public FhirCoding(CD cd) {
 		fromCD(cd);
 	}
 
+	/**
+	 * From CD.
+	 *
+	 * @param hl7CdaR2Value the hl 7 cda R 2 value
+	 */
 	private void fromCD(org.ehealth_connector.common.hl7cdar2.CD hl7CdaR2Value) {
 
 		if (hl7CdaR2Value != null) {
@@ -41,13 +63,13 @@ public class FhirCoding extends Coding {
 			setDisplay(hl7CdaR2Value.getDisplayName());
 		}
 	}
-	
+
 	/**
 	 * Creates the HL7 CDA R2 CD data type from HL7 FHIR Coding type.
 	 *
 	 * @param coding HL7 FHIR coding
 	 * @param nf     null flavor, which should be used if coding is null
-	 * 
+	 *
 	 * @return the HL7 CDA R2 CD data typed value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.CD createHl7CdaR2Cd(Coding coding, NullFlavor nf) {
@@ -130,13 +152,13 @@ public class FhirCoding extends Coding {
 
 		return retVal;
 	}
-	
+
 	/**
 	 * Creates the HL7 CDA R2 CS data type from HL7 FHIR Coding type.
 	 *
 	 * @param coding HL7 FHIR coding
 	 * @param nf     null flavor, which should be used if coding is null
-	 * 
+	 *
 	 * @return the HL7 CDA R2 CS data typed value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.CS createHl7CdaR2Cs(Coding coding, NullFlavor nf) {

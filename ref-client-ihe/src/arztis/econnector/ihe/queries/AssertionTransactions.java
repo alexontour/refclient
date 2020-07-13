@@ -1,24 +1,24 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.ihe.queries;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.rmi.RemoteException;
-import java.time.Instant;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.util.XMLUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlObject;
-import org.hl7.fhir.r4.model.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.base.soap.BaseServiceStub.CardException;
 import arztis.econnector.common.model.Message;
 import arztis.econnector.common.model.MessageTypes;
 import arztis.econnector.common.utilities.MessageUtil;
@@ -36,7 +36,6 @@ import arztis.econnector.ihe.generatedClasses.at.chipkarte.client.sts.soap.StsSe
 import arztis.econnector.ihe.generatedClasses.at.chipkarte.client.sts.soap.StsServiceStub.RequestSamlAssertionResponseE;
 import arztis.econnector.ihe.generatedClasses.ets.AccessDenied;
 import arztis.econnector.ihe.generatedClasses.ets.ETSServiceStub;
-import arztis.econnector.ihe.generatedClasses.kbs.KBSServiceStub;
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext.SecurityDocument;
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext.SecurityHeaderType;
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.ws_sx.ws_trust._200512.ELGAClaimsType;
@@ -48,44 +47,64 @@ import arztis.econnector.ihe.generatedClasses.org.oasis_open.ws_sx.ws_trust._200
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.ws_sx.ws_trust._200512.RequestSecurityTokenResponseType;
 import arztis.econnector.ihe.generatedClasses.ts.tiani_spirit.ClaimTypeType;
 import arztis.econnector.ihe.queries.common.QueryPartFactory;
-import arztis.econnector.ihe.utilities.AssertionTypeUtil;
 import arztis.econnector.ihe.utilities.ElgaEHealthApplication;
 import arztis.econnector.ihe.utilities.IheConstants;
 import arztis.econnector.ihe.utilities.IheServiceStubPool;
-import arztis.econnector.ihe.utilities.UnauthorizedException;
 
+/**
+ * This class contains all functionalities to request </br>
+ * 
+ * <li>Identity assertion of SVC and ELGA ETS</li>
+ * <li>Health care provider (HCP) assertion of ELGA ETS</li>
+ * <li>Context assertion for electronic immunization state and virtual
+ * organization of ELGA ETS</li>
+ * <li>e-Card only assertion of SVC</li>.
+ *
+ * @author Anna Jungwirth
+ */
 public class AssertionTransactions {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(AssertionTransactions.class.getName());
-	protected static final String WS_TRUST_200512_RST_ISSUE = "http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/"
-			+ "Issue";
+	
+	/** The Constant WS_TRUST_200512. */
 	protected static final String WS_TRUST_200512 = "http://docs.oasis-open.org/ws-sx/ws-trust/200512";
-	protected static final String CLAIMS_DIALECT_2013 = "urn:tiani-spirit:bes:2013:claims";
+	
+	/** The Constant CLAIMS_DIALECT_2019. */
 	private static final String CLAIMS_DIALECT_2019 = "urn:tiani-spirit:bes:2019:claims";
-	protected static final String XMLSCHEMA_ANY_URI = "http://www.w3.org/2001/XMLSchema#anyURI";
-	protected static final String XMLSCHEMA_STRING = "http://www.w3.org/2001/XMLSchema#string";
+	
+	/** The Constant CLAIMS_TYPE_NAME_REQUESTED_AC. */
 	private static final String CLAIMS_TYPE_NAME_REQUESTED_AC = "urn:tiani-spirit:bes:2019:claims:requested-ac";
+	
+	/** The Constant CLAIMS_TYPE_NAME_REQUESTED_ROLE. */
 	private static final String CLAIMS_TYPE_NAME_REQUESTED_ROLE = "urn:tiani-spirit:bes:2013:claims:requested-role";
+	
+	/** The Constant CLAIMS_TYPE_NAME_REQUESTED_AC_2013. */
 	private static final String CLAIMS_TYPE_NAME_REQUESTED_AC_2013 = "urn:tiani-spirit:bes:2013:claims:requested-ac";
-	protected static final String SUBJECT_ORGANIZATION_ID = "urn:oasis:names:tc:xspa:1.0:subject:organization-id";
+	
+	/** The Constant SUBJECT_ID. */
 	private static final String SUBJECT_ID = "urn:oasis:names:tc:xacml:1.0:subject:subject-id";
+	
+	/** The Constant OID_ISSUING_AUTHORITY. */
 	private static final String OID_ISSUING_AUTHORITY = "urn:elga:bes:2013:OIDIssuingAuthority";
+	
+	/** The Constant ORGANIZATION. */
 	private static final String ORGANIZATION = "urn:oasis:names:tc:xspa:1.0:subject:organization";
-	protected static final String RESOURCE_RESOURCE_ID = "urn:oasis:names:tc:xacml:1.0:resource:resource-id";
-	private static final String CLAIMS_TR_DATE = "urn:tiani-spirit:bes:2013:claims:tr-date";
-	private static final String CLAIMS_TR_TYPE = "urn:tiani-spirit:bes:2013:claims:tr-type";
-	private static final String CLAIMS_IDENT_METHOD = "urn:tiani-spirit:bes:2013:claims:ident-method";
+	
+	/** The Constant KEY_MESSAGE_CHECK_CARD_READER. */
 	private static final String KEY_MESSAGE_CHECK_CARD_READER = "CHECK_CARD_READER";
 
 	/**
-	 * This method requests the Identity Assertion, which confirms the identity of
-	 * the physician. This assertion is needed to request the HCP Assertion.
+	 * This method requests identity assertion, which confirms identity of
+	 * physician, who wants to register for ELGA. This assertion is needed to
+	 * request HCP Assertion.
 	 *
-	 * @param dialogId       String id of the built dialog
-	 * @param ticketSubject   SVC ticket URL for requesting IDA (defined in config file)
+	 * @param dialogId      id of the built GINA dialog
+	 * @param ticketSubject SVC ticket URL for requesting IDA (defined in
+	 *                      configuration file)
 	 *
-	 * @return if a saml ticket can be generated the saml ticket will be returned as
-	 *         String, otherwise a empty String will be returned
+	 * @return if saml ticket can be generated saml ticket is returned, otherwise
+	 *         {@link Message} with error details is returned
 	 */
 	public Object requestIdentityAssertion(String dialogId, String ticketSubject) {
 
@@ -130,6 +149,19 @@ public class AssertionTransactions {
 		}
 	}
 
+	/**
+	 * formats real name of person that it is possible to pass full name with ticket
+	 * subject of SVC. Real name will look like Dr.+Max+Mustermann+MSc. The
+	 * separation with "+" sign is necessary to set full name to URL of ticket
+	 * subject. This method is suggested in FAQ document of SVC.
+	 *
+	 * @param prefix of person
+	 * @param suffix of person
+	 * @param given  name of person
+	 * @param family name of person
+	 *
+	 * @return formatted real name of person
+	 */
 	public String getRealNameForUrl(String prefix, String suffix, String given, String family) {
 		StringBuilder realName = new StringBuilder();
 		if (prefix != null && !prefix.isEmpty()) {
@@ -149,6 +181,22 @@ public class AssertionTransactions {
 		return realName.toString();
 	}
 
+	/**
+	 * This method requests identity assertion, which confirms identity of user of
+	 * hospital, who wants to register for ELGA. This assertion is needed to request
+	 * HCP Assertion.
+	 *
+	 * @param subjectId        Subject ID of health care provider, who wants to
+	 *                         register
+	 * @param organizationId   Organization ID (OID) of health care provider, who
+	 *                         wants to register
+	 * @param issuingAuthority ID of issuing authority
+	 * @param organization     Organization name of health care provider, who wants
+	 *                         to register.
+	 *
+	 * @return if saml ticket can be generated saml ticket is returned, otherwise
+	 *         {@link Message} with error details is returned
+	 */
 	public Object requestIdentityAssertionGdaElgaArea(String subjectId, String organizationId, String issuingAuthority,
 			String organization) {
 		RequestSecurityTokenDocument requestSecurityToken = RequestSecurityTokenDocument.Factory.newInstance();
@@ -158,11 +206,13 @@ public class AssertionTransactions {
 				.setRequestType(ELGARequestTypeEnum.HTTP_DOCS_OASIS_OPEN_ORG_WS_SX_WS_TRUST_200512_ISSUE);
 		elgaRequestSecurityToken.setTokenType(ELGAETSTokenTypeType.URN_ELGA_BES_2013_IDA_GDA_ASSERTION);
 
-		ELGAClaimsType claims = QueryPartFactory.generateELGAClaimsType(CLAIMS_DIALECT_2013,
-				QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, SUBJECT_ID, subjectId),
-				QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, SUBJECT_ORGANIZATION_ID, organizationId),
-				QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, OID_ISSUING_AUTHORITY, issuingAuthority),
-				QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, ORGANIZATION, organization));
+		ELGAClaimsType claims = QueryPartFactory.generateELGAClaimsType(QueryPartFactory.CLAIMS_DIALECT_2013,
+				QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI, SUBJECT_ID, subjectId),
+				QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI,
+						QueryPartFactory.SUBJECT_ORGANIZATION_ID, organizationId),
+				QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI, OID_ISSUING_AUTHORITY,
+						issuingAuthority),
+				QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI, ORGANIZATION, organization));
 
 		try {
 			XmlObject xmlClaims = XmlObject.Factory.parse(claims.xmlText());
@@ -170,7 +220,8 @@ public class AssertionTransactions {
 
 			requestSecurityToken.setRequestSecurityToken(elgaRequestSecurityToken);
 
-			ETSServiceStub service = IheServiceStubPool.getInstance().getIdaGdaService(WS_TRUST_200512_RST_ISSUE);
+			ETSServiceStub service = IheServiceStubPool.getInstance()
+					.getIdaGdaService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 
 			RequestSecurityTokenResponseCollectionDocument reqSecTokenRespCollection = service
 					.issueAssertion(requestSecurityToken, null);
@@ -197,21 +248,27 @@ public class AssertionTransactions {
 		} catch (Exception e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} finally {
-			cleanupEtsServices(WS_TRUST_200512_RST_ISSUE);
+			cleanupEtsServices(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 		}
 	}
 
 	/**
-	 * This method requests the HCP Assertion, which is needed to authenticate the
-	 * physicians. This Assertion has to be in the security header of every SOAP
-	 * Message to request data of ELGA.
+	 * This method requests HCP Assertion, which is needed for authentication at all
+	 * other ELGA requests. This Assertion has to be in the security header of every
+	 * SOAP Message to request data of ELGA.
 	 *
-	 * @param pRole       String role of the provider of health service
-	 * @param pSamlTicket String saml ticket, which authenticate the provider of
-	 *                    health service
+	 * @param pRole         Role of health care provider to register (Possible
+	 *                      values are available under
+	 *                      https://termpub.gesundheit.gv.at
+	 *                      (ELGA_GDA_Aggregatrollen))
+	 * @param pSamlTicket   saml ticket, which authenticate provider of health
+	 *                      service
+	 * @param kindOfRequest kind of requests (VO, eMedication, eImmunization,
+	 *                      electronic records)
 	 *
-	 * @return if the user could registered in ELGA the HCP Assertion will be
-	 *         returned as AssertionType Object otherwise null will be returned
+	 * @return if user registration was successful HCP Assertion is returned as
+	 *         {@link AssertionType} otherwise {@link Message} with error details is
+	 *         returned
 	 */
 	public Object requestHCPAssertion(String pRole, String pSamlTicket, int kindOfRequest) {
 		RequestSecurityTokenDocument requestSecurityToken = RequestSecurityTokenDocument.Factory.newInstance();
@@ -222,10 +279,10 @@ public class AssertionTransactions {
 		elgaRequestSecurityToken.setTokenType(ELGAETSTokenTypeType.URN_ELGA_BES_2013_HCP_ASSERTION);
 
 		ELGAClaimsType claims = ELGAClaimsType.Factory.newInstance();
-		claims.setDialect(CLAIMS_DIALECT_2013);
+		claims.setDialect(QueryPartFactory.CLAIMS_DIALECT_2013);
 		ClaimTypeType[] claimTypeArray = new ClaimTypeType[1];
-		claimTypeArray[0] = QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_TYPE_NAME_REQUESTED_ROLE,
-				pRole);
+		claimTypeArray[0] = QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI,
+				CLAIMS_TYPE_NAME_REQUESTED_ROLE, pRole);
 
 		claims.setClaimTypeArray(claimTypeArray);
 
@@ -246,12 +303,13 @@ public class AssertionTransactions {
 
 			ETSServiceStub service = null;
 			if (kindOfRequest == IheConstants.KIND_OF_REQUEST_VOS) {
-				service = IheServiceStubPool.getInstance().getEtsEhealthPlusService(WS_TRUST_200512_RST_ISSUE);
+				service = IheServiceStubPool.getInstance()
+						.getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 			} else if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
 				service = IheServiceStubPool.getInstance()
-						.getEtsEhealthPlusEImmunizationService(WS_TRUST_200512_RST_ISSUE);
+						.getEtsEhealthPlusEImmunizationService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 			} else {
-				service = IheServiceStubPool.getInstance().getEtsService(WS_TRUST_200512_RST_ISSUE);
+				service = IheServiceStubPool.getInstance().getEtsService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 			}
 
 			RequestSecurityTokenResponseCollectionDocument reqSecTokenRespCollection = service
@@ -274,16 +332,34 @@ public class AssertionTransactions {
 		} catch (Exception e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} finally {
-			cleanupEtsServices(WS_TRUST_200512_RST_ISSUE);
+			cleanupEtsServices(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
 		}
 	}
 
-	public Object requestKontextAssertion(ElgaEHealthApplication vo, AssertionType hcpAssertion, int kindOfRequest, String role) {
+	/**
+	 * This method requests context Assertion, which is needed for authentication at
+	 * ELGA eHealth applications like electronic immunization record or virtual
+	 * organization. This assertion has to be in security header of every SOAP
+	 * message to request data of electronic immunization record or virtual
+	 * organization.
+	 *
+	 * @param vo            eHealth application for which authentication should be
+	 *                      executed
+	 * @param hcpAssertion  assertion, which authenticate health care provider
+	 * @param kindOfRequest kind of requests (VO, eMedication, eImmunization,
+	 *                      electronic records)
+	 * @param role the role
+	 * @return if user registration was successful Context Assertion is returned as
+	 *         {@link AssertionType} otherwise {@link Message} with error details is
+	 *         returned
+	 */
+	public Object requestKontextAssertion(ElgaEHealthApplication vo, AssertionType hcpAssertion, int kindOfRequest,
+			String role) {
 		String claimsDialect = "";
 		String claimsName = "";
 
 		if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
-			claimsDialect = CLAIMS_DIALECT_2013;
+			claimsDialect = QueryPartFactory.CLAIMS_DIALECT_2013;
 			claimsName = CLAIMS_TYPE_NAME_REQUESTED_AC_2013;
 		} else {
 			claimsDialect = CLAIMS_DIALECT_2019;
@@ -292,17 +368,18 @@ public class AssertionTransactions {
 
 		try {
 			ClaimTypeType[] claimTypes = null;
-			
-			if(role != null && !role.isEmpty()) {
+
+			if (role != null && !role.isEmpty()) {
 				claimTypes = new ClaimTypeType[2];
-				claimTypes[1] = QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_TYPE_NAME_REQUESTED_ROLE,
-						role);			 
+				claimTypes[1] = QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI,
+						CLAIMS_TYPE_NAME_REQUESTED_ROLE, role);
 			} else {
 				claimTypes = new ClaimTypeType[1];
 			}
-			
-			claimTypes[0] = QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, claimsName, vo.getId());
-			
+
+			claimTypes[0] = QueryPartFactory.generateClaimValue(QueryPartFactory.XMLSCHEMA_ANY_URI, claimsName,
+					vo.getId());
+
 			RequestSecurityTokenDocument request = QueryPartFactory.generateRequestSecurityTokenDocument(
 					ELGAETSTokenTypeType.URN_ELGA_BES_2019_CONTEXT_ASSERTION,
 					ELGARequestTypeEnum.HTTP_DOCS_OASIS_OPEN_ORG_WS_SX_WS_TRUST_200512_ISSUE, claimsDialect,
@@ -312,11 +389,11 @@ public class AssertionTransactions {
 
 			if (IheConstants.KIND_OF_REQUEST_VOS == kindOfRequest) {
 				reqSecTokenRespCollection = IheServiceStubPool.getInstance()
-						.getEtsEhealthPlusService(WS_TRUST_200512_RST_ISSUE)
+						.getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
 						.issueAssertion(request, QueryPartFactory.buildSecurityHeader(hcpAssertion));
 			} else {
 				reqSecTokenRespCollection = IheServiceStubPool.getInstance()
-						.getEtsEhealthPlusEImmunizationService(WS_TRUST_200512_RST_ISSUE)
+						.getEtsEhealthPlusEImmunizationService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
 						.issueAssertion(request, QueryPartFactory.buildSecurityHeader(hcpAssertion));
 			}
 
@@ -329,17 +406,16 @@ public class AssertionTransactions {
 		} catch (AccessDenied e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_UNAUTHORIZED);
 		} catch (AxisFault af) {
-			return getErrorMessage(SoapUtil.extractErrorMessageOfAxisFault(af),
-					null, af,
+			return getErrorMessage(SoapUtil.extractErrorMessageOfAxisFault(af), null, af,
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} finally {
 			try {
-				IheServiceStubPool.getInstance().getEtsEhealthPlusService(WS_TRUST_200512_RST_ISSUE)._getServiceClient()
-						.cleanupTransport();
-				IheServiceStubPool.getInstance().getEtsEhealthPlusService(WS_TRUST_200512_RST_ISSUE)._getServiceClient()
-						.cleanup();
+				IheServiceStubPool.getInstance().getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+						._getServiceClient().cleanupTransport();
+				IheServiceStubPool.getInstance().getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+						._getServiceClient().cleanup();
 				IheServiceStubPool.getInstance().instantiateEtsEhealthPlusService();
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
@@ -349,202 +425,17 @@ public class AssertionTransactions {
 		return null;
 	}
 
-	public Object registerConfirmationContact(AssertionType pHcpAssertion, String samlTicket, String pCardToken,
-			Identifier patientId, int kindOfRequest) throws UnauthorizedException {
-
-		LOGGER.debug("Saml ticket: {}", samlTicket);
-		
-		if(pHcpAssertion == null) {
-			throw new UnauthorizedException("No HCP Assertion found!");
-		}
-
-		if (samlTicket == null || samlTicket.isEmpty()) {
-			LOGGER.debug("register confirmation without eCard");
-			return registerConfirmationContactWithoutEcard(pHcpAssertion, patientId, kindOfRequest);
-		} else {
-			LOGGER.debug("register confirmation with eCard");
-			return registerConfirmationContactWithECard(pHcpAssertion, samlTicket, pCardToken, patientId,
-					kindOfRequest);
-		}
-	}
-
 	/**
-	 * This method initiates the confirmation of the patient contact in ELGA.
-	 * Therefore the HCP-Assertion has to be in the Security Header and additionally
-	 * there have to be a Identity Assertion of the patient in the SOAP body.
+	 * This method requests a saml ticket to be able to confirm identity of patient.
+	 * The identity will be confirmed with an e-Card.
 	 *
-	 * @param pGinaAddress               String ip address of the gina client like
-	 *                                   10.196.3.66
-	 * @param pTargetEndpointKbs         String path of the endpoint of the kbs
-	 *                                   service like /elga-proxy/1/KBS
-	 * @param pTargetEndpointBaseService String path of the endpoint of the base
-	 *                                   SS-12 service like /base/15
-	 * @param pTargetEndpointSts         String path of the endpoint of the sts
-	 *                                   SS-12 service like /sts/4
-	 * @param pVpnr                      String number of the contracting party
-	 * @param pHcpAssertion              AssertionType
-	 * @param pCardReaderId              String id of the card reader, where the
-	 *                                   eCard is plugged
-	 * @param pDialogId                  String id of the actual eCard dialog
-	 *
-	 * @return true if the contact could be registered and false if the contact
-	 *         could not be registered
-	 * @throws CardException
-	 * @throws ServiceException
-	 * @throws Exception
+	 * @param cardToken     card token of used e-Card
+	 * @param dialogId      id of actual GINA dialog
+	 * @param ticketSubject SVC ticket subject to confirm identity of patient
+	 * @return if saml ticket can be generated saml ticket is returned, otherwise
+	 *         {@link Message} with error details is returned
 	 */
-	public Object registerConfirmationContactWithECard(AssertionType pHcpAssertion, String samlTicket,
-			String pCardToken, Identifier patientId, int kindOfRequest) {
-		try {
-			String typeOfIdentification = "PIM101";
-
-			if (pCardToken == null || pCardToken.isEmpty()) {
-				typeOfIdentification = "PIM104";
-			}
-
-			KBSServiceStub kbsService = null;
-
-			if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
-				kbsService = IheServiceStubPool.getInstance()
-						.getKbsEhealthPlusEImmunizationService(WS_TRUST_200512_RST_ISSUE);
-			} else if (kindOfRequest == IheConstants.KIND_OF_REQUEST_VOS) {
-				kbsService = IheServiceStubPool.getInstance().getKbsEhealthPlus(WS_TRUST_200512_RST_ISSUE);
-			} else {
-				kbsService = IheServiceStubPool.getInstance().getKbsService(WS_TRUST_200512_RST_ISSUE);
-			}
-
-			RequestSecurityTokenResponseCollectionDocument requestSecurityTokenResponseCollDoc = kbsService
-					.issueKBeCard(buildRegisterKbsRequest(ELGAETSTokenTypeType.URN_ELGA_KBS_CONTACT_ECARD, "K102",
-							typeOfIdentification, AssertionTypeUtil.getOrganizationIdOfHcpAssertion(pHcpAssertion),
-							patientId, AssertionTypeUtil.getTimeOfPatientContactOfAssertion(samlTicket), samlTicket),
-							QueryPartFactory.buildSecurityHeader(pHcpAssertion));
-
-			if (requestSecurityTokenResponseCollDoc.getRequestSecurityTokenResponseCollection()
-					.getRequestSecurityTokenResponseArray().length == 0) {
-				return requestSecurityTokenResponseCollDoc.getDomNode();
-			} else {
-				return true;
-			}
-		} catch (AxisFault af) {
-			String returnMessage = SoapUtil.extractErrorMessageOfAxisFault(af);
-			LOGGER.error("Something was going wrong: {}", returnMessage, af);
-
-			return new Message(
-					returnMessage.isEmpty() ? MessageUtil.getMessageFromProperties(KEY_MESSAGE_CHECK_CARD_READER, null)
-							: returnMessage,
-					MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} catch (Exception ex) {
-			return new Message(MessageUtil.getMessageFromProperties(KEY_MESSAGE_CHECK_CARD_READER, null),
-					MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} finally {
-			cleanupKbsServices(WS_TRUST_200512_RST_ISSUE, kindOfRequest);
-		}
-	}
-
-	public Object registerConfirmationContactWithoutEcard(AssertionType pHcpAssertion, Identifier bPkId,
-			int kindOfRequest) {
-		try {
-			String timeOfPatientContact = Instant.now().toString();
-			String typeOfIdentification = "PIM103";
-
-			KBSServiceStub kbsService = null;
-
-			if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
-				kbsService = IheServiceStubPool.getInstance()
-						.getKbsEhealthPlusEImmunizationService(WS_TRUST_200512_RST_ISSUE);
-			} else if (kindOfRequest == IheConstants.KIND_OF_REQUEST_VOS) {
-				kbsService = IheServiceStubPool.getInstance().getKbsEhealthPlus(WS_TRUST_200512_RST_ISSUE);
-			} else {
-				kbsService = IheServiceStubPool.getInstance().getKbsService(WS_TRUST_200512_RST_ISSUE);
-			}
-
-			RequestSecurityTokenResponseCollectionDocument requestSecurityTokenResponseCollDoc = kbsService
-					.issueKB(buildRegisterKbsRequest(ELGAETSTokenTypeType.URN_ELGA_KBS_CONTACT, "K102",
-							typeOfIdentification, AssertionTypeUtil.getOrganizationIdOfHcpAssertion(pHcpAssertion),
-							bPkId, timeOfPatientContact, null), QueryPartFactory.buildSecurityHeader(pHcpAssertion));
-
-			if (requestSecurityTokenResponseCollDoc.getRequestSecurityTokenResponseCollection()
-					.getRequestSecurityTokenResponseArray().length == 0) {
-				return requestSecurityTokenResponseCollDoc.getDomNode();
-			} else {
-				return true;
-			}
-		} catch (AxisFault af) {
-			return getErrorMessage(af.getMessage(),
-					af.getMessage(), af,
-					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} catch (Exception e) {
-			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} finally {
-			cleanupKbsServices(WS_TRUST_200512_RST_ISSUE, kindOfRequest);
-		}
-	}
-
-	public RequestSecurityTokenDocument buildRegisterKbsRequest(ELGAETSTokenTypeType.Enum tokenType,
-			String typeOfContact, String typeOfIdentification, String organizationId, Identifier patientId,
-			String timeOfPatientContact, String samlTicket) throws XmlException {
-
-		String claimValue = "";
-
-		if (patientId != null) {
-			claimValue = patientId.getValue() + "^^^& " + patientId.getSystem() + "&ISO";
-		}
-		RequestSecurityTokenDocument reqSecToken = null;
-
-		if (samlTicket != null) {
-			reqSecToken = QueryPartFactory.generateRequestSecurityTokenDocument(tokenType,
-					ELGARequestTypeEnum.HTTP_DOCS_OASIS_OPEN_ORG_WS_SX_WS_TRUST_200512_ISSUE, CLAIMS_DIALECT_2013,
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_TR_TYPE, typeOfContact),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_IDENT_METHOD, typeOfIdentification),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, SUBJECT_ORGANIZATION_ID, organizationId),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_STRING, RESOURCE_RESOURCE_ID, claimValue),
-					QueryPartFactory.generateClaimValue("http://www.w3.org/2001/XMLSchema#dateTime", CLAIMS_TR_DATE,
-							timeOfPatientContact),
-					QueryPartFactory.generateClaimValue("http://www.w3.org/2001/XMLSchema#base64Binary",
-							"urn:tiani-spirit:bes:2013:claims:ecardkb", XMLUtils.base64encode(samlTicket.getBytes(StandardCharsets.UTF_8))));
-		} else {
-			reqSecToken = QueryPartFactory.generateRequestSecurityTokenDocument(tokenType,
-					ELGARequestTypeEnum.HTTP_DOCS_OASIS_OPEN_ORG_WS_SX_WS_TRUST_200512_ISSUE, CLAIMS_DIALECT_2013,
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_TR_TYPE, typeOfContact),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, CLAIMS_IDENT_METHOD, typeOfIdentification),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_ANY_URI, SUBJECT_ORGANIZATION_ID, organizationId),
-					QueryPartFactory.generateClaimValue(XMLSCHEMA_STRING, RESOURCE_RESOURCE_ID, claimValue),
-					QueryPartFactory.generateClaimValue("http://www.w3.org/2001/XMLSchema#dateTime", CLAIMS_TR_DATE,
-							timeOfPatientContact));
-		}
-
-		return reqSecToken;
-	}
-
-	/**
-	 * This method requests a saml ticket to confirm the identity of the patient.
-	 * The identity will be confirmed through the eCard.
-	 *
-	 * @param pVpnr                      number of the contracting party
-	 * @param pTargetEndpointBaseService String path of the endpoint of the base
-	 *                                   SS-12 service like /base/15
-	 * @param pTargetEndpointSts         path of the endpoint of the sts SS-12
-	 *                                   service like /sts/4
-	 * @param pGinaAddress               ip address of the gina client like
-	 *                                   10.196.3.66
-	 * @param pCardReaderId              id of the card reader, where the eCard is
-	 *                                   plugged
-	 * @param pDialogId                  id of the actual eCard dialog
-	 *
-	 * @return false, if no eCard is inserted or if the eCard can't be read. It
-	 *         returns true, if everything is all right and the saml ticket is
-	 *         issued.
-	 * @throws CardException
-	 * @throws ServiceException
-	 * @throws RemoteException
-	 * @throws at.arztis.ec.generatedClasses.at.chipkarte.client.sts.soap.ServiceException
-	 * @throws at.arztis.ec.generatedClasses.at.chipkarte.client.sts.soap.CardException
-	 * @throws DialogException
-	 * @throws InvalidParameterStsException
-	 * @throws StsException
-	 * @throws AccessException
-	 */
-	public Object requestEcardOnlyAssertion(String pCardToken, String pDialogId, String ticketSubject) {
+	public Object requestEcardOnlyAssertion(String cardToken, String dialogId, String ticketSubject) {
 
 		try {
 			LOGGER.debug(ticketSubject);
@@ -553,11 +444,11 @@ public class AssertionTransactions {
 			RequestSamlAssertionE requestSamlAssertionE = new RequestSamlAssertionE();
 			RequestSamlAssertion requestSamlAssertion = new RequestSamlAssertion();
 
-			if (pCardToken != null && !pCardToken.isEmpty()) {
-				requestSamlAssertion.setCardToken(pCardToken);
+			if (cardToken != null && !cardToken.isEmpty()) {
+				requestSamlAssertion.setCardToken(cardToken);
 			}
 
-			requestSamlAssertion.setDialogId(pDialogId);
+			requestSamlAssertion.setDialogId(dialogId);
 			requestSamlAssertion.setRequestSamlAssertionReq(samlAssertionRequest);
 			requestSamlAssertionE.setRequestSamlAssertion(requestSamlAssertion);
 			RequestSamlAssertionResponseE requestSamlAssertionRespE = IheServiceStubPool.getInstance().getStsService()
@@ -592,7 +483,7 @@ public class AssertionTransactions {
 			LOGGER.error("There is a problem at the authentication of the patient with the eCard: ", af);
 
 			return new Message(
-					returnMessage.isEmpty() ? MessageUtil.getMessageFromProperties(KEY_MESSAGE_CHECK_CARD_READER, null)
+					returnMessage.isEmpty() ? MessageUtil.getMessageFromProperties(KEY_MESSAGE_CHECK_CARD_READER)
 							: returnMessage,
 					MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
@@ -601,6 +492,12 @@ public class AssertionTransactions {
 		}
 	}
 
+	/**
+	 * clean up ETS service client with passed action. And instantiates new ETS
+	 * service client.
+	 *
+	 * @param action of ETS service to clean
+	 */
 	protected void cleanupEtsServices(String action) {
 		try {
 			IheServiceStubPool.getInstance().getEtsService(action)._getServiceClient().cleanupTransport();
@@ -611,31 +508,15 @@ public class AssertionTransactions {
 		}
 	}
 
-	protected void cleanupKbsServices(String action, int kindOfRequest) {
-		if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
-			try {
-				IheServiceStubPool.getInstance().getKbsEhealthPlusEImmunizationService(action)._getServiceClient()
-						.cleanupTransport();
-				IheServiceStubPool.getInstance().getKbsEhealthPlusEImmunizationService(action)._getServiceClient()
-						.cleanup();
-				IheServiceStubPool.getInstance().instantiateKbsEhealthPlusEImmunizationService();
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		} else {
-			try {
-
-				IheServiceStubPool.getInstance().getKbsService(action)._getServiceClient().cleanupTransport();
-				IheServiceStubPool.getInstance().getKbsService(action)._getServiceClient().cleanup();
-				IheServiceStubPool.getInstance().instantiateKbsService();
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage(), e);
-
-			}
-
-		}
-	}
-
+	/**
+	 * logs error message and returns {@link Message}.
+	 *
+	 * @param message         text of error message
+	 * @param detailedMessage detailed error message
+	 * @param ex              thrown exception
+	 * @param status          HTTP request status
+	 * @return created {@link Message}
+	 */
 	protected Message getErrorMessage(String message, String detailedMessage, Exception ex, int status) {
 		LOGGER.error(message, ex);
 		return new Message(message, MessageTypes.ERROR, status, detailedMessage);

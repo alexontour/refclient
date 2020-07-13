@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.rest.server;
 
 import java.io.IOException;
@@ -18,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
 import org.ehealth_connector.fhir.structures.gen.FhirPatient;
@@ -51,28 +58,69 @@ import arztis.econnector.rest.model.fhir.FhirPatientAt;
 import arztis.econnector.rest.utilities.FhirUtil;
 import arztis.econnector.rest.utilities.JsonUtilRest;
 import arztis.econnector.rest.utilities.JwtUtil;
-import arztis.econnector.rest.utilities.RestConstants;
+import arztis.econnector.rest.utilities.RestEndpointConstants;
 
+/**
+ * Handles all incoming HTTP requests for ELGA reference client. It is an
+ * implementation of {@link AbstractHandler}. This implementation is required by
+ * {@link Server}.
+ *
+ * @author Tanja Reiterer and Anna Jungwirth
+ *
+ */
 public class RestHandler extends AbstractHandler {
-	private static final Logger LOGGER = LoggerFactory.getLogger(RestHandler.class.getName());
-	private static final ResourceBundle bundleRestApi = ResourceBundle.getBundle("elga_ref_client_rest_api");
-	private static final String REST_API_VERSION = getRestEndpointFromProperties(RestConstants.REST_API_VERSION);
-	private static final String REST_API_USER_REGISTRATION = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_USER_REGISTRATION));
-	private static final String REST_API_IDA = getRestEndpointFromProperties(RestConstants.REST_API_IDA);
-	private static final String REST_API_PATIENTCONTACTS = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_PATIENTCONTACT));
-	private static final String REST_API_PATIENTDEMOGRAPHICS = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_PATIENTDEMOGRAPHICS));
-	private static final String REST_API_CARD = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_CARD));
-	private static final String REST_API_CARD_READERS = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_CARD_READER_PATH));
-	private static final String REST_API_DOCUMENT_REFERENCE = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_DOCUMENT_REFERENCE));
-	private static final String REST_API_COMPOSITION = concatenate(REST_API_VERSION,
-			getRestEndpointFromProperties(RestConstants.REST_API_COMPOSITION));
 
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(RestHandler.class.getName());
+
+	/** The Constant bundleRestApi. */
+	private static final ResourceBundle bundleRestApi = ResourceBundle.getBundle("elga_ref_client_rest_api");
+
+	/** The Constant REST_API_VERSION. */
+	private static final String REST_API_VERSION = getRestEndpointFromProperties(
+			RestEndpointConstants.REST_API_VERSION);
+
+	/** The Constant REST_API_USER_REGISTRATION. */
+	private static final String REST_API_USER_REGISTRATION = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_USER_REGISTRATION));
+
+	/** The Constant REST_API_IDA. */
+	private static final String REST_API_IDA = getRestEndpointFromProperties(RestEndpointConstants.REST_API_IDA);
+
+	/** The Constant REST_API_PATIENTCONTACTS. */
+	private static final String REST_API_PATIENTCONTACTS = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_PATIENTCONTACT));
+
+	/** The Constant REST_API_PATIENTDEMOGRAPHICS. */
+	private static final String REST_API_PATIENTDEMOGRAPHICS = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_PATIENTDEMOGRAPHICS));
+
+	/** The Constant REST_API_CARD. */
+	private static final String REST_API_CARD = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_CARD));
+
+	/** The Constant REST_API_CARD_READERS. */
+	private static final String REST_API_CARD_READERS = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_CARD_READER_PATH));
+
+	/** The Constant REST_API_DOCUMENT_REFERENCE. */
+	private static final String REST_API_DOCUMENT_REFERENCE = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_DOCUMENT_REFERENCE));
+
+	/** The Constant REST_API_COMPOSITION. */
+	private static final String REST_API_COMPOSITION = concatenate(REST_API_VERSION,
+			getRestEndpointFromProperties(RestEndpointConstants.REST_API_COMPOSITION));
+
+	/**
+	 * Handle requests.
+	 *
+	 * @param target the target
+	 * @param baseRequest the base request
+	 * @param request the request
+	 * @param response the response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ServletException the servlet exception
+	 */
 	@Override
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -107,7 +155,20 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
-	public void handleDocumentReferenceCall(String target, String body, HttpServletRequest request,
+	/**
+	 * handles all requests with literal DocumentReference in <code>target</code>.
+	 * </br>
+	 * This method handles querying, writing and canceling documents.
+	 *
+	 * @param target        The target of the request - either a URI or a name.
+	 * @param body          The body of the request, for example JSON
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
+	private void handleDocumentReferenceCall(String target, String body, HttpServletRequest request,
 			HttpServletResponse response, String authorization) {
 		if (target == null || request == null) {
 			writeResponse("", response, HttpServletResponse.SC_BAD_REQUEST, HttpConstants.MEDIA_TYPE_TEXT_XML);
@@ -127,6 +188,15 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to query document metadata</br>.
+	 *
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleQueryDocuments(HttpServletRequest request, HttpServletResponse response, String authorization) {
 		String type = request.getParameter(JsonUtilRest.JSON_PARAM_TYPE);
 		org.hl7.fhir.r4.model.Identifier patientIdentifier = FhirUtil
@@ -153,6 +223,16 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to retrieve document</br>.
+	 *
+	 * @param target        The target of the request - either a URI or a name.
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleRequestDocument(String target, HttpServletRequest request, HttpServletResponse response,
 			String authorization) {
 		String contentType = request.getParameter(JsonUtilRest.JSON_PARAM_CONTENT_ATTACHMENT_CONTENT_TYPE);
@@ -173,6 +253,15 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to cancel document</br>.
+	 *
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleCancelDocument(HttpServletRequest request, HttpServletResponse response, String authorization) {
 		org.hl7.fhir.r4.model.Identifier patientIdentifier = FhirUtil
 				.extractIdentifierFromTokenType(request.getParameter(JsonUtilRest.JSON_PARAM_PATIENT_IDENTIFIER));
@@ -197,6 +286,14 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to write document</br>.
+	 *
+	 * @param body          The body of the request, for example JSON
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleProvideAndRegisterDocument(String body, HttpServletResponse response, String authorization) {
 		FhirBundle result = FhirElgaConnectionCaller.getInstance().provideAndRegisterDocuments(
 				FhirUtil.getFhirContext().newJsonParser().parseResource(Bundle.class, body),
@@ -215,7 +312,18 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
-	public void handleCdaGenerationCall(String target, String body, HttpServletRequest request,
+	/**
+	 * handles request to generate CDA document from passed <code>body</code>.
+	 *
+	 * @param target        The target of the request - either a URI or a name.
+	 * @param body          The body of the request, for example JSON
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
+	private void handleCdaGenerationCall(String target, String body, HttpServletRequest request,
 			HttpServletResponse response, String authorization) {
 		if (target == null || request == null) {
 			writeResponse("", response, HttpServletResponse.SC_BAD_REQUEST, HttpConstants.MEDIA_TYPE_TEXT_XML);
@@ -241,6 +349,18 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles all requests with literal user in <code>target</code>. </br>
+	 * This method handles authentication of user and requesting identity assertion
+	 * of ELGA area.
+	 *
+	 * @param target   The target of the request - either a URI or a name.
+	 * @param body     The body of the request, for example JSON
+	 * @param request  The {@link HttpServletRequest} either as the Request object
+	 *                 or a wrapper of that request.
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 */
 	private void handleRegisterUser(String target, String body, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (target.contains(REST_API_IDA)) {
@@ -250,6 +370,14 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to get identity assertion of ELGA area.
+	 *
+	 * @param request  The {@link HttpServletRequest} either as the Request object
+	 *                 or a wrapper of that request.
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 */
 	private void handleRequestUserIdaCall(HttpServletRequest request, HttpServletResponse response) {
 		String subjectId = request.getParameter(JsonUtilRest.JSON_PARAM_SUBJECT_ID);
 		String organizationId = request.getParameter(JsonUtilRest.JSON_PARAM_ORGANIZATION_ID);
@@ -271,6 +399,15 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to authenticate user for ELGA areas and/or for GINA.
+	 *
+	 * @param body     The body of the request, for example JSON
+	 * @param request  The {@link HttpServletRequest} either as the Request object
+	 *                 or a wrapper of that request.
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 */
 	private void handleRegisterUserCall(String body, HttpServletRequest request, HttpServletResponse response) {
 		JSONObject json = null;
 		String role;
@@ -358,7 +495,7 @@ public class RestHandler extends AbstractHandler {
 					HttpServletResponse.SC_OK);
 			JSONObject responseJson = message.toJson();
 			responseJson.put("jwt", connData.getUserJwtToken());
-			writeResponse(responseJson.toString(), response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+			writeResponse(responseJson.toString(), response, message.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		} else if (result instanceof Message) {
 			Message messageResult = (Message) result;
@@ -369,23 +506,39 @@ public class RestHandler extends AbstractHandler {
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "text");
 		}
 	}
-	
+
+	/**
+	 * extracts JWT token from passed <code>connData</code>.
+	 *
+	 * @param connData details about authentication of user
+	 * @return extracted JWT token
+	 */
 	private String getJwtToken(ConnectionData connData) {
-		if(connData != null) {
-			if(connData.getHcpAssertion() != null) {
+		if (connData != null) {
+			if (connData.getHcpAssertion() != null) {
 				return JwtUtil.buildJwtFromHcpAssertion(connData.getHcpAssertion());
-			} else if(connData.getContextAssertions() != null) {
-				for(String key: connData.getContextAssertions().keySet()) {
-					if(key != null) {
+			} else if (connData.getContextAssertions() != null) {
+				for (String key : connData.getContextAssertions().keySet()) {
+					if (key != null) {
 						return JwtUtil.buildJwtFromHcpAssertion(connData.getContextAssertion(key));
 					}
-				}				
+				}
 			}
 		}
-		
+
 		return "";
 	}
 
+	/**
+	 * handles all requests with patient contacts.
+	 *
+	 * @param body          The body of the request, for example JSON
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handlePatientContactCall(String body, HttpServletRequest request, HttpServletResponse response,
 			String authorization) {
 		if (HttpConstants.POST_METHOD.equalsIgnoreCase(request.getMethod())) {
@@ -393,6 +546,14 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to confirm patient contact.
+	 *
+	 * @param body          The body of the request, for example JSON
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleRegisterPatientContactCall(String body, HttpServletResponse response, String authorization) {
 		JSONObject json = new JSONObject(body);
 		ConfigReader config = ConfigReader.getInstance();
@@ -429,8 +590,7 @@ public class RestHandler extends AbstractHandler {
 		if (result != null) {
 			int statusResponse = 200;
 
-			if (result.hasEntry() && result.getEntry().get(0) != null
-					&& result.getEntry().get(0).hasResponse()) {
+			if (result.hasEntry() && result.getEntry().get(0) != null && result.getEntry().get(0).hasResponse()) {
 				statusResponse = Integer.valueOf(result.getEntry().get(0).getResponse().getStatus());
 			}
 
@@ -439,6 +599,15 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to query patient demographics.
+	 *
+	 * @param request       The {@link HttpServletRequest} either as the Request
+	 *                      object or a wrapper of that request.
+	 * @param response      The {@link HttpServletResponse} as the Response object
+	 *                      or a wrapper of that request.
+	 * @param authorization sent JWT token from authorization header
+	 */
 	private void handleQueryPatientDemographicsCall(HttpServletRequest request, HttpServletResponse response,
 			String authorization) {
 		String given = request.getParameter(JsonUtilRest.JSON_PARAM_GIVENNAME);
@@ -467,7 +636,7 @@ public class RestHandler extends AbstractHandler {
 			patDemParam.setGender(org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender.valueOf(gender));
 		}
 
-		if(addressline != null) {
+		if (addressline != null) {
 			Address address = new Address();
 			address.addLine(addressline);
 			address.setCity(city);
@@ -483,8 +652,7 @@ public class RestHandler extends AbstractHandler {
 		if (result != null) {
 			int statusResponse = 200;
 
-			if (result.hasEntry() && result.getEntry().get(0) != null
-					&& result.getEntry().get(0).hasResponse()) {
+			if (result.hasEntry() && result.getEntry().get(0) != null && result.getEntry().get(0).hasResponse()) {
 				statusResponse = Integer.valueOf(result.getEntry().get(0).getResponse().getStatus());
 			}
 
@@ -493,6 +661,14 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to get information about e-Card or Admin-Card.
+	 *
+	 * @param request  The {@link HttpServletRequest} either as the Request object
+	 *                 or a wrapper of that request.
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 */
 	private void handleQueryCardDataCall(HttpServletRequest request, HttpServletResponse response) {
 		String cardReaderId = request.getParameter(JsonUtilRest.JSON_PARAM_CARD_READER_ID);
 		Object result = FhirElgaConnectionCaller.getInstance().getCardData(cardReaderId,
@@ -508,6 +684,12 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * handles request to query all available card readers.
+	 *
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 */
 	private void handleQueryCardReadersCall(HttpServletResponse response) {
 		Object result = FhirElgaConnectionCaller.getInstance().queryAllCardReaders();
 
@@ -529,7 +711,15 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
-	public static String getRestEndpointFromProperties(String key) {
+	/**
+	 * Allocates REST API endpoint of {@link #bundleRestApi} with passed key.
+	 *
+	 * @param key to allocate endpoint
+	 *
+	 * @return allocated endpoint, if no matching endpoint found emtpy
+	 *         {@link String} is returned
+	 */
+	private static String getRestEndpointFromProperties(String key) {
 		try {
 			return bundleRestApi.getString(key);
 		} catch (MissingResourceException ex) {
@@ -537,6 +727,12 @@ public class RestHandler extends AbstractHandler {
 		}
 	}
 
+	/**
+	 * Concatenates all passed <code>strings</code>.
+	 *
+	 * @param strings to concatenate
+	 * @return concatenated text
+	 */
 	public static String concatenate(String... strings) {
 		StringBuilder builder = new StringBuilder("");
 
@@ -551,7 +747,24 @@ public class RestHandler extends AbstractHandler {
 		return builder.toString();
 	}
 
-	public static boolean writeResponse(String txt, HttpServletResponse response, int status, String type) {
+	/**
+	 * writes passed <code>txt</code> as response. Adds following headers to
+	 * response
+	 *
+	 * <ul>
+	 * <li>Access-Control-Allow-Origin</li>
+	 * <li>cache-control</li>
+	 * <li>Connection</li>
+	 * </ul>
+	 *
+	 * @param txt      text to sent in response like JSON
+	 * @param response The {@link HttpServletResponse} as the Response object or a
+	 *                 wrapper of that request.
+	 * @param status   HTTP request status
+	 * @param type     content type of text, e.g. application/xml
+	 * @return true, if successful
+	 */
+	private boolean writeResponse(String txt, HttpServletResponse response, int status, String type) {
 
 		boolean success = true;
 
@@ -581,7 +794,13 @@ public class RestHandler extends AbstractHandler {
 		return success;
 	}
 
-	protected static String readoutInputStreamOfRequest(InputStream is) {
+	/**
+	 * extracts text from passed {@link InputStream}.
+	 *
+	 * @param is {@link InputStream} to be extracted
+	 * @return extracted text
+	 */
+	private String readoutInputStreamOfRequest(InputStream is) {
 		String body = "";
 		try {
 			Scanner first = new Scanner(is);

@@ -1,10 +1,13 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.tests.utilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
@@ -13,50 +16,19 @@ import org.junit.Test;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.InternationalStringType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.LocalizedStringType;
-import arztis.econnector.ihe.model.Hl7Cxi;
 import arztis.econnector.ihe.utilities.Hl7Utils;
 
+/**
+ * Test of {@link Hl7Utils}.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class Hl7UtilsTest {
 
-	@Test
-	public void testConvertToHl7Cxi() {
-		List<String> values = new ArrayList<>();
-		values.add(
-				"ZZZZZZZZZZZZZZZZZZZ^^^&1.2.40.0.34.99.111.1.1&ISO^urn:elga:iti:xds:2014:ownDocument_setId^&1.2.40.0.34.99.999&ISO");
-		values.add("1234^^^&1.2.3.4.5.6.1&ISO^urn:elga:iti:xds:2014:ownDocument_setId^&1.2.40.0.34.99.9&ISO");
-
-		List<Hl7Cxi> actualValues = Hl7Utils.convertToHl7Cxi(values);
-		Assert.assertEquals("ZZZZZZZZZZZZZZZZZZZ", actualValues.get(0).getIdentificator().getExtension());
-		Assert.assertEquals("1.2.40.0.34.99.111.1.1", actualValues.get(0).getIdentificator().getRoot());
-		Assert.assertEquals("1.2.40.0.34.99.999", actualValues.get(0).getHomeCommunityId());
-
-		Assert.assertEquals("1234", actualValues.get(1).getIdentificator().getExtension());
-		Assert.assertEquals("1.2.3.4.5.6.1", actualValues.get(1).getIdentificator().getRoot());
-		Assert.assertEquals("1.2.40.0.34.99.9", actualValues.get(1).getHomeCommunityId());
-	}
-
-	@Test
-	public void testConvertInvalidStringValuesToHl7Cxi() {
-		List<String> values = new ArrayList<>();
-		values.add("^^^&1.2.40.0.34.99.111.1.1&ISO^urn:elga:iti:xds:2014:ownDocument_setId^&1.2.40.0.34.99.999&ISO");
-		values.add("1234^^^^^^&&1.2.40.0.34.99.9&ISO");
-		values.add("12345^^^&1.2.40.0.34.99.9&ISO^^^^^^^^^^");
-		values.add("1234^^^^");
-		values.add("");
-		values.add(null);
-
-		List<Hl7Cxi> actualValues = Hl7Utils.convertToHl7Cxi(values);
-		Assert.assertEquals(2, actualValues.size());
-
-		Assert.assertEquals("", actualValues.get(0).getIdentificator().getExtension());
-		Assert.assertEquals("1.2.40.0.34.99.111.1.1", actualValues.get(0).getIdentificator().getRoot());
-		Assert.assertEquals("1.2.40.0.34.99.999", actualValues.get(0).getHomeCommunityId());
-
-		Assert.assertEquals("1234", actualValues.get(1).getIdentificator().getExtension());
-		Assert.assertEquals("", actualValues.get(1).getIdentificator().getRoot());
-		Assert.assertEquals("1.2.40.0.34.99.9", actualValues.get(1).getHomeCommunityId());
-	}
-
+	/**
+	 * Test convert international string to string.
+	 */
 	@Test
 	public void testConvertInternationalStringToString() {
 		InternationalStringType stringType = InternationalStringType.Factory.newInstance();
@@ -77,6 +49,9 @@ public class Hl7UtilsTest {
 				Hl7Utils.convertInternationalStringToString(stringType));
 	}
 
+	/**
+	 * Test convert invalid international string to string.
+	 */
 	@Test
 	public void testConvertInvalidInternationalStringToString() {
 		InternationalStringType stringType1 = InternationalStringType.Factory.newInstance();
@@ -91,6 +66,9 @@ public class Hl7UtilsTest {
 		Assert.assertNull(Hl7Utils.convertInternationalStringToString(null));
 	}
 
+	/**
+	 * Test extract hl 7 cx.
+	 */
 	@Test
 	public void testExtractHl7Cx() {
 		Identifier id = Hl7Utils.extractHl7Cx("123^^^Ordination&1.2.3.4.5");
@@ -100,6 +78,9 @@ public class Hl7UtilsTest {
 		assertEquals("1.2.3.4.5", id.getSystem());
 	}
 
+	/**
+	 * Test extract hl 7 xcn.
+	 */
 	@Test
 	public void testExtractHl7Xcn() {
 		HumanName name = Hl7Utils.extractHl7Xcn("^Huber^Herbert^^MBA^Dr.");
@@ -111,6 +92,9 @@ public class Hl7UtilsTest {
 		assertEquals("Dr.", name.getPrefixAsSingleString());
 	}
 
+	/**
+	 * Test extract hl 7 xad.
+	 */
 	@Test
 	public void testExtractHl7Xad() {
 		org.hl7.fhir.r4.model.Address address = Hl7Utils.extractHl7Xad("Testgasse 11^^Graz^Steiermark^1050^Austria");

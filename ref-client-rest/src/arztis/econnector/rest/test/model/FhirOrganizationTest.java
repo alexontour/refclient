@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model;
 
 import static org.junit.Assert.assertEquals;
@@ -13,16 +19,17 @@ import arztis.econnector.ihe.tests.TestUtils;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
 
 /**
- * Test of {@link FhirOrganization}
+ * Test of {@link FhirOrganization}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirOrganizationTest extends TestUtils {
 
+	/** The test organization. */
 	private Organization testOrganization;
 
 	/**
-	 * Method implementing
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
@@ -34,7 +41,7 @@ public class FhirOrganizationTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirOrganization#createHeaderCustodian()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHeaderCustodian() {
@@ -63,11 +70,11 @@ public class FhirOrganizationTest extends TestUtils {
 				getAddress1().getLine(), getAddress1().getPostalCode(), getAddress1().getCity(), getAddress1().getState(),
 				getAddress1().getCountry());
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirOrganization#createHl7CdaR2Pocdmt000040Organization()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaR2Pocdmt000040Organization() {

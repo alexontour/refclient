@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.queries.common;
 
 import java.nio.charset.StandardCharsets;
@@ -30,17 +36,85 @@ import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.Re
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.SlotType1;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ValueListType;
 
+/**
+ * This class contains functionality to build ELGA requests for </br>
+ * <ul>
+ * <li>Cancel documents with IHE ITI-57 (<a href=
+ * "https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XDS_Metadata_Update.pdf">https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_XDS_Metadata_Update.pdf</a>)</li>
+ * <li>Search medications with IHE PHARM-1 (<a href=
+ * "https://www.ihe.net/uploadedFiles/Documents/Pharmacy/IHE_Pharmacy_Suppl_CMPD_Rev1-8_TI_2020-01-27.pdf">https://www.ihe.net/uploadedFiles/Documents/Pharmacy/IHE_Pharmacy_Suppl_CMPD_Rev1-8_TI_2020-01-27.pdf</a>)</li>
+ * </ul>
+ *
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class IheQueryTransformer {
+
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IheQueryTransformer.class.getName());
+
+	/** The Constant CDA_DATE_TIME_FORMAT. */
 	private static final String CDA_DATE_TIME_FORMAT = "yyyyMMddhhmmss";
+
+	/** The Constant STRING_PLACEHOLDER. */
 	private static final String STRING_PLACEHOLDER = "('%s')";
 
+	/**
+	 * Default constructor.
+	 */
 	private IheQueryTransformer() {
 		throw new IllegalStateException("Utility class for Queries");
 	}
 
+	/**
+	 * builds {@link SubmitObjectsRequestDocument} with formatted metadata. </br>
+	 * </br>
+	 * Structure of {@link SubmitObjectsRequestDocument} should look as follows:
+	 * </br>
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 *<lcm:SubmitObjectsRequest>
+	 *  <RegistryObjectList>
+	 *   <!-- Required SubmissionSet object -->
+	 *   <RegistryPackage id="SubmissionSet"/>
+	 *   <Association id="triggerAssociation"
+	 *     associationType="urn:ihe:iti:2010:AssociationType:UpdateAvailabilityStatus"
+	 *     sourceObject="SubmissionSet"
+	 *     targetObject="urn:uuid:e0985823-dc50-45a5-a6c8-a11a829893bd">
+	 *       <Slot name="NewStatus">
+	 *          <ValueList>
+	 *             <Value>urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated</Value>
+	 *          </ValueList>
+	 *       </Slot>
+	 *       <Slot name="OriginalStatus">
+	 *           <ValueList>
+	 *              <Value>urn:oasis:names:tc:ebxml-regrep:StatusType:Approved</Value>
+	 *           </ValueList>
+	 *       </Slot>
+	 *    </Association>
+	 *  </RegistryObjectList>
+	 *</lcm:SubmitObjectsRequest>
+	 *
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param uniqueId                     entry UUID of target document
+	 * @param patientId                    ID of patient
+	 * @param classCode                    class code of target document
+	 * @param organizationId               organization ID of document author
+	 * @param practitionerOrganizationName organization name of document author
+	 * @param isUrnNeeded                  indicator whether prefix "urn:oid" is
+	 *                                     needed
+	 *
+	 * @return builded {@link SubmitObjectsRequestDocument}
+	 */
 	public static SubmitObjectsRequestDocument createSubmitObjectsRequestDocument(String uniqueId,
-			Identificator patientId, ClassCode classCode, String organizationId, String practitionerOrganizationName, boolean isUrnNeeded) {
+			Identificator patientId, ClassCode classCode, String organizationId, String practitionerOrganizationName,
+			boolean isUrnNeeded) {
 		if (uniqueId == null) {
 			return null;
 		}
@@ -59,13 +133,14 @@ public class IheQueryTransformer {
 		InternationalStringType name = null;
 		if (classCode != null) {
 			List<String> classCodeList = new ArrayList<>();
-			
-			if(isUrnNeeded && classCode.getCodeSystemId() != null && !classCode.getCodeSystemId().contains("urn:oid:")) {
+
+			if (isUrnNeeded && classCode.getCodeSystemId() != null
+					&& !classCode.getCodeSystemId().contains("urn:oid:")) {
 				classCodeList.add(String.format("urn:oid:%s", classCode.getCodeSystemId()));
 			} else {
 				classCodeList.add(classCode.getCodeSystemId());
 			}
-			
+
 			values = QueryPartFactory.generateValueList(classCodeList);
 			name = QueryPartFactory.generateInternationalString(classCode.getDisplayName(), "en-US",
 					StandardCharsets.UTF_8.name());
@@ -156,6 +231,29 @@ public class IheQueryTransformer {
 
 	}
 
+	/**
+	 * creates {@link SlotType1} with identifier as value. The identifier is
+	 * formatted in HL7v2 CX format. It will look like 'ID Number^^^&OID&ISO'.
+	 *
+	 * Structure of slots with identifiers as value looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <rim:Slot name="$XDSDocumentEntryPatientId">
+	 *     <rim:ValueList>
+	 *          <rim:Value>'1002120289^^^&amp;1.2.40.0.10.1.4.3.1&amp;ISO'</rim:Value>
+	 *     </rim:ValueList>
+	 * </rim:Slot>
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param id       identifier
+	 * @param slotName name of slot
+	 *
+	 * @return created {@link SlotType1} or null if passed identifier was null.
+	 */
 	public static SlotType1 createIdentificatorSlot(Identificator id, String slotName) {
 		if (id != null) {
 			List<String> slotValues = new ArrayList<>();
@@ -165,6 +263,29 @@ public class IheQueryTransformer {
 		return null;
 	}
 
+	/**
+	 * creates {@link SlotType1} with list of text as values.
+	 *
+	 * Structure of slots with list of text as values looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <urn1:Slot name="$XDSDocumentEntryExample">
+	 *      <urn1:ValueList>
+	 *           <urn1:Value>('')</urn1:Value>
+	 *           <urn1:Value>('')</urn1:Value>
+	 *      </urn1:ValueList>
+	 * </urn1:Slot>
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param values   list of text
+	 * @param slotName name of slot
+	 *
+	 * @return created {@link SlotType1}
+	 */
 	public static SlotType1 createStringsSlot(List<String> values, String slotName) {
 		List<String> slotValues = new ArrayList<>();
 
@@ -177,6 +298,26 @@ public class IheQueryTransformer {
 		return (QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(slotValues), slotName));
 	}
 
+	/**
+	 * creates {@link SlotType1} with text as value.
+	 *
+	 * Structure of slots with text as value looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <urn1:Slot name="$XDSDocumentEntryStatus">
+	 *      <urn1:ValueList>
+	 *           <urn1:Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</urn1:Value>
+	 *      </urn1:ValueList>
+	 * </urn1:Slot>
+	 * }
+	 * </pre>
+	 *
+	 * @param value the value
+	 * @param slotName name of slot
+	 * @return created {@link SlotType1}
+	 */
 	public static SlotType1 createStringSlot(String value, String slotName) {
 		List<String> slotValues = new ArrayList<>();
 
@@ -187,12 +328,56 @@ public class IheQueryTransformer {
 		return (QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(slotValues), slotName));
 	}
 
+	/**
+	 * creates {@link SlotType1} with one code as value.
+	 *
+	 * Structure of slots with one code as value looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <urn1:Slot name="$XDSDocumentEntryExample">
+	 *      <urn1:ValueList>
+	 *           <urn1:Value>('11490-0^^2.16.840.1.113883.6.1')</urn1:Value>
+	 *      </urn1:ValueList>
+	 * </urn1:Slot>
+	 * }
+	 * </pre>
+	 *
+	 * @param code code value
+	 * @param codesystem code system
+	 * @param slotName name of slot
+	 *
+	 * @return created {@link SlotType1}
+	 */
 	public static SlotType1 createCodeSlot(String code, String codesystem, String slotName) {
 		List<String> slotValues = new ArrayList<>();
 		slotValues.add(createCodeSlotValue(code, codesystem));
 		return QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(slotValues), slotName);
 	}
 
+	/**
+	 * creates {@link SlotType1} with more codes as value.
+	 *
+	 * Structure of slots with more codes as value looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <urn1:Slot name="$XDSDocumentEntryExample">
+	 *      <urn1:ValueList>
+	 *           <urn1:Value>('Privatrezept^^1.2.40.0.10.1.4.3.4.3.3')</urn1:Value>
+	 *           <urn1:Value>('Kassenrezept^^1.2.40.0.10.1.4.3.4.3.3')</urn1:Value>
+	 *      </urn1:ValueList>
+	 * </urn1:Slot>
+	 * }
+	 * </pre>
+	 *
+	 * @param codes list of codes
+	 * @param slotName name of slot
+	 *
+	 * @return created {@link SlotType1}
+	 */
 	public static SlotType1 createServiceEventCodeSlot(List<CodeableConcept> codes, String slotName) {
 		List<String> slotValues = new ArrayList<>();
 
@@ -206,6 +391,14 @@ public class IheQueryTransformer {
 		return QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(slotValues), slotName);
 	}
 
+	/**
+	 * formats code and code system according to HL7v2 CE data type (code^^coding
+	 * system).
+	 *
+	 * @param code       code
+	 * @param codesystem code system
+	 * @return formatted code value
+	 */
 	private static String createCodeSlotValue(String code, String codesystem) {
 		if (code == null) {
 			code = "";
@@ -218,6 +411,28 @@ public class IheQueryTransformer {
 		return String.format("('%s^^%s')", code, codesystem);
 	}
 
+	/**
+	 * creates {@link SlotType1} with author institution as value.
+	 *
+	 * Structure of slots with author institution as value looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 * <urn1:Slot name="$XDSDocumentEntryAuthorInstitution">
+	 *       <urn1:ValueList>
+	 *             <urn1:Value>('urn:oid:1.2.40.0.34.99.3.2.1')</urn1:Value>
+	 *       </urn1:ValueList>
+	 * </urn1:Slot>
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param authorInstitutionId OID of author
+	 * @param slotName            name of slot
+	 *
+	 * @return created {@link SlotType1}
+	 */
 	public static SlotType1 createAuthorInstitutionSlot(String authorInstitutionId, String slotName) {
 		List<String> slotValues = new ArrayList<>();
 		if (authorInstitutionId != null) {
@@ -231,6 +446,51 @@ public class IheQueryTransformer {
 		return QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(slotValues), slotName);
 	}
 
+	/**
+	 * builds {@link AdhocQueryRequestDocument} with formatted metadata to search for documents with PHARM-1 transactin.</br>
+	 * </br>
+	 * Structure of {@link AdhocQueryRequestDocument} should look as follows:
+	 * </br>
+	 *
+	 * <pre>
+	 * {@code
+	 *
+	 *<urn:AdhocQueryRequest xmlns:urn="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0"
+     *       xmlns:urn1="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+     *       <urn:ResponseOption returnComposedObjects="true" returnType="LeafClass"/>
+     *       <urn1:AdhocQuery id="urn:uuid:fdbe8fb8-7b5c-4470-9383-8abc7135f462">
+     *           <urn1:Slot name="$XDSDocumentEntryType">
+     *               <urn1:ValueList>
+     *                   <urn1:Value>('urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1')</urn1:Value>
+     *               </urn1:ValueList>
+     *           </urn1:Slot>
+     *           <urn1:Slot name="$XDSDocumentEntryPatientId">
+     *               <urn1:ValueList>
+     *                   <urn1:Value>'1001210995^^^&amp;1.2.40.0.10.1.4.3.1&amp;ISO'</urn1:Value>
+     *               </urn1:ValueList>
+     *           </urn1:Slot>
+     *           <urn1:Slot name="$XDSDocumentEntryStatus">
+     *               <urn1:ValueList>
+     *                   <urn1:Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</urn1:Value>
+     *               </urn1:ValueList>
+     *           </urn1:Slot>
+     *           <urn1:Slot name="$XDSDocumentEntryAuthorInstitution">
+     *               <urn1:ValueList>
+     *                   <urn1:Value>('urn:oid:1.2.40.0.34.99.3.2.1046167')</urn1:Value>
+     *               </urn1:ValueList>
+     *           </urn1:Slot>
+     *       </urn1:AdhocQuery>
+     *</urn:AdhocQueryRequest>
+	 *
+	 * }
+	 * </pre>
+	 *
+	 * @param queryId ID of provided stored query, which should be used
+	 * @param patientId ID of patient
+	 * @param status availability status of document
+	 * @param authorInstitution organization ID of document author
+	 * @return builded {@link AdhocQueryRequestDocument}
+	 */
 	public static AdhocQueryRequestDocument createAdhocQueryRequestDocument(PharmQueryIds queryId,
 			Identificator patientId, AvailabilityStatus status, String authorInstitution) {
 		AdhocQueryRequestDocument queryReqDocument = AdhocQueryRequestDocument.Factory.newInstance();
@@ -243,9 +503,9 @@ public class IheQueryTransformer {
 		}
 
 		LOGGER.info("query id: {}", queryId.getName());
-		if ("FindMedicationList".equalsIgnoreCase(queryId.getName())) {
+		if (PharmQueryIds.FIND_MEDICATION_LIST.getName().equalsIgnoreCase(queryId.getName())) {
 			slots.add(createStringSlot(ObjectTypes.ON_DEMAND_DOCUMENT.getCode(), "$XDSDocumentEntryType"));
-		} else if ("FindMedicationAdministrations".equalsIgnoreCase(queryId.getName())) {
+		} else if (PharmQueryIds.FIND_MEDICATION_ADMINISTRATIONS.getName().equalsIgnoreCase(queryId.getName())) {
 			slots.add(createStringSlot(ObjectTypes.STABLE_DOCUMENT.getCode(), "$XDSDocumentEntryType"));
 		}
 

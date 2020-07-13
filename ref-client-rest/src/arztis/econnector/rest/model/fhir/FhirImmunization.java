@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
@@ -43,6 +49,7 @@ import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntry;
 import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntryRelationship;
 import org.ehealth_connector.common.hl7cdar2.XActRelationshipExternalReference;
 import org.ehealth_connector.common.utils.DateUtil;
+import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DateTimeType;
@@ -53,41 +60,74 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.StringType;
-import org.hl7.fhir.r4.model.Address.AddressUse;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.eimpf.Vaccine;
 import arztis.econnector.rest.utilities.ImmunizationMapping;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
+/**
+ * This class is a subclass of {@link Immunization}. Therefore it includes
+ * information about vaccination of patients</br>
+ *
+ * It contains functionalities for converting CDA R2 {@link POCDMT000040Entry}
+ * into HL7 FHIR {@link Immunization} and vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @ResourceDef(name = "Immunization", profile = "http://hl7.org/fhir/StructureDefinition/Immunization")
 public class FhirImmunization extends Immunization {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The Constant REFERENCE_TEXT_EIMPF_DOSE. */
 	private static final String REFERENCE_TEXT_EIMPF_DOSE = "#schedule-immunization-";
+	
+	/** The Constant REFERENCE_IMMUNIZATION_INDEX. */
 	private static final String REFERENCE_IMMUNIZATION_INDEX = "immunization-%d";
+
+	/** map of vaccines. */
 	private static Map<String, Vaccine> vaccines = ImmunizationMapping.getInstance().getVaccineMap();
+	
+	/** The resources. */
 	private List<Resource> resources;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirImmunization() {
 
 	}
 
+	/**
+	 * Constructor to create {@link Immunization} from passed
+	 * {@link POCDMT000040Entry}.
+	 *
+	 * @param entry immunization entry
+	 * @param index of passed entry
+	 */
 	public FhirImmunization(POCDMT000040Entry entry, int index) {
 		resources = new ArrayList<>();
 		fromPOCDMT000040Entry(entry, String.valueOf(index));
 	}
 
+	/**
+	 * all referenced resources of immunization entry.
+	 *
+	 * @return list of referenced resources
+	 */
 	public List<Resource> getResources() {
 		return resources;
 	}
 
+	/**
+	 * extracts information about vaccination from passed {@link POCDMT000040Entry}.
+	 *
+	 * @param entry element for extracting information
+	 * @param index of immunization
+	 */
 	private void fromPOCDMT000040Entry(POCDMT000040Entry entry, String index) {
 		if (entry != null && entry.getSubstanceAdministration() != null) {
 			setId(index);
@@ -127,6 +167,15 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * Extracts information about immunization schema from passed
+	 * <code>preconditions</code>.
+	 *
+	 * @param preconditions               list of {@link POCDMT000040Precondition}
+	 *                                    from which information is extracted
+	 * @param immunizationProtocolApplied resource to add information
+	 *
+	 */
 	private void fromPrecondition(List<POCDMT000040Precondition> preconditions,
 			ImmunizationProtocolAppliedComponent immunizationProtocolApplied) {
 		if (preconditions != null && !preconditions.isEmpty() && preconditions.get(0).getCriterion() != null) {
@@ -139,6 +188,15 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * Extracts information about person, who is responsible for documentation of
+	 * vaccination from passed <code>authors</code>.
+	 *
+	 * @param authors                     list of {@link POCDMT000040Author} from
+	 *                                    which information is extracted
+	 * @param immunizationProtocolApplied resource to add information
+	 * @param id                          of immunization
+	 */
 	private void fromAuthor(List<POCDMT000040Author> authors,
 			ImmunizationProtocolAppliedComponent immunizationProtocolApplied, String id) {
 
@@ -152,6 +210,14 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * Extracts information about person, who administers the vaccination, e.g. a
+	 * physician or a midwife from passed <code>performers</code>.
+	 *
+	 * @param performers list of {@link POCDMT000040Performer2} from which
+	 *                   information is extracted
+	 * @param id         of immunization
+	 */
 	private void fromPerformer(List<POCDMT000040Performer2> performers, String id) {
 		if (performers != null && !performers.isEmpty()) {
 			ImmunizationPerformerComponent performerComp = new ImmunizationPerformerComponent();
@@ -165,6 +231,13 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * Extracts information about vaccine, lot number and manufacturer of vaccine
+	 * from passed {@link POCDMT000040Consumable}.
+	 *
+	 * @param consumable to be extracted
+	 * @param id         of immunization
+	 */
 	private void fromConsumable(POCDMT000040Consumable consumable, String id) {
 		if (consumable != null && consumable.getManufacturedProduct() != null) {
 
@@ -183,6 +256,16 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * Extracts information of all passed {@link POCDMT000040EntryRelationship}. In
+	 * immunization entry there are two types of
+	 * {@link POCDMT000040EntryRelationship}. Entry relationship of type "RSON"
+	 * contains information about target diseases. Entry relationship of type "SUBJ"
+	 * contains information about settlement.
+	 *
+	 * @param entryRels the entry rels
+	 * @param immunizationProtocolApplied the immunization protocol applied
+	 */
 	private void fromEntryRelationships(List<POCDMT000040EntryRelationship> entryRels,
 			ImmunizationProtocolAppliedComponent immunizationProtocolApplied) {
 		if (entryRels != null && !entryRels.isEmpty()) {
@@ -195,12 +278,17 @@ public class FhirImmunization extends Immunization {
 						fromEntryRelationshipSubj(entryRel);
 					}
 				}
-
 			}
-
 		}
 	}
 
+	/**
+	 * Extracts information about settlement from passed
+	 * {@link POCDMT000040EntryRelationship}.Expiration date of vaccine and ID of
+	 * vaccination voucher are extracted.
+	 *
+	 * @param entryRel {@link POCDMT000040EntryRelationship} to extract
+	 */
 	private void fromEntryRelationshipSubj(POCDMT000040EntryRelationship entryRel) {
 		if (entryRel == null || entryRel.getAct() == null) {
 			return;
@@ -226,7 +314,17 @@ public class FhirImmunization extends Immunization {
 		setExpirationDate(expDate);
 	}
 
-	public static AtcdabbrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(Map<Immunization, PractitionerRole> immunizations) {
+	/**
+	 * Creates {@link AtcdabbrSectionImpfungenKodiert} of passed
+	 * <code>immunizations</code>.
+	 *
+	 * @param immunizations map of immunizations and their author
+	 *
+	 * @return created {@link AtcdabbrSectionImpfungenKodiert}
+	 *
+	 */
+	public static AtcdabbrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(
+			Map<Immunization, PractitionerRole> immunizations) {
 		if (immunizations == null || immunizations.isEmpty()) {
 			return null;
 		}
@@ -237,7 +335,8 @@ public class FhirImmunization extends Immunization {
 		int index = 0;
 		for (Entry<Immunization, PractitionerRole> immunization : immunizations.entrySet()) {
 			if (immunization != null && immunization.getValue() != null && immunization.getKey() != null) {
-				vaccinationSection.getEntry().add(getImmunizationEntry(immunization.getKey(), index++, immunization.getValue()));
+				vaccinationSection.getEntry()
+						.add(getImmunizationEntry(immunization.getKey(), index++, immunization.getValue()));
 			}
 		}
 
@@ -264,6 +363,19 @@ public class FhirImmunization extends Immunization {
 		return vaccinationSection;
 	}
 
+	/**
+	 * fills passed maps with values of passed {@link Immunization}. Key of map is
+	 * immunization reference, e.g. immunization-1. These maps are intended to
+	 * create human readable text in immunization CDA document.
+	 *
+	 * @param targets               map for target diseases
+	 * @param immunizationDose      map for dose
+	 * @param immunizationScheme    map for scheme
+	 * @param historicImmunizations map for historic vaccine
+	 * @param immunizationsCodes    map for vaccine
+	 * @param immunization          resource to extract from
+	 * @param index                 of immunization entry
+	 */
 	private static void fillMapsForTextBuilder(Map<String, List<EImpfImmunizationTargetVs>> targets,
 			Map<String, EImpfImpfdosisVs> immunizationDose, Map<String, EImpfImpfschemaVs> immunizationScheme,
 			Map<String, EImpfHistorischeImpfstoffeVs> historicImmunizations,
@@ -317,7 +429,20 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
-	public static POCDMT000040Entry getImmunizationEntry(Immunization immunization, int index, PractitionerRole practitionerRole) {
+	/**
+	 * Creates {@link POCDMT000040Entry} for passed {@link Immunization}. If vaccine
+	 * code is available in <code>immunization</code>,
+	 * {@link AtcdabbrEntryImmunization} is created, otherwise
+	 * {@link AtcdabbrEntryImmunizationImpfungNichtAngegeben} is created.
+	 *
+	 * @param immunization     resource to be extracted
+	 * @param index            of immunization entry
+	 * @param practitionerRole author of immunization
+	 *
+	 * @return created {@link POCDMT000040Entry}
+	 */
+	private static POCDMT000040Entry getImmunizationEntry(Immunization immunization, int index,
+			PractitionerRole practitionerRole) {
 		POCDMT000040Entry entry = new POCDMT000040Entry();
 		entry.setTypeCode(XActRelationshipEntry.DRIV);
 		entry.setContextConductionInd(true);
@@ -345,6 +470,16 @@ public class FhirImmunization extends Immunization {
 		return entry;
 	}
 
+	/**
+	 * sets various properties such as occurrence date, dose quantity, author,
+	 * performer, scheme and target diseases to the passed
+	 * {@link POCDMT000040SubstanceAdministration}.
+	 *
+	 * @param substanceAdministration element to add properties
+	 * @param index                   of immunization entry
+	 * @param immunization            resource to be extracted
+	 * @param practitionerRole        author of immunization
+	 */
 	private static void setImmunizationProperties(POCDMT000040SubstanceAdministration substanceAdministration,
 			int index, Immunization immunization, PractitionerRole practitionerRole) {
 		if (immunization == null) {
@@ -372,7 +507,8 @@ public class FhirImmunization extends Immunization {
 
 			if (immunization.getProtocolAppliedFirstRep().hasAuthority()) {
 				substanceAdministration.getAuthor().clear();
-				substanceAdministration.getAuthor().add(FhirPractitionerRole.getAuthorBodyPs(immunization.getRecorded(), practitionerRole));
+				substanceAdministration.getAuthor()
+						.add(FhirPractitionerRole.getAuthorBodyPs(immunization.getRecorded(), practitionerRole));
 			}
 
 			if (immunization.getProtocolAppliedFirstRep().hasTargetDisease()) {
@@ -423,6 +559,18 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * sets various properties such as occurrence date, dose quantity, author,
+	 * performer, scheme and target diseases to the passed
+	 * {@link POCDMT000040SubstanceAdministration}.
+	 *
+	 * @param substanceAdministration element to add properties
+	 * @param index                   of immunization entry
+	 * @param noImmunization          indicates whether vaccine code is available or
+	 *                                not
+	 * @param immunization            resource to be extracted
+	 * @param practitionerRole        author of immunization
+	 */
 	private static void setProperties(POCDMT000040SubstanceAdministration substanceAdministration, int index,
 			boolean noImmunization, Immunization immunization, PractitionerRole practitionerRole) {
 		if (immunization == null) {
@@ -444,6 +592,16 @@ public class FhirImmunization extends Immunization {
 		}
 	}
 
+	/**
+	 * creates {@link AtcdabbrEntryImmunizationTarget} with passed information about
+	 * target disease. Only mandatory fields are set.
+	 *
+	 * @param indexTarget       index of target disease
+	 * @param indexImmunization index of immunization
+	 * @param target            code of target disease
+	 *
+	 * @return created {@link AtcdabbrEntryImmunizationTarget}
+	 */
 	private static AtcdabbrEntryImmunizationTarget getAtcdabbrEntryImmunizationTarget(int indexTarget,
 			int indexImmunization, CodeableConcept target) {
 		AtcdabbrEntryImmunizationTarget immunizationTargetObservation = new AtcdabbrEntryImmunizationTarget();
@@ -452,12 +610,23 @@ public class FhirImmunization extends Immunization {
 			immunizationTargetObservation.setHl7Code(FhirCodeableConcept.createHl7CdaR2Ce(target, null, null));
 		}
 
-		immunizationTargetObservation.setText(CdaUtil.createReference(
-				String.format("#target-immunization-%d", indexImmunization)));
+		immunizationTargetObservation
+				.setText(CdaUtil.createReference(String.format("#target-immunization-%d", indexImmunization)));
 
 		return immunizationTargetObservation;
 	}
 
+	/**
+	 * creates {@link AtcdabbrOtherPerformerBodyImpfendePerson} with passed
+	 * information about person, who administers the vaccination, e.g. a physician
+	 * or a midwife.
+	 *
+	 * @param timePerformed Time at which the performer was occupied with
+	 *                      vaccination
+	 * @param fhirPerformer resource to be extracted
+	 *
+	 * @return created {@link AtcdabbrOtherPerformerBodyImpfendePerson}
+	 */
 	private static AtcdabbrOtherPerformerBodyImpfendePerson getAtcdabbrOtherPerformerBodyImpfendePerson(
 			Date timePerformed, ImmunizationPerformerComponent fhirPerformer) {
 		AtcdabbrOtherPerformerBodyImpfendePerson performer = new AtcdabbrOtherPerformerBodyImpfendePerson();
@@ -471,7 +640,7 @@ public class FhirImmunization extends Immunization {
 		if (fhirPerformer.getActorTarget() != null
 				&& ResourceType.PractitionerRole.equals(fhirPerformer.getActorTarget().getResourceType())) {
 			performer.setAssignedEntity(FhirPractitionerRole.getHl7CdaR2Pocdmt000040AssignedEntity(
-					performer.getAssignedEntity(), (PractitionerRole) fhirPerformer.getActorTarget(), AddressUse.NULL));					
+					performer.getAssignedEntity(), (PractitionerRole) fhirPerformer.getActorTarget(), AddressUse.NULL));
 		}
 
 		performer.getAssignedEntity()
@@ -480,6 +649,15 @@ public class FhirImmunization extends Immunization {
 		return performer;
 	}
 
+	/**
+	 * creates {@link AtcdabbrEntryImmunizationBillability} with passed information
+	 * about settlement. Expiration date of vaccine and ID of vaccination voucher
+	 * are set as properties.
+	 *
+	 * @param immunization resource to be extracted
+	 *
+	 * @return created {@link AtcdabbrEntryImmunizationBillability}
+	 */
 	private static AtcdabbrEntryImmunizationBillability getAtcdabbrEntryImmunizationBillability(
 			Immunization immunization) {
 		AtcdabbrEntryImmunizationBillability immunizationBillabilityAct = new AtcdabbrEntryImmunizationBillability();
@@ -518,7 +696,22 @@ public class FhirImmunization extends Immunization {
 		return immunizationBillabilityAct;
 	}
 
-	public static POCDMT000040Precondition getImmunizationScheduleEntry(int index, String series, String doseNumber) {
+	/**
+	 * creates {@link POCDMT000040Precondition} with passed information about
+	 * immunization schema. Vaccination scheme and dose number of vaccination are
+	 * set as properties.
+	 *
+	 * @param index      of immunization entry
+	 * @param series     vaccination scheme. Possible values are available under
+	 *                   <a href=
+	 *                   "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=eImpf_Impfschema_VS">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=eImpf_Impfschema_VS</a>
+	 * @param doseNumber indication of the vaccination or partial vaccination.
+	 *                   Possible values are available under <a href=
+	 *                   "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=eImpf_Impfdosis_VS">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=eImpf_Impfdosis_VS</a>
+	 *
+	 * @return created {@link POCDMT000040Precondition}
+	 */
+	private static POCDMT000040Precondition getImmunizationScheduleEntry(int index, String series, String doseNumber) {
 		POCDMT000040Precondition precondition = new POCDMT000040Precondition();
 		precondition.getTypeCode().add("PRCN");
 		AtcdabbrEntryImmunizationSchedule schedule = new AtcdabbrEntryImmunizationSchedule();
@@ -546,7 +739,19 @@ public class FhirImmunization extends Immunization {
 		return precondition;
 	}
 
-	public static POCDMT000040Consumable getVaccineProduct(boolean immunizationRecommendaction,
+	/**
+	 * creates {@link POCDMT000040Consumable} with passed information about vaccine.
+	 * This method extracts details about a vaccine such as indications from
+	 * {@link #vaccines}. The lot number and information about the manufacturer are
+	 * also used.
+	 *
+	 * @param immunizationRecommendaction specifies whether element should be
+	 *                                    created for a recommendation or not
+	 * @param immunization                to be extracted
+	 *
+	 * @return created {@link POCDMT000040Consumable}
+	 */
+	private static POCDMT000040Consumable getVaccineProduct(boolean immunizationRecommendaction,
 			Immunization immunization) {
 		POCDMT000040Consumable consumable = new POCDMT000040Consumable();
 		consumable.getTypeCode().clear();

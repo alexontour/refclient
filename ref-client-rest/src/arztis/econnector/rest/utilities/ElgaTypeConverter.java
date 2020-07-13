@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.rest.utilities;
 
 import java.util.ArrayList;
@@ -10,6 +16,7 @@ import org.ehealth_connector.common.at.enums.AuthorSpeciality;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 import org.openhealthtools.ihe.common.hl7v2.XCN;
 import org.openhealthtools.ihe.common.hl7v2.XON;
@@ -36,15 +43,44 @@ import arztis.econnector.rest.model.fhir.FhirPatientAt;
 import arztis.econnector.rest.model.fhir.FhirPractitioner;
 import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
 
+/**
+ * This class contains utilities to convert HL7 V2 data types to classes and to
+ * convert classes to HL7 FHIR resources.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class ElgaTypeConverter {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ElgaTypeConverter.class.getName());
+
+	/** The Constant DIGIT_DIGIT_PLACEHOLDER. */
 	private static final String DIGIT_DIGIT_PLACEHOLDER = "%d-%d";
 
+	/**
+	 * Default constructor.
+	 */
 	private ElgaTypeConverter() {
 		throw new IllegalStateException("utility class");
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document responses. This method adds a
+	 * set of resources to {@link FhirBundle}. This resources are extracted from
+	 * passed <code>documentResponses</code>. Extracted resources are:
+	 *
+	 * <ul>
+	 * <li>{@link FhirDocumentReference}</li>
+	 * <li>{@link FhirPractitioner}</li>
+	 * <li>{@link FhirPractitionerRole}</li>
+	 * <li>{@link FhirOrganization}</li>
+	 * </ul>
+	 *
+	 * @param documentResponses list of response
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	public static FhirBundle createFhirBundleOfDocumentResponseType(List<DocumentEntryResponseType> documentResponses) {
 		List<Resource> resources = new ArrayList<>();
 		if (documentResponses != null && !documentResponses.isEmpty()) {
@@ -87,6 +123,23 @@ public class ElgaTypeConverter {
 		return new FhirBundle(resources);
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed <code>registryObject</code>. This method
+	 * adds a set of resources to {@link FhirBundle}. This resources are extracted
+	 * from passed <code>registryObject</code>. Extracted resources are:
+	 *
+	 * <ul>
+	 * <li>{@link FhirDocumentReference}</li>
+	 * <li>{@link Patient}</li>
+	 * <li>{@link FhirPractitioner}</li>
+	 * <li>{@link FhirPractitionerRole}</li>
+	 * <li>{@link FhirOrganization}</li>
+	 * </ul>
+	 *
+	 * @param registryObject response with document metadata
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	public static FhirBundle createFhirBundleOfRegistryObjectToMetadata(RegistryObjectListType registryObject) {
 		LOGGER.info("convert registry object to fhir bundle");
 
@@ -128,6 +181,22 @@ public class ElgaTypeConverter {
 		return new FhirBundle(resources);
 	}
 
+	/**
+	 * Creates list of {@link Resource} of passed <code>classification</code>. This
+	 * method creates a set of resources related to author. This resources are
+	 * extracted from passed <code>classification</code>. Extracted resources are:
+	 *
+	 * <ul>
+	 * <li>{@link FhirPractitioner}</li>
+	 * <li>{@link FhirPractitionerRole}</li>
+	 * <li>{@link FhirOrganization}</li>
+	 * </ul>
+	 *
+	 * @param classification {@link ClassificationType} to be extracted
+	 * @param index          of document metadata
+	 *
+	 * @return created list of {@link Resource}
+	 */
 	private static List<Resource> extractAuthorFromClassification(ClassificationType classification, String index) {
 		List<Resource> resouces = new ArrayList<>();
 
@@ -162,16 +231,37 @@ public class ElgaTypeConverter {
 		return resouces;
 	}
 
+	/**
+	 * extracts HL7 V2 {@link XCN} from passed {@link SlotType1}.
+	 *
+	 * @param slot with value formatted as HL7 V2 XCN
+	 * @return extracted HL7 V2 {@link XCN}
+	 */
 	private static XCN extractAuthorPerson(SlotType1 slot) {
 		return HL7V2MessageFormat.buildXCNFromMessageString(MetadataConverter.getStringFromSlot(slot),
 				MessageDelimiters.COMPONENT, MessageDelimiters.SUBCOMPONENT);
 	}
 
+	/**
+	 * extracts HL7 V2 {@link XON} from passed {@link SlotType1}.
+	 *
+	 * @param slot with value formatted as HL7 V2 XON
+	 * @return extracted HL7 V2 {@link XON}
+	 */
 	private static XON extractAuthorInstitution(SlotType1 slot) {
 		return HL7V2MessageFormat.buildXONFromMessageString(MetadataConverter.getStringFromSlot(slot),
 				MessageDelimiters.COMPONENT, MessageDelimiters.SUBCOMPONENT);
 	}
 
+	/**
+	 * extracts {@link AuthorSpeciality} from passed {@link SlotType1}. If value is
+	 * available in {@link AuthorSpeciality} otherwise null is returned.
+	 *
+	 * @param slot with author subject as value.
+	 *
+	 * @return {@link AuthorSpeciality} is returned if value is available, otherwise
+	 *         null is returned.
+	 */
 	private static AuthorSpeciality extractAuthorSpeciality(SlotType1 slot) {
 		try {
 			return AuthorSpeciality.getEnum(MetadataConverter.getStringFromSlot(slot));
@@ -182,6 +272,15 @@ public class ElgaTypeConverter {
 		return null;
 	}
 
+	/**
+	 * extracts {@link AuthorRole} from passed {@link SlotType1}. If value is
+	 * available in {@link AuthorRole} otherwise null is returned.
+	 *
+	 * @param slot with role of author as value.
+	 *
+	 * @return {@link AuthorRole} is returned if value is available, otherwise null
+	 *         is returned.
+	 */
 	private static AuthorRole extractAuthorRole(SlotType1 slot) {
 		try {
 			return AuthorRole.getEnum(MetadataConverter.getStringFromSlot(slot));
@@ -192,6 +291,25 @@ public class ElgaTypeConverter {
 		return null;
 	}
 
+	/**
+	 *
+	 * Creates {@link FhirBundle} with error details that are extracted from passed
+	 * <code>xmlCode</code>. The EMED error code and human readable text is
+	 * extracted and added to bundle. XML code looks as follows:
+	 *
+	 * <pre>
+	 *  {@code
+	 *   <EmedReturn version=1.0>
+	 *       <code>EMED-021002</code>
+	 *       <text>Die angegebene eMED-ID ist ungültig.</text>
+	 *   </EmedReturn>
+	 *  }
+	 * </pre>
+	 *
+	 * @param xmlCode {@link String} with XML formatted code
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	public static FhirBundle extractErrorMessageOfEmedReturn(String xmlCode) {
 		FhirBundle returnMessage = null;
 		Element node = null;

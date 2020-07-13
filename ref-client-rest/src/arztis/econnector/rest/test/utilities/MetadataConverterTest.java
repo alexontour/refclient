@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.utilities;
 
 import static org.junit.Assert.assertEquals;
@@ -30,31 +36,82 @@ import arztis.econnector.ihe.utilities.IheConstants;
 import arztis.econnector.rest.model.fhir.FhirBundle;
 import arztis.econnector.rest.utilities.ElgaTypeConverter;
 
+/**
+ * The Class MetadataConverterTest.
+ */
 public class MetadataConverterTest {
 
+	/** The Constant SAMPLE_OID. */
 	private static final String SAMPLE_OID = "1.2.40.0.34.6.7";
+	
+	/** The Constant SAMPLE_ID. */
 	private static final String SAMPLE_ID = "urn:uuid:8c165cbd-45e3-4282-baa0-0f21d0004424";
+	
+	/** The Constant SAMPLE_E_MED_ID. */
 	private static final String SAMPLE_E_MED_ID = "1.2.40.0.10.1.4.3.4.2.1^7E36MJHP949S";
+	
+	/** The Constant SAMPLE_HOME_COMMUNITY_ID. */
 	private static final String SAMPLE_HOME_COMMUNITY_ID = "urn:oid:1.2.40.0.34.3.9.107";
+	
+	/** The Constant SNOMED_CT_OID. */
 	private static final String SNOMED_CT_OID = "2.16.840.1.113883.6.1";
+	
+	/** The Constant OBJECT_ID. */
 	private static final String OBJECT_ID = "urn:uuid:34268e47-fdf5-41a6-ba33-82133c465248";
+	
+	/** The Constant ELGA_MEDIKATION_NAME. */
 	private static final String ELGA_MEDIKATION_NAME = "ELGA e-Medikation v2.06";
+	
+	/** The Constant SERVICE_START_TIME_LITERAL. */
 	private static final String SERVICE_START_TIME_LITERAL = "serviceStartTime";
+	
+	/** The Constant SERVICE_STOP_TIME_LITERAL. */
 	private static final String SERVICE_STOP_TIME_LITERAL = "serviceStopTime";
+	
+	/** The Constant SERVICE_CREATION_TIME_LITERAL. */
 	private static final String SERVICE_CREATION_TIME_LITERAL = "creationTime";
+	
+	/** The Constant SOURCE_PATIENT_INFO_LITERAL. */
 	private static final String SOURCE_PATIENT_INFO_LITERAL = "sourcePatientInfo";
+	
+	/** The Constant CODING_SCHEME_LITERAL. */
 	private static final String CODING_SCHEME_LITERAL = "codingScheme";
+	
+	/** The Constant SOZIALVERSICHERUNG. */
 	private static final String SOZIALVERSICHERUNG = "Sozialversicherung";
+	
+	/** The Constant EN_US. */
 	private static final String EN_US = "en-US";
+	
+	/** The Constant TEXT_XML. */
 	private static final String TEXT_XML = "text/xml";
+	
+	/** The Constant FORMAT_CODE_EMEDAT. */
 	private static final String FORMAT_CODE_EMEDAT = "urn:elga:emedat:2015-v2.06";
+	
+	/** The Constant STATUS_APPROVED. */
 	private static final String STATUS_APPROVED = "urn:oasis:names:tc:ebxml-regrep:StatusType:Approved";
+	
+	/** The Constant SAMPLE_PID5_ELEMENT. */
 	private static final String SAMPLE_PID5_ELEMENT = "PID-5|Random^Tom^^^Dr.";
+	
+	/** The Constant SAMPLE_PID3_ELEMENT. */
 	private static final String SAMPLE_PID3_ELEMENT = "PID-3|1001210995^^^&amp;1.2.40.0.10.1.4.3.1&amp;ISO";
+	
+	/** The Constant SAMPLE_PID7_ELEMENT. */
 	private static final String SAMPLE_PID7_ELEMENT = "PID-7|19800328000000";
+	
+	/** The Constant SAMPLE_PID8_ELEMENT. */
 	private static final String SAMPLE_PID8_ELEMENT = "PID-8|M";
+	
+	/** The Constant SAMPLE_PID11_ELEMENT. */
 	private static final String SAMPLE_PID11_ELEMENT = "PID-11|Mustergasse 11^^Wien^W^1230^Austria";
 
+	/**
+	 * Adds the base value to extrinsic object.
+	 *
+	 * @param extrinsicObject the extrinsic object
+	 */
 	private void addBaseValueToExtrinsicObject(ExtrinsicObjectType extrinsicObject) {
 		extrinsicObject.setId(SAMPLE_ID);
 		extrinsicObject.setHome(SAMPLE_HOME_COMMUNITY_ID);
@@ -63,6 +120,12 @@ public class MetadataConverterTest {
 		extrinsicObject.setStatus(STATUS_APPROVED);
 	}
 
+	/**
+	 * Adds the source patient info to extrinsic object.
+	 *
+	 * @param extrinsicObject the extrinsic object
+	 * @param index the index
+	 */
 	private void addSourcePatientInfoToExtrinsicObject(ExtrinsicObjectType extrinsicObject, int index) {
 		List<String> values = new ArrayList<>();
 		values.add(SAMPLE_PID3_ELEMENT);
@@ -75,6 +138,12 @@ public class MetadataConverterTest {
 				QueryPartFactory.generateSlot(QueryPartFactory.generateValueList(values), SOURCE_PATIENT_INFO_LITERAL));
 	}
 
+	/**
+	 * Adds the times to extrinsic object.
+	 *
+	 * @param extrinsicObject the extrinsic object
+	 * @param index the index
+	 */
 	private void addTimesToExtrinsicObject(ExtrinsicObjectType extrinsicObject, int index) {
 		List<String> values = new ArrayList<>();
 		values.add("20160308170232");
@@ -95,6 +164,11 @@ public class MetadataConverterTest {
 				.generateSlot(QueryPartFactory.generateValueList(values), SERVICE_CREATION_TIME_LITERAL));
 	}
 
+	/**
+	 * Creates the dummy registry object list.
+	 *
+	 * @return the registry object list type
+	 */
 	private RegistryObjectListType createDummyRegistryObjectList() {
 		RegistryObjectListType registryObject = RegistryObjectListType.Factory.newInstance();
 		ExtrinsicObjectType extrinsicObject = ExtrinsicObjectType.Factory.newInstance();
@@ -242,6 +316,11 @@ public class MetadataConverterTest {
 
 	}
 
+	/**
+	 * Creates the dummy registry object list with invalid date values.
+	 *
+	 * @return the registry object list type
+	 */
 	private RegistryObjectListType createDummyRegistryObjectListWithInvalidDateValues() {
 		RegistryObjectListType registryObject = RegistryObjectListType.Factory.newInstance();
 		ExtrinsicObjectType extrinsicObject = ExtrinsicObjectType.Factory.newInstance();
@@ -282,6 +361,11 @@ public class MetadataConverterTest {
 		return registryObject;
 	}
 
+	/**
+	 * Creates the dummy registry object list only with date values.
+	 *
+	 * @return the registry object list type
+	 */
 	private RegistryObjectListType createDummyRegistryObjectListOnlyWithDateValues() {
 		RegistryObjectListType registryObject = RegistryObjectListType.Factory.newInstance();
 		ExtrinsicObjectType extrinsicObject = ExtrinsicObjectType.Factory.newInstance();
@@ -304,6 +388,11 @@ public class MetadataConverterTest {
 		return registryObject;
 	}
 
+	/**
+	 * Creates the dummy registry object list empty date values.
+	 *
+	 * @return the registry object list type
+	 */
 	private RegistryObjectListType createDummyRegistryObjectListEmptyDateValues() {
 		RegistryObjectListType registryObject = RegistryObjectListType.Factory.newInstance();
 		ExtrinsicObjectType extrinsicObject = ExtrinsicObjectType.Factory.newInstance();
@@ -328,6 +417,11 @@ public class MetadataConverterTest {
 		return registryObject;
 	}
 
+	/**
+	 * Creates the dummy registry object list with empty classification.
+	 *
+	 * @return the registry object list type
+	 */
 	private RegistryObjectListType createDummyRegistryObjectListWithEmptyClassification() {
 		RegistryObjectListType registryObject = RegistryObjectListType.Factory.newInstance();
 		ExtrinsicObjectType extrinsicObject = ExtrinsicObjectType.Factory.newInstance();
@@ -354,6 +448,9 @@ public class MetadataConverterTest {
 
 	}
 
+	/**
+	 * Test convert registry object to metadata.
+	 */
 	@Test
 	public void testConvertRegistryObjectToMetadata() {
 		RegistryObjectListType registryObjectList = createDummyRegistryObjectList();
@@ -494,6 +591,9 @@ public class MetadataConverterTest {
 
 	}
 
+	/**
+	 * Test convert registry object with invalid date values to metadata.
+	 */
 	@Test
 	public void testConvertRegistryObjectWithInvalidDateValuesToMetadata() {
 		RegistryObjectListType registryObjectList = createDummyRegistryObjectListWithInvalidDateValues();
@@ -529,6 +629,9 @@ public class MetadataConverterTest {
 		}
 	}
 
+	/**
+	 * Test convert registry object with empty date values to metadata.
+	 */
 	@Test
 	public void testConvertRegistryObjectWithEmptyDateValuesToMetadata() {
 		RegistryObjectListType registryObjectList = createDummyRegistryObjectListEmptyDateValues();
@@ -564,6 +667,9 @@ public class MetadataConverterTest {
 		}
 	}
 
+	/**
+	 * Test convert registry object only with date values to metadata.
+	 */
 	@Test
 	public void testConvertRegistryObjectOnlyWithDateValuesToMetadata() {
 		RegistryObjectListType registryObjectList = createDummyRegistryObjectListOnlyWithDateValues();
@@ -612,6 +718,9 @@ public class MetadataConverterTest {
 		}
 	}
 
+	/**
+	 * Test convert registry object with empty classifications to metadata.
+	 */
 	@Test
 	public void testConvertRegistryObjectWithEmptyClassificationsToMetadata() {
 		RegistryObjectListType registryObjectList = createDummyRegistryObjectListWithEmptyClassification();
@@ -644,6 +753,9 @@ public class MetadataConverterTest {
 		}
 	}
 
+	/**
+	 * Test convert empty registry object to metadata.
+	 */
 	@Test
 	public void testConvertEmptyRegistryObjectToMetadata() {
 		RegistryObjectListType registryObjectList = RegistryObjectListType.Factory.newInstance();

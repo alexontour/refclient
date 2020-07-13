@@ -1,7 +1,10 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.utilities;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.hl7.fhir.r4.model.Address;
@@ -12,42 +15,33 @@ import org.openhealthtools.ihe.common.hl7v2.XAD;
 import org.openhealthtools.ihe.common.hl7v2.XCN;
 import org.openhealthtools.ihe.common.hl7v2.format.HL7V2MessageFormat;
 import org.openhealthtools.ihe.common.hl7v2.format.MessageDelimiters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.InternationalStringType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.LocalizedStringType;
-import arztis.econnector.ihe.model.Hl7Cxi;
 
+/**
+ * This class contains utility functionalities to extract information from Hl7v2
+ * data types.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class Hl7Utils {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Hl7Utils.class.getName());
-
+	/**
+	 * Default constructor.
+	 */
 	private Hl7Utils() {
 		throw new IllegalStateException("Utility class");
 	}
 
-	public static List<Hl7Cxi> convertToHl7Cxi(List<String> values) {
-		List<Hl7Cxi> referencedIds = new ArrayList<>();
-
-		for (String value : values) {
-			if (value != null) {
-				String[] elements = value.split("\\^|\\&amp;|\\&");
-
-				if (elements != null && elements.length >= 10) {
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("converted string {} to {}, {} and {}", value, elements[0], elements[4],
-								elements[8]);
-					}
-
-					referencedIds.add(new Hl7Cxi(elements[0], elements[4], elements[8]));
-				}
-			}
-		}
-
-		return referencedIds;
-	}
-
+	/**
+	 * extracts all text fields from {@link InternationalStringType} and concatenate
+	 * it to a {@link String}.
+	 *
+	 * @param ist {@link InternationalStringType} to extract
+	 * @return extracted text
+	 */
 	public static String convertInternationalStringToString(InternationalStringType ist) {
 		if (ist != null && (ist.getLocalizedStringArray() != null) && (ist.getLocalizedStringArray().length > 0)) {
 			StringBuilder s = new StringBuilder("");
@@ -64,6 +58,14 @@ public class Hl7Utils {
 		return null;
 	}
 
+	/**
+	 * extracts {@link Identifier} from passed {@link String} value. Value is Hl7v2 CX
+	 * format. This looks like {ID}^^^&amp;{OID}&amp;ISO
+	 *
+	 * @param value Hl7v2 CX formatted ID
+	 *
+	 * @return extracted {@link Identifier}
+	 */
 	public static Identifier extractHl7Cx(String value) {
 		CX patientId = HL7V2MessageFormat.buildCXFromMessageString(value, MessageDelimiters.COMPONENT,
 				MessageDelimiters.SUBCOMPONENT);
@@ -75,6 +77,14 @@ public class Hl7Utils {
 		return id;
 	}
 
+	/**
+	 * extracts {@link HumanName} from passed {@link String} value. Value is Hl7v2 XCN
+	 * format. This looks like {ID}^{family}^{given}^{further given}^{suffix}^{prefix}^^^{assigning authority}&amp;&amp;ISO
+	 *
+	 * @param value Hl7v2 XCN formatted name
+	 *
+	 * @return extracted {@link HumanName}
+	 */
 	public static HumanName extractHl7Xcn(String value) {
 		XCN patientName = HL7V2MessageFormat.buildXCNFromMessageString(value, MessageDelimiters.COMPONENT,
 				MessageDelimiters.SUBCOMPONENT);
@@ -89,6 +99,15 @@ public class Hl7Utils {
 		return name;
 	}
 
+	/**
+	 * extracts {@link Address} from passed {@link String} value. Value is Hl7v2 XAD
+	 * format. This looks like {street address}^{other designation}^{city}^{state or
+	 * province}^{postal code}^{country}
+	 *
+	 * @param value Hl7v2 XAD formatted address
+	 *
+	 * @return extracted {@link Address}
+	 */
 	public static Address extractHl7Xad(String value) {
 		XAD xad = HL7V2MessageFormat.buildXADFromMessageString(value, MessageDelimiters.COMPONENT);
 		Address address = new Address();

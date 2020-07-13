@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.queries;
 
 import java.util.ArrayList;
@@ -16,14 +22,39 @@ import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.utilities.IheServiceStubPool;
 
+/**
+ * This class contains all functionalities to request </br>
+ *
+ * <li>patient demographic information from ZPI (central patient index)</li>
+ *
+ * This class includes all needed transactions of IHE PDQ integration profile.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class PatientIndexTransactions {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientIndexTransactions.class.getName());
 
+	/**
+	 * Default constructor.
+	 */
 	private PatientIndexTransactions() {
 		throw new IllegalStateException("Utility class");
 	}
 
+	/**
+	 * This method is used to search for individual entries from the ZPI for
+	 * personal data that describe a patient. The search is limited by passed
+	 * parameters. This request is part of IHE PDQ integration profile.
+	 *
+	 * @param fhirPatient object with details to search
+	 * @param assertion   assertion that authenticate health care provider who
+	 *                    requests patient information
+	 *
+	 * @return list of found {@link FhirPatient}
+	 */
 	public static List<FhirPatient> queryPatientDemographics(FhirPatient fhirPatient, XUAAssertion assertion) {
 		if (fhirPatient == null) {
 			return new ArrayList<>();
@@ -65,6 +96,10 @@ public class PatientIndexTransactions {
 
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("Found {} patients.", response.getTotalNumbers());
+			}
+
+			for (FhirPatient patient : response.getFhirPatients()) {
+				patient.setActive(true);
 			}
 
 			return response.getFhirPatients();

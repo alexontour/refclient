@@ -1,17 +1,23 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
-import java.util.Base64;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.events.Characters;
+import javax.xml.stream.events.XMLEvent;
 
 import org.apache.axis2.AxisFault;
 import org.apache.commons.io.FileUtils;
@@ -24,7 +30,6 @@ import org.ehealth_connector.common.at.enums.FormatCode;
 import org.ehealth_connector.common.at.enums.TypeCode;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040ClinicalDocument;
 import org.ehealth_connector.common.utils.DebugUtil;
-import org.ehealth_connector.communication.DocumentRequest;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
@@ -67,11 +72,12 @@ import arztis.econnector.rest.model.fhir.FhirDocumentReference;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
 import arztis.econnector.rest.utilities.ElgaTypeConverter;
 import arztis.econnector.rest.utilities.FhirUtil;
+import ca.uhn.fhir.util.XmlUtil;
 
 /**
  * JAVA API for the ELGA reference client. This class includes all function
  * calls that are required for
- * 
+ *
  * <ul>
  * <li>Reading the cards (e-card and Admin-Card - GINA)</li>
  * <li>User registration for ELGA and GINA</li>
@@ -86,27 +92,36 @@ import arztis.econnector.rest.utilities.FhirUtil;
  * <li>Retrieving demographic patient data</li>
  * <li>List and cancel patient contacts</li>
  * </ul>
- * 
+ *
  * This class is built as singleton, so you have to call {@link getInstance} to
  * instantiate.
- * 
- * @author ET-Innovations
+ *
+ * @author Anna Jungwirth
  *
  */
 public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
+	/** The Constant URN_OID_FORMAT. */
 	private static final String URN_OID_FORMAT = "urn:oid:";
+	
+	/** The Constant NO_DOCUMENT_REFERENCE_FOUND. */
 	private static final String NO_DOCUMENT_REFERENCE_FOUND = "No document reference found";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FhirElgaConnectionCaller.class.getName());
 
+	/**
+	 * The Class LazyHolder.
+	 */
 	private static class LazyHolder {
+		
+		/** The Constant INSTANCE. */
 		static final FhirElgaConnectionCaller INSTANCE = new FhirElgaConnectionCaller();
 	}
 
 	/**
-	 * This method returns the instance of the class (Singleton)
-	 * 
+	 * This method returns the instance of the class (Singleton).
+	 *
 	 * @return instance
 	 */
 	public static FhirElgaConnectionCaller getInstance() {
@@ -120,12 +135,9 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * @param documentReference contains all data to restrict the queried documents
 	 * @param connData          Connection data of the respective user requesting
 	 *                          the documents
-	 * @param organizationId    OID of the organization of the health care provider
-	 *
 	 * @return If documents were found, a list of {@link DocumentEntryResponseType}
 	 *         is returned, otherwise an {@link Message} with the detailed error
 	 *         message is returned.
-	 * 
 	 */
 	public FhirBundle requestDocumentList(FhirDocumentReference documentReference, ConnectionData connData) {
 		if (connData == null) {
@@ -164,17 +176,12 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * used in the background according to passed document type.
 	 *
 	 * @param documentReference  contains all data to restrict queried documents
-	 * @param assertion          assertion of respective user requesting the
-	 *                           documents
+	 * @param connData the conn data
 	 * @param typeCode           code document type
-	 * @param eHealthApplication eHealth application like eImmunization or virtual
-	 *                           organization from which document should be queried
-	 *
 	 * @return If documents were found, a FHIR {@link Bundle} with
 	 *         {@link FhirDocumentReference} as resource is returned, otherwise a
 	 *         FHIR {@link Bundle} with detailed error message in response is
 	 *         returned.
-	 * 
 	 */
 	private FhirBundle requestDocumentList(FhirDocumentReference documentReference, ConnectionData connData,
 			String typeCode) {
@@ -219,6 +226,15 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document response (<code>qr</code>).
+	 * Depending on the response, this method creates {@link FhirBundle} with error
+	 * details or with retrieved document metadata.
+	 *
+	 * @param qr document query response (ITI-18)
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	private FhirBundle extractFhirBundleFromResponse(XDSQueryResponseType qr) {
 		if (qr == null) {
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
@@ -230,7 +246,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			String error = getError(qr.getErrorList().getError());
 			LOGGER.error("{}", error);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					IssueSeverity.ERROR, null, null, null);
+					IssueSeverity.ERROR, null, null, error);
 		} else {
 			if (LOGGER.isDebugEnabled()) {
 				StringBuilder sb = new StringBuilder();
@@ -301,6 +317,17 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document response (<code>rrt</code>).
+	 * Depending on the response, this method creates {@link FhirBundle} with error
+	 * details or with retrieved document metadata.
+	 *
+	 * @param rrt               document query response (ITI-43)
+	 * @param documentReference to add retrieved document
+	 * @param typeCode          type of document
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	private FhirBundle extractFhirBundleFromResponse(XDSRetrieveResponseType rrt,
 			FhirDocumentReference documentReference, String typeCode) {
 		if (rrt != null) {
@@ -328,12 +355,11 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	}
 
 	/**
-	 * Add XDS document (result of ITI-41 request) to passed document reference
+	 * Add XDS document (result of ITI-43 request) to passed document reference.
 	 *
-	 * @param documents XDS documents as result of ITI-41 request
+	 * @param documents XDS documents as result of ITI-43 request
 	 * @param reference document reference to add returned document
 	 * @param typeCode  type of document
-	 *
 	 * @return document reference with returned document
 	 */
 	public void addXdsDocumentToDocumentReference(List<XDSDocument> documents, DocumentReference reference,
@@ -357,10 +383,9 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 						if (reference.getContent().get(index).getAttachment().getContentType() != null && reference
 								.getContent().get(index).getAttachment().getContentType().contains("json")) {
 							reference.getContent().get(index).getAttachment()
-									.setData(Base64.getEncoder().encode(convertXmlToJson(typeCode, bytesDoc)));
+									.setData(convertXmlToJson(typeCode, bytesDoc));
 						} else {
-							reference.getContent().get(index).getAttachment()
-									.setData(Base64.getEncoder().encode(bytesDoc));
+							reference.getContent().get(index).getAttachment().setData(bytesDoc);
 						}
 					}
 				}
@@ -368,6 +393,16 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * creates JSON from passed XML document. At the moment this method only
+	 * supports complete immunization states. First XML document is converted to HL7
+	 * FHIR {@link Bundle}. The JSON is created from this bundle
+	 *
+	 * @param typeCode type of document
+	 * @param bytesDoc bytes of XML document
+	 *
+	 * @return bytes of JSON
+	 */
 	private byte[] convertXmlToJson(String typeCode, byte[] bytesDoc) {
 		if (TypeCode.IMMUNIZATION_SUMMARY_REPORT.getCodeValue().equalsIgnoreCase(typeCode)) {
 			File file = new File("resources/update_immunization_example.xml");
@@ -392,7 +427,13 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		return new byte[0];
 	}
 
-	public String getError(List<XDSErrorType> errors) {
+	/**
+	 * Gets the error.
+	 *
+	 * @param errors the errors
+	 * @return the error
+	 */
+	private String getError(List<XDSErrorType> errors) {
 		StringBuilder sb = new StringBuilder();
 
 		if (errors == null || errors.isEmpty()) {
@@ -400,12 +441,32 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 
 		for (XDSErrorType xdsError : errors) {
-			sb.append(xdsError.getCodeContext());
+			if (xdsError.getCodeContext() != null && xdsError.getCodeContext().contains("EmedReturn")) {
+				List<XMLEvent> xmlEvents = XmlUtil.parse(xdsError.getCodeContext());
+				for (int index = 0; index < xmlEvents.size(); index++) {
+					XMLEvent node = xmlEvents.get(index);
+					if (node != null && node.isCharacters()) {
+						Characters asCharacters = node.asCharacters();
+						if (!asCharacters.isWhiteSpace()) {
+							sb.append(asCharacters.getData());
+							sb.append(" ");
+						}
+					}
+				}
+			} else {
+				sb.append(xdsError.getCodeContext());
+			}
 		}
 
 		return sb.toString();
 	}
 
+	/**
+	 * Gets the error message.
+	 *
+	 * @param errors the errors
+	 * @return the error message
+	 */
 	public String getErrorMessage(List<XDSErrorType> errors) {
 		StringBuilder sb = new StringBuilder();
 
@@ -426,32 +487,6 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 
 		return sb.toString();
-	}
-
-	public static DocumentRequest[] generateDocumentRequests(DocumentReference reference, URI uri) {
-		DocumentRequest[] requests = null;
-
-		if (reference.getContent() != null) {
-			requests = new DocumentRequest[reference.getContent().size()];
-		}
-
-		for (int i = 0; i < reference.getContent().size(); i++) {
-			if (requests != null && reference.getContent().get(i) != null
-					&& reference.getContent().get(i).getAttachment() != null
-					&& reference.getContent().get(i).getAttachment().getUrl() != null
-					&& reference.getContent().get(i).getAttachment().getUrl().indexOf('/') != -1) {
-				String[] pathes = reference.getContent().get(i).getAttachment().getUrl().split("/");
-
-				DocumentRequest documentRequest = new DocumentRequest(pathes[pathes.length - 2], uri,
-						pathes[pathes.length - 3]);
-
-				documentRequest.setHomeCommunityId(pathes[pathes.length - 1]);
-
-				requests[i] = documentRequest;
-			}
-		}
-
-		return requests;
 	}
 
 	/**
@@ -503,12 +538,10 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * This method queries first metadata of medication list and queries afterwards
 	 * medication list.
 	 *
-	 * @param assertion         assertion of respective user, who would like to
-	 *                          retrieve medication list
+	 * @param connData the conn data
 	 * @param documentReference contains details for restriction of medication list
 	 *                          search
 	 * @param typeCode          type code of document to search for
-	 *
 	 * @return If the user was registered successfully and a medication list was
 	 *         found the document is returned. If the query failed, the error
 	 *         message {@link Message} why the request failed is returned.
@@ -586,16 +619,12 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	}
 
 	/**
-	 * This method queries all prescriptions (open and closed) of a patient
+	 * This method queries all prescriptions (open and closed) of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve prescriptions
+	 * @param connData the conn data
 	 * @param documentReference contains details for the restriction of prescription
 	 *                          search such as social security number of the patient
-	 * @param forDispenses      parameter to limit the search for open or all
-	 *                          prescriptions. True if only prescriptions to be
-	 *                          dispensed should be requested. Otherwise false.
-	 *
+	 * @param typeCode the type code
 	 * @return If the user was registered successfully and prescriptions were found,
 	 *         {@link FhirBundle} with {@link FhirDocumentReference} as resource is
 	 *         returned. If the query failed, a {@link FhirBundle} with information,
@@ -609,11 +638,10 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	/**
 	 * This method queries open prescriptions of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve prescriptions
+	 * @param connData the conn data
 	 * @param documentReference contains details for the restriction of prescription
 	 *                          search such as social security number of the patient
-	 *
+	 * @param typeCode the type code
 	 * @return If the user was registered successfully and prescriptions were found,
 	 *         {@link FhirBundle} with {@link FhirDocumentReference} as resource is
 	 *         returned. If the query failed, a {@link FhirBundle} with information,
@@ -624,6 +652,19 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		return findPrescriptionsCommon(connData, documentReference, typeCode, true);
 	}
 
+	/**
+	 * This method queries open prescriptions of a patient.
+	 *
+	 * @param connData the conn data
+	 * @param documentReference contains details for the restriction of prescription
+	 *                          search such as social security number of the patient
+	 * @param typeCode the type code
+	 * @param dispense the dispense
+	 * @return If the user was registered successfully and prescriptions were found,
+	 *         {@link FhirBundle} with {@link FhirDocumentReference} as resource is
+	 *         returned. If the query failed, a {@link FhirBundle} with information,
+	 *         why the request failed is returned.
+	 */
 	private FhirBundle findPrescriptionsCommon(ConnectionData connData, FhirDocumentReference documentReference,
 			String typeCode, boolean dispense) {
 		try {
@@ -672,12 +713,11 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * This method queries self created update immunization states of ELGA eHealth
 	 * application "eImpfpass" of a patient.
 	 *
-	 * @param assertion         assertion of the respective user, who would like to
-	 *                          retrieve immunization states
+	 * @param connData the conn data
 	 * @param documentReference contains details for the restriction of immunization
 	 *                          states search such as social security number of
 	 *                          patient
-	 *
+	 * @param typeCode the type code
 	 * @return If the user was registered successfully and immunization states were
 	 *         found, {@link FhirBundle} with {@link FhirDocumentReference} as
 	 *         resource is returned. If the query failed, a {@link FhirBundle} with
@@ -724,6 +764,15 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document response
+	 * (<code>response</code>). Depending on the response, this method creates
+	 * {@link FhirBundle} with error details or with retrieved document metadata.
+	 *
+	 * @param response document query response (PHARM-1)
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	private FhirBundle extractBundleFromAdhocQueryResponseDocument(AdhocQueryResponseDocument response) {
 		if (response.getAdhocQueryResponse() != null
 				&& response.getAdhocQueryResponse().getRegistryErrorList() != null) {
@@ -749,14 +798,12 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	/**
 	 * This method provides and registers a CDA document in the ELGA area. An ITI-41
 	 * transaction is executed in the background.
-	 * 
-	 * @param body              contains information about the document to be
-	 *                          registered, such as metadata and the document itself
+	 *
+	 * @param bundle the bundle
 	 * @param connData          Connection data of the respective user providing the
 	 *                          document
 	 * @param oidTargetElgaArea OID of the ELGA area in which documents should be
 	 *                          stored
-	 * 
 	 * @return a message {@link Message} whether the registration was successful or
 	 *         why the request failed is returned.
 	 */
@@ -834,7 +881,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 				doc = documentReference.getContentFirstRep().getAttachment().getData();
 			}
 
-			extractFhirBundleFromResponse(super.provideAndRegisterDocuments(status, typeCode, facilityTypeCode,
+			return extractFhirBundleFromResponse(super.provideAndRegisterDocuments(status, typeCode, facilityTypeCode,
 					practiceSettingCode, formatCode, patientId, doc, cda, parentDoc, connData, oidTargetElgaArea));
 		} catch (UnauthorizedException e) {
 			LOGGER.error(e.getMessage(), e);
@@ -856,11 +903,17 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					IssueSeverity.ERROR, IssueType.EXCEPTION, OperationOutcome.NULL, message);
 		}
-		return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-				IssueSeverity.ERROR, IssueType.EXCEPTION, OperationOutcome.NULL, null);
-
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document response
+	 * (<code>response</code>). Depending on the response, this method creates
+	 * {@link FhirBundle} with error details or with the success message.
+	 *
+	 * @param response writing document response (ITI-41)
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	private FhirBundle extractFhirBundleFromResponse(XDSResponseType response) {
 		if (response != null && response.getErrorList() != null && response.getErrorList().getError() != null
 				&& !response.getErrorList().getError().isEmpty()) {
@@ -881,6 +934,15 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 				IssueSeverity.ERROR, IssueType.EXCEPTION, OperationOutcome.NULL, null);
 	}
 
+	/**
+	 * extracts details of passed document in XML or JSON format. This method
+	 * creates {@link POCDMT000040ClinicalDocument} with extracted details.
+	 *
+	 * @param documentReference resource that contains document
+	 * @param connData          connection data of user, who wants to get details
+	 *
+	 * @return created {@link POCDMT000040ClinicalDocument}
+	 */
 	private POCDMT000040ClinicalDocument getCdaDetails(DocumentReference documentReference, ConnectionData connData) {
 		String formatCodeValue = documentReference.getContentFirstRep().getFormat().getCode();
 		if (documentReference.getContentFirstRep().getAttachment().getContentType().contains("xml")) {
@@ -892,6 +954,16 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		return null;
 	}
 
+	/**
+	 * creates CDA R2 document depending on passed format code. Currently, only
+	 * update immunization states can be generated by using a JSON.
+	 *
+	 * @param documentReference resource that contains document
+	 * @param formatCode        format of document
+	 * @param userToken         JWT token, which authenticates user
+	 *
+	 * @return created {@link POCDMT000040ClinicalDocument}
+	 */
 	protected POCDMT000040ClinicalDocument generateCdaDocument(DocumentReference documentReference, String formatCode,
 			String userToken) {
 		if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
@@ -907,31 +979,16 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		return null;
 	}
 
-	protected POCDMT000040ClinicalDocument getDetailsOfDocument(byte[] bytesDoc, String formatCode) {
-		try {
-			if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
-				return getDetailsOfUpdateImmunization(bytesDoc);
-			} else if (FormatCode.ELGA_LAB_REPORT_FULL_SUPPORT_2015.getCodeValue().equalsIgnoreCase(formatCode)) {
-				return getDetailsOfLabReport(bytesDoc);
-			}
-		} catch (IOException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-
-		return null;
-	}
-
 	/**
 	 * This method cancels a document by setting the status of the document to
 	 * deprecated. An ITI-57 transaction is executed in the background.
-	 * 
+	 *
 	 * @param connData          Connection data of the respective user who wants to
 	 *                          cancel the document
-	 * @param parameter         contains information about the document to be
-	 *                          cancelled
+	 * @param documentReference the document reference
+	 * @param authorInstitution the author institution
 	 * @param oidTargetElgaArea OID of the ELGA area in which this document should
 	 *                          be cancelled
-	 *
 	 * @return a message {@link Message} whether the cancellation was successful or
 	 *         why the request failed is returned.
 	 */
@@ -986,6 +1043,15 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
+	/**
+	 * Creates {@link FhirBundle} of passed document response
+	 * (<code>registryResponse</code>). Depending on the response, this method
+	 * creates {@link FhirBundle} with error details or with the success message.
+	 *
+	 * @param registryResponse writing document response (ITI-57)
+	 *
+	 * @return created {@link FhirBundle}
+	 */
 	private FhirBundle extractFhirBundleFromResponse(RegistryResponseType registryResponse) {
 		if (registryResponse != null && registryResponse.getStatus() != null
 				&& registryResponse.getStatus().contains(IheConstants.EBXML_SUCCESS_LITERAL)) {
@@ -1016,13 +1082,13 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * {@link EimpfDocumentUpdateImmunisierungsstatus} in the ehealth connector
 	 * project. This instance can be used to generate the XML of the CDA document.
 	 * The instance is filled with the information form the {@link json}
-	 * 
+	 *
 	 * @param json          data of the CDA document in json form. The description
 	 *                      of the detailed json structure could be found under
 	 *                      <b>docs/api/v1/cda.md</b> in the section generate
 	 *                      "Update Immunisierungsstatus"
 	 * @param authorization jwt of the user who wants to generate the CDA document.
-	 * 
+	 *
 	 * @return if the request was successful
 	 *         {@link EimpfDocumentUpdateImmunisierungsstatus} is returned,
 	 *         otherwise an error message {@link Message} is returned.
@@ -1036,8 +1102,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
 	/**
 	 * This method extracts the OID (identification of health service provider) of
-	 * the HCP Assertion, which is stored for the user
-	 * 
+	 * the HCP Assertion, which is stored for the user.
+	 *
 	 * @param authorization jwt of user for which the OID is needed.
 	 * @param urnNotation   true, if the OID is needed in urn notation
 	 *                      (urn:oid:1.2.3.4) or false if the OID is needed without

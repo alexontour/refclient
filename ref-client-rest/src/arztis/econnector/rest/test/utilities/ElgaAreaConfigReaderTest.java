@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.utilities;
 
 import static org.junit.Assert.assertEquals;
@@ -6,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-import org.apache.xmlbeans.XmlException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,28 +20,26 @@ import arztis.econnector.ihe.utilities.ElgaAreaConfigReader;
 import arztis.econnector.ihe.utilities.IheConstants;
 
 /**
- * Test of {@link ElgaAreaConfigReader}
- *
+ * Test of {@link ElgaAreaConfigReader}.
  */
 public class ElgaAreaConfigReaderTest {
-	
+
+	/** The map. */
 	Map<String, ElgaAreaConfig> map;
-	
+
 	/**
-	 * Method implementing
-	 * 
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
 		ElgaAreaConfigReader reader = ElgaAreaConfigReader.getInstance();
 		map = reader.getElgaAreaConfigMap();
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link ElgaAreaConfigReader()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testElgaAreaConfigReader() {

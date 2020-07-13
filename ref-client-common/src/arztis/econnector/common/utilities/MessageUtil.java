@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.common.utilities;
 
 import java.text.MessageFormat;
@@ -5,35 +11,39 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
- * 
- * Utilities for messages
- * 
- * @author ET-Innovations
+ * Utilities for building messages of properties file.
  *
+ * @author Anna Jungwirth
  */
-
 public class MessageUtil {
+
+	/** The bundle. */
 	private static ResourceBundle bundle = ResourceBundle.getBundle("messages_de");
 
+	/**
+	 * Default Constructor.
+	 *
+	 * @throws UnsupportedOperationException the unsupported operation exception
+	 */
 	private MessageUtil() {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * reads property values of the <b>resources/messages_de.properties</b> file
-	 * 
-	 * @param key       of the property
-	 * @param arguments to pass to the message value like the social security number
-	 *                  for "Es wurden keine Dokumente für den Patienten mit der
-	 *                  SVNR {0} gefunden."
-	 * 
-	 * @return the retrieved value, if no value could be retrieved a empty string
-	 *         will be returned
+	 * This method reads property value of <b>resources/messages_de.properties</b>
+	 * file for passed <code>key</code>
+	 *
+	 * @param key       property key
+	 * @param arguments message values to pass for example social security number
+	 *                  for a certain patient.
+	 *
+	 * @return retrieved value, if no value could be retrieved an empty string is
+	 *         returned
 	 */
-	public static String getMessageFromProperties(String key, Object arguments) {
+	public static String getMessageFromProperties(String key, Object... arguments) {
 		try {
 			MessageFormat messageFormat = new MessageFormat(bundle.getString(key));
-			return messageFormat.format(arguments);
+			return messageFormat.format(arguments, new StringBuffer(), null).toString();
 		} catch (MissingResourceException ex) {
 			return "";
 		}

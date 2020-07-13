@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.math.BigInteger;
@@ -7,32 +13,53 @@ import java.util.List;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryExternalDocument;
 import org.ehealth_connector.common.enums.NullFlavor;
 import org.ehealth_connector.common.hl7cdar2.CD;
+import org.ehealth_connector.common.hl7cdar2.CS;
 import org.ehealth_connector.common.hl7cdar2.ED;
 import org.ehealth_connector.common.hl7cdar2.INT;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
+/**
+ * This class is a subclass of {@link CodeableConcept}. Therefore it contains
+ * reference to terminology or ontology. </br>
+ *
+ * It contains functionalities for converting CDA R2 {@link CD}, CDA R2
+ * {@link CE} and CDA R2 {@link CS} into HL7 FHIR {@link CodeableConcept} and
+ * vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @DatatypeDef(name = "CodeableConcept")
 public class FhirCodeableConcept extends CodeableConcept {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirCodeableConcept() {
 
 	}
 
+	/**
+	 * creates HL7 FHIR codeable concept from CDA R2 code {@link CD}.
+	 *
+	 * @param cd code element of CDA
+	 */
 	public FhirCodeableConcept(CD cd) {
 		fromCD(cd);
 	}
 
+	/**
+	 * extracts {@link Coding} and text from CDA R2 code {@link CD}.
+	 *
+	 * @param hl7CdaR2Value the hl 7 cda R 2 value
+	 */
 	private void fromCD(org.ehealth_connector.common.hl7cdar2.CD hl7CdaR2Value) {
 
 		if (hl7CdaR2Value != null) {
@@ -54,7 +81,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 	 *                         is null
 	 * @param translationCodes list of translation codes. It is not implemented in
 	 *                         HL7 FHIR to added as child like in HL7 CDA R2
-	 * 
+	 *
 	 * @return the HL7 CDA R2 CD data typed value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.CD createHl7CdaR2Cd(CodeableConcept codeableConcept,
@@ -98,7 +125,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 	 *                         is null
 	 * @param translationCodes list of translation codes. It is not implemented in
 	 *                         HL7 FHIR to added as child like in HL7 CDA R2
-	 * 
+	 *
 	 * @return the HL7 CDA R2 CE data typed value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.CE createHl7CdaR2Ce(CodeableConcept codeableConcept,
@@ -144,7 +171,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 	 *                         is null
 	 * @param translationCodes list of translation codes. It is not implemented in
 	 *                         HL7 FHIR to added as child like in HL7 CDA R2
-	 * 
+	 *
 	 * @return the HL7 CDA R2 CE data typed value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.CS createHl7CdaR2Cs(CodeableConcept codeableConcept,
@@ -182,6 +209,16 @@ public class FhirCodeableConcept extends CodeableConcept {
 		return retVal;
 	}
 
+	/**
+	 * Creates the CDA R2 {@link AtcdabbrEntryExternalDocument} from HL7 FHIR
+	 * Codeable concept.
+	 *
+	 * @param index           of document
+	 * @param codeableConcept HL7 FHIR data type with information about external
+	 *                        document.
+	 *
+	 * @return the HL7 CDA R2 CD data typed value
+	 */
 	public static AtcdabbrEntryExternalDocument getAtcdabbrEntryExternalDocument(int index,
 			CodeableConcept codeableConcept) {
 		AtcdabbrEntryExternalDocument externalDoc = new AtcdabbrEntryExternalDocument();

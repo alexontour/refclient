@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.queries;
 
 import java.math.BigInteger;
@@ -16,21 +22,41 @@ import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.InstanceIden
 import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.ListResponse;
 import arztis.econnector.ihe.utilities.IheServiceStubPool;
 
+/**
+ * This class contains all functionalities to request </br>
+ *
+ * <li>health care provider from GDA-Index</li>.
+ *
+ * @author Anna Jungwirth
+ */
 public class GdaSearch {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(GdaSearch.class.getName());
 
+	/**
+	 * Default Constructor.
+	 */
 	private GdaSearch() {
 		throw new IllegalStateException("Utility class");
 	}
 
 	/**
-	 * This method searches a gda in the gda index with the given parameter.
+	 * This method is used to search for individual entries from the GDA-I for
+	 * personal or organisational data that describe a health care provider. The
+	 * search is limited by passed parameters. If more than 200 health care
+	 * providers are found, an error will be returned. The number of hits is limited
+	 * to 200 by default.
 	 *
-	 * @param practitioner details about the health care provider to search for
-	 * 
-	 * @return list of found health care providers
-	 * @throws RemoteException
+	 * @param family    name of health care provider
+	 * @param given     name of health care provider
+	 * @param maxResult maximal number of hits
+	 * @param active    status of health care provider
+	 * @param role      of health care provider (Possible values are available under
+	 *                  https://termpub.gesundheit.gv.at (ELGA_GDA_Aggregatrollen))
+	 * @param address   of health care provider
+	 * @return list of {@link ListResponse} filled with found health care providers
+	 * @throws RemoteException the remote exception
 	 */
 	public static ListResponse[] searchGdas(String family, String given, int maxResult, boolean active, String role,
 			Address address) throws RemoteException {
@@ -64,6 +90,13 @@ public class GdaSearch {
 		return gdaIndexResponseListDocument.getGda();
 	}
 
+	/**
+	 * Adds address parameters like city, postal code and street name to passed
+	 * {@link InstanceIdentifierPerson}.
+	 *
+	 * @param address                  of health care provider
+	 * @param instanceIdentifierPerson the instance identifier person
+	 */
 	private static void setAddressForSearch(Address address, InstanceIdentifierPerson instanceIdentifierPerson) {
 		if (address != null) {
 			if (address.getCity() != null) {
@@ -88,6 +121,12 @@ public class GdaSearch {
 		}
 	}
 
+	/**
+	 * extracts index of first digit of passed address line.
+	 *
+	 * @param addressline the addressline
+	 * @return index of first digit or -1 if no digit was found
+	 */
 	private static int getIndexOfFirstDigit(String addressline) {
 		try {
 			Matcher matcher = Pattern.compile("\\d+").matcher(addressline);
@@ -99,6 +138,14 @@ public class GdaSearch {
 		}
 	}
 
+	/**
+	 * Adds passed name parameters like given and family to passed
+	 * {@link InstanceIdentifierPerson}.
+	 *
+	 * @param family name
+	 * @param given name
+	 * @param instanceIdentifierPerson the instance identifier person
+	 */
 	private static void setNameForSearch(String family, String given,
 			InstanceIdentifierPerson instanceIdentifierPerson) {
 

@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model;
 
 import static org.junit.Assert.assertEquals;
@@ -15,16 +21,17 @@ import arztis.econnector.ihe.tests.TestUtils;
 import arztis.econnector.rest.model.fhir.FhirHumanName;
 
 /**
- * Test of {@link FhirHumanName}
+ * Test of {@link FhirHumanName}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirHumanNameTest extends TestUtils {
 
+	/** The test name. */
 	private HumanName testName;
 
 	/**
-	 * Method implementing
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
@@ -35,67 +42,67 @@ public class FhirHumanNameTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2En()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaR2En()  {
 		final EN en = FhirHumanName.createHl7CdaR2En(testName, null);
-		
+
 		assertNotNull(en);
 		testName(en.getContent(), testName.getPrefixAsSingleString(), testName.getSuffixAsSingleString(), testName.getGivenAsSingleString(), testName.getFamily());
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2En()} with a null flavor.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaR2EnNullFlavor()  {
 		final EN en = FhirHumanName.createHl7CdaR2En(null, NullFlavor.NOINFORMATION);
-		
+
 		assertNotNull(en);
 		assertNotNull(en.getNullFlavor());
 		assertNotNull(en.getNullFlavor().get(0));
 		assertEquals("NI", en.getNullFlavor().get(0));
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2On()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaROn()  {
 		final ON on = FhirHumanName.createHl7CdaR2On("Ordination Dr. Musterärztin");
-		
-		assertNotNull(on);		
+
+		assertNotNull(on);
 		assertNotNull(on.getContent());
 		assertEquals("Ordination Dr. Musterärztin", on.xmlContent);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2Pn()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaR2Pn()  {
 		final PN pn = FhirHumanName.createHl7CdaR2Pn(testName, null);
-		
+
 		assertNotNull(pn);
 		testName(pn.getContent(), testName.getPrefixAsSingleString(), testName.getSuffixAsSingleString(), testName.getGivenAsSingleString(), testName.getFamily());
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirHumanName#createHl7CdaR2Pn()} with a null flavor.
-	 * 
+	 *
 	 */
 	@Test
 	public void testCreateHl7CdaR2PnNullFlavor()  {
 		final PN pn = FhirHumanName.createHl7CdaR2Pn(null, NullFlavor.UNKNOWN);
-		
+
 		assertNotNull(pn);
 		assertNotNull(pn.getNullFlavor());
 		assertNotNull(pn.getNullFlavor().get(0));

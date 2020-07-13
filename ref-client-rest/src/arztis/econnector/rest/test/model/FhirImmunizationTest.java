@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model;
 
 import static org.junit.Assert.assertEquals;
@@ -5,10 +11,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrSectionImpfungenKodiert;
 import org.ehealth_connector.common.hl7cdar2.CD;
 import org.ehealth_connector.common.hl7cdar2.EntityDeterminerDetermined;
@@ -41,17 +45,20 @@ import arztis.econnector.ihe.tests.TestUtils;
 import arztis.econnector.rest.model.fhir.FhirImmunization;
 
 /**
- * Test of {@link FhirImmunization}
+ * Test of {@link FhirImmunization}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirImmunizationTest extends TestUtils {
 
+	/** The Constant COMPLETED. */
 	private static final String COMPLETED = "completed";
+	
+	/** The test immunization. */
 	private Immunization testImmunization;
 
 	/**
-	 * Method implementing
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
@@ -85,7 +92,7 @@ public class FhirImmunizationTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.rest.model.fhir.FhirImmunization#getAtcdabbrSectionImpfungenKodiert()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testGetAtcdabbrSectionImpfungenKodiert() {

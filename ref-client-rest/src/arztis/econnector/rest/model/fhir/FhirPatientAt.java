@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.Date;
@@ -44,17 +50,18 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
  * ELGA. The class attributes restrict the search. It is important to restrict
  * the search of demographic data as much as possible to enable best possible
  * return value.
- * 
- * @author ET-Innovations
+ *
+ * @author Anna Jungwirth
  *
  */
 @ResourceDef(name = "Patient", profile = "http://hl7.org/fhir/StructureDefinition/Patient")
 public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirPatientAt() {
 
@@ -62,7 +69,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	/**
 	 * Creates fhir patient instance.
-	 * 
+	 *
 	 * @param patientId id of patient
 	 */
 	public FhirPatientAt(Identificator patientId) {
@@ -75,9 +82,10 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	}
 
 	/**
-	 * Creates fhir patient instance from CDA record target element
-	 * 
+	 * Creates fhir patient instance from CDA record target element.
+	 *
 	 * @param target record target of CDA
+	 * @param resourceId the resource id
 	 */
 	public FhirPatientAt(POCDMT000040RecordTarget target, String resourceId) {
 		if (target != null && target.getPatientRole() != null) {
@@ -132,7 +140,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	/**
 	 * Creates fhir patient instance.
-	 * 
+	 *
 	 * @param given     patient's given name
 	 * @param family    patient's family name
 	 * @param id        id of the patient
@@ -147,9 +155,9 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	}
 
 	/**
-	 * Constructor to create patient from ITI-18 response (Query document metadata)
-	 * 
-	 * @param documentEntry document reference response
+	 * Constructor to create patient from ITI-18 response (Query document metadata).
+	 *
+	 * @param documentResponse the document response
 	 * @param index         index of response. It must be build of {document
 	 *                      response index} - {patient index}
 	 */
@@ -159,8 +167,8 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	/**
 	 * Constructor to create patient from PHARM-1 response (Query pharmaceutical
-	 * document metadata)
-	 * 
+	 * document metadata).
+	 *
 	 * @param extrinsicObject document reference response
 	 * @param index           index of response. It must be build of {document
 	 *                        response index} - {patient index}
@@ -172,7 +180,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	/**
 	 * Name of the patient to search. Given and family name will be used for the
 	 * demographic search. Prefixes and suffixes won't be used.
-	 * 
+	 *
 	 * @param given  patient's given name
 	 * @param family patient's family name
 	 */
@@ -187,7 +195,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	 * Unique identifier of the patient. One of this identifier is for example the
 	 * social security number. This parameter restricts the search as much as
 	 * possible.
-	 * 
+	 *
 	 * @param id  id of the patient, e.g. 1001210995
 	 * @param oid oid of the identificator system
 	 */
@@ -201,7 +209,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	/**
 	 * Gender of the patient. Possible values are male, female and undifferentiated
 	 * in ELGA.
-	 * 
+	 *
 	 * @param gender patient's gender
 	 * @return this patient
 	 */
@@ -213,7 +221,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	/**
 	 * The date of birth of the patient being sought.
-	 * 
+	 *
 	 * @param birthTime patient's birth date
 	 */
 	public void setBirthTime(Date birthTime) {
@@ -222,7 +230,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	/**
 	 * The address of the patient.
-	 * 
+	 *
 	 * @param addressline addressline of patient's address
 	 * @param city        city of patient's address
 	 * @param postalcode  postal code of patient's address
@@ -239,6 +247,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		addAddress(address);
 	}
 
+	/**
+	 * From document entry response.
+	 *
+	 * @param documentEntry the document entry
+	 * @param index the index
+	 */
 	private void fromDocumentEntryResponse(DocumentEntryResponseType documentEntry, String index) {
 		if (documentEntry == null) {
 			return;
@@ -257,6 +271,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		}
 	}
 
+	/**
+	 * From extrinsic object.
+	 *
+	 * @param extrinsicObject the extrinsic object
+	 * @param index the index
+	 */
 	private void fromExtrinsicObject(ExtrinsicObjectType extrinsicObject, String index) {
 		if (extrinsicObject == null) {
 			return;
@@ -268,6 +288,11 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		convertExternalIdentifiers(extrinsicObject.getExternalIdentifierArray());
 	}
 
+	/**
+	 * From slots.
+	 *
+	 * @param aSlots the a slots
+	 */
 	private void fromSlots(SlotType1[] aSlots) {
 		if (aSlots == null) {
 			return;
@@ -288,6 +313,11 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 
 	}
 
+	/**
+	 * Convert external identifiers.
+	 *
+	 * @param identifiers the identifiers
+	 */
 	private void convertExternalIdentifiers(ExternalIdentifierType[] identifiers) {
 		if (identifiers == null) {
 			return;
@@ -301,6 +331,11 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		}
 	}
 
+	/**
+	 * Extract source patient info.
+	 *
+	 * @param values the values
+	 */
 	private void extractSourcePatientInfo(List<String> values) {
 		for (String value : values) {
 			if (value != null && value.contains("PID-3")) {
@@ -308,7 +343,8 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 			} else if (value != null && value.contains("PID-5")) {
 				addName(Hl7Utils.extractHl7Xcn(value.substring(6)));
 			} else if (value != null && value.contains("PID-7")) {
-				setBirthDate(MetadataConverter.extractHl7v2Pid7(value.substring(6)));
+				setBirthDate(DateUtil.parseHl7Timestamp(value.substring(6)));
+				//setBirthDate(MetadataConverter.extractHl7v2Pid7(value.substring(6)));
 			} else if (value != null && value.contains("PID-8")) {
 				setGender(convertAdministrativeGenderToFhirGender(value.substring(6)));
 			} else if (value != null && value.contains("PID-11")) {
@@ -317,6 +353,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		}
 	}
 
+	/**
+	 * Convert administrative gender to fhir gender.
+	 *
+	 * @param value the value
+	 * @return the administrative gender
+	 */
 	private AdministrativeGender convertAdministrativeGenderToFhirGender(String value) {
 		if (org.ehealth_connector.common.enums.AdministrativeGender.MALE_CODE.equalsIgnoreCase(value)) {
 			return AdministrativeGender.MALE;
@@ -330,6 +372,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		}
 	}
 
+	/**
+	 * Convert fhir gender to administrative gender.
+	 *
+	 * @param gender the gender
+	 * @return the elga administrative gender
+	 */
 	private static ElgaAdministrativeGender convertFhirGenderToAdministrativeGender(AdministrativeGender gender) {
 		switch (gender) {
 		case MALE:
@@ -343,6 +391,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		}
 	}
 
+	/**
+	 * Gets the header record target.
+	 *
+	 * @param patient the patient
+	 * @return the header record target
+	 */
 	public static HeaderRecordTarget getHeaderRecordTarget(Patient patient) {
 		if (patient == null) {
 			return null;
@@ -378,6 +432,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		return recordTarget;
 	}
 
+	/**
+	 * Gets the atcdabbr header record target E impfpass.
+	 *
+	 * @param patient the patient
+	 * @return the atcdabbr header record target E impfpass
+	 */
 	public static AtcdabbrHeaderRecordTargetEImpfpass getAtcdabbrHeaderRecordTargetEImpfpass(Patient patient) {
 		AtcdabbrHeaderRecordTargetEImpfpass recordTarget = new AtcdabbrHeaderRecordTargetEImpfpass();
 		POCDMT000040PatientRole patientRole = recordTarget.getHl7PatientRole();
@@ -413,6 +473,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		return recordTarget;
 	}
 
+	/**
+	 * Gets the POCDMT 000040 patient.
+	 *
+	 * @param fhirPatient the fhir patient
+	 * @return the POCDMT 000040 patient
+	 */
 	private static POCDMT000040Patient getPOCDMT000040Patient(Patient fhirPatient) {
 		POCDMT000040Patient patient = new POCDMT000040Patient();
 		patient.getClassCode().add("PSN");
@@ -454,6 +520,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		return patient;
 	}
 
+	/**
+	 * Gets the POCDMT 000040 guardian.
+	 *
+	 * @param contactComponent the contact component
+	 * @return the POCDMT 000040 guardian
+	 */
 	public static POCDMT000040Guardian getPOCDMT000040Guardian(ContactComponent contactComponent) {
 		if (contactComponent == null) {
 			return null;
@@ -489,6 +561,12 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		return guardian;
 	}
 
+	/**
+	 * Gets the gender tag.
+	 *
+	 * @param genderEnum the gender enum
+	 * @return the gender tag
+	 */
 	private static CE getGenderTag(ElgaAdministrativeGender genderEnum) {
 		CE gender = new CE();
 
@@ -504,6 +582,16 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 		return gender;
 	}
 
+	/**
+	 * Gets the fhir patient.
+	 *
+	 * @param given the given
+	 * @param family the family
+	 * @param id the id
+	 * @param gender the gender
+	 * @param birthDate the birth date
+	 * @return the fhir patient
+	 */
 	public static FhirPatient getFhirPatient(String given, String family, Identifier id,
 			org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender gender, Date birthDate) {
 		FhirPatient patient = new FhirPatient();

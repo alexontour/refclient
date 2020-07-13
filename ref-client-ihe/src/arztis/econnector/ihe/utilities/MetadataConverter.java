@@ -1,51 +1,82 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.utilities;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Strings;
+import org.ehealth_connector.common.utils.DateUtil;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.SlotType1;
 
+/**
+ * This class contains utility functionalities to extract retrieved document
+ * metadata information from XML elements.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class MetadataConverter {
-	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataConverter.class.getName());
-	private static final String DATE_TIME_PATTERN = "yyyyMMddHHmmss";
-	private static final String DATE_PATTERN = "yyyyMMdd";
 
+	/**
+	 * Default constructor.
+	 */
 	private MetadataConverter() {
 		throw new IllegalStateException("utility class");
 	}
-	
+
+	/**
+	 * extracts {@link Date} from passed {@link SlotType1}. Passed slot in XML
+	 * format looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *   <ns2:Slot name="creationTime">
+	 *       <ns2:ValueList>
+	 *           <ns2:Value>202002190425</ns2:Value>
+	 *       </ns2:ValueList>
+	 *   </ns2:Slot>
+	 * }
+	 * </pre>
+	 *
+	 * </br>
+	 * Included date can have different formats.
+	 *
+	 * @param slot XML element from which to extract
+	 *
+	 * @return extracted {@link Date}
+	 */
 	public static Date convertDateTime(SlotType1 slot) {
-		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(MetadataConverter.DATE_TIME_PATTERN);
-		SimpleDateFormat dateFormat = new SimpleDateFormat(MetadataConverter.DATE_PATTERN);
 		String time = getStringFromSlot(slot);
-
-		if (time != null) {
-			try {
-				if (time.length() == 14) {
-					dateTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-					return dateTimeFormat.parse(time);
-				} else if (time.length() == 8) {
-					return dateFormat.parse(time);
-				}
-			} catch (ParseException e) {
-				LOGGER.error(e.getMessage());
-			}
-		}
-
-		return null;
+		return DateUtil.parseHl7Timestamp(time);
 	}
-	
+
+	/**
+	 * extracts {@link String} from passed {@link SlotType1}. The slot can contain
+	 * different values, such as date values or identifiers. Passed slot in XML
+	 * format looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *   <ns2:Slot name="creationTime">
+	 *       <ns2:ValueList>
+	 *           <ns2:Value>202002190425</ns2:Value>
+	 *       </ns2:ValueList>
+	 *   </ns2:Slot>
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param slot XML element from which to extract
+	 *
+	 * @return extracted {@link String}
+	 */
 	public static String getStringFromSlot(SlotType1 slot) {
 		if (slot != null && slot.getValueList() != null && slot.getValueList().sizeOfValueArray() >= 1) {
 			return slot.getValueList().getValueArray(0);
@@ -54,30 +85,35 @@ public class MetadataConverter {
 		return null;
 	}
 
+	/**
+	 * extracts list of {@link String} from passed {@link SlotType1}. The slot can
+	 * contain more than one different values, such as date values or identifiers.
+	 * Passed slot in XML format looks as follows:
+	 *
+	 * <pre>
+	 * {@code
+	 *   <ns2:Slot name="sourcePatientInfo">
+	 *       <ns2:ValueList>
+	 *           <ns2:Value>PID-3|70000^^^&amp;1.2.40.0.34.99.3.2.1046167&amp;ISO</ns2:Value>
+	 *           <ns2:Value>PID-3|1002120289^^^&amp;1.2.40.0.10.1.4.3.1&amp;ISO</ns2:Value>
+	 *           <ns2:Value>PID-5|Musterpatient^Max^^BSc^Dipl.-Ing.</ns2:Value>
+	 *           <ns2:Value>PID-7|19890212</ns2:Value>
+	 *           <ns2:Value>PID-8|M</ns2:Value>
+	 *           <ns2:Value>PID-11|^^Graz^^8020^AUT</ns2:Value>
+	 *       </ns2:ValueList>
+	 *   </ns2:Slot>
+	 * }
+	 * </pre>
+	 *
+	 *
+	 * @param slot XML element from which to extract
+	 *
+	 * @return extracted list of {@link String}
+	 */
 	public static List<String> getListOfStringsFromSlot(SlotType1 slot) {
 		if (slot != null && slot.getValueList() != null && slot.getValueList().getValueArray() != null) {
 			return Arrays.asList(slot.getValueList().getValueArray());
 		}
 		return new ArrayList<>();
 	}
-	
-	public static Date extractHl7v2Pid7(String value) {
-		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DATE_TIME_PATTERN);
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-
-		try {
-			if (!Strings.isNullOrEmpty(value)) {
-				if (value.length() == 14) {
-					return dateTimeFormat.parse(value);
-				} else if (value.length() == 8) {
-					return dateFormat.parse(value);
-				}
-			}
-		} catch (DateTimeParseException | ParseException ex) {
-			LOGGER.error(ex.getMessage());
-		}
-		
-		return null;
-	}
-
 }

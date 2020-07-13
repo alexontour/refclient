@@ -1,46 +1,39 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.AssignedEntityElements;
 import org.ehealth_connector.cda.at.elga.v2019.HeaderAuthor;
 import org.ehealth_connector.cda.at.elga.v2019.HeaderLegalAuthenticator;
-import org.ehealth_connector.cda.at.elga.v2019.cdalab.LaboratoryPerformer2;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderAuthor;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDataEnterer;
 import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherAuthorBodyEImpfpass;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherPerformerBodyLaboratory;
 import org.ehealth_connector.cda.at.elga.v2019.ps.AuthorBodyPs;
-import org.ehealth_connector.common.Address;
-import org.ehealth_connector.common.Code;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.Telecom;
 import org.ehealth_connector.common.at.enums.AuthorRole;
 import org.ehealth_connector.common.at.enums.AuthorSpeciality;
-import org.ehealth_connector.common.basetypes.AddressBaseType;
 import org.ehealth_connector.common.enums.NullFlavor;
 import org.ehealth_connector.common.hl7cdar2.AD;
 import org.ehealth_connector.common.hl7cdar2.II;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedAuthor;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedEntity;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssociatedEntity;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040LegalAuthenticator;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Participant1;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Person;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ResponsibleParty;
-import org.ehealth_connector.common.hl7cdar2.ParticipationPhysicalPerformer;
 import org.ehealth_connector.common.hl7cdar2.TEL;
-import org.ehealth_connector.common.hl7cdar2.TS;
 import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.Organization;
+import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
@@ -55,30 +48,41 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
 /**
  * This class is used to pass details to represent authors and legal
  * authenticators in ELGA documents. The class attributes restrict the search.
- * 
- * @author ET-Innovations
+ * </br>
+ * Furthermore, it can be used to generate CDA R2 document elements.
+ *
+ * @author Anna Jungwirth
  *
  */
 @ResourceDef(name = "PractitionerRole", profile = "http://hl7.org/fhir/StructureDefinition/PractitionerRole")
 public class FhirPractitionerRole extends PractitionerRole {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FhirPractitionerRole.class.getName());
+	
+	/** The Constant ORGANIZATION_REF. */
 	private static final String ORGANIZATION_REF = "Organization/%s";
+	
+	/** The Constant PRACTITIONER_REF. */
 	private static final String PRACTITIONER_REF = "Practitioner/%s";
+	
+	/** The resources. */
 	private List<Resource> resources;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirPractitionerRole() {
 
 	}
 
 	/**
-	 * Constructor to create practitioner role of author
+	 * Constructor to create {@link PractitionerRole} of passed details.
 	 *
-	 * @param speciality speciality of author
+	 * @param speciality subject of author
 	 * @param role       role of author
 	 * @param index      index of author to create. It must be build of {document
 	 *                   response index} - {author index}
@@ -101,9 +105,9 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	/**
-	 * Default constructor to create practitioner role from authors in document
-	 * response (ITI-18)
-	 * 
+	 * Constructor to create practitioner role from authors in document response
+	 * (ITI-18).
+	 *
 	 * @param author author of document
 	 * @param index  index of author to create. It must be build of {document
 	 *               response index} - {author index}
@@ -113,8 +117,9 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	/**
-	 * Constructor to create practitioner role of HL7 CDA V2 author
-	 * 
+	 * Constructor to create practitioner role of HL7 CDA R2
+	 * {@link POCDMT000040Author}.
+	 *
 	 * @param author HL7 CDA V2 author
 	 * @param id     of resource to reference to
 	 */
@@ -124,8 +129,9 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	/**
-	 * Constructor to create practitioner role of HL7 CDA V2 legal authenticator
-	 * 
+	 * Constructor to create practitioner role of HL7 CDA R2
+	 * {@link POCDMT000040LegalAuthenticator}.
+	 *
 	 * @param authenticator HL7 CDA V2 legal authenticator
 	 * @param id            of resource to reference to
 	 */
@@ -136,15 +142,20 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 	/**
 	 * Constructor to create an instance of fhir practitioner role of HL7 CDA R2
-	 * performer 2
-	 * 
-	 * @param person HL7 CDA R2 performer 2
+	 * performer 2.
+	 *
+	 * @param performer the performer
 	 * @param id     resource id to reference to
 	 */
 	public FhirPractitionerRole(POCDMT000040Performer2 performer, String id) {
 		fromPOCDMT000040Performer2(performer, id);
 	}
 
+	/**
+	 * Gets the resources.
+	 *
+	 * @return collection of referenced resources
+	 */
 	public List<Resource> getResources() {
 		return resources;
 	}
@@ -152,13 +163,23 @@ public class FhirPractitionerRole extends PractitionerRole {
 	/**
 	 * creates JSON of this practitioner role instance like specified in
 	 * http://hl7.org/fhir/R4/practitionerrole.html
-	 * 
+	 *
 	 * @return JSON string
 	 */
 	public String toJson() {
 		return FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(this);
 	}
 
+	/**
+	 * Creates practitioner role from authors in document response (ITI-18). In
+	 * document response author are of type {@link AuthorTypeImpl}. </br>
+	 * This method extracts role and subject of author. Moreover, it resolves
+	 * references of {@link Organization} and {@link Practitioner} resource.
+	 *
+	 * @param author of document
+	 * @param index  index of author to create. It must be build of {document
+	 *               response index} - {author index}
+	 */
 	private void fromDocumentEntryResponse(AuthorTypeImpl author, String index) {
 		if (author == null) {
 			return;
@@ -175,6 +196,12 @@ public class FhirPractitionerRole extends PractitionerRole {
 		setPractitioner(practitionerReference);
 	}
 
+	/**
+	 * Extracts subject of passed {@link AuthorTypeImpl}. This method checks if
+	 * extracted code is available in {@link AuthorSpeciality}.
+	 *
+	 * @param authorTypeImpl author of document
+	 */
 	private void addSpeciality(AuthorTypeImpl authorTypeImpl) {
 		try {
 			if (authorTypeImpl.getAuthorSpeciality() != null && !authorTypeImpl.getAuthorSpeciality().isEmpty()
@@ -192,6 +219,12 @@ public class FhirPractitionerRole extends PractitionerRole {
 		}
 	}
 
+	/**
+	 * Extracts role of passed {@link AuthorTypeImpl}. This method adds extracted
+	 * value as code.
+	 *
+	 * @param authorTypeImpl author of document
+	 */
 	private void addRole(AuthorTypeImpl authorTypeImpl) {
 		try {
 			if (authorTypeImpl.getAuthorRole() != null && !authorTypeImpl.getAuthorRole().isEmpty()
@@ -203,6 +236,15 @@ public class FhirPractitionerRole extends PractitionerRole {
 		}
 	}
 
+	/**
+	 * Creates {@link PractitionerRole} of passed HL7 CDA R2
+	 * {@link POCDMT000040Author}. </br>
+	 * Adds passed <code>id</code> as resource ID. Includes references and resources
+	 * for organization and person. Moreover code and contact details are entered.
+	 *
+	 * @param hl7CdaR2Value HL7 CDA R2 author
+	 * @param id            of resource to reference to
+	 */
 	private void fromPOCDMT000040Author(POCDMT000040Author hl7CdaR2Value, String id) {
 		if (hl7CdaR2Value == null || hl7CdaR2Value.getAssignedAuthor() == null) {
 			return;
@@ -238,6 +280,16 @@ public class FhirPractitionerRole extends PractitionerRole {
 		}
 	}
 
+	/**
+	 * Creates {@link PractitionerRole} of passed HL7 CDA R2
+	 * {@link POCDMT000040LegalAuthenticator}. </br>
+	 * Adds passed <code>id</code> as resource ID. Includes references and resources
+	 * for organization and person. Moreover code and contact details are entered.
+	 * This method also includes signature code of legal authenticator.
+	 *
+	 * @param hl7CdaR2Value legal authenticator
+	 * @param id            of resource to reference to
+	 */
 	private void fromPOCDMT000040LegalAuthenticator(POCDMT000040LegalAuthenticator hl7CdaR2Value, String id) {
 		if (hl7CdaR2Value == null || hl7CdaR2Value.getAssignedEntity() == null) {
 			return;
@@ -277,6 +329,15 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 	}
 
+	/**
+	 * Creates {@link PractitionerRole} of passed HL7 CDA R2
+	 * {@link POCDMT000040Performer2}. </br>
+	 * Adds passed <code>id</code> as resource ID. Includes references and resources
+	 * for organization and person. Moreover code and contact details are entered.
+	 *
+	 * @param performer HL7 CDA R2 performer 2
+	 * @param id        resource id to reference to
+	 */
 	private void fromPOCDMT000040Performer2(POCDMT000040Performer2 performer, String id) {
 		setId(id);
 
@@ -320,22 +381,87 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 	}
 
+	/**
+	 * Creates {@link HeaderAuthor} of passed {@link PractitionerRole}. </br>
+	 * Adds details with method {@link #getPOCDMT000040Author}. This method can be
+	 * used to create author for CDA R2 header. There are various attributes and
+	 * parameters that are set for different author elements in the CDA document.
+	 *
+	 * @param timeAuthor   date on which the document was written
+	 * @param practitioner to be extracted
+	 *
+	 * @return {@link POCDMT000040Author} with added details.
+	 *
+	 */
 	public static POCDMT000040Author getHeaderAuthor(Date timeAuthor, PractitionerRole practitioner) {
 		return getPOCDMT000040Author(new HeaderAuthor(), timeAuthor, practitioner);
 	}
 
+	/**
+	 * Creates {@link AtcdabbrHeaderAuthor} of passed {@link PractitionerRole}.
+	 * </br>
+	 * Adds details with method {@link #getPOCDMT000040Author}. This method can be
+	 * used to create author for CDA R2 header in electronic immunization documents.
+	 * There are various attributes and parameters that are set for different author
+	 * elements in the CDA document.
+	 *
+	 * @param timeAuthor   date on which the document was written
+	 * @param practitioner to be extracted
+	 *
+	 * @return {@link POCDMT000040Author} with added details.
+	 *
+	 */
 	public static POCDMT000040Author getAtcdabbrHeaderAuthor(Date timeAuthor, PractitionerRole practitioner) {
 		return getPOCDMT000040Author(new AtcdabbrHeaderAuthor(), timeAuthor, practitioner);
 	}
 
+	/**
+	 * Creates {@link AuthorBodyPs} of passed {@link PractitionerRole}. </br>
+	 * Adds details with method {@link #getPOCDMT000040Author}. This method can be
+	 * used to create author for CDA R2 body. There are various attributes and
+	 * parameters that are set for different author elements in the CDA document.
+	 *
+	 * @param authTime     date on which the document was written
+	 * @param practitioner to be extracted
+	 *
+	 * @return {@link POCDMT000040Author} with added details.
+	 *
+	 */
 	public static POCDMT000040Author getAuthorBodyPs(Date authTime, PractitionerRole practitioner) {
 		return getPOCDMT000040Author(new AuthorBodyPs(), authTime, practitioner);
 	}
-	
+
+	/**
+	 * Creates {@link AtcdabbrOtherAuthorBodyEImpfpass} of passed
+	 * {@link PractitionerRole}. </br>
+	 * Adds details with method {@link #getPOCDMT000040Author}. This method can be
+	 * used to create author for CDA R2 body in electronic immunization states.
+	 * There are various attributes and parameters that are set for different author
+	 * elements in the CDA document.
+	 *
+	 * @param authTime     date on which the document was written
+	 * @param practitioner to be extracted
+	 *
+	 * @return {@link POCDMT000040Author} with added details.
+	 *
+	 */
 	public static POCDMT000040Author getAuthorBodyEImpf(Date authTime, PractitionerRole practitioner) {
 		return getPOCDMT000040Author(new AtcdabbrOtherAuthorBodyEImpfpass(), authTime, practitioner);
 	}
 
+	/**
+	 * Adds extracted details of passed {@link PractitionerRole} to passed
+	 * {@link POCDMT000040Author}. </br>
+	 * Adds function code of author from {@link #getCodeFirstRep()}. And added
+	 * assigned author with method {@link #getHl7CdaR2Pocdmt000040AssignedAuthor()}
+	 *
+	 * @param author       to add details
+	 * @param timeAuthor   date on which the document was written
+	 * @param practitioner to be extracted
+	 *
+	 * @return {@link POCDMT000040Author} with added details.
+	 *
+	 */
 	private static POCDMT000040Author getPOCDMT000040Author(POCDMT000040Author author, Date timeAuthor,
 			PractitionerRole practitioner) {
 		if (author == null) {
@@ -347,11 +473,22 @@ public class FhirPractitionerRole extends PractitionerRole {
 		if (practitioner.hasCode()) {
 			author.setFunctionCode(FhirCodeableConcept.createHl7CdaR2Ce(practitioner.getCodeFirstRep(), null, null));
 		}
-		
+
 		author.setAssignedAuthor(getHl7CdaR2Pocdmt000040AssignedAuthor(author.getAssignedAuthor(), practitioner));
 		return author;
 	}
 
+	/**
+	 * Creates {@link HeaderLegalAuthenticator} of passed {@link PractitionerRole}.
+	 * </br>
+	 * Adds details for {@link POCDMT000040AssignedEntity}.
+	 *
+	 * @param timeLegalAuthen date on which the document was signed
+	 * @param practitioner    to be extracted
+	 *
+	 * @return created {@link HeaderLegalAuthenticator}
+	 *
+	 */
 	public static HeaderLegalAuthenticator getHeaderLegalAuthenticator(Date timeLegalAuthen,
 			PractitionerRole practitioner) {
 		HeaderLegalAuthenticator legalAuthenticator = new HeaderLegalAuthenticator();
@@ -362,290 +499,18 @@ public class FhirPractitionerRole extends PractitionerRole {
 		return legalAuthenticator;
 	}
 
-	protected POCDMT000040AssociatedEntity getHl7CdaR2Pocdmt000040AssociatedEntity() {
-		POCDMT000040AssociatedEntity associatedEntity = new POCDMT000040AssociatedEntity();
-
-		if (this.identifier != null && !identifier.isEmpty()) {
-			for (Identifier id : getIdentifier()) {
-				if (id != null) {
-					associatedEntity.getId().add(FhirIdentifier.createHl7CdaR2Ii(id, null));
-				}
-			}
-		}
-
-		if (hasPractitioner()) {
-			if (getPractitionerTarget().hasAddress()) {
-				for (org.hl7.fhir.r4.model.Address address : getPractitionerTarget().getAddress()) {
-					if (address != null) {
-						associatedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(address, null));
-					}
-				}
-			}
-
-			if (getPractitionerTarget().getName() != null) {
-				associatedEntity.setAssociatedPerson(FhirPractitioner
-						.getHl7CdaR2Pocdmt000040Person(getPractitionerTarget(), new POCDMT000040Person()));
-			} else {
-				POCDMT000040Person person = new POCDMT000040Person();
-				person.getNullFlavor().add("UNK");
-				associatedEntity.setAssociatedPerson(person);
-			}
-		}
-
-		if (hasTelecom()) {
-			for (ContactPoint telecom : getTelecom()) {
-				if (telecom != null) {
-					associatedEntity.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(telecom, null));
-				}
-			}
-		}
-
-		if (hasOrganization()) {
-			associatedEntity.setScopingOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(getOrganizationTarget()));
-		}
-
-		return associatedEntity;
-	}
-
-	public static AtcdabbrOtherPerformerBodyLaboratory getAtcdabbrOtherPerformerBodyLaboratory(Date finishingLabTest,
-			PractitionerRole practitionerRole) {
-		AtcdabbrOtherPerformerBodyLaboratory lab = new AtcdabbrOtherPerformerBodyLaboratory();
-		lab.setHl7Time(CdaUtil.createEffectiveTimePointIVLTS(finishingLabTest));
-
-		POCDMT000040AssignedEntity assignedEntity = lab.getAssignedEntity();
-		assignedEntity.getId()
-				.add(FhirIdentifier.createHl7CdaR2Ii(practitionerRole.getIdentifierFirstRep(), NullFlavor.UNKNOWN));
-
-		assignedEntity.setCode(
-				FhirCodeableConcept.createHl7CdaR2Ce(practitionerRole.getCodeFirstRep(), NullFlavor.UNKNOWN, null));
-
-		if (practitionerRole.getPractitionerTarget() != null) {
-			if (practitionerRole.getPractitionerTarget().hasAddress()) {
-				for (org.hl7.fhir.r4.model.Address address : practitionerRole.getPractitionerTarget().getAddress()) {
-					if (address != null) {
-						assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(address, NullFlavor.UNKNOWN));
-					}
-				}
-			} else {
-				Address address = new Address(new AddressBaseType());
-				address.setNullFlavor(NullFlavor.UNKNOWN);
-				assignedEntity.getAddr().add(address.getHl7CdaR2Ad());
-			}
-
-			assignedEntity.setAssignedPerson(FhirPractitioner
-					.getHl7CdaR2Pocdmt000040Person(practitionerRole.getPractitionerTarget(), new POCDMT000040Person()));
-		}
-
-		if (practitionerRole.hasTelecom()) {
-			for (ContactPoint tel : practitionerRole.getTelecom()) {
-				if (tel != null) {
-					assignedEntity.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(tel, null));
-				}
-			}
-		}
-
-		if (practitionerRole.getOrganizationTarget() != null
-				&& practitionerRole.getOrganizationTarget().getName() != null
-				&& !practitionerRole.getOrganizationTarget().getName().isEmpty()) {
-			assignedEntity.setRepresentedOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(practitionerRole.getOrganizationTarget()));
-		}
-
-		lab.setHl7AssignedEntity(assignedEntity);
-
-		return lab;
-	}
-
-	public LaboratoryPerformer2 getLaboratoryPerformer2(Date finishingLabTest) {
-		LaboratoryPerformer2 lab = new LaboratoryPerformer2();
-		lab.setHl7Time(CdaUtil.createEffectiveTimePointIVLTS(finishingLabTest));
-
-		POCDMT000040AssignedEntity assignedEntity = new POCDMT000040AssignedEntity();
-		assignedEntity.getId().add(FhirIdentifier.createHl7CdaR2Ii(getIdentifierFirstRep(), NullFlavor.NOINFORMATION));
-
-		Code code = new Code();
-		code.setCode("E");
-		code.setCodeSystem("2.16.840.1.113883.2.16.1.4.9");
-		code.setCodeSystemName("HL7.at.Laborkennzeichnung");
-		code.setDisplayName("EXTERN");
-		assignedEntity.setCode(code.getHl7CdaR2Ce());
-
-		if (hasPractitioner()) {
-			if (getPractitionerTarget().hasAddress()) {
-				for (org.hl7.fhir.r4.model.Address add : getPractitionerTarget().getAddress()) {
-					if (add != null) {
-						assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(add, null));
-					}
-				}
-			}
-
-			assignedEntity.setAssignedPerson(FhirPractitioner.getPOCDMT000040Person(getPractitionerTarget()));
-		} else if (hasOrganization() && getOrganizationTarget().getName() != null
-				&& !getOrganizationTarget().getName().isEmpty()) {
-			assignedEntity.setRepresentedOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(getOrganizationTarget()));
-		}
-
-		for (ContactPoint tel : telecom) {
-			if (tel != null) {
-				assignedEntity.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(tel, null));
-			}
-		}
-
-		lab.setHl7AssignedEntity(assignedEntity);
-
-		return lab;
-	}
-
-	public POCDMT000040Performer2 getPOCDMT000040Performer2() {
-		POCDMT000040Performer2 performer = new POCDMT000040Performer2();
-		performer.setTypeCode(ParticipationPhysicalPerformer.PRF);
-
-		AssignedEntityElements elements = new AssignedEntityElements();
-
-		if (this.identifier != null && !this.identifier.isEmpty()) {
-			for (Identifier id : identifier) {
-				elements.getId().add(FhirIdentifier.createHl7CdaR2Ii(id, NullFlavor.UNKNOWN));
-			}
-		} else {
-			Identificator id = new Identificator();
-			id.setNullFlavor(NullFlavor.UNKNOWN);
-			elements.getId().add(id.getHl7CdaR2Ii());
-		}
-
-		if (telecom != null && !telecom.isEmpty()) {
-			for (ContactPoint tel : telecom) {
-				if (tel != null) {
-					elements.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(tel, NullFlavor.UNKNOWN));
-				}
-			}
-		} else {
-			Telecom tel = new Telecom();
-			tel.setNullFlavor(NullFlavor.UNKNOWN);
-			elements.getTelecom().add(tel.getHl7CdaR2Tel());
-		}
-
-		if (hasOrganization() && getOrganizationTarget().getName() != null
-				&& !getOrganizationTarget().getName().isEmpty()) {
-			elements.setRepresentedOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(getOrganizationTarget()));
-		}
-
-		if (hasPractitioner()) {
-			if (getPractitionerTarget().getAddress() != null && !getPractitionerTarget().getAddress().isEmpty()
-					&& getPractitionerTarget().getAddressFirstRep() != null) {
-				elements.getAddr().add(
-						FhirAddress.createHl7CdaR2Ad(getPractitionerTarget().getAddressFirstRep(), NullFlavor.UNKNOWN));
-			} else {
-				Address address = new Address(new AddressBaseType());
-				address.setNullFlavor(NullFlavor.UNKNOWN);
-				elements.getAddr().add(address.getHl7CdaR2Ad());
-			}
-
-			elements.setAssignedPerson(FhirPractitioner.getPOCDMT000040Person(getPractitionerTarget()));
-		}
-
-		performer.setAssignedEntity(elements);
-
-		return performer;
-	}
-
-	public static POCDMT000040ResponsibleParty getPOCDMT000040ResponsibleParty(PractitionerRole practitioner) {
-		POCDMT000040ResponsibleParty responsibleParty = new POCDMT000040ResponsibleParty();
-		POCDMT000040AssignedEntity assignedEntity = new POCDMT000040AssignedEntity();
-		assignedEntity.setClassCode("ASSIGNED");
-
-		if (!practitioner.hasIdentifier()) {
-			Identificator niId = new Identificator();
-			niId.setNullFlavor(NullFlavor.NOINFORMATION);
-			assignedEntity.getId().add(niId.getHl7CdaR2Ii());
-		} else {
-			for (Identifier id : practitioner.getIdentifier()) {
-				if (id != null) {
-					assignedEntity.getId().add(FhirIdentifier.createHl7CdaR2Ii(id, NullFlavor.UNKNOWN));
-				} else {
-					Identificator unkId = new Identificator();
-					unkId.setNullFlavor(NullFlavor.UNKNOWN);
-					assignedEntity.getId().add(unkId.getHl7CdaR2Ii());
-				}
-			}
-		}
-
-		if (practitioner.getPractitionerTarget() != null) {
-			if (practitioner.getPractitionerTarget().getAddress() != null
-					&& !practitioner.getPractitionerTarget().getAddress().isEmpty()) {
-				assignedEntity.getAddr().clear();
-				assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(
-						practitioner.getPractitionerTarget().getAddressFirstRep(), NullFlavor.UNKNOWN));
-			}
-
-			assignedEntity
-					.setAssignedPerson(FhirPractitioner.getPOCDMT000040Person(practitioner.getPractitionerTarget()));
-		}
-
-		if (practitioner.hasTelecom()) {
-			for (ContactPoint tel : practitioner.getTelecom()) {
-				if (tel != null) {
-					assignedEntity.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(tel, null));
-				}
-			}
-		}
-
-		if (practitioner.getOrganizationTarget() != null) {
-			assignedEntity.setRepresentedOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(practitioner.getOrganizationTarget()));
-		}
-
-		responsibleParty.setAssignedEntity(assignedEntity);
-
-		return responsibleParty;
-	}
-
-	public AtcdabbrHeaderDataEnterer getHeaderDataEnterer() {
-		AtcdabbrHeaderDataEnterer dataEnterer = new AtcdabbrHeaderDataEnterer();
-		POCDMT000040AssignedEntity assignedEntity = new POCDMT000040AssignedEntity();
-
-		if (identifier != null && !identifier.isEmpty()) {
-			for (Identifier id : getIdentifier()) {
-				if (id != null) {
-					assignedEntity.getId().add(FhirIdentifier.createHl7CdaR2Ii(id, NullFlavor.UNKNOWN));
-				} else {
-					Identificator unkId = new Identificator();
-					unkId.setNullFlavor(NullFlavor.UNKNOWN);
-				}
-			}
-		}
-
-		if (hasPractitioner()) {
-			if (getPractitionerTarget().getAddress() != null && !getPractitionerTarget().getAddress().isEmpty()) {
-				for (org.hl7.fhir.r4.model.Address address : getPractitionerTarget().getAddress()) {
-					assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(address, NullFlavor.UNKNOWN));
-				}
-			}
-
-			assignedEntity.setAssignedPerson(FhirPractitioner.getHl7CdaR2Pocdmt000040Person(getPractitionerTarget(),
-					assignedEntity.getAssignedPerson()));
-		}
-
-		if (telecom != null && !telecom.isEmpty()) {
-			for (ContactPoint telecom : telecom) {
-				if (telecom != null) {
-					assignedEntity.getTelecom().add(FhirContactPoint.createHl7CdaR2Tel(telecom, null));
-				}
-			}
-		}
-
-		if (hasOrganization()) {
-			assignedEntity.setRepresentedOrganization(
-					FhirOrganization.createHl7CdaR2Pocdmt000040Organization(getOrganizationTarget()));
-		}
-
-		dataEnterer.setAssignedEntity(assignedEntity);
-
-		return dataEnterer;
-	}
-
+	/**
+	 * Adds extracted details of passed {@link PractitionerRole} to passed
+	 * {@link POCDMT000040AssignedAuthor}. </br>
+	 * This method adds identifiers, contacts details and addresses of author.
+	 * Furthermore, it appends code and organization of author.
+	 *
+	 * @param assignedAuthor to add details
+	 * @param practitioner   to be extracted
+	 *
+	 * @return {@link POCDMT000040AssignedAuthor} with added details.
+	 *
+	 */
 	public static POCDMT000040AssignedAuthor getHl7CdaR2Pocdmt000040AssignedAuthor(
 			POCDMT000040AssignedAuthor assignedAuthor, PractitionerRole practitioner) {
 
@@ -706,6 +571,19 @@ public class FhirPractitionerRole extends PractitionerRole {
 		return assignedAuthor;
 	}
 
+	/**
+	 * Adds extracted details of passed {@link PractitionerRole} to passed
+	 * {@link POCDMT000040AssignedEntity}. </br>
+	 * This method adds identifiers and details about person like addresses of
+	 * performer. Furthermore, it appends code and organization of performer.
+	 *
+	 * @param assignedEntity    to add details
+	 * @param practitioner      to be extracted
+	 * @param defaultAddressUse default value for address use of organization
+	 *
+	 * @return {@link POCDMT000040AssignedEntity} with added details.
+	 *
+	 */
 	public static POCDMT000040AssignedEntity getHl7CdaR2Pocdmt000040AssignedEntity(
 			POCDMT000040AssignedEntity assignedEntity, PractitionerRole practitioner, AddressUse defaultAddressUse) {
 		if (assignedEntity == null || practitioner == null) {
@@ -742,7 +620,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 			if (practitioner.getPractitionerTarget().hasAddress()) {
 				for (org.hl7.fhir.r4.model.Address address : practitioner.getPractitionerTarget().getAddress()) {
-					if (address != null) {						
+					if (address != null) {
 						assignedEntity.getAddr().add(FhirAddress.createHl7CdaR2Ad(address, null));
 					}
 				}
@@ -753,35 +631,5 @@ public class FhirPractitionerRole extends PractitionerRole {
 		}
 
 		return assignedEntity;
-	}
-
-	public POCDMT000040Participant1 getHeaderOrderingProvider(Date timeAuthor) {
-		POCDMT000040Participant1 participant = new POCDMT000040Participant1();
-		participant.getTypeCode().add("REF");
-		participant.setTime(CdaUtil.createEffectiveTimePointIVLTS(timeAuthor));
-
-		participant.setAssociatedEntity(getHl7CdaR2Pocdmt000040AssociatedEntity());
-		return participant;
-	}
-
-	public static AtcdabbrOtherAuthorBodyEImpfpass getAtcdabbrOtherAuthorBodyEImpfpass(Date timeAuthor,
-			PractitionerRole practitioner) {
-		AtcdabbrOtherAuthorBodyEImpfpass author = new AtcdabbrOtherAuthorBodyEImpfpass();
-
-		if (practitioner == null) {
-			return author;
-		}
-
-		if (timeAuthor != null) {
-			author.setTime(CdaUtil.createEffectiveTimePoint(timeAuthor));
-		} else {
-			TS timestamp = new TS();
-			timestamp.nullFlavor = new ArrayList<>();
-			timestamp.getNullFlavor().add(NullFlavor.UNKNOWN_CODE);
-			author.setTime(timestamp);
-		}
-
-		author.setAssignedAuthor(getHl7CdaR2Pocdmt000040AssignedAuthor(author.getAssignedAuthor(), practitioner));
-		return author;
 	}
 }

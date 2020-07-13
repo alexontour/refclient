@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.io.Serializable;
@@ -9,6 +15,7 @@ import javax.xml.namespace.QName;
 import org.apache.commons.lang3.NotImplementedException;
 import org.ehealth_connector.common.enums.EntityNameUse;
 import org.ehealth_connector.common.enums.NullFlavor;
+import org.ehealth_connector.common.hl7cdar2.EN;
 import org.ehealth_connector.common.hl7cdar2.EnFamily;
 import org.ehealth_connector.common.hl7cdar2.EnGiven;
 import org.ehealth_connector.common.hl7cdar2.EnPrefix;
@@ -20,43 +27,62 @@ import org.hl7.fhir.r4.model.StringType;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
+/**
+ * This class is a subclass of {@link HumanName}. Therefore it expresses name of
+ * a human. </br>
+ *
+ * It contains functionalities for converting CDA R2 {@link PN}, CDA R2
+ * {@link EN} and CDA R2 {@link ON} into HL7 FHIR {@link HumanName} and vice
+ * versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 @DatatypeDef(name = "HumanName")
 public class FhirHumanName extends HumanName {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirHumanName() {
 
 	}
 
 	/**
-	 * create fhir human name from CDA name {@link PN}
-	 * 
-	 * @param pn name of CDA
+	 * create HL7 FHIR human name from CDA R2 name {@link PN}.
+	 *
+	 * @param pn name of CDA R2
 	 */
 	public FhirHumanName(PN pn) {
 		fromPN(pn);
 	}
 
 	/**
-	 * create fhir human name from CDA name {@link ON}
-	 * 
-	 * @param on name of CDA
+	 * create HL7 FHIR human name from CDA R2 name {@link ON}.
+	 *
+	 * @param on name of CDA R2
 	 */
 	public FhirHumanName(ON on) {
 		fromEN(on);
 	}
 
+	/**
+	 * create HL7 FHIR human name from CDA R2 name {@link PN}.
+	 *
+	 * @param pn name of CDA R2
+	 */
 	private void fromPN(PN pn) {
 		fromEN(pn);
 	}
 
+	/**
+	 * create HL7 FHIR human name from passed CDA R2 name {@link EN}.
+	 *
+	 * @param hl7CdaR2Value name of CDA R2
+	 */
 	private void fromEN(org.ehealth_connector.common.hl7cdar2.EN hl7CdaR2Value) {
 
 		if (hl7CdaR2Value != null) {
@@ -91,6 +117,29 @@ public class FhirHumanName extends HumanName {
 		}
 	}
 
+	/**
+	 * Allocates HL7 FHIR {@link NameUse} for passed name use. </br>
+	 *
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>CDA R2</b></td>
+	 * <td><b>HL7 FHIR</b></td>
+	 * </tr>
+	 * <tr>
+	 * <td>L</td>
+	 * <td>official</td>
+	 * </tr>
+	 * <tr>
+	 * <td>P</td>
+	 * <td>anonymous</td>
+	 * </tr>
+	 * </table>
+	 *
+	 * @param entityNameUse usage of name
+	 *
+	 * @return allocated value or {@link NameUse.<code>USUAL</code>} if no value can
+	 *         be allocated
+	 */
 	private NameUse getNameUse(EntityNameUse entityNameUse) {
 		if (entityNameUse == null) {
 			return null;
@@ -106,6 +155,27 @@ public class FhirHumanName extends HumanName {
 		}
 	}
 
+	/**
+	 * Allocates passed name use for HL7 FHIR {@link NameUse}. </br>
+	 * 
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>CDA R2</b></td>
+	 * <td><b>HL7 FHIR</b></td>
+	 * </tr>
+	 * <tr>
+	 * <td>L</td>
+	 * <td>official</td>
+	 * </tr>
+	 * <tr>
+	 * <td>P</td>
+	 * <td>anonymous</td>
+	 * </tr>
+	 * </table>
+	 *
+	 * @param use the use
+	 * @return allocated value or null if no value can be allocated
+	 */
 	private static EntityNameUse getNameUse(NameUse use) {
 		if (use != null) {
 			switch (use) {
@@ -122,11 +192,11 @@ public class FhirHumanName extends HumanName {
 	}
 
 	/**
-	 * create CDA name from fhir data type human name {@link HumanName}
-	 * 
-	 * @param name fhir human name
+	 * create CDA R2 {@link EN} from HL7 FHIR {@link HumanName}.
+	 *
+	 * @param name FHIR human name
 	 * @param nf   null flavor, which should be used if name is null
-	 * @return CDA name
+	 * @return created CDA R2 name
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.EN createHl7CdaR2En(HumanName name, NullFlavor nf) {
 		org.ehealth_connector.common.hl7cdar2.EN retVal = new org.ehealth_connector.common.hl7cdar2.EN();
@@ -148,7 +218,8 @@ public class FhirHumanName extends HumanName {
 		if (value != null) {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
-			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
+			retVal.getContent()
+					.add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -156,7 +227,8 @@ public class FhirHumanName extends HumanName {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
-					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -166,7 +238,8 @@ public class FhirHumanName extends HumanName {
 				if (prefix != null) {
 					EnPrefix obj = new EnPrefix();
 					obj.xmlContent = prefix.getValue();
-					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -176,7 +249,8 @@ public class FhirHumanName extends HumanName {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
-					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}
@@ -190,11 +264,11 @@ public class FhirHumanName extends HumanName {
 	}
 
 	/**
-	 * Creates HL7 CDA R2 data type from FHIR name of organization.
+	 * Creates HL7 CDA R2 {@link ON} from HL7 FHIR {@link HumanName} of organization.
 	 *
-	 * @param name name of organization
-	 * 
-	 * @return HL7 CDA R2 ON value
+	 * @param name of organization
+	 *
+	 * @return HL7 CDA R2 {@link ON} value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.ON createHl7CdaR2On(String name) {
 		org.ehealth_connector.common.hl7cdar2.ON retVal = new org.ehealth_connector.common.hl7cdar2.ON();
@@ -207,12 +281,11 @@ public class FhirHumanName extends HumanName {
 	}
 
 	/**
-	 * Creates HL7 CDA R2 PN data type from FHIR human name {@link HumanName}.
+	 * Creates HL7 CDA R2 {@link PN} data type from FHIR human name {@link HumanName}.
 	 *
 	 * @param name FHIR name
-	 * @param null flavor, which should be used if name is null
-	 * 
-	 * @return HL7 CDA R2 PN value
+	 * @param nf the nf
+	 * @return HL7 CDA R2  {@link PN} value
 	 */
 	public static org.ehealth_connector.common.hl7cdar2.PN createHl7CdaR2Pn(HumanName name, NullFlavor nf) {
 		org.ehealth_connector.common.hl7cdar2.PN retVal = new org.ehealth_connector.common.hl7cdar2.PN();
@@ -234,7 +307,8 @@ public class FhirHumanName extends HumanName {
 		if (value != null) {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
-			retVal.getContent().add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
+			retVal.getContent()
+					.add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -242,7 +316,8 @@ public class FhirHumanName extends HumanName {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
-					retVal.getContent().add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -253,7 +328,8 @@ public class FhirHumanName extends HumanName {
 					EnPrefix obj = new EnPrefix();
 					obj.xmlContent = prefix.getValue();
 					obj.getQualifier().add("AC");
-					retVal.getContent().add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -263,7 +339,8 @@ public class FhirHumanName extends HumanName {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
-					retVal.getContent().add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
+					retVal.getContent()
+							.add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}
@@ -282,6 +359,5 @@ public class FhirHumanName extends HumanName {
 		return retVal;
 
 	}
-
 
 }

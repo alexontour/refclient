@@ -1,45 +1,81 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.common.model;
 
 /**
  * This class is used to pass details to register a user in ELGA. It can be used
  * for
- * 
+ *
  * <ul>
  * <li>requesting IDA from SVC - for physicians with GINA</li>
  * <li>requesting IDA from ELGA - for hospitals</li>
  * <li>requesting HCP assertion</li>
  * <li>requesting context assertion</li>
  * </ul>
- * 
- * @author ET-Innovations
+ *
+ * @author Anna Jungwirth
  *
  */
 public class RegisterParam extends Parameter {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	/** The given name. */
 	private String givenName;
+
+	/** The family name. */
 	private String familyName;
+
+	/** The prefix. */
 	private String prefix;
+
+	/** The suffix. */
 	private String suffix;
+
+	/** The information. */
 	private String information;
+
+	/** The role. */
 	private String role;
+
+	/** The card reader id. */
 	private String cardReaderId;
+
+	/** The password. */
 	private String password;
+
+	/** The product id. */
 	private int productId;
+
+	/** The product version. */
 	private String productVersion;
+
+	/** The ord id. */
 	private String ordId;
+
+	/** The producer id. */
 	private String producerId;
+
+	/** The identity assertion. */
 	private String identityAssertion;
+
+	/** The organization id. */
 	private String organizationId;
+
+	/** The subject id. */
 	private String subjectId;
+
+	/** The organization name. */
 	private String organizationName;
 
 	/**
-	 * Creates instance of {@link RegisterParam}
-	 * 
+	 * Creates instance of {@link RegisterParam}.
+	 *
 	 * @param givenName         given name of the real person, who wants to register
 	 * @param familyName        family name of the real person, who wants to
 	 *                          register
@@ -53,7 +89,7 @@ public class RegisterParam extends Parameter {
 	 * @param suffix            suffix of the real person, who wants to register
 	 * @param information       additional information about the real person
 	 * @param password          PIN of the Admin-Card
-	 * @param ordId
+	 * @param ordId             ID of surgery to register
 	 * @param identityAssertion already existing IDA of the user
 	 */
 	public RegisterParam(String givenName, String familyName, String role, String cardReaderId, String prefix,
@@ -71,234 +107,314 @@ public class RegisterParam extends Parameter {
 	}
 
 	/**
-	 * Default Constructor
+	 * Default Constructor.
 	 */
 	public RegisterParam() {
 
 	}
 
 	/**
-	 * PIN of the Admin-Card. It is needed, if the user registration is executed
-	 * with the GINA
-	 * 
-	 * @return PIN of the Admin-Card
+	 * PIN of Admin-Card. It is needed, if user registration is executed with GINA
+	 *
+	 * @return PIN of Admin-Card
 	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Sets the password.
+	 *
+	 * @param password the new password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * ID of card reader, which should be used for the registration. It is needed,
-	 * if the user registration is executed with the GINA
-	 * 
-	 * @return ID of the card reader
+	 * Gets ID of card reader, which should be used for registration. It is needed,
+	 * if user registration is executed with GINA
+	 *
+	 * @return ID of card reader
 	 */
 	public String getCardReaderId() {
 		return cardReaderId;
 	}
 
+	/**
+	 * Sets the card reader id.
+	 *
+	 * @param cardReaderId the new card reader id
+	 */
 	public void setCardReaderId(String cardReaderId) {
 		this.cardReaderId = cardReaderId;
 	}
 
 	/**
-	 * Given name of the real person, who wants to register. It is needed, if the
-	 * user registration is executed with the GINA
-	 * 
-	 * @return given name of the real person
+	 * Gets given name of real person, who wants to register. It is needed, if user
+	 * registration is executed with GINA
+	 *
+	 * @return given name of real person
 	 */
 	public String getGivenName() {
 		return givenName;
 	}
 
+	/**
+	 * Sets the given name.
+	 *
+	 * @param givenName the new given name
+	 */
 	public void setGivenName(String givenName) {
 		this.givenName = givenName;
 	}
 
 	/**
-	 * Family name of the real person, who wants to register. It is needed, if the
-	 * user registration is executed with the GINA
-	 * 
-	 * @return family name of the real person
+	 * Gets family name of real person, who wants to register. It is needed, if user
+	 * registration is executed with GINA
+	 *
+	 * @return family name of real person
 	 */
 	public String getFamilyName() {
 		return familyName;
 	}
 
+	/**
+	 * Sets the family name.
+	 *
+	 * @param familyName the new family name
+	 */
 	public void setFamilyName(String familyName) {
 		this.familyName = familyName;
 	}
 
 	/**
-	 * Prefix of the real person, who wants to register. It is needed, if the user
-	 * registration is executed with the GINA
-	 * 
-	 * @return prefix of the real person
+	 * Gets prefix of real person, who wants to register. It is needed, if user
+	 * registration is executed with GINA
+	 *
+	 * @return prefix of real person
 	 */
 	public String getPrefix() {
 		return prefix;
 	}
 
+	/**
+	 * Sets the prefix.
+	 *
+	 * @param prefix the new prefix
+	 */
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 	}
 
 	/**
-	 * Suffix of the real person, who wants to register. It is needed, if the user
-	 * registration is executed with the GINA
-	 * 
-	 * @return suffix of the real person
+	 * Gets suffix of real person, who wants to register. It is needed, if user
+	 * registration is executed with GINA
+	 *
+	 * @return suffix of real person
 	 */
 	public String getSuffix() {
 		return suffix;
 	}
 
+	/**
+	 * Sets the suffix.
+	 *
+	 * @param suffix the new suffix
+	 */
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
 
 	/**
-	 * Additional information about the real person, who wants to register. It is
-	 * needed, if the user registration is executed with the GINA
-	 * 
-	 * @return additional information about the real person
+	 * Gets additional information about real person, who wants to register. It is
+	 * needed, if user registration is executed with GINA
+	 *
+	 * @return additional information about real person
 	 */
 	public String getInformation() {
 		return information;
 	}
 
+	/**
+	 * Sets the information.
+	 *
+	 * @param information the new information
+	 */
 	public void setInformation(String information) {
 		this.information = information;
 	}
 
 	/**
-	 * Role of the health care provider to register (Possible values are available
+	 * Gets role of health care provider to register (Possible values are available
 	 * under https://termpub.gesundheit.gv.at (ELGA_GDA_Aggregatrollen))
-	 * 
-	 * @return role of the health care provider
+	 *
+	 * @return role of health care provider
 	 */
 	public String getRole() {
 		return role;
 	}
 
+	/**
+	 * Sets the role.
+	 *
+	 * @param role the new role
+	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
 
 	/**
-	 * Product id of the health care provider to register. It is required since the
-	 * SS12 interface version R19b. It is needed, if the user registration is
-	 * executed with the GINA
-	 * 
-	 * @return product id of the health care provider
+	 * Gets product ID of health care provider to register. It is required since
+	 * SS12 interface version R19b. It is needed, if user registration is executed
+	 * with GINA
+	 *
+	 * @return product id of health care provider
 	 */
 	public int getProductId() {
 		return productId;
 	}
 
+	/**
+	 * Sets the product id.
+	 *
+	 * @param productId the new product id
+	 */
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
 
 	/**
-	 * Product version of the health care provider to register. It is required since
-	 * the SS12 interface version R19b. It is needed, if the user registration is
-	 * executed with the GINA
-	 * 
+	 * Gets product version of health care provider to register. It is required
+	 * since SS12 interface version R19b. It is needed, if user registration is
+	 * executed with GINA
+	 *
 	 * @return product version of the health care provider
 	 */
 	public String getProductVersion() {
 		return productVersion;
 	}
 
+	/**
+	 * Sets the product version.
+	 *
+	 * @param productVersion the new product version
+	 */
 	public void setProductVersion(String productVersion) {
 		this.productVersion = productVersion;
 	}
 
 	/**
-	 * Surgery ID of the health care provider, which should be used to register. It
-	 * is needed, if the user registration is executed with the GINA
-	 * 
-	 * @return Surgery ID of the health care provider
+	 * Gets surgery ID of the health care provider, which should be used to
+	 * register. It is needed, if user registration is executed with GINA and more
+	 * than one surgery is available for same health care provider.
+	 *
+	 * @return Surgery ID of health care provider
 	 */
 	public String getOrdId() {
 		return ordId;
 	}
 
+	/**
+	 * Sets the ord id.
+	 *
+	 * @param ordId the new ord id
+	 */
 	public void setOrdId(String ordId) {
 		this.ordId = ordId;
 	}
 
 	/**
-	 * Producer ID (HerstellerId) of the software producer. It is required since the
-	 * SS12 interface version R19b. It is needed, if the user registration is
-	 * executed with the GINA
-	 * 
-	 * @return Producer ID (HerstellerId) of the software producer
+	 * Gets producer ID (HerstellerId) of software producer. It is required since
+	 * SS12 interface version R19b. It is needed, if user registration is executed
+	 * with GINA
+	 *
+	 * @return Producer ID (HerstellerId) of software producer
 	 */
 	public String getProducerId() {
 		return producerId;
 	}
 
+	/**
+	 * Sets the producer id.
+	 *
+	 * @param producerId the new producer id
+	 */
 	public void setProducerId(String producerId) {
 		this.producerId = producerId;
 	}
 
 	/**
-	 * Identity assertion or IDA, which should be used to register in ELGA.
-	 * 
+	 * Gets identity assertion or IDA, which should be used to register in ELGA.
+	 *
 	 * @return identity assertion
 	 */
 	public String getIdentityAssertion() {
 		return identityAssertion;
 	}
 
+	/**
+	 * Sets the identity assertion.
+	 *
+	 * @param identityAssertion the new identity assertion
+	 */
 	public void setIdentityAssertion(String identityAssertion) {
 		this.identityAssertion = identityAssertion;
 	}
 
 	/**
-	 * Organization ID (OID) of the health care provider, who wants to register. It
-	 * is needed, if the user registration is executed as hospital
-	 * 
-	 * @return Organization ID (OID) of the health care provider
+	 * Gets organization ID (OID) of health care provider, who wants to register. It
+	 * is needed, if user registration is executed as hospital
+	 *
+	 * @return Organization ID (OID) of health care provider
 	 */
 	public String getOrganizationId() {
 		return organizationId;
 	}
 
+	/**
+	 * Sets the organization id.
+	 *
+	 * @param organizationId the new organization id
+	 */
 	public void setOrganizationId(String organizationId) {
 		this.organizationId = organizationId;
 	}
 
 	/**
-	 * Subject ID of the health care provider, who wants to register. It is needed,
-	 * if the user registration is executed as hospital
-	 * 
+	 * Gets subject ID of health care provider, who wants to register. It is needed,
+	 * if user registration is executed as hospital
+	 *
 	 * @return subject id of the health care provider
 	 */
 	public String getSubjectId() {
 		return subjectId;
 	}
 
+	/**
+	 * Sets the subject id.
+	 *
+	 * @param subjectId the new subject id
+	 */
 	public void setSubjectId(String subjectId) {
 		this.subjectId = subjectId;
 	}
 
 	/**
-	 * Organization name of the health care provider, who wants to register. It is
-	 * needed, if the user registration is executed as hospital
-	 * 
+	 * Gets organization name of health care provider, who wants to register. It is
+	 * needed, if user registration is executed as hospital
+	 *
 	 * @return Organization name of the health care provider
 	 */
 	public String getOrganizationName() {
 		return organizationName;
 	}
 
+	/**
+	 * Sets the organization name.
+	 *
+	 * @param organizationName the new organization name
+	 */
 	public void setOrganizationName(String organizationName) {
 		this.organizationName = organizationName;
 	}

@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.ihe.tests.utilities;
 
 import static org.junit.Assert.assertEquals;
@@ -10,23 +16,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import arztis.econnector.ihe.generatedClasses.assertion._0._2.saml.tc.names.oasis.AssertionType;
-import arztis.econnector.ihe.queries.AssertionTransactions;
 import arztis.econnector.ihe.utilities.AssertionTypeUtil;
 
 /**
- * Test of {@link AssertionTypeUtil}
+ * Test of {@link AssertionTypeUtil}.
  *
+ * @author Anna Jungwirth
  */
 public class AssertionTypeUtilTest {
 
+	/** The test hcp assertion. */
 	private AssertionType testHcpAssertion;
+	
+	/** The saml ticket. */
 	private String samlTicket;
 
 	/**
-	 * Method implementing
-	 * 
-	 * @throws XmlException
+	 * Method implementing.
 	 *
+	 * @throws XmlException the xml exception
 	 */
 	@Before
 	public void setUp() throws XmlException {
@@ -38,7 +46,7 @@ public class AssertionTypeUtilTest {
 
 	/**
 	 * Test method for {@link AssertionTypeUtil#getRoleOfAssertionShort()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testExtractAssertionInformation() {
@@ -48,7 +56,7 @@ public class AssertionTypeUtilTest {
 
 	/**
 	 * Test method for {@link AssertionTypeUtil#getDateToRenewalAssertion()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testGetDateToRenewalAssertion() {
@@ -81,9 +89,8 @@ public class AssertionTypeUtilTest {
 	/**
 	 * Test method for
 	 * {@link AssertionTypeUtil#getTimeOfPatientContactOfAssertion()}.
-	 * 
-	 * @throws XmlException
-	 * 
+	 *
+	 * @throws XmlException the xml exception
 	 */
 	@Test
 	public void testGetTimeOfPatientContactOfAssertion() throws XmlException {

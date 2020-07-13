@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.utilities;
 
 import static org.junit.Assert.assertEquals;
@@ -10,19 +16,21 @@ import org.junit.Test;
 import arztis.econnector.rest.utilities.FhirUtil;
 
 /**
- * Tests for {@link FhirUtil}
- * 
- * @author ET-Innovations
+ * Tests for {@link FhirUtil}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirUtilTest {
-	
+
+	/** The Constant SSNO. */
 	private static final String SSNO = "1001210995";
+	
+	/** The Constant FEMALE. */
 	private static final String FEMALE = "female";
 
 	/**
 	 * Test method for {@link FhirUtil#extractIdentifierFromTokenType()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testExtractIdentifierFromTokenType() {
@@ -37,10 +45,10 @@ public class FhirUtilTest {
 		assertNotNull(id);
 		assertEquals(SSNO, id.getValue());
 	}
-	
+
 	/**
 	 * Test method for {@link FhirUtil#extractCodeFromTokenType()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testExtractCodeFromTokenType() {

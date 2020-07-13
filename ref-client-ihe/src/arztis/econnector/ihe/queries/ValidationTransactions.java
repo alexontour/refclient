@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.ihe.queries;
 
 import java.io.File;
@@ -16,15 +22,43 @@ import org.ehealth_connector.validation.service.schematron.result.SchematronVali
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class contains all functionalities to validate a CDA document. CDA
+ * validation includes schema, schematron and PDF validation. This class uses
+ * {@link CdaValidator} tool to validate passed CDA documents</br>
+ *
+ */
 public class ValidationTransactions {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ValidationTransactions.class.getName());
+
+	/** The Constant CDA_VALIDATOR. */
 	private static final CdaValidator CDA_VALIDATOR = new CdaValidator();
 
+	/** The Constant LITERAL_NOT_SET. */
+	private static final String LITERAL_NOT_SET = "not set";
+
+	/**
+	 * Default constructor.
+	 */
 	private ValidationTransactions() {
 		throw new IllegalStateException("Utility class");
 	}
 
+	/**
+	 * Validates passed CDA document according to configuration in file
+	 * (resources/cdavalidator_config.xml). Validation result is extracted and added
+	 * to a {@link String}
+	 *
+	 * @param validateSchema     indicates whether schema should be validated
+	 * @param validateSchematron indicates whether schematron should be used for
+	 *                           validation
+	 * @param validatePdf        indicates whether included PDFs should be validated
+	 * @param cdaDocument        bytes of CDA document to validate
+	 * @return result of validation as text
+	 * @throws ConfigurationException the configuration exception
+	 */
 	public static String validateCDADocument(boolean validateSchema, boolean validateSchematron, boolean validatePdf,
 			byte[] cdaDocument) throws ConfigurationException {
 
@@ -37,8 +71,6 @@ public class ValidationTransactions {
 			LOGGER.debug("rule set: {} {} {} {}", set.getPath().getAbsolutePath(), set.getDescription(),
 					set.getDisplayName(), set.getId());
 		}
-		
-		System.out.println(new String(cdaDocument));
 
 		ValidationResult result = new ValidationResult();
 
@@ -59,6 +91,13 @@ public class ValidationTransactions {
 		return formatValidationResults(result);
 	}
 
+	/**
+	 * formats schema and schematron validation result and appends it to a
+	 * {@link StringBuilder}.
+	 *
+	 * @param result of validation
+	 * @return formatted validation result as text
+	 */
 	private static String formatValidationResults(ValidationResult result) {
 		StringBuilder value = new StringBuilder();
 
@@ -69,6 +108,13 @@ public class ValidationTransactions {
 		return value.toString();
 	}
 
+	/**
+	 * formats schema validation result and appends it to a {@link StringBuilder}.
+	 *
+	 * @param value  {@link StringBuilder} to append formatted result
+	 * @param result of validation
+	 * @return formatted validation result as text
+	 */
 	private static String formatXsdValidationResult(StringBuilder value, ValidationResult result) {
 		if (result.isXsdValidationPerformed()) {
 			value.append("Schema validation:\n");
@@ -82,27 +128,34 @@ public class ValidationTransactions {
 		return value.toString();
 	}
 
+	/**
+	 * formats schematron rule set validation report and appends it to a
+	 * {@link StringBuilder}.
+	 *
+	 * @param value   {@link StringBuilder} to append formatted result
+	 * @param ruleset schematron rule results
+	 */
 	private static void formatRuleSetResult(StringBuilder value, RuleSet ruleset) {
 		if (ruleset != null) {
-			String valTemp = "not set";
+			String valTemp = LITERAL_NOT_SET;
 			if (ruleset.getPath() != null) {
 				valTemp = ruleset.getPath().getName();
 			}
 			value.append("Schematron: " + valTemp + "\n");
 
-			valTemp = "not set";
+			valTemp = LITERAL_NOT_SET;
 			if (ruleset.getTemplateId() != null) {
 				valTemp = ruleset.getTemplateId();
 			}
 			value.append("Rule-set template id: " + valTemp + "\n");
 
-			valTemp = "not set";
+			valTemp = LITERAL_NOT_SET;
 			if (ruleset.getDisplayName() != null) {
 				valTemp = ruleset.getDisplayName();
 			}
 			value.append("Rule-set name: " + valTemp + "\n");
 
-			valTemp = "not set";
+			valTemp = LITERAL_NOT_SET;
 			if (ruleset.getDescription() != null) {
 				valTemp = ruleset.getDisplayName();
 			}
@@ -110,6 +163,13 @@ public class ValidationTransactions {
 		}
 	}
 
+	/**
+	 * formats failed schematron validation report and appends it to a
+	 * {@link StringBuilder}.
+	 *
+	 * @param value   {@link StringBuilder} to append formatted result
+	 * @param tempFrr schematron rule results
+	 */
 	private static void formatFailedAssert(StringBuilder value, FiredRuleResult tempFrr) {
 		if (tempFrr == null) {
 			return;
@@ -140,6 +200,13 @@ public class ValidationTransactions {
 		}
 	}
 
+	/**
+	 * formats successful schematron validation report and appends it to a
+	 * {@link StringBuilder}.
+	 *
+	 * @param value   {@link StringBuilder} to append formatted result
+	 * @param tempFrr schematron rule results
+	 */
 	private static void formatSuccessfulReport(StringBuilder value, FiredRuleResult tempFrr) {
 		if (tempFrr == null) {
 			return;
@@ -165,6 +232,14 @@ public class ValidationTransactions {
 		}
 	}
 
+	/**
+	 * formats schematron validation result and appends it to a
+	 * {@link StringBuilder}.
+	 *
+	 * @param value  {@link StringBuilder} to append formatted result
+	 * @param result of validation
+	 * @return formatted validation result as text
+	 */
 	private static String formatSchematronValidationResult(StringBuilder value, ValidationResult result) {
 		if (result.isSchValidationPerformed()) {
 			value.append("Schematron validation:\n");
@@ -177,7 +252,7 @@ public class ValidationTransactions {
 					value.append("Exception: " + exMsg + "\n");
 				}
 
-				String valTemp = "not set";
+				String valTemp = LITERAL_NOT_SET;
 				if (result.getSchValidationResult().getSourceFile() != null) {
 					valTemp = result.getSchValidationResult().getSourceFile().getName();
 				}

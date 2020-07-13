@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.HashMap;
@@ -14,38 +20,62 @@ import org.hl7.fhir.r4.model.Period;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
-@DatatypeDef(name="Period")
+/**
+ * This class is a subclass of {@link Period}. Therefore it contains time
+ * periods.</br>
+ *
+ * It contains functionalities for converting CDA R2 {@link IVLTS} into HL7 FHIR
+ * {@link Period} and vice versa.
+ *
+ * @author Anna Jungwirth
+ *
+ */
+@DatatypeDef(name = "Period")
 public class FhirPeriod extends Period {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirPeriod() {
-		
+
 	}
 
 	/**
-	 * Constructor to create an instance of fhir period of HL7 CDA R2 IVL TS
-	 * 
-	 * @param time HL7 CDA R2 IVL TS
+	 * Constructor to create an instance of HL7 FHIR {@link Period} of HL7 CDA R2
+	 * {@link IVLTS}.
+	 *
+	 * @param time HL7 CDA R2 {@link IVLTS}
 	 */
 	public FhirPeriod(IVLTS time) {
 		fromIVLTS(time);
 	}
-	
+
+	/**
+	 * Extracts start and end time from passed {@link IVLTS}. Therefore values of
+	 * elements low and high are extracted.
+	 *
+	 * @param time to be extracted
+	 */
 	private void fromIVLTS(IVLTS time) {
 		if (time != null) {
 			Map<String, String> timeMap = getTsElement(time);
 			setStart(DateUtil.parseHl7Timestamp(timeMap.get("low")));
-			setEnd(DateUtil.parseHl7Timestamp(timeMap.get("high")));		
+			setEnd(DateUtil.parseHl7Timestamp(timeMap.get("high")));
 		}
 	}
 
+	/**
+	 * extracts all {@link TS} elements of passed {@link IVLTS}. Extracted elements
+	 * are stored in a map, where key is element name like "high" and value is
+	 * element value.
+	 *
+	 * @param time to be extracted
+	 *
+	 * @return map of element name and value
+	 */
 	private Map<String, String> getTsElement(IVLTS time) {
 		Map<String, String> tsElements = new HashMap<>();
 		if (time != null) {

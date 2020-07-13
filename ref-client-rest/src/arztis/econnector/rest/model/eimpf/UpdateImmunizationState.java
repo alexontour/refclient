@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.eimpf;
 
 import java.util.ArrayList;
@@ -34,25 +40,77 @@ import arztis.econnector.rest.model.fhir.FhirIdentifier;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
 import arztis.econnector.rest.model.fhir.FhirPatientAt;
 import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
-import jdk.jfr.Percentage;
 
+/**
+ * This class provides functionalities to generate CDA R2 document ("Update
+ * Immunisierungsstatus") from HL7 FHIR resources. All resources for
+ * immunization state are in a {@link Bundle}. </br>
+ *
+ *
+ * Details of how {@link Bundle} must be structured to generate a update
+ * immunization state can be found under the following link <a href=
+ * "https://git.et-innovations.org/java/elga-refclient/blob/master/docs/API/v1/Composition.md">https://git.et-innovations.org/java/elga-refclient/blob/master/docs/API/v1/Composition.md</a>
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class UpdateImmunizationState {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateImmunizationState.class.getName());
 
+	/** The authors. */
 	private List<PractitionerRole> authors;
+	
+	/** The legal authenticator. */
 	private PractitionerRole legalAuthenticator;
+
+	/**
+	 * map of organization with its ID. It is used to resolve references to
+	 * {@link Organization} resource
+	 */
 	private Map<String, Organization> organizations;
+
+	/**
+	 * map of practitioners (authors or legal authenticator) with its ID. It is used
+	 * to resolve references to {@link PractitionerRole} resource
+	 */
 	private Map<String, PractitionerRole> practitionerRoles;
+
+	/**
+	 * map of practitioners (authors or legal authenticator) with its ID. It is used
+	 * to resolve references to {@link Practitioner} resource
+	 */
 	private Map<String, Practitioner> practitioners;
+
+	/**
+	 * map of immunization with its author. It is used to generate immunization
+	 * entries with their author
+	 */
 	private Map<Immunization, PractitionerRole> immunizations;
+	
+	/** The composition. */
 	private Composition composition;
+	
+	/** The custodian. */
 	private Organization custodian;
+	
+	/** The patient. */
 	private Patient patient;
+
+	/**
+	 * A container for collection of resources to generate update immunization
+	 * state. Value is assigned during instantiation.
+	 */
 	private Bundle bundle;
 
+	/**
+	 * Constructor to generate CDA document ("Update Immunisierungsstatus") from
+	 * passed {@link Bundle} resource.
+	 *
+	 * @param bundle contains information to generate CDA document
+	 */
 	public UpdateImmunizationState(Bundle bundle) {
-
 		this.bundle = bundle;
 		authors = new ArrayList<>();
 		organizations = new HashMap<>();
@@ -61,6 +119,12 @@ public class UpdateImmunizationState {
 		immunizations = new HashMap<>();
 	}
 
+	/**
+	 * Generates CDA document {@link EimpfDocumentUpdateImmunisierungsstatus}.
+	 * Information to fill CDA document is extracted from {@link #bundle}
+	 *
+	 * @return generated CDA document
+	 */
 	public EimpfDocumentUpdateImmunisierungsstatus getUpdateImmunizationState() {
 		EimpfDocumentUpdateImmunisierungsstatus cda = new EimpfDocumentUpdateImmunisierungsstatus();
 		extractPassedResources();
@@ -79,6 +143,13 @@ public class UpdateImmunizationState {
 		return cda;
 	}
 
+	/**
+	 * extracts references of {@link #composition} and resolves it. Assigns, for
+	 * example, a value from {@link #practitionerRoles} to
+	 * {@link #legalAuthenticator} using given reference in {@link #composition} as
+	 * key.
+	 *
+	 */
 	private void assignRessources() {
 		if (composition.hasAttester()) {
 			for (CompositionAttesterComponent attesterComp : composition.getAttester()) {
@@ -122,6 +193,19 @@ public class UpdateImmunizationState {
 
 	}
 
+	/**
+	 * extracts resources of {@link #bundle} and assigns it to local variables like
+	 * {@link #practitioners}. Following types of resources are extracted:
+	 *
+	 * <ul>
+	 * <li>composition</li>
+	 * <li>patient</li>
+	 * <li>practitioner</li>
+	 * <li>practitioner role</li>
+	 * <li>organization</li>
+	 * <li>immunization</li>
+	 * </ul>
+	 */
 	private void extractPassedResources() {
 		if (bundle.hasEntry()) {
 			for (BundleEntryComponent compEntry : bundle.getEntry()) {
@@ -159,6 +243,21 @@ public class UpdateImmunizationState {
 		}
 	}
 
+	/**
+	 * adds header information to passed
+	 * {@link EimpfDocumentUpdateImmunisierungsstatus}. </br>
+	 * This method extracts information from passed {@link Composition} and added to
+	 * CDA document as header elements. Authors, patient, custodian and legal
+	 * authenticator are passed separately, as these are independent resources.
+	 *
+	 * @param cda                CDA document to add information
+	 * @param authors            of document
+	 * @param composition        includes different header information like creation
+	 *                           time
+	 * @param patient            for whom document is written
+	 * @param legalAuthenticator of document
+	 * @param custodian          of document
+	 */
 	private void addHeader(EimpfDocumentUpdateImmunisierungsstatus cda, List<PractitionerRole> authors,
 			Composition composition, Patient patient, PractitionerRole legalAuthenticator, Organization custodian) {
 		if (composition == null) {
@@ -220,6 +319,15 @@ public class UpdateImmunizationState {
 
 	}
 
+	/**
+	 * extracts confidentiality code of passed {@link Composition} and generated CDA
+	 * R2 {@link CE} element. If there is no information on confidentiality in composition,
+	 * {@link ConfidentialityCode.<code>NORMAL</code>} is set as default value.
+	 *
+	 * @param composition resource to be extracted
+	 *
+	 * @return created confidentiality code.
+	 */
 	private CE getConfidentialityCode(Composition composition) {
 		CE confCode = new CE();
 		if (composition != null && composition.hasConfidentiality()) {

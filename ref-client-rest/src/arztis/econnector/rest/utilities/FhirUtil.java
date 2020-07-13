@@ -1,13 +1,17 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.rest.utilities;
 
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaPersonalRelationship;
 import org.ehealth_connector.common.enums.NullFlavor;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedEntity;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
 import org.ehealth_connector.common.hl7cdar2.POCDMT000040Person;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RelatedEntity;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -19,7 +23,6 @@ import org.hl7.fhir.r4.model.Practitioner;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.fhir.FhirAddress;
-import arztis.econnector.rest.model.fhir.FhirCodeableConcept;
 import arztis.econnector.rest.model.fhir.FhirContactPoint;
 import arztis.econnector.rest.model.fhir.FhirIdentifier;
 import arztis.econnector.rest.model.fhir.FhirOrganization;
@@ -27,15 +30,34 @@ import arztis.econnector.rest.model.fhir.FhirPractitioner;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
 
+/**
+ * This class contains utilities to extract information from FHIR resources and
+ * create FHIR resources from CDA R2 elements.
+ *
+ * @author Anna Jungwirth
+ *
+ */
 public class FhirUtil {
 
+	/** {@link FhirContext} with version R4. */
 	private static FhirContext context;
+
+	/** {@link FhirContext} with version DSTU3. */
 	private static FhirContext contextDstu3;
 
+	/**
+	 * Default constructor.
+	 */
 	private FhirUtil() {
 		throw new IllegalStateException("Utility class");
 	}
 
+	/**
+	 * returns a FhirContext with version R4. If {@link #context} is null a new
+	 * {@link FhirContext} is created.
+	 *
+	 * @return {@link FhirContext}
+	 */
 	public static FhirContext getFhirContext() {
 		if (context == null) {
 			context = new FhirContext(FhirVersionEnum.R4);
@@ -44,6 +66,12 @@ public class FhirUtil {
 		return context;
 	}
 
+	/**
+	 * returns a FhirContext with version DSTU3. If {@link #context} is null a new
+	 * {@link FhirContext} is created.
+	 *
+	 * @return {@link FhirContext}
+	 */
 	public static FhirContext getFhirContextDstu3() {
 		if (contextDstu3 == null) {
 			contextDstu3 = new FhirContext(FhirVersionEnum.DSTU3);
@@ -52,10 +80,26 @@ public class FhirUtil {
 		return contextDstu3;
 	}
 
+	/**
+	 * creates JSON of passed {@link IBaseResource}.
+	 *
+	 * @param fhirResource to get JSON from
+	 *
+	 * @return created JSON
+	 */
 	public static String toJson(IBaseResource fhirResource) {
 		return getFhirContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(fhirResource);
 	}
 
+	/**
+	 * extracts {@link Identifier} from passed <code>idToken</code>. Token in HL7
+	 * FHIR are formatted as described in <a href=
+	 * "https://www.hl7.org/fhir/search.html#token">https://www.hl7.org/fhir/search.html#token</a>.
+	 *
+	 * @param idToken token to be extracted in format {ID}|{system} or {ID} only
+	 *
+	 * @return extracted {@link Identifier}
+	 */
 	public static Identifier extractIdentifierFromTokenType(String idToken) {
 		if (idToken == null || idToken.isEmpty()) {
 			return null;
@@ -73,6 +117,16 @@ public class FhirUtil {
 		return id;
 	}
 
+	/**
+	 * extracts {@link org.hl7.fhir.dstu3.model.Identifier} from passed
+	 * <code>idToken</code>. Token in HL7 FHIR are formatted as described in
+	 * <a href=
+	 * "https://www.hl7.org/fhir/search.html#token">https://www.hl7.org/fhir/search.html#token</a>.
+	 *
+	 * @param idToken token to be extracted in format {ID}|{system} or {ID} only
+	 *
+	 * @return extracted {@link org.hl7.fhir.dstu3.model.Identifier}
+	 */
 	public static org.hl7.fhir.dstu3.model.Identifier extractIdentifierDstu3FromTokenType(String idToken) {
 		Identifier id = extractIdentifierFromTokenType(idToken);
 
@@ -86,6 +140,16 @@ public class FhirUtil {
 		return null;
 	}
 
+	/**
+	 * extracts {@link CodeableConcept} from passed <code>codeToken</code>. Token in
+	 * HL7 FHIR are formatted as described in <a href=
+	 * "https://www.hl7.org/fhir/search.html#token">https://www.hl7.org/fhir/search.html#token</a>.
+	 *
+	 * @param codeToken token to be extracted in format {code}|{system} or {code}
+	 *                  only
+	 *
+	 * @return extracted {@link CodeableConcept}
+	 */
 	public static CodeableConcept extractCodeFromTokenType(String codeToken) {
 		if (codeToken == null) {
 			return null;
@@ -105,6 +169,14 @@ public class FhirUtil {
 		return code;
 	}
 
+	/**
+	 * extracts resource ID from passed <code>reference</code>. The item after last
+	 * slash is used as resource ID
+	 *
+	 * @param reference to be extracted
+	 *
+	 * @return extracted resource ID
+	 */
 	public static String extractResourceIdOfReference(String reference) {
 		if (reference != null && !reference.isEmpty() && reference.contains("/")) {
 			return reference.substring(reference.indexOf('/') + 1);
@@ -113,6 +185,17 @@ public class FhirUtil {
 		return reference;
 	}
 
+	/**
+	 * Adds details to passed {@link POCDMT000040AssignedEntity} of passed
+	 * resources.
+	 *
+	 * @param assignedEntity to add details
+	 * @param practitioner   details about person of entity
+	 * @param org            details about organization of entity
+	 * @param ids            identifiers of entity
+	 *
+	 * @return {@link POCDMT000040AssignedEntity} with added details
+	 */
 	public static POCDMT000040AssignedEntity createAssignedEntity(POCDMT000040AssignedEntity assignedEntity,
 			Practitioner practitioner, Organization org, List<Identifier> ids) {
 		if (assignedEntity == null) {
@@ -162,13 +245,5 @@ public class FhirUtil {
 		}
 
 		return assignedEntity;
-	}
-
-	public static POCDMT000040RelatedEntity createRelatedEntity(POCDMT000040RelatedEntity entity,
-			ElgaPersonalRelationship personalRel) {
-		entity.setCode(FhirCodeableConcept.createHl7CdaR2Ce(new CodeableConcept(
-				new Coding(personalRel.getCodeSystemId(), personalRel.getCodeValue(), personalRel.getDisplayName())),
-				null, null));
-		return entity;
 	}
 }

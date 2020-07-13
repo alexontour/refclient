@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import org.ehealth_connector.common.at.enums.AuthorRole;
@@ -27,27 +33,32 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
  * This class is used to pass details to query health care providers (GDA),
  * which can use ELGA. The class attributes restrict the search. It is important
  * to restrict the search of health care providers as much as possible to enable
- * best possible return values.
- * 
- * @author ET-Innovations
+ * best possible return values. </br>
+ * Furthermore it can be used to create parts of CDA R2 document.
+ *
+ * @author Anna Jungwirth
  *
  */
 @ResourceDef(name = "Practitioner", profile = "http://hl7.org/fhir/StructureDefinition/Practitioner")
 public class FhirPractitioner extends Practitioner {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The max results. */
 	private long maxResults;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public FhirPractitioner() {
 
 	}
 
 	/**
-	 * Creates fhir practitioner instance from document response (ITI-18)
-	 * 
+	 * Creates HL7 FHIR {@link Practitioner} instance from document response
+	 * (ITI-18).
+	 *
 	 * @param author author or legal authenticator of document
 	 * @param index  index of author or legal authenticator. It must be build of
 	 *               {document response index} - {author index}
@@ -57,8 +68,9 @@ public class FhirPractitioner extends Practitioner {
 	}
 
 	/**
-	 * Creates fhir practitioner instance from extrinsic object (PHARM-1)
-	 * 
+	 * Creates HL7 FHIR {@link Practitioner} instance from extrinsic object
+	 * (PHARM-1).
+	 *
 	 * @param extrinsicObject response from PHARM-1
 	 * @param index           index of author or legal authenticator. It must be
 	 *                        build of {document response index} - {author index}
@@ -70,10 +82,10 @@ public class FhirPractitioner extends Practitioner {
 	}
 
 	/**
-	 * Creates fhir practitioner instance with following parameters.
-	 * 
-	 * @param given      health care provider's given name
+	 * Creates HL7 FHIR {@link Practitioner} instance with following parameters.
+	 *
 	 * @param family     health care provider's family name
+	 * @param given      health care provider's given name
 	 * @param role       health care provider's role
 	 * @param maxResults maxResults max results, which should be returned by search
 	 * @param active     specifies whether the health care provider is active or not
@@ -86,9 +98,9 @@ public class FhirPractitioner extends Practitioner {
 	}
 
 	/**
-	 * Constructor to create an instance of fhir practitioner of the return value of
-	 * the GDA index search {@link GdaSearch}
-	 * 
+	 * Constructor to create an instance of HL7 FHIR {@link Practitioner} of the
+	 * return value of the GDA index search {@link GdaSearch}.
+	 *
 	 * @param gdaDesc response of GDA index search
 	 */
 	public FhirPractitioner(GdaDescriptor gdaDesc) {
@@ -96,8 +108,9 @@ public class FhirPractitioner extends Practitioner {
 	}
 
 	/**
-	 * Constructor to create an instance of fhir practitioner of HL7 CDA R2 person
-	 * 
+	 * Constructor to create an instance of HL7 FHIR {@link Practitioner} of HL7 CDA
+	 * R2 person.
+	 *
 	 * @param person HL7 CDA R2 person
 	 * @param id     resource id to reference to
 	 */
@@ -108,7 +121,7 @@ public class FhirPractitioner extends Practitioner {
 	/**
 	 * The details about the person to search. Details like given and family name
 	 * will be used to search for the health care provider.
-	 * 
+	 *
 	 * @param given  health care provider's given name
 	 * @param family health care provider's family name
 	 * @param prefix health care provider's title before the name. It isn't used to
@@ -128,7 +141,7 @@ public class FhirPractitioner extends Practitioner {
 	/**
 	 * The role of the health care provider to search. Possible values are available
 	 * under https://termpub.gesundheit.gv.at (ELGA_GDA_Aggregatrollen)
-	 * 
+	 *
 	 * @param role health care provider's role
 	 */
 	public void setRole(String role) {
@@ -149,20 +162,25 @@ public class FhirPractitioner extends Practitioner {
 	/**
 	 * The max results, which should be returned. If this is to small for all
 	 * returned health care provider information an exception will be thrown.
-	 * 
+	 *
 	 * @param maxResults max results, which should be returned
 	 */
 	public void setMaxResults(long maxResults) {
 		this.maxResults = maxResults;
 	}
 
+	/**
+	 * Gets the max results.
+	 *
+	 * @return the max results
+	 */
 	public long getMaxResults() {
 		return this.maxResults;
 	}
 
 	/**
-	 * Specifies whether the health care provider is active or not
-	 * 
+	 * Specifies whether the health care provider is active or not.
+	 *
 	 * @param statusActive true, if the health care provider is active, otherwise
 	 *                     false
 	 */
@@ -172,7 +190,7 @@ public class FhirPractitioner extends Practitioner {
 
 	/**
 	 * The address of the health care provider.
-	 * 
+	 *
 	 * @param addressline addressline of health care provider's address
 	 * @param city        city of health care provider's address
 	 * @param postalcode  postal code of health care provider's address
@@ -192,13 +210,22 @@ public class FhirPractitioner extends Practitioner {
 	/**
 	 * creates JSON of this practitioner instance like specified in
 	 * http://hl7.org/fhir/R4/practitioner.html
-	 * 
+	 *
 	 * @return JSON string
 	 */
 	public String toJson() {
 		return FhirUtil.toJson(this);
 	}
 
+	/**
+	 * Creates HL7 FHIR {@link Practitioner} instance from passed {@link XCN}.
+	 * Passed <code>index</code> is used as resource ID. Name and identifier are
+	 * added to practitioner.
+	 *
+	 * @param author person formatted as HL7 v2 data type {@link XCN}
+	 * @param index  index of author or legal authenticator. It must be build of
+	 *               {document response index} - {author index}
+	 */
 	private void fromDocumentEntryResponse(XCN author, String index) {
 		if (author == null) {
 			return;
@@ -213,6 +240,14 @@ public class FhirPractitioner extends Practitioner {
 		addIdentifier(id);
 	}
 
+	/**
+	 * Creates HL7 FHIR {@link Practitioner} instance from passed {@link SlotType1}.
+	 * This method extracts legal authenticator from passed <code>slots</code>
+	 *
+	 * @param slots array of {@link SlotType1}
+	 * @param index index of legal authenticator. It must be build of {document
+	 *              response index} - {author index}
+	 */
 	private void fromExtrinsicObject(SlotType1[] slots, String index) {
 		if (slots == null) {
 			return;
@@ -229,6 +264,13 @@ public class FhirPractitioner extends Practitioner {
 		}
 	}
 
+	/**
+	 * Creates HL7 FHIR {@link Practitioner} instance from passed
+	 * {@link GdaDescriptor}. This method extracts name, role, identifiers and
+	 * addresses of passed {@link GdaDescriptor}.
+	 *
+	 * @param gdaDesc to be extracted
+	 */
 	public void fromGdaDescriptor(GdaDescriptor gdaDesc) {
 		if (gdaDesc == null) {
 			return;
@@ -260,6 +302,15 @@ public class FhirPractitioner extends Practitioner {
 		}
 	}
 
+	/**
+	 * Creates {@link Practitioner} of passed HL7 CDA R2 {@link POCDMT000040Person}.
+	 * </br>
+	 * This method adds passed <code>id</code> as resource ID. And it appends
+	 * extracted names of passed {@link POCDMT000040Person}.
+	 *
+	 * @param person to be extracted
+	 * @param id     resource id to reference to
+	 */
 	private void fromPOCDMT000040Person(POCDMT000040Person person, String id) {
 		setId(id);
 		if (person != null && person.getName() != null) {
@@ -271,25 +322,18 @@ public class FhirPractitioner extends Practitioner {
 		}
 	}
 
-	public static POCDMT000040Person getPOCDMT000040Person(Practitioner practitioner) {
-		if (practitioner == null) {
-			return new POCDMT000040Person();
-		}
-
-		POCDMT000040Person person = new POCDMT000040Person();
-		if (practitioner.getName() != null) {
-			person.getName().clear();
-
-			for (HumanName nam : practitioner.getName()) {
-				if (nam != null) {
-					person.getName().add(FhirHumanName.createHl7CdaR2Pn(nam, null));
-				}
-			}
-		}
-
-		return person;
-	}
-
+	/**
+	 * Creates {@link POCDMT000040Person} of passed {@link Practitioner}. </br>
+	 * This method extracts names of passed {@link Practitioner} and added to passed
+	 * {@link POCDMT000040Person}. If {@code person} is null a new instance of
+	 * {@link POCDMT000040Person} is created.
+	 *
+	 * @param practitioner to be extracted
+	 * @param person       CDA R2 element to add
+	 *
+	 * @return {@link POCDMT000040Person} with added details.
+	 *
+	 */
 	public static POCDMT000040Person getHl7CdaR2Pocdmt000040Person(Practitioner practitioner,
 			POCDMT000040Person person) {
 		if (practitioner == null) {

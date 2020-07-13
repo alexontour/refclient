@@ -1,5 +1,8 @@
 /**
- * Provides the classes which are needed to handle REST requests for ELGA reference client. 
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
  */
 package arztis.econnector.ihe.model;
 
@@ -13,40 +16,54 @@ import arztis.econnector.ihe.queries.AssertionTransactions;
 
 /**
  * This class includes all data, which are important for the registration of the
- * healthcare service provider (GDA). Moreover it has the HCP assertion as
- * attribute, because every user have their own assertion. In this class a timer
- * was set to renew the HCP assertion after 3h 55m. Furthermore the context
+ * healthcare service provider (GDA). Moreover it has HCP assertion as
+ * attribute, because every user have their own assertion. Furthermore context
  * assertions for different services such as virtual organizations and
  * immunization record are stored for each user. <br/>
- * For users, which registered for the GINA, the created dialog is cached in
- * this class.
- * 
- * @author ET-Innovations
+ * For users, which registered at GINA, the created dialog is cached in this
+ * class.
+ *
+ * @author Anna Jungwirth
  *
  */
-
 public class ConnectionData {
 
+	/** The user jwt token. */
 	private String userJwtToken;
+
+	/** The HCP assertion. */
 	protected AssertionType sHcpAssertion;
+
+	/** The context assertion. */
 	protected AssertionType hcpContextAssertion;
+
+	/** The electronic immunization context assertion. */
 	protected AssertionType hcpEImmunizationContextAssertion;
+
+	/** The context assertions. */
 	protected Map<String, AssertionType> contextAssertions;
-	protected Timer oTimer = new Timer();
-	protected AssertionTransactions oAssertionTransaction;
-	protected DialogCreator oDialog;
+
+	/** The timer. */
+	protected Timer timer = new Timer();
+
+	/** The assertion transaction. */
+	protected AssertionTransactions assertionTransaction;
+
+	/** The dialog. */
+	protected DialogCreator dialog;
 
 	/**
 	 * Default constructor to create an instance of {@link ConnectionData}. This
-	 * constructor assigns an empty Map to the context assertions.
+	 * constructor assigns an empty Map for context assertions.
 	 */
 	public ConnectionData() {
 		this.contextAssertions = new HashMap<>();
 	}
 
 	/**
-	 * User JWT Token generated from the hcp assertion. There are separate assertions for each user.
-	 * 
+	 * User JWT Token generated from HCP assertion. There are separate assertions
+	 * for each user.
+	 *
 	 * @param jwt user token
 	 */
 	public void setUserJwtToken(String jwt) {
@@ -54,7 +71,8 @@ public class ConnectionData {
 	}
 
 	/**
-	 * 
+	 * Gets the user jwt token.
+	 *
 	 * @return user token
 	 */
 	public String getUserJwtToken() {
@@ -62,64 +80,64 @@ public class ConnectionData {
 	}
 
 	/**
-	 * This method returns the GINA Dialog ({@link DialogCreator}) with all cached
-	 * information such as used card readers or information about the surgeries.
-	 * 
+	 * This method returns GINA Dialog ({@link DialogCreator}) with additional
+	 * information such as used card readers or information about surgeries.
+	 *
 	 * @return dialog for a specific user
 	 */
 	public DialogCreator getDialog() {
-		return this.oDialog;
+		return this.dialog;
 	}
 
 	/**
-	 * Unique GINA dialog ({@link DialogCreator}) for the user.
-	 * 
-	 * @param dialog created GINA dialog, which should be cached for the user
+	 * Unique GINA dialog ({@link DialogCreator}) for one user.
+	 *
+	 * @param dialog created GINA dialog, which should be cached for user
 	 */
 	public void setDialog(DialogCreator dialog) {
-		this.oDialog = dialog;
+		this.dialog = dialog;
 	}
 
 	/**
-	 * sets the HCP Assertion
-	 * 
-	 * @param assertion HCP Assertion of the user
+	 * sets HCP Assertion.
+	 *
+	 * @param assertion HCP Assertion of user
 	 */
 	public void setHcpAssertion(AssertionType assertion) {
 		this.sHcpAssertion = assertion;
 	}
 
 	/**
-	 * gets the HCP Assertion of the user
-	 * 
-	 * @return HCP Assertion of the user
+	 * gets HCP Assertion of user.
+	 *
+	 * @return HCP Assertion of user
 	 */
 	public AssertionType getHcpAssertion() {
 		return this.sHcpAssertion;
 	}
 
 	/**
-	 * gets the HCP Assertion of the user used to request a context assertion for
-	 * the virtual organizations. This is needed if the context assertion has to be
-	 * requested from another ELGA area than the default. Context assertions are
-	 * needed for ELGA eHealth applications such as electronic immunization record
-	 * (eImpfpass) or virtual organizations
-	 * 
-	 * @return HCP Assertion of the user used to request a context assertion for
-	 *         virtual organizations.
+	 * gets HCP Assertion of user used to request a context assertion for virtual
+	 * organizations. This is needed if context assertion has to be requested from
+	 * another ELGA area than default. Context assertions are needed for ELGA
+	 * eHealth applications such as electronic immunization record (eImpfpass) or
+	 * virtual organizations
+	 *
+	 * @return HCP Assertion of user used to request a context assertion for virtual
+	 *         organizations.
 	 */
 	public AssertionType getHcpContextAssertion() {
 		return hcpContextAssertion;
 	}
 
 	/**
-	 * gets the HCP Assertion of the user used to request a context assertion for
-	 * the electronic immunization record. This is needed if the context assertion
-	 * has to be requested from another ELGA area than the default. Context
-	 * assertions are needed for ELGA eHealth applications such as electronic
-	 * immunization record (eImpfpass) or virtual organizations
-	 * 
-	 * @return HCP Assertion of the user used to request a context assertion for
+	 * gets HCP Assertion of user used to request a context assertion for electronic
+	 * immunization record. This is needed if context assertion has to be requested
+	 * from another ELGA area than default. Context assertions are needed for ELGA
+	 * eHealth applications such as electronic immunization record (eImpfpass) or
+	 * virtual organizations
+	 *
+	 * @return HCP Assertion of user used to request a context assertion for
 	 *         electronic immunization record.
 	 */
 	public AssertionType getHcpEImmunizationContextAssertion() {
@@ -127,25 +145,24 @@ public class ConnectionData {
 	}
 
 	/**
-	 * sets the HCP Assertion of the user used to request a context assertion for
-	 * the virtual organizations. This is needed if the context assertion has to be
-	 * requested from another ELGA area than the default.
-	 * 
-	 * @param hcpContextAssertion HCP Assertion of the user used to request a
-	 *                            context assertion for virtual organizations.
+	 * sets HCP Assertion of user used to request a context assertion for virtual
+	 * organizations. This is needed if context assertion has to be requested from
+	 * another ELGA area than default.
+	 *
+	 * @param hcpContextAssertion HCP Assertion of user used to request a context
+	 *                            assertion for virtual organizations.
 	 */
 	public void setHcpContextAssertion(AssertionType hcpContextAssertion) {
 		this.hcpContextAssertion = hcpContextAssertion;
 	}
 
 	/**
-	 * sets the HCP Assertion of the user used to request a context assertion for
-	 * the electronic immunization record. This is needed if the context assertion
-	 * has to be requested from another ELGA area than the default.
-	 * 
-	 * @param hcpContextAssertion HCP Assertion of the user used to request a
-	 *                            context assertion for electronic immunization
-	 *                            record.
+	 * sets HCP Assertion of user used to request a context assertion for electronic
+	 * immunization record. This is needed if context assertion has to be requested
+	 * from another ELGA area than default.
+	 *
+	 * @param hcpContextAssertion HCP Assertion of user used to request a context
+	 *                            assertion for electronic immunization record.
 	 */
 	public void setHcpEImmunContextAssertion(AssertionType hcpContextAssertion) {
 		this.hcpEImmunizationContextAssertion = hcpContextAssertion;
@@ -154,9 +171,9 @@ public class ConnectionData {
 	/**
 	 * gets all stored context assertions for virtual organizations and electronic
 	 * immunization records. The map consists of a key that is assigned to a
-	 * specific context assertion. The key is the application id of the eHealth
-	 * application for example 103 for the electronic immunization record.
-	 * 
+	 * specific context assertion. The key is application id of the eHealth
+	 * application for example 103 for electronic immunization record.
+	 *
 	 * @return stored context assertions as Map
 	 */
 	public Map<String, AssertionType> getContextAssertions() {
@@ -164,12 +181,11 @@ public class ConnectionData {
 	}
 
 	/**
-	 * gets a single context assertions for a specific eHealth application with the
-	 * id, which is passed as parameter key.
+	 * gets a single context assertions for a specific eHealth application with id,
+	 * which is passed as parameter key.
 	 *
-	 * @param key id of the eHealth application for which the context assertion is
-	 *            needed
-	 * 
+	 * @param key id of eHealth application for which context assertion is needed
+	 *
 	 * @return stored context assertion for eHealth application
 	 */
 	public AssertionType getContextAssertion(String key) {
@@ -177,15 +193,14 @@ public class ConnectionData {
 	}
 
 	/**
-	 * adds the context Assertion to a map with eHealth application ID as key
-	 * 
-	 * @param key           id of the area (eHealth application) for which the context assertion is
-	 *                      intended e.g. 103 for eImmunization
-	 * @param assertion     context assertion
-	 * 
+	 * adds context assertion to a map with eHealth application ID as key.
+	 *
+	 * @param key       id of area (eHealth application) for which context assertion
+	 *                  is intended e.g. 103 for eImmunization
+	 * @param assertion context assertion
 	 */
 	public void putContextAssertion(String key, AssertionType assertion) {
-		this.contextAssertions.put(key, assertion);		
+		this.contextAssertions.put(key, assertion);
 	}
 
 }

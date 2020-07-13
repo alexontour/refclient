@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model;
 
 import static org.junit.Assert.assertEquals;
@@ -22,18 +28,23 @@ import arztis.econnector.ihe.tests.TestUtils;
 import arztis.econnector.rest.model.fhir.FhirPatientAt;
 
 /**
- * Test of {@link PatientAt}
+ * Test of {@link PatientAt}.
  *
+ * @author Anna Jungwirth
  */
 public class FhirPatientAtTest extends TestUtils {
 
+	/** The Constant MAILTO. */
 	private static final String MAILTO = "mailto:";
+	
+	/** The test record target E impfpass. */
 	private Patient testRecordTargetEImpfpass;
+	
+	/** The test record target. */
 	private Patient testRecordTarget;
 
 	/**
-	 * Method implementing
-	 *
+	 * Method implementing.
 	 */
 	@Before
 	public void setUp() {
@@ -57,6 +68,11 @@ public class FhirPatientAtTest extends TestUtils {
 		testRecordTarget.setContact(Arrays.asList(getGuardian()));
 	}
 
+	/**
+	 * Gets the guardian.
+	 *
+	 * @return the guardian
+	 */
 	private ContactComponent getGuardian() {
 		ContactComponent guardian = new ContactComponent();
 		HumanName name = new HumanName();
@@ -70,7 +86,7 @@ public class FhirPatientAtTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getAtcdabbrHeaderRecordTargetEImpfpass()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testGetAtcdabbrHeaderRecordTargetEImpfpass() {
@@ -122,7 +138,7 @@ public class FhirPatientAtTest extends TestUtils {
 	/**
 	 * Test method for
 	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getHeaderRecordTarget()}.
-	 * 
+	 *
 	 */
 	@Test
 	public void testGetHeaderRecordTarget() {
@@ -176,6 +192,11 @@ public class FhirPatientAtTest extends TestUtils {
 		assertEquals(1, headerRecordTarget.getPatientRole().getPatient().getGuardian().size());
 	}
 
+	/**
+	 * Test fixed values.
+	 *
+	 * @param patient the patient
+	 */
 	private void testFixedValues(POCDMT000040RecordTarget patient) {
 		assertNotNull(patient);
 		assertNotNull(patient.getTypeCode());

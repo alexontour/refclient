@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model.eimpf;
 
 import static org.junit.Assert.assertEquals;
@@ -49,29 +55,50 @@ import arztis.econnector.rest.model.fhir.FhirPeriod;
 import ca.uhn.fhir.context.FhirContext;
 
 /**
- * Test of {@link UpdateImmunizationState}
+ * Test of {@link UpdateImmunizationState}.
  *
+ * @author Tanja Reiterer und Anna Jungwirth
  */
 public class UpdateImmunizationStateTest extends TestUtils {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateImmunizationStateTest.class.getName());
-	private static final String OID_AUTHOR = "1.2.40.0.34.99.3.2.1046167";
-	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
-	private static final String ASSIGNED = "ASSIGNED";
-	private static final String AUTHOR_ADDRESS = "Ernst-Melchior-Gasse 22";
-	private static final String EXAMPLE_TEL = "tel:0154168899521";
-	private static final String INSTANCE = "INSTANCE";
-	private static final String AUTHOR_GIVEN_NAME = "Helga";
-	private static final String AUTHOR_FAMILY_NAME = "Musterärztin";
-	private static final String ORGANIZATION_NAME = "Ordination Dr. Musterärztin";
-	private static final String COMPLETED = "completed";
 	
+	/** The Constant OID_AUTHOR. */
+	private static final String OID_AUTHOR = "1.2.40.0.34.99.3.2.1046167";
+	
+	/** The Constant OID_LOINC. */
+	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
+	
+	/** The Constant ASSIGNED. */
+	private static final String ASSIGNED = "ASSIGNED";
+	
+	/** The Constant AUTHOR_ADDRESS. */
+	private static final String AUTHOR_ADDRESS = "Ernst-Melchior-Gasse 22";
+	
+	/** The Constant EXAMPLE_TEL. */
+	private static final String EXAMPLE_TEL = "tel:0154168899521";
+	
+	/** The Constant INSTANCE. */
+	private static final String INSTANCE = "INSTANCE";
+	
+	/** The Constant AUTHOR_GIVEN_NAME. */
+	private static final String AUTHOR_GIVEN_NAME = "Helga";
+	
+	/** The Constant AUTHOR_FAMILY_NAME. */
+	private static final String AUTHOR_FAMILY_NAME = "Musterärztin";
+	
+	/** The Constant ORGANIZATION_NAME. */
+	private static final String ORGANIZATION_NAME = "Ordination Dr. Musterärztin";
+	
+	/** The Constant COMPLETED. */
+	private static final String COMPLETED = "completed";
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.ihe.model.eimpf.UpdateImmunizationState()}.
-	 * 
-	 * @throws ParseException
-	 * @throws IOException
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testUpdateImmunizationState() throws IOException {
@@ -150,6 +177,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test record target.
+	 *
+	 * @param records the records
+	 */
 	private void testRecordTarget(List<POCDMT000040RecordTarget> records) {
 		// test patient
 		assertNotNull(records);
@@ -185,6 +217,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				records.get(0).getPatientRole().getPatient().getAdministrativeGenderCode().getCode());
 	}
 
+	/**
+	 * Test authors.
+	 *
+	 * @param authors the authors
+	 */
 	private void testAuthors(List<POCDMT000040Author> authors) {
 		// test patient
 		assertNotNull(authors);
@@ -240,6 +277,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getTelecom().get(0).getUse().get(0));
 	}
 
+	/**
+	 * Test custodian.
+	 *
+	 * @param custodian the custodian
+	 */
 	private void testCustodian(POCDMT000040Custodian custodian) {
 		assertNotNull(custodian);
 		assertEquals("CST", custodian.getTypeCode().get(0));
@@ -267,6 +309,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getTelecom().getUse().get(0));
 	}
 
+	/**
+	 * Test legal authenticator.
+	 *
+	 * @param legalAuthenticator the legal authenticator
+	 */
 	private void testLegalAuthenticator(POCDMT000040LegalAuthenticator legalAuthenticator) {
 		assertNotNull(legalAuthenticator);
 		assertEquals("LA", legalAuthenticator.getTypeCode().get(0));
@@ -321,6 +368,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test documentation of.
+	 *
+	 * @param documentationOf the documentation of
+	 */
 	private void testDocumentationOf(List<POCDMT000040DocumentationOf> documentationOf) {
 		assertNotNull(documentationOf.get(0));
 		assertEquals("DOC", documentationOf.get(0).getTypeCode().get(0));
@@ -343,6 +395,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("20200510", DateUtil.formatDateOnly(period.getEnd()));
 	}
 
+	/**
+	 * Test structured body.
+	 *
+	 * @param body the body
+	 */
 	private void testStructuredBody(POCDMT000040StructuredBody body) {
 		assertNotNull(body);
 		assertEquals("DOCBODY", body.getClassCode().get(0));
@@ -355,6 +412,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		testImmunizationSection(body.getComponent().get(0).getSection());
 	}
 
+	/**
+	 * Test immunization section.
+	 *
+	 * @param section the section
+	 */
 	private void testImmunizationSection(POCDMT000040Section section) {
 		assertNotNull(section);
 		assertEquals("DOCSECT", section.getClassCode().get(0));
@@ -499,6 +561,11 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		testPerformer(substance.getPerformer());
 	}
 
+	/**
+	 * Test performer.
+	 *
+	 * @param performers the performers
+	 */
 	private void testPerformer(List<POCDMT000040Performer2> performers) {
 		// performer
 		assertNotNull(performers);
@@ -508,16 +575,16 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals(ParticipationPhysicalPerformer.PRF, performer.getTypeCode());
 		assertEquals(1, performer.getTemplateId().size());
 		assertEquals("1.2.40.0.34.6.0.11.9.21", performer.getTemplateId().get(0).getRoot());
-		
+
 		assertNotNull(performer.getTime());
 		assertEquals("20200509000000+0200", performer.getTime().getValue());
-		
+
 		assertNotNull(performer.getAssignedEntity());
 		assertEquals(ASSIGNED, performer.getAssignedEntity().getClassCode());
-		
+
 		assertEquals(1, performer.getAssignedEntity().getId().size());
 		assertEquals("NI", performer.getAssignedEntity().getId().get(0).getNullFlavor().get(0));
-		
+
 		assertNotNull(performer.getAssignedEntity().getCode());
 		assertEquals("100", performer.getAssignedEntity().getCode().getCode());
 
@@ -560,6 +627,13 @@ public class UpdateImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Gets the json from file.
+	 *
+	 * @param path the path
+	 * @return the json from file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private String getJsonFromFile(String path) throws IOException {
 		File file = FileUtils.getFile(path);
 

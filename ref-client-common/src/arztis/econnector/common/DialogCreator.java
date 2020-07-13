@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.common;
 
 import java.rmi.RemoteException;
@@ -20,7 +26,6 @@ import arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap.A
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap.AuthServiceStub.VertragspartnerV2;
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap.DialogException;
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap.ServiceException;
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.base.soap.BaseServiceStub.Property;
 import arztis.econnector.common.model.Message;
 import arztis.econnector.common.model.MessageTypes;
 import arztis.econnector.common.model.RegisterParam;
@@ -29,53 +34,80 @@ import arztis.econnector.common.utilities.MessageUtil;
 import arztis.econnector.common.utilities.SoapUtil;
 
 /**
- * This class includes all around a GINA dialog.
- * 
- * @author anna
+ * This class includes methods to login and log-off for GINA. Moreover some
+ * information about contract partner and real person are stored.
+ *
+ * @author Anna Jungwirth
  *
  */
 
 public class DialogCreator {
+
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(DialogCreator.class.getName());
+
+	/** The Constant EXCEPTION_CODE_LITERAL. */
 	private static final String EXCEPTION_CODE_LITERAL = "Exception-Code:";
 
+	/** The s dialog id. */
 	private String sDialogId = "";
-	private VertragspartnerV2 oVertragspartnerInfos = new VertragspartnerV2();
-	private GdaMa oGdaMa = null;
-	private String sCardReaderId = "";
-	private Property[] aStatus = null;
 
+	/** The o vertragspartner infos. */
+	private VertragspartnerV2 oVertragspartnerInfos = new VertragspartnerV2();
+
+	/** The o gda ma. */
+	private GdaMa oGdaMa = null;
+
+	/** The s card reader id. */
+	private String sCardReaderId = "";
+
+	/**
+	 * Gets the dialog id.
+	 *
+	 * @return ID of created dialog
+	 */
 	public String getDialogId() {
 		return sDialogId;
 	}
 
+	/**
+	 * Gets the information about contract partner.
+	 *
+	 * @return {@link VertragspartnerV2} with information about contract partner
+	 */
 	public VertragspartnerV2 getVertragspartnerInfos() {
 		return oVertragspartnerInfos;
 	}
 
+	/**
+	 * Gets the healthcare provider employee.
+	 *
+	 * @return {@link GdaMa} with information about authenticated real person
+	 */
 	public GdaMa getGdaMa() {
 		return oGdaMa;
 	}
 
+	/**
+	 * Gets the card reader ID.
+	 *
+	 * @return ID of card reader, which was used for authentication
+	 */
 	public String getCardReaderId() {
 		return sCardReaderId;
 	}
 
-	public Property[] getStatus() {
-		return aStatus;
-	}
-
 	/**
-	 * creates a GINA dialog
-	 * 
-	 * @param param      register param, which includes all necessary information to
-	 *                   register a user such as name and role.
-	 * @param pCardToken card token of the used Admin card
-	 * @return boolean object, if the registration was successful. Otherwise the
-	 *         object is a Message object with the details about the error.
+	 * creates GINA dialog.
+	 *
+	 * @param param     register parameter, which includes all necessary information
+	 *                  to register a user such as name and role.
+	 * @param cardToken card token of used Admin-Card
+	 * @return boolean, if registration was successful. Otherwise {@link Message}
+	 *         with error details is returned.
 	 */
-	public Object createDialog(RegisterParam param, String pCardToken) {
-		Object buildDialogReturn = authenticateDialog(pCardToken, param.getProductId(), param.getProductVersion(),
+	public Object createDialog(RegisterParam param, String cardToken) {
+		Object buildDialogReturn = authenticateDialog(cardToken, param.getProductId(), param.getProductVersion(),
 				param.getProducerId());
 		if (buildDialogReturn instanceof Boolean && (boolean) buildDialogReturn) {
 			GdaMa gdaMa = new GdaMa();
@@ -90,7 +122,17 @@ public class DialogCreator {
 		return buildDialogReturn;
 	}
 
-	private Object authenticateDialog(String pCardToken, int productId, String productVersion, String producerId) {
+	/**
+	 * This method authenticates contracting partner for GINA.
+	 *
+	 * @param cardToken      card token of used Admin-Card
+	 * @param productId      ID of software product (SVC)
+	 * @param productVersion version of software product
+	 * @param producerId     ID of software producer
+	 * @return true if request was successful, otherwise {@link Message} with error
+	 *         details is returned.
+	 */
+	private Object authenticateDialog(String cardToken, int productId, String productVersion, String producerId) {
 		try {
 			ProduktInfo produktInfo = new ProduktInfo();
 			produktInfo.setProduktId(productId);
@@ -99,7 +141,7 @@ public class DialogCreator {
 
 			AuthenticateDialogE authenticateDialogE = new AuthenticateDialogE();
 			AuthenticateDialog authenticateDialog = new AuthenticateDialog();
-			authenticateDialog.setCardToken(pCardToken);
+			authenticateDialog.setCardToken(cardToken);
 			authenticateDialog.setProduktInfo(produktInfo);
 			authenticateDialog.setExtUID(null);
 			authenticateDialog.setPushMessageEnabled(true);
@@ -125,8 +167,9 @@ public class DialogCreator {
 			String returnMessage = SoapUtil.extractErrorMessageOfAxisFault(af);
 			LOGGER.error("Something was going wrong at the authentication of the dialog: ", af);
 
-			return new Message(returnMessage.isEmpty() ? MessageUtil.getMessageFromProperties("CHECK_CARD_READER", null)
-					: returnMessage, MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return new Message(
+					returnMessage.isEmpty() ? MessageUtil.getMessageFromProperties("CHECK_CARD_READER") : returnMessage,
+					MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return new Message(e.getMessage(), MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -140,25 +183,21 @@ public class DialogCreator {
 	}
 
 	/**
-	 * registers the employee of the healthcare service provider. This is needed
-	 * only for ELGA because the hits of the documents are logged.
-	 * 
-	 * @param gdaM  generatedClasses.at.chipkarte.client.auth.soap.AuthServiceStub.GdaMa
-	 *              details about the real person, which wants to create a GINA
-	 *              dialog
-	 * @param role  String, which can be 700, 701, 702, 703, 704 </br>
-	 *              700 Ärztin/Arzt </br>
-	 *              701 Zahnärztin/Zahnarzt </br>
-	 *              702 Krankenanstalt </br>
-	 *              703 Einrichtung der Pflege </br>
-	 *              704 Apotheke</br>
-	 *              </br>
-	 *              Alle aktuellen Werte können hier entommen werden:
+	 * This method registers employee of healthcare provider. This is needed for
+	 * ELGA because the hits of documents are logged.
+	 *
+	 * @param gdaM  {@link GdaMa} with details about real person, which wants to
+	 *              authenticate
+	 * @param role  role, which can be
+	 *              <li>700 Ärztin/Arzt</li>
+	 *              <li>701 Zahnärztin/Zahnarzt</li>
+	 *              <li>702 Krankenanstalt</li>
+	 *              <li>703 Einrichtung der Pflege</li>
+	 *              <li>704 Apotheke</li> All current values can be viewed here:
 	 *              (https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen)
-	 * @param ordId id of the surgery of the healthcare service provider, where the
-	 *              employee works
-	 * @return boolean, if the authentication was successful, otherwise it returns a
-	 *         Message with details about the error
+	 * @param ordId ID of surgery of the healthcare provider, where employee works
+	 * @return if authentication was successful {@link Boolean} is returned,
+	 *         otherwise {@link Message} with error details is returned.
 	 */
 	public Object registerGdaMa(GdaMa gdaM, String role, String ordId) {
 		oGdaMa = gdaM;
@@ -201,10 +240,12 @@ public class DialogCreator {
 			String returnMessage = SoapUtil.extractErrorMessageOfAxisFault(af);
 			LOGGER.error("Something was going wrong when query the subjects by the surgery id: ", af);
 
-			return new Message(returnMessage.isEmpty()
-					? MessageUtil.getMessageFromProperties(
-							"Something was going wrong when query the subjects by the surgery id: ", null)
-					: returnMessage, MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return new Message(
+					returnMessage.isEmpty()
+							? MessageUtil.getMessageFromProperties(
+									"Something was going wrong when query the subjects by the surgery id: ")
+							: returnMessage,
+					MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage(), ex);
 			return new Message(ex.getMessage(), MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -220,10 +261,10 @@ public class DialogCreator {
 	}
 
 	/**
-	 * closes this GINA dialog
-	 * 
-	 * @return boolean, if the authentication was successful, otherwise it returns a
-	 *         Message with details about the error
+	 * closes this GINA dialog.
+	 *
+	 * @return if log-off was successful {@link Boolean} is returned, otherwise it
+	 *         returns a {@link Message} with error details.
 	 */
 	public Object closeDialog() {
 		CloseDialogE closeDialogE = new CloseDialogE();

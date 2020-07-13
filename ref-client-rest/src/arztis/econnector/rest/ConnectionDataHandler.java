@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest;
 
 import java.util.ArrayList;
@@ -9,31 +15,46 @@ import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.model.ConnectionData;
 
+/**
+ * This class is a singleton that caches {@link ConnectionData}.
+ *
+ * @author Anna Jungwirth
+ */
 public class ConnectionDataHandler {
-	
+
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionDataHandler.class.getName());
-	
+
+	/** The connection data. */
 	private List<ConnectionData> connectionData;
-	
+
+	/**
+	 * Instantiates a new connection data handler.
+	 */
 	protected ConnectionDataHandler() {
 		connectionData = new LinkedList<>();
 	}
 
+	/**
+	 * The Class LazyHolder.
+	 */
 	private static class LazyHolder {
+		
+		/** The Constant INSTANCE. */
 		static final ConnectionDataHandler INSTANCE = new ConnectionDataHandler();
 	}
 
 	/**
-	 * This method returns the instance of the class (Singleton)
-	 * 
+	 * This method returns the instance of the class (Singleton).
+	 *
 	 * @return instance
 	 */
 	public static ConnectionDataHandler getInstance() {
 		return LazyHolder.INSTANCE;
 	}
-	
+
 	/**
-	 * adds connData to a list of connection data. This list caches all registered
+	 * adds {@link ConnectionData} to a list of connection data. This list caches all registered
 	 * users.
 	 *
 	 * @param connData Connection data of a single user, which is registered for
@@ -62,10 +83,10 @@ public class ConnectionDataHandler {
 	}
 
 	/**
-	 * Deletes a certain connection data from the list of connection data through
-	 * the user id
+	 * Deletes a certain connection data from the list of {@link ConnectionData} through
+	 * the <code>jwt</code>.
 	 *
-	 * @param jwt jwt of the user for which the connection data is to be deleted
+	 * @param jwt of the user for which the connection data is to be deleted
 	 */
 	public synchronized void deleteConnData(String jwt) {
 		List<ConnectionData> connDataToDelete = new ArrayList<>();
@@ -82,11 +103,11 @@ public class ConnectionDataHandler {
 	}
 
 	/**
-	 * Method to overwrite one element of the list of connection data. If there is
+	 * Method to overwrite one element of the list of {@link ConnectionData}. If there is
 	 * an object in the list with the same user id as the user id of the parameter,
 	 * the connection data in the list is overwritten by the parameter.
 	 *
-	 * @param connData ConnectionData
+	 * @param connData {@link ConnectionData}
 	 */
 	public synchronized void overwriteConnDataInList(ConnectionData connData) {
 		for (ConnectionData oConnData : connectionData) {
@@ -101,12 +122,12 @@ public class ConnectionDataHandler {
 	}
 
 	/**
-	 * This method returns the connection data that has the same user id as
+	 * This method returns the {@link ConnectionData} that has the same user id as
 	 * specified in the parameter.
-	 * 
+	 *
 	 * @param jwt token of user, for which the connection data is required
-	 * 
-	 * @return either the connection data or null if no connection data with the
+	 *
+	 * @return either the {@link ConnectionData} or null if no {@link ConnectionData} with the
 	 *         respective user ID is available
 	 */
 

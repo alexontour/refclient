@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.utilities;
 
 import static org.junit.Assert.assertEquals;
@@ -48,16 +54,35 @@ import arztis.econnector.rest.model.fhir.FhirDocumentReference;
 import arztis.econnector.rest.model.fhir.FhirPatientAt;
 import arztis.econnector.rest.model.fhir.FhirPractitioner;
 
+/**
+ * The Class ElgaTypeConverterTest.
+ */
 public class ElgaTypeConverterTest {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ElgaTypeConverterTest.class.getName());
+	
+	/** The Constant HOME_COMMUNITY_ID. */
 	private static final String HOME_COMMUNITY_ID = "1234.23";
+	
+	/** The Constant REPOSITORY_ID. */
 	private static final String REPOSITORY_ID = "1234.22";
+	
+	/** The Constant DOCUMENT_ID. */
 	private static final String DOCUMENT_ID = "1234";
+	
+	/** The Constant UNIQUE_ID. */
 	private static final String UNIQUE_ID = "122334";
+	
+	/** The Constant ID_PATH. */
 	private static final String ID_PATH = "/1234/1234.22/1234.23";
+	
+	/** The Constant APPLICATION_XML. */
 	private static final String APPLICATION_XML = "application/xml";
 
+	/**
+	 * Test cast document.
+	 */
 	@Test
 	public void testCastDocument() {
 		XDSDocument xdsDocument = getDocumentFromFile("resources/tests/xml/ELGA-Entlassungsbrief-Beispiel.xml");
@@ -72,6 +97,9 @@ public class ElgaTypeConverterTest {
 		Assert.assertEquals(ID_PATH, reference.getContentFirstRep().getAttachment().getUrl());
 	}
 
+	/**
+	 * Test cast document prescription.
+	 */
 	@Test
 	public void testCastDocumentPrescription() {
 		XDSDocument xdsDocument = getDocumentFromFile(
@@ -88,6 +116,12 @@ public class ElgaTypeConverterTest {
 
 	}
 
+	/**
+	 * Gets the document from file.
+	 *
+	 * @param path the path
+	 * @return the document from file
+	 */
 	private XDSDocument getDocumentFromFile(String path) {
 		try (InputStream documentStream = new FileInputStream(path)) {
 			DocumentDescriptor descriptor = new DocumentDescriptor("xml", APPLICATION_XML);
@@ -102,6 +136,9 @@ public class ElgaTypeConverterTest {
 		return null;
 	}
 
+	/**
+	 * Test transform assertion type to XUA assertion.
+	 */
 	@Test
 	public void testTransformAssertionTypeToXUAAssertion() {
 		try {
@@ -125,6 +162,9 @@ public class ElgaTypeConverterTest {
 		}
 	}
 
+	/**
+	 * Test cast document entry response.
+	 */
 	@Test
 	public void testCastDocumentEntryResponse() {
 		DocumentEntryResponseType documentEntryResponse = new DocumentEntryResponseTypeImpl();
@@ -279,6 +319,13 @@ public class ElgaTypeConverterTest {
 		Assert.assertEquals("11111", actualDocument.getRelatesToFirstRep().getTarget().getIdentifier().getValue());
 	}
 
+	/**
+	 * Test transform null to XUA assertion.
+	 *
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws SAXException the SAX exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testTransformNullToXUAAssertion() throws ParserConfigurationException, SAXException, IOException {
 		Assert.assertEquals(null, AssertionTypeUtil.transformAssertionTypeToXUAAssertion(null));

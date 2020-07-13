@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest.test.model.eimpf;
 
 import static org.junit.Assert.assertEquals;
@@ -41,32 +47,57 @@ import arztis.econnector.rest.model.eimpf.CompleteImmunizationState;
 import arztis.econnector.rest.utilities.FhirUtil;
 
 /**
- * Test of {@link CompleteImmunizationState}
+ *  Test of {@link CompleteImmunizationState}.
  *
+ * @author Tanja Reiterer und Anna Jungwirth
  */
 public class CompleteImmunizationStateTest extends TestUtils {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompleteImmunizationStateTest.class.getName());
-	private static final String SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1";
-	private static final String SET_ID_SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1.1";
-	private static final String IMMUNIZATION_SYSTEM = "1.2.40.0.34.99.4613.3.5";
-	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
-	private static final String CLASS_CODE_IMMUNIZATION = "11369-6";
-	private static final String OID_SNOMED = "2.16.840.1.113883.6.96";
-	private static final String NAME_EIMMUNIZATION = "Zentrale Anwendung e-Impfpass";
-	private static final String VACCINE_CODE = "2427872";
-	private static final String VACCINE_OID = "1.2.40.0.34.4.16.1";
-	private static final String VACCIEN_NAME = "ENCEPUR FSPR 0,25ML KIND";
-	private static final String FSME_CODE = "333699008";
-	private static final String FSME_NAME = "Frühsommer-Meningoencephalitis Impfstoff";
 	
+	/** The Constant SYSTEM_IDENTIFIER. */
+	private static final String SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1";
+	
+	/** The Constant SET_ID_SYSTEM_IDENTIFIER. */
+	private static final String SET_ID_SYSTEM_IDENTIFIER = "1.2.40.0.34.99.4613.3.1.1";
+	
+	/** The Constant IMMUNIZATION_SYSTEM. */
+	private static final String IMMUNIZATION_SYSTEM = "1.2.40.0.34.99.4613.3.5";
+	
+	/** The Constant OID_LOINC. */
+	private static final String OID_LOINC = "2.16.840.1.113883.6.1";
+	
+	/** The Constant CLASS_CODE_IMMUNIZATION. */
+	private static final String CLASS_CODE_IMMUNIZATION = "11369-6";
+	
+	/** The Constant OID_SNOMED. */
+	private static final String OID_SNOMED = "2.16.840.1.113883.6.96";
+	
+	/** The Constant NAME_EIMMUNIZATION. */
+	private static final String NAME_EIMMUNIZATION = "Zentrale Anwendung e-Impfpass";
+	
+	/** The Constant VACCINE_CODE. */
+	private static final String VACCINE_CODE = "2427872";
+	
+	/** The Constant VACCINE_OID. */
+	private static final String VACCINE_OID = "1.2.40.0.34.4.16.1";
+	
+	/** The Constant VACCIEN_NAME. */
+	private static final String VACCIEN_NAME = "ENCEPUR FSPR 0,25ML KIND";
+	
+	/** The Constant FSME_CODE. */
+	private static final String FSME_CODE = "333699008";
+	
+	/** The Constant FSME_NAME. */
+	private static final String FSME_NAME = "Frühsommer-Meningoencephalitis Impfstoff";
+
 	/**
 	 * Test method for
 	 * {@link arztis.econnector.ihe.model.eimpf.CompleteImmunizationState()}.
-	 * 
-	 * @throws JAXBException
-	 * @throws ParseException
-	 * @throws IOException
+	 *
+	 * @throws JAXBException the JAXB exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testCompleteImmunizationState() throws JAXBException, IOException {
@@ -122,11 +153,16 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		if(completeImmunization != null && LOGGER.isInfoEnabled()) {
 			LOGGER.info(FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(completeImmunization));
 		}
-		
+
 		assertEquals(28, countTest);
 
 	}
 
+	/**
+	 * Test composition entry.
+	 *
+	 * @param composition the composition
+	 */
 	private void testCompositionEntry(Composition composition) {
 		assertNotNull(composition);
 
@@ -196,6 +232,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test patient entry.
+	 *
+	 * @param patient the patient
+	 */
 	private void testPatientEntry(Patient patient) {
 		assertNotNull(patient);
 
@@ -243,6 +284,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("20121224", DateUtil.formatDateOnly(patient.getBirthDate()));
 	}
 
+	/**
+	 * Test device entry.
+	 *
+	 * @param device the device
+	 */
 	private void testDeviceEntry(Device device) {
 		assertNotNull(device);
 
@@ -262,6 +308,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals(NAME_EIMMUNIZATION, device.getDeviceNameFirstRep().getName());
 	}
 
+	/**
+	 * Test organization entry.
+	 *
+	 * @param organization the organization
+	 */
 	private void testOrganizationEntry(Organization organization) {
 		assertNotNull(organization);
 
@@ -278,7 +329,12 @@ public class CompleteImmunizationStateTest extends TestUtils {
 			testAuthorImmunizationRecommendationEntry(organization);
 		}
 	}
-	
+
+	/**
+	 * Test practitioner role entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testPractitionerRoleEntry(PractitionerRole practitioner) {
 		assertNotNull(practitioner);
 
@@ -289,9 +345,14 @@ public class CompleteImmunizationStateTest extends TestUtils {
 			testPractitionerRoleRiskPerformerEntry(practitioner);
 		} else if (practitioner.getId().equalsIgnoreCase("laboratory-report-1-performer")) {
 			testPractitionerRoleLaboratoryPerformerEntry(practitioner);
-		} 
+		}
 	}
-	
+
+	/**
+	 * Test practitioner role laboratory performer entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testPractitionerRoleLaboratoryPerformerEntry(PractitionerRole practitioner) {
 		assertNotNull(practitioner);
 
@@ -302,11 +363,16 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// practitioner reference
 		assertTrue(practitioner.hasPractitioner());
-		
+
 		// organization reference
 		assertTrue(practitioner.hasOrganization());
 	}
-	
+
+	/**
+	 * Test practitioner role risk performer entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testPractitionerRoleRiskPerformerEntry(PractitionerRole practitioner) {
 		assertNotNull(practitioner);
 
@@ -317,11 +383,16 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		// practitioner reference
 		assertTrue(practitioner.hasPractitioner());
-		
+
 		// organization reference
 		assertTrue(practitioner.hasOrganization());
 	}
-	
+
+	/**
+	 * Test practitioner entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testPractitionerEntry(Practitioner practitioner) {
 		assertNotNull(practitioner);
 
@@ -332,9 +403,14 @@ public class CompleteImmunizationStateTest extends TestUtils {
 			testPractitionerRiskPerformerEntry(practitioner);
 		} else if (practitioner.getId().equalsIgnoreCase("laboratory-report-1-performer")) {
 			testLaboratoryPerformerEntry(practitioner);
-		} 
+		}
 	}
-	
+
+	/**
+	 * Test practitioner risk performer entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testPractitionerRiskPerformerEntry(Practitioner practitioner) {
 		assertNotNull(practitioner);
 
@@ -344,7 +420,12 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("Frank", practitioner.getNameFirstRep().getGivenAsSingleString());
 		assertEquals("Dr.", practitioner.getNameFirstRep().getPrefixAsSingleString());
 	}
-	
+
+	/**
+	 * Test laboratory performer entry.
+	 *
+	 * @param practitioner the practitioner
+	 */
 	private void testLaboratoryPerformerEntry(Practitioner practitioner) {
 		assertNotNull(practitioner);
 
@@ -355,6 +436,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("Dr.", practitioner.getNameFirstRep().getPrefixAsSingleString());
 	}
 
+	/**
+	 * Test organization author entry.
+	 *
+	 * @param organization the organization
+	 */
 	private void testOrganizationAuthorEntry(Organization organization) {
 		assertNotNull(organization);
 
@@ -383,6 +469,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals(ContactPointSystem.EMAIL, organization.getTelecom().get(0).getSystem());
 	}
 
+	/**
+	 * Test organization custodian entry.
+	 *
+	 * @param organization the organization
+	 */
 	private void testOrganizationCustodianEntry(Organization organization) {
 		assertNotNull(organization);
 
@@ -411,6 +502,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals(ContactPointSystem.PHONE, organization.getTelecom().get(0).getSystem());
 	}
 
+	/**
+	 * Test author first immunization entry.
+	 *
+	 * @param organization the organization
+	 */
 	private void testAuthorFirstImmunizationEntry(Organization organization) {
 		assertNotNull(organization);
 
@@ -443,6 +539,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals(ContactPointUse.WORK, organization.getTelecom().get(1).getUse());
 	}
 
+	/**
+	 * Test author immunization recommendation entry.
+	 *
+	 * @param organization the organization
+	 */
 	private void testAuthorImmunizationRecommendationEntry(Organization organization) {
 		assertNotNull(organization);
 
@@ -456,6 +557,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("Für Gesundheit zuständiges Ministerium", organization.getName());
 	}
 
+	/**
+	 * Test immunization section.
+	 *
+	 * @param section the section
+	 */
 	private void testImmunizationSection(SectionComponent section) {
 		assertNotNull(section);
 		assertTrue(section.hasCode());
@@ -476,6 +582,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("Immunization/3", section.getEntry().get(2).getReference());
 	}
 
+	/**
+	 * Test immunization entry.
+	 *
+	 * @param immunization the immunization
+	 */
 	private void testImmunizationEntry(Immunization immunization) {
 		assertNotNull(immunization);
 
@@ -489,6 +600,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		}
 	}
 
+	/**
+	 * Test immunization first entry.
+	 *
+	 * @param immunization the immunization
+	 */
 	private void testImmunizationFirstEntry(Immunization immunization) {
 		assertNotNull(immunization);
 
@@ -543,6 +659,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test immunization second entry.
+	 *
+	 * @param immunization the immunization
+	 */
 	private void testImmunizationSecondEntry(Immunization immunization) {
 		assertNotNull(immunization);
 
@@ -595,6 +716,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 				immunization.getProtocolAppliedFirstRep().getAuthority().getReference());
 	}
 
+	/**
+	 * Test immunization third entry.
+	 *
+	 * @param immunization the immunization
+	 */
 	private void testImmunizationThirdEntry(Immunization immunization) {
 		assertNotNull(immunization);
 
@@ -647,6 +773,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 				immunization.getProtocolAppliedFirstRep().getAuthority().getReference());
 	}
 
+	/**
+	 * Test immunization recommendation entry.
+	 *
+	 * @param immunizationRecommendation the immunization recommendation
+	 */
 	private void testImmunizationRecommendationEntry(ImmunizationRecommendation immunizationRecommendation) {
 		assertNotNull(immunizationRecommendation);
 
@@ -656,6 +787,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		}
 	}
 
+	/**
+	 * Test immunization recommendation first entry.
+	 *
+	 * @param immunization the immunization
+	 */
 	private void testImmunizationRecommendationFirstEntry(ImmunizationRecommendation immunization) {
 		assertNotNull(immunization);
 
@@ -713,6 +849,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 				.formatDateOnly(immunization.getRecommendationFirstRep().getDateCriterionFirstRep().getValue()));
 	}
 
+	/**
+	 * Test observation entry.
+	 *
+	 * @param observation the observation
+	 */
 	private void testObservationEntry(Observation observation) {
 		assertNotNull(observation);
 
@@ -726,6 +867,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		}
 	}
 
+	/**
+	 * Test observation risk entry.
+	 *
+	 * @param observation the observation
+	 */
 	private void testObservationRiskEntry(Observation observation) {
 		assertNotNull(observation);
 
@@ -771,6 +917,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test observation disease entry.
+	 *
+	 * @param observation the observation
+	 */
 	private void testObservationDiseaseEntry(Observation observation) {
 		assertNotNull(observation);
 
@@ -818,6 +969,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test observation laboratory report entry.
+	 *
+	 * @param observation the observation
+	 */
 	private void testObservationLaboratoryReportEntry(Observation observation) {
 		assertNotNull(observation);
 
@@ -878,6 +1034,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertNull(observation.getComponentFirstRep().getReferenceRange().get(0).getHigh().getValue());
 	}
 
+	/**
+	 * Test document reference entry.
+	 *
+	 * @param documentReference the document reference
+	 */
 	private void testDocumentReferenceEntry(DocumentReference documentReference) {
 		assertNotNull(documentReference);
 
@@ -891,6 +1052,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		}
 	}
 
+	/**
+	 * Test document reference relevant disease entry.
+	 *
+	 * @param documentReference the document reference
+	 */
 	private void testDocumentReferenceRelevantDiseaseEntry(DocumentReference documentReference) {
 		assertNotNull(documentReference);
 
@@ -913,6 +1079,11 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 	}
 
+	/**
+	 * Test document reference lab report entry.
+	 *
+	 * @param documentReference the document reference
+	 */
 	private void testDocumentReferenceLabReportEntry(DocumentReference documentReference) {
 		assertNotNull(documentReference);
 

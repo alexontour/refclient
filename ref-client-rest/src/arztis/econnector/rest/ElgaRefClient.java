@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * 
+ */
 package arztis.econnector.rest;
 
 import java.io.File;
@@ -10,7 +16,6 @@ import org.eclipse.jetty.server.HttpConfiguration;
 import org.ehealth_connector.common.utils.FileUtil;
 import org.ehealth_connector.common.utils.Util;
 import org.jasypt.util.text.BasicTextEncryptor;
-import org.jasypt.util.text.StrongTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,23 +26,23 @@ import arztis.econnector.ihe.utilities.IheServiceStubPool;
 import arztis.econnector.rest.server.IJettyServer;
 
 /**
- * Main class of the ELGA reference client, it initialize different things like
+ * Main class of ELGA reference client, it initialize different things like
  * 
  * <ul>
  * <li>LOGGING configuration</li>
  * <li>Application configuration</li>
  * <li>Configuration of embedded JETTY Server</li>
- * </ul>
- * 
- * @author ET-Innovations
+ * </ul>.
  *
+ * @author Anna Jungwirth
  */
 public class ElgaRefClient {
 
 	/**
-	 * Main method to start the WEB Server of the ELGA reference client
-	 * 
-	 * @param args at position 0 key store password encrypted with algorithm PBEWithMD5AndDES
+	 * Main method to start the WEB Server of the ELGA reference client.
+	 *
+	 * @param args at position 0 key store password encrypted with algorithm
+	 *             PBEWithMD5AndDES
 	 */
 	public static void main(String[] args) {
 		setLogFile();
@@ -48,12 +53,12 @@ public class ElgaRefClient {
 
 		setConfigFile();
 		createTempFolder(logger);
-		
+
 		BasicTextEncryptor passwordEncryptor = new BasicTextEncryptor();
 		passwordEncryptor.setPassword(System.getenv("ELGA_REF_CLIENT_PASSWORD"));
 		String encryptedKeystorePass = null;
 		String keystorePass = null;
-		if(args != null && args.length > 0) {
+		if (args != null && args.length > 0) {
 			encryptedKeystorePass = args[0];
 			keystorePass = passwordEncryptor.decrypt(encryptedKeystorePass);
 		}
@@ -91,20 +96,22 @@ public class ElgaRefClient {
 	}
 
 	/**
-	 * The method sets the config file at a certain path or if the parameter is null
-	 * or empty the default config file is used.
-	 *
-	 * @param pPath String path of the config file
+	 * The method sets the configuration file at resources/config_elga_ref_client.
 	 */
 	private static void setConfigFile() {
 		ConfigReader.getInstance().setConfigFilePath("config_elga_ref_client");
 	}
 
+	/**
+	 * creates temporary folder with name EConnectorTemp at TEMP directory.
+	 *
+	 * @param logger to log
+	 */
 	private static void createTempFolder(Logger logger) {
 		try {
 			String path = Util.getTempDirectory() + FileUtil.getPlatformSpecificPathSeparator() + "EConnectorTemp";
 			File directory = new File(path);
-			
+
 			if (!directory.exists()) {
 				directory.mkdir();
 			}
@@ -115,6 +122,15 @@ public class ElgaRefClient {
 		}
 	}
 
+	/**
+	 * Creates a map for needed endpoints to ELGA and GINA services. Name of service
+	 * is used as key, while target endpoint from configuration file is used as
+	 * value.
+	 *
+	 * @param config configuration details
+	 *
+	 * @return map of service name and service endpoints
+	 */
 	private static Map<String, String> createServiceEndpointMap(ConfigReader config) {
 		Map<String, String> serviceEndpointMap = new HashMap<>();
 		serviceEndpointMap.put(IheConstants.STS_SERVICE, config.getTargetEndpointSts());
@@ -145,6 +161,10 @@ public class ElgaRefClient {
 		return serviceEndpointMap;
 	}
 
+	/**
+	 * set resources/log4j2.properties as configuration file of LOGGING. In this
+	 * file log file path is defined and other logging properties.
+	 */
 	private static void setLogFile() {
 		File propertiesFile = new File("resources/log4j2.properties");
 

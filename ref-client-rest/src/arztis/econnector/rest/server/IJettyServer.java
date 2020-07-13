@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
+ *
+ * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ *
+ */
 package arztis.econnector.rest.server;
 
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -8,18 +14,40 @@ import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class IJettyServer.
+ *
+ * @author Tanja Reiterer and Anna Jungwirth
+ */
 public class IJettyServer extends Thread {
+
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IJettyServer.class.getName());
+
+    /** The http port. */
     private int httpPort;
+
+    /** The http config. */
     private HttpConfiguration httpConfig;
+
+    /** The handler. */
     private RestHandler handler;
 
+    /**
+     * Instantiates a new Jetty server.
+     *
+     * @param httpPort the HTTP port
+     * @param http the HTTP configuration
+     */
     public IJettyServer(int httpPort, HttpConfiguration http){
         this.httpPort = httpPort;
         this.httpConfig = http;
         this.handler = new RestHandler();
     }
 
+    /**
+     * Run method. Adds HTTP configuration and starts {@link Server}
+     */
     @Override
     public void run() {
         Server server = new Server();
