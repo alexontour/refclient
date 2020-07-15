@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
  *
- * This code is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.
+ * This code is licensed under the Eclipse Public License v1.0.
  * 
  */
 package arztis.econnector.rest.utilities;
