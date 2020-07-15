@@ -1338,7 +1338,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/update_immunization_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1365,7 +1365,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/lab_report_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return Laborbefund.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1392,7 +1392,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/cda_prescription_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return Cdarezept.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1416,7 +1416,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/discharge_letter_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return CdaentlassbriefAerztlich.loadFromFile(file);
 			} catch (JAXBException e) {
@@ -1443,7 +1443,7 @@ public class ElgaConnectionCaller {
 		File file = new File("resources/phc_consultation_summary_example.xml");
 
 		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8);
+			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
 			try {
 				return ElgapatientConsultationSummary.loadFromFile(file);
 			} catch (JAXBException e) {
