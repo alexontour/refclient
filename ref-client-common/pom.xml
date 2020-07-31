@@ -64,45 +64,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2-jaxws</artifactId>
-			<version>${axis2.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.sun.xml.ws</groupId>
-					<artifactId>jaxws-tools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.axis2</groupId>
-					<artifactId>axis2-kernel</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.axis2</groupId>
-					<artifactId>axis2-saaj</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/xalan/xalan -->
-		<!-- <dependency>
-			<groupId>xalan</groupId>
-			<artifactId>xalan</artifactId>
-			<version>2.7.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency> -->
-		<dependency>
-			<groupId>org.apache.axis2</groupId>
 			<artifactId>axis2-transport-http</artifactId>
 			<version>${axis2.version}</version>
 			<exclusions>
@@ -229,12 +190,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.woden</groupId>
 			<artifactId>woden-core</artifactId>
@@ -252,9 +207,6 @@
 			<artifactId>javax.activation-api</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
-		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>javax.mail-api</artifactId> 
-			<version>1.6.2</version> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>

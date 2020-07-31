@@ -143,7 +143,9 @@ public class ConfigReader {
 			new ElgaEHealthApplication("VO Testinstanz 152", "152", "urn:oid:1.1.2.1"),
 			new ElgaEHealthApplication("VO Testinstanz 153", "153", "urn:oid:1.1.3.1"),
 			new ElgaEHealthApplication("VO Testinstanz 150", "150", "urn:oid:1.2.40.0.34.99.10.1.12.1.990.11"),
-			new ElgaEHealthApplication("VO Testinstanz 151", "151", "urn:oid:1.2.40.0.34.99.10.1.94.20.11"));
+			new ElgaEHealthApplication("VO Testinstanz 151", "151", "urn:oid:1.2.40.0.34.99.10.1.94.20.11"),
+			new ElgaEHealthApplication("VO Testinstanz 198", "198", "urn:oid:1.1.2.1"),
+			new ElgaEHealthApplication("VO Testinstanz 199", "199", "urn:oid:1.1.3.1"));
 
 	/** The bundle. */
 	private ResourceBundle bundle = null;

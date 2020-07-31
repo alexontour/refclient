@@ -13,7 +13,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]" id="d133e5306-false-d124784e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]" id="d245561e4266-false-d413567e0">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="count(hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']) &gt;= 1">(eimpf_entry_AntikoerperBestimmungDataProcessing): Element hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15'] ist mandatory [min 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="count(hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']) &lt;= 1">(eimpf_entry_AntikoerperBestimmungDataProcessing): Element hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15'] kommt zu häufig vor [max 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="count(hl7:templateId[@root='1.3.6.1.4.1.19376.1.3.1'][not(@nullFlavor)]) &gt;= 1">(eimpf_entry_AntikoerperBestimmungDataProcessing): Element hl7:templateId[@root='1.3.6.1.4.1.19376.1.3.1'][not(@nullFlavor)] ist mandatory [min 1x].</assert>
@@ -26,7 +26,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']" id="d133e5341-false-d124878e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']" id="d245561e4288-false-d413661e0">
         <extends rule="II"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(eimpf_entry_AntikoerperBestimmungDataProcessing): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@root) = ('1.2.40.0.34.6.0.11.3.15')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von root MUSS '1.2.40.0.34.6.0.11.3.15' sein. Gefunden: "<value-of select="@root"/>"</assert>
@@ -36,7 +36,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root='1.3.6.1.4.1.19376.1.3.1'][not(@nullFlavor)]
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root='1.3.6.1.4.1.19376.1.3.1'][not(@nullFlavor)]" id="d133e5346-false-d124889e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:templateId[@root='1.3.6.1.4.1.19376.1.3.1'][not(@nullFlavor)]" id="d245561e4293-false-d413672e0">
         <extends rule="II"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(eimpf_entry_AntikoerperBestimmungDataProcessing): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@root) = ('1.3.6.1.4.1.19376.1.3.1')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von root MUSS '1.3.6.1.4.1.19376.1.3.1' sein. Gefunden: "<value-of select="@root"/>"</assert>
@@ -46,7 +46,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]" id="d133e5350-false-d124967e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]" id="d245561e4297-false-d413750e0">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@classCode) = ('ACT')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von classCode MUSS 'ACT' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@moodCode) = ('EVN')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von moodCode MUSS 'EVN' sein. Gefunden: "<value-of select="@moodCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="not(/hl7:ClinicalDocument/hl7:templateId[@root = '1.2.40.0.34.6.0.11.0.4']) or hl7:author">(eimpf_entry_AntikoerperBestimmungDataProcessing): Das Element author MUSS vorhanden sein.</assert>
@@ -64,9 +64,11 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]" id="d133e5353-false-d125085e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]" id="d245561e4300-false-d413868e0">
         <extends rule="CE"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CE' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(eimpf_entry_AntikoerperBestimmungDataProcessing): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CE" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="@displayName">(eimpf_entry_AntikoerperBestimmungDataProcessing): Attribut @displayName MUSS vorkommen.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="not(@displayName) or string-length(@displayName)&gt;0">(eimpf_entry_AntikoerperBestimmungDataProcessing): Attribute @displayName MUSS vom Datentyp 'st' sein  - '<value-of select="@displayName"/>'</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@code) = ('26436-6')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von code MUSS '26436-6' sein. Gefunden: "<value-of select="@code"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@codeSystem) = ('2.16.840.1.113883.6.1')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von codeSystem MUSS '2.16.840.1.113883.6.1' sein. Gefunden: "<value-of select="@codeSystem"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="string(@codeSystemName) = ('LOINC')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Wert von codeSystemName MUSS 'LOINC' sein. Gefunden: "<value-of select="@codeSystemName"/>"</assert>
@@ -77,7 +79,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.3.15
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:statusCode[@code = 'completed']
 Item: (eimpf_entry_AntikoerperBestimmungDataProcessing)
 -->
-    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:statusCode[@code = 'completed']" id="d133e5360-false-d125110e0">
+    <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:statusCode[@code = 'completed']" id="d245561e4308-false-d413898e0">
         <extends rule="CS"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='CS' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(eimpf_entry_AntikoerperBestimmungDataProcessing): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:CS" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.3.15" test="@nullFlavor or (@code='completed')">(eimpf_entry_AntikoerperBestimmungDataProcessing): Der Elementinhalt MUSS einer von 'code 'completed'' sein.</assert>
@@ -199,7 +201,7 @@ Item: (atcdabbr_other_AddressCompilation)
 -->
     <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:author[hl7:assignedAuthor]/hl7:assignedAuthor/hl7:addr[not(@nullFlavor)]">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="not(@use) or (string-length(@use) &gt; 0 and not(matches(@use,'\s')))">(atcdabbr_other_AddressCompilation): Attribute @use MUSS vom Datentyp 'cs' sein  - '<value-of select="@use"/>'</assert>
-        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(hl7:streetAddressLine or (hl7:streetName and hl7:houseNumber)) and not(hl7:streetAddressLine and hl7:streetName and hl7:houseNumber)">(atcdabbr_other_AddressCompilation): Es muss entweder streetAddressLine oder streetName UND houseNumber angegeben werden.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="not(hl7:streetAddressLine and (hl7:streetName or hl7:houseNumber)) or ((hl7:streetAddressLine or (hl7:streetName and hl7:houseNumber)) and not((hl7:streetAddressLine and hl7:streetName and hl7:houseNumber) or (hl7:streetAddressLine and (hl7:streetName or hl7:houseNumber))))">(atcdabbr_other_AddressCompilation): Es muss entweder streetAddressLine oder streetName UND houseNumber angegeben werden.</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetAddressLine) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetAddressLine kommt zu häufig vor [max 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetName) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetName kommt zu häufig vor [max 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:houseNumber) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:houseNumber kommt zu häufig vor [max 1x].</assert>
@@ -458,7 +460,7 @@ Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(
 Item: (atcdabbr_other_AuthorBody_eImpfpass)
 -->
     <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:author[hl7:assignedAuthor]/hl7:assignedAuthor/hl7:representedOrganization">
-        <extends rule="d125887e0-false-d125903e0"/>
+        <extends rule="d414675e0-false-d414691e0"/>
     </rule>
 
    <!--
@@ -466,7 +468,7 @@ Template derived rules for ID: 1.2.40.0.34.6.0.11.9.5
 Context: *[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:author[hl7:assignedAuthor]/hl7:assignedAuthor/hl7:representedOrganization
 Item: (atcdabbr_other_OrganizationCompilationWithIdName)
 -->
-    <rule id="d125887e0-false-d125903e0" abstract="true">
+    <rule id="d414675e0-false-d414691e0" abstract="true">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.5" test="string(@classCode) = ('ORG') or not(@classCode)">(atcdabbr_other_OrganizationCompilationWithIdName): Der Wert von classCode MUSS 'ORG' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.5" test="string(@determinerCode) = ('INSTANCE') or not(@determinerCode)">(atcdabbr_other_OrganizationCompilationWithIdName): Der Wert von determinerCode MUSS 'INSTANCE' sein. Gefunden: "<value-of select="@determinerCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.5" test="count(hl7:telecom)&lt;2 or (count(hl7:telecom) = count(hl7:telecom[@use]))">(atcdabbr_other_OrganizationCompilationWithIdName): Das Attribut telecom/@use MUSS bei allen telecom Elementen strukturiert sein.</assert>
@@ -522,7 +524,7 @@ Item: (atcdabbr_other_AddressCompilation)
 -->
     <rule context="*[hl7:templateId[@root = '1.2.40.0.34.6.0.11.3.15']]/hl7:act[hl7:code[(@code = '26436-6' and @codeSystem = '2.16.840.1.113883.6.1')]]/hl7:author[hl7:assignedAuthor]/hl7:assignedAuthor/hl7:representedOrganization/hl7:addr[not(@nullFlavor)]">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="not(@use) or (string-length(@use) &gt; 0 and not(matches(@use,'\s')))">(atcdabbr_other_AddressCompilation): Attribute @use MUSS vom Datentyp 'cs' sein  - '<value-of select="@use"/>'</assert>
-        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="(hl7:streetAddressLine or (hl7:streetName and hl7:houseNumber)) and not(hl7:streetAddressLine and hl7:streetName and hl7:houseNumber)">(atcdabbr_other_AddressCompilation): Es muss entweder streetAddressLine oder streetName UND houseNumber angegeben werden.</assert>
+        <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="not(hl7:streetAddressLine and (hl7:streetName or hl7:houseNumber)) or ((hl7:streetAddressLine or (hl7:streetName and hl7:houseNumber)) and not((hl7:streetAddressLine and hl7:streetName and hl7:houseNumber) or (hl7:streetAddressLine and (hl7:streetName or hl7:houseNumber))))">(atcdabbr_other_AddressCompilation): Es muss entweder streetAddressLine oder streetName UND houseNumber angegeben werden.</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetAddressLine) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetAddressLine kommt zu häufig vor [max 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:streetName) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:streetName kommt zu häufig vor [max 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.6.0.11.9.25" test="count(hl7:houseNumber) &lt;= 1">(atcdabbr_other_AddressCompilation): Element hl7:houseNumber kommt zu häufig vor [max 1x].</assert>

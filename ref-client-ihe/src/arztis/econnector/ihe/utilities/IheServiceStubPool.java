@@ -21,9 +21,6 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.AddressingConstants;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.context.ConfigurationContextFactory;
-import org.apache.axis2.description.AxisModule;
-import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -308,7 +305,6 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 		try {
 			System.setProperty("axis2.xml", PATH_AXIS2_CONFIG);
-			addAddressingModule();
 			initiateAllServices();
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage(), ex);
@@ -324,7 +320,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 *
 	 * @return instance of {@link IheServiceStubPool}
 	 */
-	public synchronized static IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints,
+	public static synchronized IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints,
 			String encryptedKeystorePass) {
 		if (instance == null) {
 			if (mapServiceEndpoints == null) {
@@ -501,23 +497,6 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 */
 	public CommunityPharmacyManagerStub getCommunityPharmacyManagerEhealthPlusEImmunizationStub() {
 		return communityPharmacyManagerEhealthPlusEImmunizationStub;
-	}
-
-	/**
-	 * adds addressing module for axis2.
-	 */
-	private void addAddressingModule() {
-		try {
-			configurationContext = ConfigurationContextFactory.createConfigurationContextFromFileSystem(null,
-					System.getProperty("axis2.xml"));
-			AxisConfiguration axisConfiguration = configurationContext.getAxisConfiguration();
-
-			AxisModule addressing = new AxisModule(ADDRESSING);
-			addressing.setParent(axisConfiguration);
-			addressing.setModuleClassLoader(getClass().getClassLoader());
-		} catch (AxisFault e) {
-			LOGGER.error(e.getFaultNode(), e);
-		}
 	}
 
 	/**

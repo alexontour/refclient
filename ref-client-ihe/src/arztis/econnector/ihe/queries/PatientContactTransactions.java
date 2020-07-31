@@ -336,7 +336,7 @@ public class PatientContactTransactions {
 	 * @param kindOfRequest kind of requests (VO, eMedication, eImmunization,
 	 *                      electronic records)
 	 */
-	protected static void cleanupKbsServices(String action, int kindOfRequest) {
+	public static void cleanupKbsServices(String action, int kindOfRequest) {
 		if (kindOfRequest == IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD) {
 			try {
 				IheServiceStubPool.getInstance().getKbsEhealthPlusEImmunizationService(action)._getServiceClient()

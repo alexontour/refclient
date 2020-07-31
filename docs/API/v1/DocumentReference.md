@@ -181,7 +181,7 @@ Cancels document with the identifier from ELGA.
 - Headers: `Authorization`
 - Response: JSON-Object
 
-Queries the metadata of ELGA documents. Identifier must match the following pattern OID|ID. An example for an identifier search is the social security number 1.2.40.0.10.1.4.3.1|1001210995. Possible values for parameter status are `"current"` and `"superseded"`. Possible values for parameter category are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
+Queries the metadata of ELGA documents. Identifier must match the following pattern OID|ID. An example for an identifier search is the social security number 1.2.40.0.10.1.4.3.1|1001210995. Possible values for parameter status are `"current"` and `"superseded"`. Possible values for parameter type are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>.
 
 Example request: <http://localhost:50051/api/v1/DocumentReference?type=87273-9&patient.identifier=1.2.40.0.10.1.4.3.1|1001210995&status=current>
 
@@ -524,12 +524,12 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=82593-5&p
 
 ## Query ELGA document [`GET`]
 
-- Parameters: `content.attachment.contentType` *(required)*
+- Parameters: `content.attachment.contentType` *(required)*, `type` *(optional)*
 - Endpoint: `/<unqiqueId>/<repositoryId>/<homeCommunityId>` this endpoint is available at the parameter `content.attachment.url` of response of metadata query.
 - Headers: `Authorization`
 - Response: JSON-Object
 
-Queries ELGA document. Value for content.attachment.url is available after querying metadata of documents. Possible content types are `"application/xml"` and `"application/fhir+json"`. JSON structure is described in <https://git.et-innovations.org/java/elga-refclient/tree/master/docs/API/v1/Composition.md>
+Queries ELGA document. Value for content.attachment.url is available after querying metadata of documents. Possible content types are `"application/xml"` and `"application/fhir+json"`. JSON structure is described in <https://git.et-innovations.org/java/elga-refclient/tree/master/docs/API/v1/Composition.md>. Possible values for parameter type are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>. At the moment type is only needed for virtual organizations.
 
 ### JSON Object Structure successfull response
 

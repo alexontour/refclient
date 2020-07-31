@@ -344,7 +344,6 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 				addName(Hl7Utils.extractHl7Xcn(value.substring(6)));
 			} else if (value != null && value.contains("PID-7")) {
 				setBirthDate(DateUtil.parseHl7Timestamp(value.substring(6)));
-				//setBirthDate(MetadataConverter.extractHl7v2Pid7(value.substring(6)));
 			} else if (value != null && value.contains("PID-8")) {
 				setGender(convertAdministrativeGenderToFhirGender(value.substring(6)));
 			} else if (value != null && value.contains("PID-11")) {

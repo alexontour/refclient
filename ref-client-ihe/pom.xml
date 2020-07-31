@@ -15,13 +15,22 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hapi.fhir.version>5.0.0</hapi.fhir.version>
-		<oht.ihe.version>2.1.0</oht.ihe.version>
-		<oht.ihe.ecc.version>ECConnector-2.1-SNAPSHOT</oht.ihe.ecc.version>
+		<oht.ihe.version>2.4-SNAPSHOT</oht.ihe.version>
+		<oht.ihe.ecc.version>2.4-SNAPSHOT</oht.ihe.ecc.version>
 		<jackson.version>2.10.1</jackson.version>
 		<skip.assembly>false</skip.assembly>
+		<ehc.version>1.10-SNAPSHOT</ehc.version>
+		<eclipse.emf.version>2.9.2.v20131212</eclipse.emf.version>
+		<mdht.version>2.5.0</mdht.version>
 	</properties>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.axis2</groupId>
+				<artifactId>axis2-mar-maven-plugin</artifactId>
+				<version>1.7.9</version>
+				<extensions>true</extensions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -92,6 +101,14 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>projects.suisse-open-exchange.healthcare-sna</id>
+			<name>projects.suisse-open-exchange.healthcare-snapshots</name>
+			<url>https://projects.suisse-open-exchange.healthcare/artifactory/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
 			<id>projects.suisse-open-exchange.healthcare-rel</id>
 			<name>projects.suisse-open-exchange.healthcare-releases</name>
 			<url>https://projects.suisse-open-exchange.healthcare/artifactory/releases</url>
@@ -122,6 +139,10 @@
 				<exclusion>
 					<groupId>com.google.code.gson</groupId>
 					<artifactId>gson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -170,80 +191,81 @@
 		</dependency>
 		<!-- local repo ehealth connector dependencies -->
 		<dependency>
+			<groupId>org.ehealth_connector</groupId>
+			<artifactId>ehealth_connector-api</artifactId>
+			<version>${ehc.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
 			<groupId>org.ehealth_connector.cda</groupId>
 			<artifactId>ehealth_connector-cda-at</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.cda</groupId>
 			<artifactId>ehealth_connector-cda-gen</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.communication</groupId>
 			<artifactId>ehealth_connector-communication-at</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.communication</groupId>
 			<artifactId>ehealth_connector-communication-gen</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.common</groupId>
 			<artifactId>ehealth_connector-common-gen</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.common</groupId>
 			<artifactId>ehealth_connector-common-at</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.validation</groupId>
 			<artifactId>ehealth_connector-validation-report</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.validation</groupId>
 			<artifactId>ehealth_connector-validation-service</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.fhir.structures</groupId>
 			<artifactId>ehealth_connector-fhir-structures-gen</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.security</groupId>
 			<artifactId>ehealth_connector-security-gen-api</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
+			<version>${ehc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ehealth_connector.security</groupId>
 			<artifactId>ehealth_connector-security-gen-impl</artifactId>
-			<version>1.8-SNAPSHOT_EC</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.opensaml/opensaml-saml-impl -->
-		<dependency>
-			<groupId>org.opensaml</groupId>
-			<artifactId>opensaml-saml-impl</artifactId>
-			<version>3.4.5</version>
+			<version>${ehc.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.apache.httpcomponents</groupId>
-					<artifactId>httpclient</artifactId>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>commons-collections</groupId>
-					<artifactId>commons-collections</artifactId>
+					<groupId>org.apache.santuario</groupId>
+					<artifactId>xmlsec</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
 			<artifactId>addressing</artifactId>
-			<version>1.4-ehc</version>
+			<version>1.7.9</version>
+			<classifier>classpath-module</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.openhealthtools.ihe.xua</groupId>
@@ -251,268 +273,184 @@
 			<version>${oht.ihe.ecc.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>org.apache.axis2</groupId>
 					<artifactId>axis2-kernel</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common.ws</groupId>
-					<artifactId>oht-common-ws-axis2</artifactId>
-				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- oht stuff -->
 		<dependency>
-			<groupId>org.openhealthtools.ihe.xds</groupId>
-			<artifactId>oht-xds-source</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.openhealthtools.ihe.common.ws</groupId>
+			<artifactId>oht-common-ws-axis2</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.openhealthtools.ihe.xds</groupId>
-			<artifactId>oht-xds-consumer</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.openhealthtools.ihe.common</groupId>
+			<artifactId>oht-common-ebXML._3._0</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.openhealthtools.ihe.xds</groupId>
-			<artifactId>oht-xds-soap</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.axis2</groupId>
-					<artifactId>axis2-kernel</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.atna</groupId>
-					<artifactId>oht-atna-auditor</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.atna</groupId>
-					<artifactId>oht-atna-nodeauth</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common</groupId>
-					<artifactId>oht-common-ebXML._3._0</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common.ws</groupId>
-					<artifactId>oht-common-ws-axis2</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.openhealthtools.ihe.common</groupId>
+			<artifactId>oht-common-ebXML._2._1</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v2</groupId>
+			<artifactId>oht-common-hl7v2</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v2</groupId>
+			<artifactId>oht-common-hl7v2-client</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v3</groupId>
+			<artifactId>oht-common-hl7v3</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v3</groupId>
+			<artifactId>oht-common-hl7v3</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v3</groupId>
+			<artifactId>oht-common-hl7v3-client</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.common.hl7v3</groupId>
+			<artifactId>oht-common-hl7v3-soap</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.atna</groupId>
+			<artifactId>oht-atna-nodeauth</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.atna</groupId>
+			<artifactId>oht-atna-context</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.atna</groupId>
+			<artifactId>oht-atna-auditor</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe</groupId>
+			<artifactId>oht-xdm</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.pdq</groupId>
+			<artifactId>oht-pdq-consumer</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.openhealthtools.ihe.pdq</groupId>
 			<artifactId>oht-pdq-consumer-v3</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.pix</groupId>
+			<artifactId>oht-pix-consumer</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.pix</groupId>
+			<artifactId>oht-pix-consumer-v3</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.pix</groupId>
+			<artifactId>oht-pix-source</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.pix</groupId>
+			<artifactId>oht-pix-source-v3</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.openhealthtools.ihe.xds</groupId>
-			<artifactId>oht-xds-metadata</artifactId>
-			<version>2.1.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.openhealthtools.ihe.common.hl7v3</groupId>
-			<artifactId>oht-common-hl7v3-client</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common.ws</groupId>
-					<artifactId>oht-common-ws-axis2</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>oht-xds-source</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.openhealthtools.ihe.common.ws</groupId>
-			<artifactId>oht-common-ws-axis2</artifactId>
-			<version>${oht.ihe.ecc.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<!-- local repo oht common hl7v2 -->
-		<dependency>
-			<groupId>org.openhealthtools.ihe.common.hl7v2</groupId>
-			<artifactId>oht-common-hl7v2</artifactId>
-			<version>${oht.ihe.ecc.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf.ecore</groupId>
-					<artifactId>xmi</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.openhealthtools.ihe.utils</groupId>
 			<artifactId>oht-ihe-utils</artifactId>
-			<version>2.1.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.openhealthtools.ihe.common</groupId>
-			<artifactId>oht-common-ebXML._3._0</artifactId>
-			<version>2.1.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
 		<dependency>
 			<groupId>org.openhealthtools.ihe.xds.metadata</groupId>
 			<artifactId>oht-xds-metadata-transform</artifactId>
 			<version>${oht.ihe.ecc.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common</groupId>
-					<artifactId>oht-common-ebXML._2._1</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.openhealthtools.ihe.common</groupId>
-					<artifactId>oht-common-ebXML._3._0</artifactId>
-				</exclusion>
-			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.xds.metadata</groupId>
+			<artifactId>oht-xds-metadata</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.xds.metadata</groupId>
+			<artifactId>oht-xds-metadata-extract-cdar2</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openhealthtools.ihe.xds.metadata</groupId>
 			<artifactId>oht-xds-metadata-extract</artifactId>
 			<version>${oht.ihe.ecc.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
+
 		<dependency>
-			<groupId>org.openhealthtools.ihe.xds.metadata</groupId>
-			<artifactId>oht-xds-metadata-extract-cdar2</artifactId>
-			<version>${oht.ihe.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.emf</groupId>
-					<artifactId>ecore</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.openhealthtools.ihe.xds</groupId>
+			<artifactId>oht-xds</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.openhealthtools.mdht.uml</groupId>
-			<artifactId>org.openhealthtools.mdht.uml.cda</artifactId>
-			<version>2.5.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.openhealthtools.ihe.xds</groupId>
+			<artifactId>oht-xds-consumer</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.xds</groupId>
+			<artifactId>oht-xds-soap</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.ihe.xds</groupId>
+			<artifactId>oht-xds-source</artifactId>
+			<version>${oht.ihe.ecc.version}</version>
 		</dependency>
 
 		<!-- hl7 -->
@@ -542,21 +480,90 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.verapdf</groupId>
-			<artifactId>validation-model</artifactId>
-			<version>1.6.0</version>
+			<groupId>com.pdftools</groupId>
+			<artifactId>VALA</artifactId>
+			<version>5.9.4.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.verapdf</groupId>
-			<artifactId>core</artifactId>
-			<version>1.6.0</version>
+			<artifactId>validation-model</artifactId>
+			<version>1.16.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+
 		<dependency>
 			<groupId>org.jasypt</groupId>
 			<artifactId>jasypt</artifactId>
 			<version>1.9.3</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- JAXB binding stuff -->
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>3.0.0-M4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>3.0.0-M4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>ecore</artifactId>
+			<version>${eclipse.emf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>common</artifactId>
+			<version>${eclipse.emf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecore</groupId>
+			<artifactId>xmi</artifactId>
+			<version>2.9.1.v20131212</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.mdht.uml.hl7</groupId>
+			<artifactId>org.openhealthtools.mdht.uml.hl7.datatypes</artifactId>
+			<version>${mdht.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openhealthtools.mdht.uml</groupId>
+			<artifactId>org.openhealthtools.mdht.uml.cda</artifactId>
+			<version>${mdht.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.14</version>
+		</dependency>
+
+
 	</dependencies>
+
 </project>

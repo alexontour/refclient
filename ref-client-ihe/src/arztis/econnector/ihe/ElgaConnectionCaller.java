@@ -1167,12 +1167,12 @@ public class ElgaConnectionCaller {
 			ParserConfigurationException, SAXException, IOException, XmlException, AccessDeniedMessage {
 		AssertionType assertion = null;
 
-		if (connData == null || connData.getHcpAssertion() == null) {
+		if (connData == null) {
 			throw new UnauthorizedException(NO_HCP_ASSERTION_FOUND_LITERAL);
 		}
 
 		ElgaEHealthApplication eHealthApplication = null;
-		if (categoryCode != null && connData.getHcpAssertion() != null) {
+		if (categoryCode != null) {
 			if (CONFIG.isEImmunLoginEnabled()
 					&& ClassCode.HISTORY_IMMUNIZATION.getCodeValue().equalsIgnoreCase(categoryCode)) {
 				eHealthApplication = CONFIG.getEImmunizationId();

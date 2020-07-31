@@ -13,7 +13,7 @@ Template derived rules for ID: 1.2.40.0.34.11.1.3.1
 Context: *[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]
 Item: (EingebettetesObjektEntry)
 -->
-    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]" id="d133e5-false-d2103e0">
+    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]" id="d245561e6-false-d247929e0">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="count(hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]) &gt;= 1">(EingebettetesObjektEntry): Element hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']] ist required [min 1x].</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="count(hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]) &lt;= 1">(EingebettetesObjektEntry): Element hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']] kommt zu häufig vor [max 1x].</assert>
     </rule>
@@ -22,7 +22,7 @@ Template derived rules for ID: 1.2.40.0.34.11.1.3.1
 Context: *[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]
 Item: (EingebettetesObjektEntry)
 -->
-    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]" id="d133e17-false-d2119e0">
+    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]" id="d245561e18-false-d247945e0">
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="string(@classCode) = ('OBS')">(EingebettetesObjektEntry): Der Wert von classCode MUSS 'OBS' sein. Gefunden: "<value-of select="@classCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="string(@moodCode) = ('EVN')">(EingebettetesObjektEntry): Der Wert von moodCode MUSS 'EVN' sein. Gefunden: "<value-of select="@moodCode"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="@ID">(EingebettetesObjektEntry): Attribut @ID MUSS vorkommen.</assert>
@@ -36,7 +36,7 @@ Template derived rules for ID: 1.2.40.0.34.11.1.3.1
 Context: *[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']
 Item: (EingebettetesObjektEntry)
 -->
-    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']" id="d133e28-false-d2155e0">
+    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']" id="d245561e29-false-d247981e0">
         <extends rule="II"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='II' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(EingebettetesObjektEntry): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:II" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="string(@root) = ('1.2.40.0.34.11.1.3.1')">(EingebettetesObjektEntry): Der Wert von root MUSS '1.2.40.0.34.11.1.3.1' sein. Gefunden: "<value-of select="@root"/>"</assert>
@@ -46,7 +46,7 @@ Template derived rules for ID: 1.2.40.0.34.11.1.3.1
 Context: *[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:value[not(@nullFlavor)]
 Item: (EingebettetesObjektEntry)
 -->
-    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:value[not(@nullFlavor)]" id="d133e30-false-d2168e0">
+    <rule context="*[hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]]/hl7:observationMedia[hl7:templateId[@root = '1.2.40.0.34.11.1.3.1']]/hl7:value[not(@nullFlavor)]" id="d245561e31-false-d247994e0">
         <extends rule="ED"/>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="(local-name-from-QName(resolve-QName(@xsi:type,.))='ED' and namespace-uri-from-QName(resolve-QName(@xsi:type,.))='urn:hl7-org:v3') or not(@xsi:type)">(EingebettetesObjektEntry): Wenn eine @xsi:type Instruktion anwesend ist MUSS diese den Wert "{urn:hl7-org:v3}:ED" haben. Gefunden "{<value-of select="namespace-uri-from-QName(resolve-QName(@xsi:type,.))"/>}:<value-of select="local-name-from-QName(resolve-QName(@xsi:type,.))"/>"</assert>
         <assert role="error" see="http://art-decor.org/art-decor/decor-templates--elgaimpf-?id=1.2.40.0.34.11.1.3.1" test="@mediaType">(EingebettetesObjektEntry): Attribut @mediaType MUSS vorkommen.</assert>

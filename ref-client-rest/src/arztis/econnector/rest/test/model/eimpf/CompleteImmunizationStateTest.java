@@ -13,7 +13,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 import javax.xml.bind.JAXBException;
 
@@ -323,8 +322,6 @@ public class CompleteImmunizationStateTest extends TestUtils {
 			testOrganizationCustodianEntry(organization);
 		} else if (organization.getId().equalsIgnoreCase("immunization-author-1")) {
 			testAuthorFirstImmunizationEntry(organization);
-		} else if (organization.getId().equalsIgnoreCase("immunization-author-2")) {
-			// testAuthorSecondImmunizationEntry(organization);
 		} else if (organization.getId().equalsIgnoreCase("immunizationRecommendation-author-1")) {
 			testAuthorImmunizationRecommendationEntry(organization);
 		}
@@ -953,9 +950,6 @@ public class CompleteImmunizationStateTest extends TestUtils {
 		assertEquals("36653000", observation.getValueCodeableConcept().getCodingFirstRep().getCode());
 		assertEquals(OID_SNOMED, observation.getValueCodeableConcept().getCodingFirstRep().getSystem());
 		assertEquals("Röteln", observation.getValueCodeableConcept().getCodingFirstRep().getDisplay());
-
-		// note
-		// assertTrue(observation.);
 
 		// author
 		assertTrue(observation.hasPerformer());

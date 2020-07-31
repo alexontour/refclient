@@ -8,6 +8,8 @@
    <!-- Add extra namespaces -->
     <ns uri="http://www.w3.org/XML/1998/namespace" prefix="xml"/>
     <ns uri="urn:ihe:pharm:medication" prefix="pharm"/>
+    <ns uri="urn:hl7-at:v3" prefix="hl7at"/>
+    <ns uri="urn:hl7-org:sdtc" prefix="sdtc"/>
    <!-- Include realm specific schematron --><!-- Include datatype abstract schematrons -->
     <pattern>
         <include href="include/DTr1_AD.sch"/>
@@ -43,6 +45,9 @@
         <include href="include/DTr1_EIVL_TS.sch"/>
         <include href="include/DTr1_EN.sch"/>
         <include href="include/DTr1_ENXP.sch"/>
+        <include href="include/DTr1_GLIST.sch"/>
+        <include href="include/DTr1_GLIST_PQ.sch"/>
+        <include href="include/DTr1_GLIST_TS.sch"/>
         <include href="include/DTr1_hl7nl-INT.sch"/>
         <include href="include/DTr1_hl7nl-IVL_QTY.sch"/>
         <include href="include/DTr1_hl7nl-IVL_TS.sch"/>
@@ -79,6 +84,7 @@
         <include href="include/DTr1_IVXB_PQ.sch"/>
         <include href="include/DTr1_IVXB_REAL.sch"/>
         <include href="include/DTr1_IVXB_TS.sch"/>
+        <include href="include/DTr1_list_int.sch"/>
         <include href="include/DTr1_MO.sch"/>
         <include href="include/DTr1_ON.sch"/>
         <include href="include/DTr1_PIVL_TS.sch"/>
@@ -96,6 +102,9 @@
         <include href="include/DTr1_RTO_QTY_QTY.sch"/>
         <include href="include/DTr1_SC.sch"/>
         <include href="include/DTr1_SD.TEXT.sch"/>
+        <include href="include/DTr1_SLIST.sch"/>
+        <include href="include/DTr1_SLIST_PQ.sch"/>
+        <include href="include/DTr1_SLIST_TS.sch"/>
         <include href="include/DTr1_ST.sch"/>
         <include href="include/DTr1_SXCM_INT.sch"/>
         <include href="include/DTr1_SXCM_MO.sch"/>
@@ -166,6 +175,7 @@
         <active pattern="template-1.2.40.0.34.6.0.11.3.8-2019-05-20T072416"/>
         <active pattern="template-1.2.40.0.34.6.0.11.3.9-2019-05-20T081225"/>
         <active pattern="template-1.2.40.0.34.6.0.11.9.14-2019-04-03T161946"/>
+        <active pattern="template-1.2.40.0.34.6.0.11.9.17-2019-01-17T124416"/>
         <active pattern="template-1.2.40.0.34.6.0.11.9.21-2019-05-08T132112"/>
         <active pattern="template-1.2.40.0.34.6.0.11.9.28-2019-05-15T163536"/>
         <active pattern="template-1.2.40.0.34.6.0.11.9.31-2019-06-05T073324"/>
@@ -315,6 +325,12 @@
     <phase id="atcdabbr_other_ParticipantBodyTranscriber-closed">
         <active pattern="template-1.2.40.0.34.6.0.11.9.14-2019-04-03T161946-closed"/>
     </phase>
+    <phase id="atcdabbr_other_PerformerBody">
+        <active pattern="template-1.2.40.0.34.6.0.11.9.17-2019-01-17T124416"/>
+    </phase>
+    <phase id="atcdabbr_other_PerformerBody-closed">
+        <active pattern="template-1.2.40.0.34.6.0.11.9.17-2019-01-17T124416-closed"/>
+    </phase>
     <phase id="atcdabbr_other_PerformerBodyImpfendePerson">
         <active pattern="template-1.2.40.0.34.6.0.11.9.21-2019-05-08T132112"/>
     </phase>
@@ -411,6 +427,9 @@
    <!-- atcdabbr_other_ParticipantBodyTranscriber -->
     <include href="include/1.2.40.0.34.6.0.11.9.14-2019-04-03T161946.sch"/>
     <include href="include/1.2.40.0.34.6.0.11.9.14-2019-04-03T161946-closed.sch"/>
+   <!-- atcdabbr_other_PerformerBody -->
+    <include href="include/1.2.40.0.34.6.0.11.9.17-2019-01-17T124416.sch"/>
+    <include href="include/1.2.40.0.34.6.0.11.9.17-2019-01-17T124416-closed.sch"/>
    <!-- atcdabbr_other_PerformerBodyImpfendePerson -->
     <include href="include/1.2.40.0.34.6.0.11.9.21-2019-05-08T132112.sch"/>
     <include href="include/1.2.40.0.34.6.0.11.9.21-2019-05-08T132112-closed.sch"/>

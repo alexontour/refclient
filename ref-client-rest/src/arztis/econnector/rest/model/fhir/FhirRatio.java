@@ -6,7 +6,6 @@
  */
 package arztis.econnector.rest.model.fhir;
 
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
 import org.ehealth_connector.common.hl7cdar2.RTO;
 import org.ehealth_connector.common.hl7cdar2.RTOPQPQ;
 import org.hl7.fhir.r4.model.Ratio;

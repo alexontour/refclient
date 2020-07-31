@@ -25,6 +25,7 @@ import org.ehealth_connector.common.hl7cdar2.PN;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.StringType;
 
+import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
 /**
@@ -219,7 +220,7 @@ public class FhirHumanName extends HumanName {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
 			retVal.getContent()
-					.add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
+					.add(new JAXBElement<EnFamily>(new QName(CdaUtil.NAMESPACE_HL7_V3, "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -228,7 +229,7 @@ public class FhirHumanName extends HumanName {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
 					retVal.getContent()
-							.add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
+							.add(new JAXBElement<EnGiven>(new QName(CdaUtil.NAMESPACE_HL7_V3, "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -239,7 +240,7 @@ public class FhirHumanName extends HumanName {
 					EnPrefix obj = new EnPrefix();
 					obj.xmlContent = prefix.getValue();
 					retVal.getContent()
-							.add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
+							.add(new JAXBElement<EnPrefix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -250,7 +251,7 @@ public class FhirHumanName extends HumanName {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
 					retVal.getContent()
-							.add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
+							.add(new JAXBElement<EnSuffix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}
@@ -308,7 +309,7 @@ public class FhirHumanName extends HumanName {
 			EnFamily obj = new EnFamily();
 			obj.xmlContent = value;
 			retVal.getContent()
-					.add(new JAXBElement<EnFamily>(new QName("urn:hl7-org:v3", "family"), EnFamily.class, obj));
+					.add(new JAXBElement<EnFamily>(new QName(CdaUtil.NAMESPACE_HL7_V3, "family"), EnFamily.class, obj));
 		}
 
 		if (name.hasGiven()) {
@@ -317,7 +318,7 @@ public class FhirHumanName extends HumanName {
 					EnGiven obj = new EnGiven();
 					obj.xmlContent = given.getValue();
 					retVal.getContent()
-							.add(new JAXBElement<EnGiven>(new QName("urn:hl7-org:v3", "given"), EnGiven.class, obj));
+							.add(new JAXBElement<EnGiven>(new QName(CdaUtil.NAMESPACE_HL7_V3, "given"), EnGiven.class, obj));
 				}
 			}
 		}
@@ -329,7 +330,7 @@ public class FhirHumanName extends HumanName {
 					obj.xmlContent = prefix.getValue();
 					obj.getQualifier().add("AC");
 					retVal.getContent()
-							.add(new JAXBElement<EnPrefix>(new QName("urn:hl7-org:v3", "prefix"), EnPrefix.class, obj));
+							.add(new JAXBElement<EnPrefix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "prefix"), EnPrefix.class, obj));
 				}
 			}
 		}
@@ -340,7 +341,7 @@ public class FhirHumanName extends HumanName {
 					EnSuffix obj = new EnSuffix();
 					obj.xmlContent = suffix.getValue();
 					retVal.getContent()
-							.add(new JAXBElement<EnSuffix>(new QName("urn:hl7-org:v3", "suffix"), EnSuffix.class, obj));
+							.add(new JAXBElement<EnSuffix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "suffix"), EnSuffix.class, obj));
 				}
 			}
 		}

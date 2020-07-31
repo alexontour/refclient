@@ -83,6 +83,9 @@ public class XdsTransactions {
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(XdsTransactions.class.getName());
 
+	/** The Constant URN_OID_FORMAT. */
+	private static final String URN_OID_FORMAT = "urn:oid:";
+	
 	/** The HCP or context assertion. */
 	private XUAAssertion oAssertion;
 
@@ -312,7 +315,7 @@ public class XdsTransactions {
 		ElgaAreaConfig config = ElgaAreaConfigReader.getInstance().getElgaAreaConfigMap().get(oid);
 		if (ownOid != null && ownOid.contains("urn:oid") && !config.isUrnOidNeededForOrganizationId()) {
 			LOGGER.info("Replace urn oid");
-			ownOid = ownOid.replace("urn:oid:", "");
+			ownOid = ownOid.replace(URN_OID_FORMAT, "");
 		}
 
 		DocumentMetadataAt metaData = extractMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode,
@@ -408,7 +411,7 @@ public class XdsTransactions {
 		}
 
 		if (metadataType != null && metadataType.getSchemeName() != null && !metadataType.getSchemeName().isEmpty()
-				&& config.isUrnOidNeeded() && !metadataType.getSchemeName().contains("urn:oid:")) {
+				&& config.isUrnOidNeeded() && !metadataType.getSchemeName().contains(URN_OID_FORMAT)) {
 			metadataType.setSchemeName(String.format("urn:oid:%s", metadataType.getSchemeName()));
 		}
 
@@ -632,7 +635,7 @@ public class XdsTransactions {
 			if (patientId != null) {
 				if (!TypeCode.isMedications(typeCode)) {
 					if (patientId.getRoot() != null
-							&& ownOid.replace("urn:oid:", "").equalsIgnoreCase(patientId.getRoot())) {
+							&& ownOid.replace(URN_OID_FORMAT, "").equalsIgnoreCase(patientId.getRoot())) {
 						return patientId;
 					}
 				} else {
@@ -765,7 +768,7 @@ public class XdsTransactions {
 		ElgaAreaConfig config = ElgaAreaConfigReader.getInstance().getElgaAreaConfigMap().get(oidElgaArea);
 
 		if (config != null && !config.isUrnOidNeededForOrganizationId() && organizationId.contains("urn:oid")) {
-			organizationId = organizationId.replace("urn:oid:", "");
+			organizationId = organizationId.replace(URN_OID_FORMAT, "");
 		}
 
 		return iheService.updateDocumentSetRequest(

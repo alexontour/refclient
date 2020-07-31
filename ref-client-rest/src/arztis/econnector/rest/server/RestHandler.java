@@ -236,10 +236,13 @@ public class RestHandler extends AbstractHandler {
 	private void handleRequestDocument(String target, HttpServletRequest request, HttpServletResponse response,
 			String authorization) {
 		String contentType = request.getParameter(JsonUtilRest.JSON_PARAM_CONTENT_ATTACHMENT_CONTENT_TYPE);
+		String typeCode = request.getParameter(JsonUtilRest.JSON_PARAM_TYPE);
 
+		FhirDocumentReference documentReference = new FhirDocumentReference(target, contentType);
+		documentReference.setType(typeCode);
 		FhirBundle result = FhirElgaConnectionCaller.getInstance().retrieveDocuments(
 				ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization),
-				new FhirDocumentReference(target, contentType));
+				documentReference);
 
 		if (result != null) {
 			int statusResponse = 200;

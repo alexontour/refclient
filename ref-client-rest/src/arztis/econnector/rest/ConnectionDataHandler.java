@@ -74,7 +74,7 @@ public class ConnectionDataHandler {
 
 			if (!bContainsUserToken && connData.getUserJwtToken() != null && !connData.getUserJwtToken().isEmpty()) {
 				connectionData.add(connData);
-			} else if (connData.getUserJwtToken() != null) {
+			} else if (connData.getUserJwtToken() != null && !connData.getUserJwtToken().isEmpty()) {
 				connectionData.set(indexOfConnDataWithUserToken, connData);
 			}
 		}

@@ -2,10 +2,9 @@
 <mappings>
     <!-- Chapter 1: Release Info (if publication is a release) -->
     <!-- ========= -->
-    <release project="1.2.40.0.34.777.4" prefix="elgaimpf-" signature="develop" date="2019-11-19T12:21:16" versionLabel="2019">
-        <note language="de-DE">
-            <span style="font-family: Arial, Helvetica, Geneva, sans-serif; font-size: 12px;">Leitfaden e-Impfpass, Version 2019</span>
-            <br clear="none"/>
+    <release project="1.2.40.0.34.777.4" prefix="elgaimpf-" signature="develop" date="2020-05-04T11:16:31" versionLabel="2019.01">
+        <note language="en-US">
+            <div>Publikation für e-Impfpass</div>
         </note>
     </release>
     

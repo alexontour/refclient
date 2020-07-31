@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <valueSets xmlns="urn:hl7-org:v3" xmlns:local="http://art-decor.org/functions" xmlns:hl7="urn:hl7-org:v3" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-    <valueSet xmlns="" id="1.2.40.0.34.10.46" name="ELGA_SpecimenType" displayName="ELGA_SpecimenType" effectiveDate="2018-03-08T00:00:00" statusCode="final" versionLabel="4.1" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
+    <valueSet xmlns="" id="1.2.40.0.34.10.46" name="ELGA_SpecimenType" displayName="ELGA_SpecimenType" effectiveDate="2020-04-28T10:51:31" statusCode="draft" versionLabel="202004" url="http://art-decor.org/decor/services/" ident="elgabbr-" referencedFrom="elgaimpf-">
         <desc language="de-DE">Art des Specimens oder der Probe</desc>
-        <sourceCodeSystem id="2.16.840.1.113883.5.129" identifierName="SpecimenType" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-SpecimenType" canonicalUriDSTU2="http://hl7.org/fhir/v3/SpecimenType" canonicalUriSTU3="http://hl7.org/fhir/v3/SpecimenType" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-SpecimenType"/>
         <sourceCodeSystem id="1.2.40.0.34.5.173" identifierName="" canonicalUri="urn:oid:1.2.40.0.34.5.173" canonicalUriDSTU2="urn:oid:1.2.40.0.34.5.173" canonicalUriSTU3="urn:oid:1.2.40.0.34.5.173" canonicalUriR4="urn:oid:1.2.40.0.34.5.173"/>
+        <sourceCodeSystem id="2.16.840.1.113883.6.96" identifierName="SNOMED&#160;Clinical&#160;Terms" canonicalUri="http://snomed.info/sct" canonicalUriDSTU2="http://snomed.info/sct" canonicalUriSTU3="http://snomed.info/sct" canonicalUriR4="http://snomed.info/sct"/>
+        <sourceCodeSystem id="2.16.840.1.113883.5.129" identifierName="SpecimenType" canonicalUri="http://terminology.hl7.org/CodeSystem/v3-SpecimenType" canonicalUriDSTU2="http://hl7.org/fhir/v3/SpecimenType" canonicalUriSTU3="http://hl7.org/fhir/v3/SpecimenType" canonicalUriR4="http://terminology.hl7.org/CodeSystem/v3-SpecimenType"/>
         <publishingAuthority name="ELGA GmbH">
             <addrLine>ELGA GmbH</addrLine>
             <addrLine>Treustraße 35-43, Stg. 4</addrLine>
@@ -11,133 +12,274 @@
             <addrLine>T +43 1 212 70 50</addrLine>
             <addrLine>E office@elga.gv.at</addrLine>
         </publishingAuthority>
+        <copyright language="en-US">This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</copyright>
         <conceptList>
-            <concept code="ABS" codeSystem="2.16.840.1.113883.5.129" displayName="Abcess" level="0" type="L"/>
-            <concept code="AMN" codeSystem="2.16.840.1.113883.5.129" displayName="Amniotic fluid" level="0" type="L"/>
-            <concept code="ASP" codeSystem="2.16.840.1.113883.5.129" displayName="Aspirate" level="0" type="L"/>
-            <concept code="BBL" codeSystem="2.16.840.1.113883.5.129" displayName="Blood bag" level="0" type="L"/>
-            <concept code="BDY" codeSystem="2.16.840.1.113883.5.129" displayName="Whole body" level="0" type="L"/>
-            <concept code="BIFL" codeSystem="2.16.840.1.113883.5.129" displayName="Bile fluid" level="0" type="L"/>
-            <concept code="BLD" codeSystem="2.16.840.1.113883.5.129" displayName="Whole blood" level="0" type="L"/>
-            <concept code="BLDA" codeSystem="2.16.840.1.113883.5.129" displayName="Blood arterial" level="0" type="L"/>
-            <concept code="BLDC" codeSystem="2.16.840.1.113883.5.129" displayName="Blood capillary" level="0" type="L"/>
-            <concept code="BLDCO" codeSystem="2.16.840.1.113883.5.129" displayName="Blood - cord" level="0" type="L"/>
-            <concept code="BLDV" codeSystem="2.16.840.1.113883.5.129" displayName="Blood venous" level="0" type="L"/>
-            <concept code="BON" codeSystem="2.16.840.1.113883.5.129" displayName="Bone" level="0" type="L"/>
-            <concept code="BPH" codeSystem="2.16.840.1.113883.5.129" displayName="Basophils" level="0" type="L"/>
-            <concept code="BPU" codeSystem="2.16.840.1.113883.5.129" displayName="Blood product unit" level="0" type="L"/>
-            <concept code="BRN" codeSystem="2.16.840.1.113883.5.129" displayName="Burn" level="0" type="L"/>
-            <concept code="BRO" codeSystem="2.16.840.1.113883.5.129" displayName="Bronchial" level="0" type="L"/>
-            <concept code="BRTH" codeSystem="2.16.840.1.113883.5.129" displayName="Exhaled gas (=breath) Breath (use EXG)" level="0" type="L"/>
-            <concept code="CALC" codeSystem="2.16.840.1.113883.5.129" displayName="Calculus (=Stone) Stone (use CALC)" level="0" type="L"/>
-            <concept code="CDM" codeSystem="2.16.840.1.113883.5.129" displayName="Cardiac muscle" level="0" type="L"/>
-            <concept code="CNJT" codeSystem="2.16.840.1.113883.5.129" displayName="Conjunctiva" level="0" type="L"/>
-            <concept code="CNL" codeSystem="2.16.840.1.113883.5.129" displayName="Cannula" level="0" type="L"/>
-            <concept code="COL" codeSystem="2.16.840.1.113883.5.129" displayName="Colostrum" level="0" type="L"/>
-            <concept code="CRN" codeSystem="2.16.840.1.113883.5.129" displayName="Cornea" level="0" type="L"/>
-            <concept code="CSF" codeSystem="2.16.840.1.113883.5.129" displayName="Cerebral spinal fluid" level="0" type="L"/>
-            <concept code="CTP" codeSystem="2.16.840.1.113883.5.129" displayName="Catheter tip" level="0" type="L"/>
-            <concept code="CUR" codeSystem="2.16.840.1.113883.5.129" displayName="Curettage" level="0" type="L"/>
-            <concept code="CVM" codeSystem="2.16.840.1.113883.5.129" displayName="Cervical mucus" level="0" type="L"/>
-            <concept code="CVX" codeSystem="2.16.840.1.113883.5.129" displayName="Cervix" level="0" type="L"/>
-            <concept code="CYST" codeSystem="2.16.840.1.113883.5.129" displayName="Cyst" level="0" type="L"/>
-            <concept code="DIAF" codeSystem="2.16.840.1.113883.5.129" displayName="Dialysis fluid" level="0" type="L"/>
-            <concept code="DOSE" codeSystem="2.16.840.1.113883.5.129" displayName="Dose med or substance" level="0" type="L"/>
-            <concept code="DRN" codeSystem="2.16.840.1.113883.5.129" displayName="Drain" level="0" type="L"/>
-            <concept code="DUFL" codeSystem="2.16.840.1.113883.5.129" displayName="Duodenal fluid" level="0" type="L"/>
-            <concept code="EAR" codeSystem="2.16.840.1.113883.5.129" displayName="Ear" level="0" type="L"/>
-            <concept code="EARW" codeSystem="2.16.840.1.113883.5.129" displayName="Ear wax (cerumen)" level="0" type="L"/>
-            <concept code="ELT" codeSystem="2.16.840.1.113883.5.129" displayName="Electrode" level="0" type="L"/>
-            <concept code="ENDC" codeSystem="2.16.840.1.113883.5.129" displayName="Endocardium" level="0" type="L"/>
-            <concept code="ENDM" codeSystem="2.16.840.1.113883.5.129" displayName="Endometrium" level="0" type="L"/>
-            <concept code="EOS" codeSystem="2.16.840.1.113883.5.129" displayName="Eosinophils" level="0" type="L"/>
-            <concept code="EXG" codeSystem="2.16.840.1.113883.5.129" displayName="Exhaled gas (=breath) Breath (use EXG)" level="0" type="L"/>
-            <concept code="EYE" codeSystem="2.16.840.1.113883.5.129" displayName="Eye" level="0" type="L"/>
-            <concept code="FIB" codeSystem="2.16.840.1.113883.5.129" displayName="Fibroblasts" level="0" type="L"/>
-            <concept code="FIST" codeSystem="2.16.840.1.113883.5.129" displayName="Fistula" level="0" type="L"/>
-            <concept code="FLT" codeSystem="2.16.840.1.113883.5.129" displayName="Filter" level="0" type="L"/>
-            <concept code="FLU" codeSystem="2.16.840.1.113883.5.129" displayName="Body fluid, unsp" level="0" type="L"/>
-            <concept code="FOOD" codeSystem="2.16.840.1.113883.5.129" displayName="Food sample" level="0" type="L"/>
-            <concept code="GAS" codeSystem="2.16.840.1.113883.5.129" displayName="Gas" level="0" type="L"/>
-            <concept code="GAST" codeSystem="2.16.840.1.113883.5.129" displayName="Gastric fluid/contents" level="0" type="L"/>
-            <concept code="GEN" codeSystem="2.16.840.1.113883.5.129" displayName="Genital" level="0" type="L"/>
-            <concept code="GENC" codeSystem="2.16.840.1.113883.5.129" displayName="Genital cervix" level="0" type="L"/>
-            <concept code="GENF" codeSystem="2.16.840.1.113883.5.129" displayName="Genital fluid" level="0" type="L"/>
-            <concept code="GENL" codeSystem="2.16.840.1.113883.5.129" displayName="Genital lochia" level="0" type="L"/>
-            <concept code="GENV" codeSystem="2.16.840.1.113883.5.129" displayName="Genital vaginal" level="0" type="L"/>
-            <concept code="HAR" codeSystem="2.16.840.1.113883.5.129" displayName="Hair" level="0" type="L"/>
-            <concept code="IHG" codeSystem="2.16.840.1.113883.5.129" displayName="Inhaled Gas" level="0" type="L"/>
-            <concept code="ISLT" codeSystem="2.16.840.1.113883.5.129" displayName="Isolate" level="0" type="L"/>
-            <concept code="IT" codeSystem="2.16.840.1.113883.5.129" displayName="Intubation tube" level="0" type="L"/>
-            <concept code="LAM" codeSystem="2.16.840.1.113883.5.129" displayName="Lamella" level="0" type="L"/>
-            <concept code="LIQ" codeSystem="2.16.840.1.113883.5.129" displayName="Liquid NOS" level="0" type="L"/>
-            <concept code="LN" codeSystem="2.16.840.1.113883.5.129" displayName="Line" level="0" type="L"/>
-            <concept code="LNA" codeSystem="2.16.840.1.113883.5.129" displayName="Line arterial" level="0" type="L"/>
-            <concept code="LNV" codeSystem="2.16.840.1.113883.5.129" displayName="Line venous" level="0" type="L"/>
-            <concept code="LYM" codeSystem="2.16.840.1.113883.5.129" displayName="Lymphocytes" level="0" type="L"/>
-            <concept code="MAC" codeSystem="2.16.840.1.113883.5.129" displayName="Macrophages" level="0" type="L"/>
-            <concept code="MAR" codeSystem="2.16.840.1.113883.5.129" displayName="Marrow (bone)" level="0" type="L"/>
-            <concept code="MBLD" codeSystem="2.16.840.1.113883.5.129" displayName="Menstrual blood" level="0" type="L"/>
-            <concept code="MEC" codeSystem="2.16.840.1.113883.5.129" displayName="Meconium" level="0" type="L"/>
-            <concept code="MILK" codeSystem="2.16.840.1.113883.5.129" displayName="Breast milk" level="0" type="L"/>
-            <concept code="MLK" codeSystem="2.16.840.1.113883.5.129" displayName="Milk" level="0" type="L"/>
-            <concept code="NAIL" codeSystem="2.16.840.1.113883.5.129" displayName="Nail" level="0" type="L"/>
-            <concept code="NOS" codeSystem="2.16.840.1.113883.5.129" displayName="Nose (nasal passage)" level="0" type="L"/>
-            <concept code="PAFL" codeSystem="2.16.840.1.113883.5.129" displayName="Pancreatic fluid" level="0" type="L"/>
-            <concept code="PAT" codeSystem="2.16.840.1.113883.5.129" displayName="Patient" level="0" type="L"/>
-            <concept code="PLAS" codeSystem="2.16.840.1.113883.5.129" displayName="Plasma" level="0" type="L"/>
-            <concept code="PLB" codeSystem="2.16.840.1.113883.5.129" displayName="Plasma bag" level="0" type="L"/>
-            <concept code="PLC" codeSystem="2.16.840.1.113883.5.129" displayName="Placenta" level="0" type="L"/>
-            <concept code="PLR" codeSystem="2.16.840.1.113883.5.129" displayName="Pleural fluid (thoracentesis fld)" level="0" type="L"/>
-            <concept code="PMN" codeSystem="2.16.840.1.113883.5.129" displayName="Polymorphonuclear neutrophils" level="0" type="L"/>
-            <concept code="PPP" codeSystem="2.16.840.1.113883.5.129" displayName="Platelet poor plasma" level="0" type="L"/>
-            <concept code="PRP" codeSystem="2.16.840.1.113883.5.129" displayName="Platelet rich plasma" level="0" type="L"/>
-            <concept code="PRT" codeSystem="2.16.840.1.113883.5.129" displayName="Peritoneal fluid /ascites" level="0" type="L"/>
-            <concept code="PUS" codeSystem="2.16.840.1.113883.5.129" displayName="Pus" level="0" type="L"/>
-            <concept code="RBC" codeSystem="2.16.840.1.113883.5.129" displayName="Erythrocytes" level="0" type="L"/>
-            <concept code="SAL" codeSystem="2.16.840.1.113883.5.129" displayName="Saliva" level="0" type="L"/>
-            <concept code="SER" codeSystem="2.16.840.1.113883.5.129" displayName="Serum" level="0" type="L"/>
-            <concept code="SKM" codeSystem="2.16.840.1.113883.5.129" displayName="Skeletal muscle" level="0" type="L"/>
-            <concept code="SKN" codeSystem="2.16.840.1.113883.5.129" displayName="Skin" level="0" type="L"/>
-            <concept code="SMN" codeSystem="2.16.840.1.113883.5.129" displayName="Seminal fluid" level="0" type="L"/>
-            <concept code="SMPLS" codeSystem="2.16.840.1.113883.5.129" displayName="Seminal plasma" level="0" type="L"/>
-            <concept code="SNV" codeSystem="2.16.840.1.113883.5.129" displayName="Synovial fluid (Joint fluid)" level="0" type="L"/>
-            <concept code="SPRM" codeSystem="2.16.840.1.113883.5.129" displayName="Spermatozoa" level="0" type="L"/>
-            <concept code="SPT" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum" level="0" type="L"/>
-            <concept code="SPTC" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum - coughed" level="0" type="L"/>
-            <concept code="SPTT" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum - tracheal aspirate" level="0" type="L"/>
-            <concept code="STL" codeSystem="2.16.840.1.113883.5.129" displayName="Stool = Fecal" level="0" type="L"/>
-            <concept code="STON" codeSystem="2.16.840.1.113883.5.129" displayName="Calculus (=Stone) Stone (use CALC)" level="0" type="L"/>
-            <concept code="SWAB" codeSystem="1.2.40.0.34.5.173" displayName="Swab" level="0" type="L"/>
-            <concept code="SWT" codeSystem="2.16.840.1.113883.5.129" displayName="Sweat" level="0" type="L"/>
-            <concept code="TEAR" codeSystem="2.16.840.1.113883.5.129" displayName="Tears" level="0" type="L"/>
-            <concept code="THRB" codeSystem="2.16.840.1.113883.5.129" displayName="Thrombocyte (platelet)" level="0" type="L"/>
-            <concept code="THRT" codeSystem="2.16.840.1.113883.5.129" displayName="Throat" level="0" type="L"/>
-            <concept code="TISG" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue gall bladder" level="0" type="L"/>
-            <concept code="TISPL" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue placenta" level="0" type="L"/>
-            <concept code="TISS" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue, unspecified" level="0" type="L"/>
-            <concept code="TISU" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue ulcer" level="0" type="L"/>
-            <concept code="TLGI" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue large intestine" level="0" type="L"/>
-            <concept code="TLNG" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue lung" level="0" type="L"/>
-            <concept code="TSMI" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue small intestine Tissue ulcer" level="0" type="L"/>
-            <concept code="TUB" codeSystem="2.16.840.1.113883.5.129" displayName="Tube, unspecified" level="0" type="L"/>
-            <concept code="ULC" codeSystem="2.16.840.1.113883.5.129" displayName="Ulcer" level="0" type="L"/>
-            <concept code="UMB" codeSystem="2.16.840.1.113883.5.129" displayName="Umbilical blood" level="0" type="L"/>
-            <concept code="UMED" codeSystem="2.16.840.1.113883.5.129" displayName="Unknown medicine" level="0" type="L"/>
-            <concept code="UR" codeSystem="2.16.840.1.113883.5.129" displayName="Urine" level="0" type="L"/>
-            <concept code="URC" codeSystem="2.16.840.1.113883.5.129" displayName="Urine clean catch" level="0" type="L"/>
-            <concept code="URNS" codeSystem="2.16.840.1.113883.5.129" displayName="Urine sediment" level="0" type="L"/>
-            <concept code="URT" codeSystem="2.16.840.1.113883.5.129" displayName="Urine catheter" level="0" type="L"/>
-            <concept code="URTH" codeSystem="2.16.840.1.113883.5.129" displayName="Urethra" level="0" type="L"/>
-            <concept code="USUB" codeSystem="2.16.840.1.113883.5.129" displayName="Unknown substance" level="0" type="L"/>
-            <concept code="VOM" codeSystem="2.16.840.1.113883.5.129" displayName="Vomitus" level="0" type="L"/>
-            <concept code="WAT" codeSystem="2.16.840.1.113883.5.129" displayName="Water" level="0" type="L"/>
-            <concept code="WBC" codeSystem="2.16.840.1.113883.5.129" displayName="Leukocytes" level="0" type="L"/>
-            <concept code="WICK" codeSystem="2.16.840.1.113883.5.129" displayName="Wick" level="0" type="L"/>
-            <concept code="WND" codeSystem="2.16.840.1.113883.5.129" displayName="Wound" level="0" type="L"/>
-            <concept code="WNDA" codeSystem="2.16.840.1.113883.5.129" displayName="Wound abscess" level="0" type="L"/>
-            <concept code="WNDD" codeSystem="2.16.840.1.113883.5.129" displayName="Wound drainage" level="0" type="L"/>
-            <concept code="WNDE" codeSystem="2.16.840.1.113883.5.129" displayName="Wound exudate" level="0" type="L"/>
+            <concept code="_SNOMEDSpecimen" codeSystem="1.2.40.0.34.5.173" displayName="SNOMED Specimen Type" level="0" type="A"/>
+            <concept code="119297000" codeSystem="2.16.840.1.113883.6.96" displayName="Blood specimen" level="1" type="S"/>
+            <concept code="446131002" codeSystem="2.16.840.1.113883.6.96" displayName="Blood specimen obtained for blood culture" level="2" type="L"/>
+            <concept code="445295009" codeSystem="2.16.840.1.113883.6.96" displayName="Blood specimen with edetic acid" level="2" type="L"/>
+            <concept code="708049000" codeSystem="2.16.840.1.113883.6.96" displayName="Plasma specimen with ethylenediamine tetraacetic acid" level="2" type="L"/>
+            <concept code="708048008" codeSystem="2.16.840.1.113883.6.96" displayName="Plasma specimen with citrate" level="2" type="L"/>
+            <concept code="441510007" codeSystem="2.16.840.1.113883.6.96" displayName="Blood specimen with anticoagulant" level="2" type="L"/>
+            <concept code="119361006" codeSystem="2.16.840.1.113883.6.96" displayName="Plasma specimen" level="2" type="L"/>
+            <concept code="122590004" codeSystem="2.16.840.1.113883.6.96" displayName="Serum specimen from patient" level="2" type="L"/>
+            <concept code="122552005" codeSystem="2.16.840.1.113883.6.96" displayName="Arterial blood specimen" level="2" type="L"/>
+            <concept code="122554006" codeSystem="2.16.840.1.113883.6.96" displayName="Capillary blood specimen" level="2" type="L"/>
+            <concept code="122555007" codeSystem="2.16.840.1.113883.6.96" displayName="Venous blood specimen" level="2" type="L"/>
+            <concept code="122556008" codeSystem="2.16.840.1.113883.6.96" displayName="Cord blood specimen" level="2" type="L"/>
+            <concept code="788707000" codeSystem="2.16.840.1.113883.6.96" displayName="Plasma specimen or serum specimen or whole blood specimen" level="2" type="L"/>
+            <concept code="258580003" codeSystem="2.16.840.1.113883.6.96" displayName="Whole blood sample" level="2" type="L"/>
+            <concept code="258603007" codeSystem="2.16.840.1.113883.6.96" displayName="Respiratory sample" level="1" type="S"/>
+            <concept code="410580001" codeSystem="2.16.840.1.113883.6.96" displayName="Respiratory fluid specimen" level="2" type="L"/>
+            <concept code="309164002" codeSystem="2.16.840.1.113883.6.96" displayName="Upper respiratory swab sample" level="2" type="L"/>
+            <concept code="258606004" codeSystem="2.16.840.1.113883.6.96" displayName="Lower respiratory sample" level="2" type="L"/>
+            <concept code="258607008" codeSystem="2.16.840.1.113883.6.96" displayName="Bronchoalveolar lavage fluid sample" level="2" type="L"/>
+            <concept code="258446004" codeSystem="2.16.840.1.113883.6.96" displayName="Bronchial fluid sample" level="2" type="L"/>
+            <concept code="122610009" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from lung obtained by biopsy" level="2" type="L"/>
+            <concept code="445297001" codeSystem="2.16.840.1.113883.6.96" displayName="Swab of internal nose" level="2" type="L"/>
+            <concept code="168141000" codeSystem="2.16.840.1.113883.6.96" displayName="Nasal fluid sample" level="2" type="L"/>
+            <concept code="258500001" codeSystem="2.16.840.1.113883.6.96" displayName="Nasopharyngeal swab" level="2" type="L"/>
+            <concept code="258411007" codeSystem="2.16.840.1.113883.6.96" displayName="Nasopharyngeal aspirate" level="2" type="L"/>
+            <concept code="258529004" codeSystem="2.16.840.1.113883.6.96" displayName="Throat swab" level="2" type="L"/>
+            <concept code="258469001" codeSystem="2.16.840.1.113883.6.96" displayName="Pharyngeal washings" level="2" type="L"/>
+            <concept code="119334006" codeSystem="2.16.840.1.113883.6.96" displayName="Sputum specimen" level="2" type="L"/>
+            <concept code="697989009" codeSystem="2.16.840.1.113883.6.96" displayName="Anterior nares swab" level="2" type="L"/>
+            <concept code="472867001" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from tonsil" level="2" type="L"/>
+            <concept code="445447003" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from trachea obtained by aspiration" level="2" type="L"/>
+            <concept code="16223051000119101" codeSystem="2.16.840.1.113883.6.96" displayName="Nasal sinus contents sample" level="2" type="L"/>
+            <concept code="433324003" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from eye region" level="1" type="S"/>
+            <concept code="445160003" codeSystem="2.16.840.1.113883.6.96" displayName="Swab of eye" level="2" type="L"/>
+            <concept code="472894002" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from cornea" level="2" type="L"/>
+            <concept code="258438000" codeSystem="2.16.840.1.113883.6.96" displayName="Vitreous humor sample" level="2" type="L"/>
+            <concept code="258498002" codeSystem="2.16.840.1.113883.6.96" displayName="Conjunctival swab" level="2" type="L"/>
+            <concept code="440473005" codeSystem="2.16.840.1.113883.6.96" displayName="Contact lens submitted as specimen" level="2" type="L"/>
+            <concept code="472927003" codeSystem="2.16.840.1.113883.6.96" displayName="Contact lens case submitted as specimen" level="2" type="L"/>
+            <concept code="16212771000119105" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from eyelid obtained by biopsy" level="2" type="L"/>
+            <concept code="309165001" codeSystem="2.16.840.1.113883.6.96" displayName="Ear sample" level="1" type="S"/>
+            <concept code="258466008" codeSystem="2.16.840.1.113883.6.96" displayName="Middle ear fluid sample" level="2" type="L"/>
+            <concept code="472901003" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from nasal sinus" level="2" type="L"/>
+            <concept code="309166000" codeSystem="2.16.840.1.113883.6.96" displayName="Ear swab sample" level="2" type="L"/>
+            <concept code="122580007" codeSystem="2.16.840.1.113883.6.96" displayName="Cerumen specimen" level="2" type="L"/>
+            <concept code="258412000" codeSystem="2.16.840.1.113883.6.96" displayName="Oropharyngeal aspirate" level="2" type="L"/>
+            <concept code="127465007" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from gastrointestinal tract" level="1" type="S"/>
+            <concept code="258662004" codeSystem="2.16.840.1.113883.6.96" displayName="Adhesive slide" level="2" type="L"/>
+            <concept code="258527002" codeSystem="2.16.840.1.113883.6.96" displayName="Anal swab" level="2" type="L"/>
+            <concept code="309225009" codeSystem="2.16.840.1.113883.6.96" displayName="Colonic biopsy sample" level="2" type="L"/>
+            <concept code="122574004" codeSystem="2.16.840.1.113883.6.96" displayName="Duodenal fluid specimen" level="2" type="L"/>
+            <concept code="449446003" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from gallbladder" level="2" type="L"/>
+            <concept code="119341000" codeSystem="2.16.840.1.113883.6.96" displayName="Bile specimen" level="2" type="L"/>
+            <concept code="309211008" codeSystem="2.16.840.1.113883.6.96" displayName="Gastric biopsy sample" level="2" type="L"/>
+            <concept code="258459007" codeSystem="2.16.840.1.113883.6.96" displayName="Gastric fluid sample" level="2" type="L"/>
+            <concept code="418932006" codeSystem="2.16.840.1.113883.6.96" displayName="Oral swab" level="2" type="L"/>
+            <concept code="309210009" codeSystem="2.16.840.1.113883.6.96" displayName="Esophageal brushings sample" level="2" type="L"/>
+            <concept code="472886009" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from gastrostomy stoma" level="2" type="L"/>
+            <concept code="258525005" codeSystem="2.16.840.1.113883.6.96" displayName="Perineal swab" level="2" type="L"/>
+            <concept code="168140004" codeSystem="2.16.840.1.113883.6.96" displayName="Peritoneal dialysate sample" level="2" type="L"/>
+            <concept code="168139001" codeSystem="2.16.840.1.113883.6.96" displayName="Peritoneal fluid sample" level="2" type="L"/>
+            <concept code="258528007" codeSystem="2.16.840.1.113883.6.96" displayName="Rectal swab" level="2" type="L"/>
+            <concept code="119339001" codeSystem="2.16.840.1.113883.6.96" displayName="Stool specimen" level="2" type="L"/>
+            <concept code="472866005" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from tongue" level="2" type="L"/>
+            <concept code="258570002" codeSystem="2.16.840.1.113883.6.96" displayName="Genitourinary sample" level="1" type="S"/>
+            <concept code="258524009" codeSystem="2.16.840.1.113883.6.96" displayName="Cervical swab" level="2" type="L"/>
+            <concept code="708112008" codeSystem="2.16.840.1.113883.6.96" displayName="Retrouterine pouch fluid aspirate" level="2" type="L"/>
+            <concept code="258508008" codeSystem="2.16.840.1.113883.6.96" displayName="Genital swab" level="2" type="L"/>
+            <concept code="258512002" codeSystem="2.16.840.1.113883.6.96" displayName="Glans penis swab" level="2" type="L"/>
+            <concept code="119347001" codeSystem="2.16.840.1.113883.6.96" displayName="Seminal fluid specimen" level="2" type="L"/>
+            <concept code="258511009" codeSystem="2.16.840.1.113883.6.96" displayName="Penile urethral swab" level="2" type="L"/>
+            <concept code="258520000" codeSystem="2.16.840.1.113883.6.96" displayName="Vaginal swab" level="2" type="L"/>
+            <concept code="258523003" codeSystem="2.16.840.1.113883.6.96" displayName="Vulval swab" level="2" type="L"/>
+            <concept code="446130001" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen from bladder" level="2" type="L"/>
+            <concept code="446846006" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen obtained via indwelling urinary catheter" level="2" type="L"/>
+            <concept code="16221251000119108" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen obtained via straight catheter" level="2" type="L"/>
+            <concept code="698276005" codeSystem="2.16.840.1.113883.6.96" displayName="First stream urine sample" level="2" type="L"/>
+            <concept code="122575003" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen" level="2" type="L"/>
+            <concept code="122565001" codeSystem="2.16.840.1.113883.6.96" displayName="Urinary catheter specimen" level="2" type="L"/>
+            <concept code="258574006" codeSystem="2.16.840.1.113883.6.96" displayName="Mid-stream urine sample" level="2" type="L"/>
+            <concept code="442173007" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen from nephrostomy tube" level="2" type="L"/>
+            <concept code="444937002" codeSystem="2.16.840.1.113883.6.96" displayName="Urine specimen from ureter" level="2" type="L"/>
+            <concept code="702701006" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from cervix or vagina" level="2" type="L"/>
+            <concept code="127476006" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from fallopian tube" level="2" type="L"/>
+            <concept code="258548000" codeSystem="2.16.840.1.113883.6.96" displayName="Dermatological sample" level="1" type="S"/>
+            <concept code="445364004" codeSystem="2.16.840.1.113883.6.96" displayName="Swab of axilla" level="2" type="L"/>
+            <concept code="472896000" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from blister" level="2" type="L"/>
+            <concept code="119326000" codeSystem="2.16.840.1.113883.6.96" displayName="Hair specimen" level="2" type="L"/>
+            <concept code="258503004" codeSystem="2.16.840.1.113883.6.96" displayName="Skin swab" level="2" type="L"/>
+            <concept code="258549008" codeSystem="2.16.840.1.113883.6.96" displayName="Skin scale sample" level="2" type="L"/>
+            <concept code="445444005" codeSystem="2.16.840.1.113883.6.96" displayName="Swab of groin" level="2" type="L"/>
+            <concept code="445367006" codeSystem="2.16.840.1.113883.6.96" displayName="Swab of umbilicus" level="2" type="L"/>
+            <concept code="119327009" codeSystem="2.16.840.1.113883.6.96" displayName="Nail specimen" level="2" type="L"/>
+            <concept code="447098004" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from nail obtained by scraping" level="2" type="L"/>
+            <concept code="119365002" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from wound" level="2" type="L"/>
+            <concept code="472882006" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from superficial wound" level="2" type="L"/>
+            <concept code="472884007" codeSystem="2.16.840.1.113883.6.96" displayName="Swab from deep wound" level="2" type="L"/>
+            <concept code="122568004" codeSystem="2.16.840.1.113883.6.96" displayName="Fluid specimen from wound" level="2" type="L"/>
+            <concept code="258539005" codeSystem="2.16.840.1.113883.6.96" displayName="Bone and joint sample" level="1" type="S"/>
+            <concept code="258448003" codeSystem="2.16.840.1.113883.6.96" displayName="Bursa fluid sample" level="2" type="L"/>
+            <concept code="309124001" codeSystem="2.16.840.1.113883.6.96" displayName="Joint biopsy sample" level="2" type="L"/>
+            <concept code="431361003" codeSystem="2.16.840.1.113883.6.96" displayName="Joint fluid specimen" level="2" type="L"/>
+            <concept code="430268003" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from bone" level="2" type="L"/>
+            <concept code="119359002" codeSystem="2.16.840.1.113883.6.96" displayName="Bone marrow specimen" level="2" type="L"/>
+            <concept code="258415003" codeSystem="2.16.840.1.113883.6.96" displayName="Biopsy sample" level="1" type="S"/>
+            <concept code="258497007" codeSystem="2.16.840.1.113883.6.96" displayName="Abscess swab" level="2" type="L"/>
+            <concept code="446972001" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from abscess obtained by aspiration" level="2" type="L"/>
+            <concept code="309201001" codeSystem="2.16.840.1.113883.6.96" displayName="Ascitic fluid sample" level="2" type="L"/>
+            <concept code="119295008" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen obtained by aspiration" level="2" type="L"/>
+            <concept code="258455001" codeSystem="2.16.840.1.113883.6.96" displayName="Drainage fluid sample" level="2" type="L"/>
+            <concept code="119373006" codeSystem="2.16.840.1.113883.6.96" displayName="Amniotic fluid specimen" level="2" type="L"/>
+            <concept code="258588005" codeSystem="2.16.840.1.113883.6.96" displayName="Hematoma sample" level="2" type="L"/>
+            <concept code="16211011000119108" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen from deep surgical wound" level="2" type="L"/>
+            <concept code="258450006" codeSystem="2.16.840.1.113883.6.96" displayName="Cerebrospinal fluid sample" level="2" type="L"/>
+            <concept code="309078004" codeSystem="2.16.840.1.113883.6.96" displayName="Lymph node tissue sample" level="2" type="L"/>
+            <concept code="122571007" codeSystem="2.16.840.1.113883.6.96" displayName="Pericardial fluid specimen" level="2" type="L"/>
+            <concept code="418564007" codeSystem="2.16.840.1.113883.6.96" displayName="Pleural fluid specimen" level="2" type="L"/>
+            <concept code="127454002" codeSystem="2.16.840.1.113883.6.96" displayName="Device specimen" level="1" type="S"/>
+            <concept code="258647001" codeSystem="2.16.840.1.113883.6.96" displayName="Drain tip" level="2" type="L"/>
+            <concept code="258540007" codeSystem="2.16.840.1.113883.6.96" displayName="Prosthetic joint sample" level="2" type="L"/>
+            <concept code="473415003" codeSystem="2.16.840.1.113883.6.96" displayName="Intrauterine contraceptive device submitted as specimen" level="2" type="L"/>
+            <concept code="472932002" codeSystem="2.16.840.1.113883.6.96" displayName="Vascular catheter submitted as specimen" level="2" type="L"/>
+            <concept code="119312009" codeSystem="2.16.840.1.113883.6.96" displayName="Catheter tip specimen" level="2" type="L"/>
+            <concept code="472919007" codeSystem="2.16.840.1.113883.6.96" displayName="Device submitted as specimen" level="2" type="L"/>
+            <concept code="472938003" codeSystem="2.16.840.1.113883.6.96" displayName="Tracheal tube submitted as specimen" level="2" type="L"/>
+            <concept code="123038009" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen" level="1" type="S"/>
+            <concept code="257261003" codeSystem="2.16.840.1.113883.6.96" displayName="Swab" level="2" type="L"/>
+            <concept code="258454002" codeSystem="2.16.840.1.113883.6.96" displayName="Dialysate sample" level="2" type="L"/>
+            <concept code="119303007" codeSystem="2.16.840.1.113883.6.96" displayName="Microbial isolate specimen" level="2" type="L"/>
+            <concept code="119328004" codeSystem="2.16.840.1.113883.6.96" displayName="Mother's milk specimen" level="2" type="L"/>
+            <concept code="258441009" codeSystem="2.16.840.1.113883.6.96" displayName="Exudate sample" level="2" type="L"/>
+            <concept code="119323008" codeSystem="2.16.840.1.113883.6.96" displayName="Pus specimen" level="2" type="L"/>
+            <concept code="258442002" codeSystem="2.16.840.1.113883.6.96" displayName="Fluid sample" level="2" type="L"/>
+            <concept code="708317005" codeSystem="2.16.840.1.113883.6.96" displayName="Pooled specimen from vaginal introitus and rectal swab" level="2" type="L"/>
+            <concept code="309051001" codeSystem="2.16.840.1.113883.6.96" displayName="Body fluid sample" level="2" type="L"/>
+            <concept code="119376003" codeSystem="2.16.840.1.113883.6.96" displayName="Tissue specimen" level="2" type="L"/>
+            <concept code="119324002" codeSystem="2.16.840.1.113883.6.96" displayName="Specimen of unknown material&#160;" level="2" type="L"/>
+            <concept code="408836004" codeSystem="2.16.840.1.113883.6.96" displayName="Sample not obtained" level="1" type="L"/>
+            <concept code="_HL7Specimen" codeSystem="1.2.40.0.34.5.173" displayName="HL7 Specimen Type" level="0" type="A"/>
+            <concept code="ABS" codeSystem="2.16.840.1.113883.5.129" displayName="Abcess" level="1" type="L"/>
+            <concept code="AMN" codeSystem="2.16.840.1.113883.5.129" displayName="Amniotic fluid" level="1" type="L"/>
+            <concept code="ASP" codeSystem="2.16.840.1.113883.5.129" displayName="Aspirate" level="1" type="L"/>
+            <concept code="BBL" codeSystem="2.16.840.1.113883.5.129" displayName="Blood bag" level="1" type="L"/>
+            <concept code="BDY" codeSystem="2.16.840.1.113883.5.129" displayName="Whole body" level="1" type="L"/>
+            <concept code="BIFL" codeSystem="2.16.840.1.113883.5.129" displayName="Bile fluid" level="1" type="L"/>
+            <concept code="BLD" codeSystem="2.16.840.1.113883.5.129" displayName="Whole blood" level="1" type="L"/>
+            <concept code="BLDA" codeSystem="2.16.840.1.113883.5.129" displayName="Blood arterial" level="1" type="L"/>
+            <concept code="BLDC" codeSystem="2.16.840.1.113883.5.129" displayName="Blood capillary" level="1" type="L"/>
+            <concept code="BLDCO" codeSystem="2.16.840.1.113883.5.129" displayName="Blood - cord" level="1" type="L"/>
+            <concept code="BLDV" codeSystem="2.16.840.1.113883.5.129" displayName="Blood venous" level="1" type="L"/>
+            <concept code="BON" codeSystem="2.16.840.1.113883.5.129" displayName="Bone" level="1" type="L"/>
+            <concept code="BPH" codeSystem="2.16.840.1.113883.5.129" displayName="Basophils" level="1" type="L"/>
+            <concept code="BPU" codeSystem="2.16.840.1.113883.5.129" displayName="Blood product unit" level="1" type="L"/>
+            <concept code="BRN" codeSystem="2.16.840.1.113883.5.129" displayName="Burn" level="1" type="L"/>
+            <concept code="BRO" codeSystem="2.16.840.1.113883.5.129" displayName="Bronchial" level="1" type="L"/>
+            <concept code="BRTH" codeSystem="2.16.840.1.113883.5.129" displayName="Exhaled gas (=breath) Breath (use EXG)" level="1" type="L"/>
+            <concept code="CALC" codeSystem="2.16.840.1.113883.5.129" displayName="Calculus (=Stone) Stone (use CALC)" level="1" type="L"/>
+            <concept code="CDM" codeSystem="2.16.840.1.113883.5.129" displayName="Cardiac muscle" level="1" type="L"/>
+            <concept code="CNJT" codeSystem="2.16.840.1.113883.5.129" displayName="Conjunctiva" level="1" type="L"/>
+            <concept code="CNL" codeSystem="2.16.840.1.113883.5.129" displayName="Cannula" level="1" type="L"/>
+            <concept code="COL" codeSystem="2.16.840.1.113883.5.129" displayName="Colostrum" level="1" type="L"/>
+            <concept code="CRN" codeSystem="2.16.840.1.113883.5.129" displayName="Cornea" level="1" type="L"/>
+            <concept code="CSF" codeSystem="2.16.840.1.113883.5.129" displayName="Cerebral spinal fluid" level="1" type="L"/>
+            <concept code="CTP" codeSystem="2.16.840.1.113883.5.129" displayName="Catheter tip" level="1" type="L"/>
+            <concept code="CUR" codeSystem="2.16.840.1.113883.5.129" displayName="Curettage" level="1" type="L"/>
+            <concept code="CVM" codeSystem="2.16.840.1.113883.5.129" displayName="Cervical mucus" level="1" type="L"/>
+            <concept code="CVX" codeSystem="2.16.840.1.113883.5.129" displayName="Cervix" level="1" type="L"/>
+            <concept code="CYST" codeSystem="2.16.840.1.113883.5.129" displayName="Cyst" level="1" type="L"/>
+            <concept code="DIAF" codeSystem="2.16.840.1.113883.5.129" displayName="Dialysis fluid" level="1" type="L"/>
+            <concept code="DOSE" codeSystem="2.16.840.1.113883.5.129" displayName="Dose med or substance" level="1" type="L"/>
+            <concept code="DRN" codeSystem="2.16.840.1.113883.5.129" displayName="Drain" level="1" type="L"/>
+            <concept code="DUFL" codeSystem="2.16.840.1.113883.5.129" displayName="Duodenal fluid" level="1" type="L"/>
+            <concept code="EAR" codeSystem="2.16.840.1.113883.5.129" displayName="Ear" level="1" type="L"/>
+            <concept code="EARW" codeSystem="2.16.840.1.113883.5.129" displayName="Ear wax (cerumen)" level="1" type="L"/>
+            <concept code="ELT" codeSystem="2.16.840.1.113883.5.129" displayName="Electrode" level="1" type="L"/>
+            <concept code="ENDC" codeSystem="2.16.840.1.113883.5.129" displayName="Endocardium" level="1" type="L"/>
+            <concept code="ENDM" codeSystem="2.16.840.1.113883.5.129" displayName="Endometrium" level="1" type="L"/>
+            <concept code="EOS" codeSystem="2.16.840.1.113883.5.129" displayName="Eosinophils" level="1" type="L"/>
+            <concept code="EXG" codeSystem="2.16.840.1.113883.5.129" displayName="Exhaled gas (=breath) Breath (use EXG)" level="1" type="L"/>
+            <concept code="EYE" codeSystem="2.16.840.1.113883.5.129" displayName="Eye" level="1" type="L"/>
+            <concept code="FIB" codeSystem="2.16.840.1.113883.5.129" displayName="Fibroblasts" level="1" type="L"/>
+            <concept code="FIST" codeSystem="2.16.840.1.113883.5.129" displayName="Fistula" level="1" type="L"/>
+            <concept code="FLT" codeSystem="2.16.840.1.113883.5.129" displayName="Filter" level="1" type="L"/>
+            <concept code="FLU" codeSystem="2.16.840.1.113883.5.129" displayName="Body fluid, unsp" level="1" type="L"/>
+            <concept code="FOOD" codeSystem="2.16.840.1.113883.5.129" displayName="Food sample" level="1" type="L"/>
+            <concept code="GAS" codeSystem="2.16.840.1.113883.5.129" displayName="Gas" level="1" type="L"/>
+            <concept code="GAST" codeSystem="2.16.840.1.113883.5.129" displayName="Gastric fluid/contents" level="1" type="L"/>
+            <concept code="GEN" codeSystem="2.16.840.1.113883.5.129" displayName="Genital" level="1" type="L"/>
+            <concept code="GENC" codeSystem="2.16.840.1.113883.5.129" displayName="Genital cervix" level="1" type="L"/>
+            <concept code="GENF" codeSystem="2.16.840.1.113883.5.129" displayName="Genital fluid" level="1" type="L"/>
+            <concept code="GENL" codeSystem="2.16.840.1.113883.5.129" displayName="Genital lochia" level="1" type="L"/>
+            <concept code="GENV" codeSystem="2.16.840.1.113883.5.129" displayName="Genital vaginal" level="1" type="L"/>
+            <concept code="HAR" codeSystem="2.16.840.1.113883.5.129" displayName="Hair" level="1" type="L"/>
+            <concept code="IHG" codeSystem="2.16.840.1.113883.5.129" displayName="Inhaled Gas" level="1" type="L"/>
+            <concept code="ISLT" codeSystem="2.16.840.1.113883.5.129" displayName="Isolate" level="1" type="L"/>
+            <concept code="IT" codeSystem="2.16.840.1.113883.5.129" displayName="Intubation tube" level="1" type="L"/>
+            <concept code="LAM" codeSystem="2.16.840.1.113883.5.129" displayName="Lamella" level="1" type="L"/>
+            <concept code="LIQ" codeSystem="2.16.840.1.113883.5.129" displayName="Liquid NOS" level="1" type="L"/>
+            <concept code="LN" codeSystem="2.16.840.1.113883.5.129" displayName="Line" level="1" type="L"/>
+            <concept code="LNA" codeSystem="2.16.840.1.113883.5.129" displayName="Line arterial" level="1" type="L"/>
+            <concept code="LNV" codeSystem="2.16.840.1.113883.5.129" displayName="Line venous" level="1" type="L"/>
+            <concept code="LYM" codeSystem="2.16.840.1.113883.5.129" displayName="Lymphocytes" level="1" type="L"/>
+            <concept code="MAC" codeSystem="2.16.840.1.113883.5.129" displayName="Macrophages" level="1" type="L"/>
+            <concept code="MAR" codeSystem="2.16.840.1.113883.5.129" displayName="Marrow (bone)" level="1" type="L"/>
+            <concept code="MBLD" codeSystem="2.16.840.1.113883.5.129" displayName="Menstrual blood" level="1" type="L"/>
+            <concept code="MEC" codeSystem="2.16.840.1.113883.5.129" displayName="Meconium" level="1" type="L"/>
+            <concept code="MILK" codeSystem="2.16.840.1.113883.5.129" displayName="Breast milk" level="1" type="L"/>
+            <concept code="MLK" codeSystem="2.16.840.1.113883.5.129" displayName="Milk" level="1" type="L"/>
+            <concept code="NAIL" codeSystem="2.16.840.1.113883.5.129" displayName="Nail" level="1" type="L"/>
+            <concept code="NOS" codeSystem="2.16.840.1.113883.5.129" displayName="Nose (nasal passage)" level="1" type="L"/>
+            <concept code="PAFL" codeSystem="2.16.840.1.113883.5.129" displayName="Pancreatic fluid" level="1" type="L"/>
+            <concept code="PAT" codeSystem="2.16.840.1.113883.5.129" displayName="Patient" level="1" type="L"/>
+            <concept code="PLAS" codeSystem="2.16.840.1.113883.5.129" displayName="Plasma" level="1" type="L"/>
+            <concept code="PLB" codeSystem="2.16.840.1.113883.5.129" displayName="Plasma bag" level="1" type="L"/>
+            <concept code="PLC" codeSystem="2.16.840.1.113883.5.129" displayName="Placenta" level="1" type="L"/>
+            <concept code="PLR" codeSystem="2.16.840.1.113883.5.129" displayName="Pleural fluid (thoracentesis fld)" level="1" type="L"/>
+            <concept code="PMN" codeSystem="2.16.840.1.113883.5.129" displayName="Polymorphonuclear neutrophils" level="1" type="L"/>
+            <concept code="PPP" codeSystem="2.16.840.1.113883.5.129" displayName="Platelet poor plasma" level="1" type="L"/>
+            <concept code="PRP" codeSystem="2.16.840.1.113883.5.129" displayName="Platelet rich plasma" level="1" type="L"/>
+            <concept code="PRT" codeSystem="2.16.840.1.113883.5.129" displayName="Peritoneal fluid /ascites" level="1" type="L"/>
+            <concept code="PUS" codeSystem="2.16.840.1.113883.5.129" displayName="Pus" level="1" type="L"/>
+            <concept code="RBC" codeSystem="2.16.840.1.113883.5.129" displayName="Erythrocytes" level="1" type="L"/>
+            <concept code="SAL" codeSystem="2.16.840.1.113883.5.129" displayName="Saliva" level="1" type="L"/>
+            <concept code="SER" codeSystem="2.16.840.1.113883.5.129" displayName="Serum" level="1" type="L"/>
+            <concept code="SKM" codeSystem="2.16.840.1.113883.5.129" displayName="Skeletal muscle" level="1" type="L"/>
+            <concept code="SKN" codeSystem="2.16.840.1.113883.5.129" displayName="Skin" level="1" type="L"/>
+            <concept code="SMN" codeSystem="2.16.840.1.113883.5.129" displayName="Seminal fluid" level="1" type="L"/>
+            <concept code="SMPLS" codeSystem="2.16.840.1.113883.5.129" displayName="Seminal plasma" level="1" type="L"/>
+            <concept code="SNV" codeSystem="2.16.840.1.113883.5.129" displayName="Synovial fluid (Joint fluid)" level="1" type="L"/>
+            <concept code="SPRM" codeSystem="2.16.840.1.113883.5.129" displayName="Spermatozoa" level="1" type="L"/>
+            <concept code="SPT" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum" level="1" type="L"/>
+            <concept code="SPTC" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum - coughed" level="1" type="L"/>
+            <concept code="SPTT" codeSystem="2.16.840.1.113883.5.129" displayName="Sputum - tracheal aspirate" level="1" type="L"/>
+            <concept code="STL" codeSystem="2.16.840.1.113883.5.129" displayName="Stool = Fecal" level="1" type="L"/>
+            <concept code="STON" codeSystem="2.16.840.1.113883.5.129" displayName="Calculus (=Stone) Stone (use CALC)" level="1" type="L"/>
+            <concept code="SWAB" codeSystem="1.2.40.0.34.5.173" displayName="Swab" level="1" type="L"/>
+            <concept code="SWT" codeSystem="2.16.840.1.113883.5.129" displayName="Sweat" level="1" type="L"/>
+            <concept code="TEAR" codeSystem="2.16.840.1.113883.5.129" displayName="Tears" level="1" type="L"/>
+            <concept code="THRB" codeSystem="2.16.840.1.113883.5.129" displayName="Thrombocyte (platelet)" level="1" type="L"/>
+            <concept code="THRT" codeSystem="2.16.840.1.113883.5.129" displayName="Throat" level="1" type="L"/>
+            <concept code="TISG" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue gall bladder" level="1" type="L"/>
+            <concept code="TISPL" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue placenta" level="1" type="L"/>
+            <concept code="TISS" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue, unspecified" level="1" type="L"/>
+            <concept code="TISU" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue ulcer" level="1" type="L"/>
+            <concept code="TLGI" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue large intestine" level="1" type="L"/>
+            <concept code="TLNG" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue lung" level="1" type="L"/>
+            <concept code="TSMI" codeSystem="2.16.840.1.113883.5.129" displayName="Tissue small intestine Tissue ulcer" level="1" type="L"/>
+            <concept code="TUB" codeSystem="2.16.840.1.113883.5.129" displayName="Tube, unspecified" level="1" type="L"/>
+            <concept code="ULC" codeSystem="2.16.840.1.113883.5.129" displayName="Ulcer" level="1" type="L"/>
+            <concept code="UMB" codeSystem="2.16.840.1.113883.5.129" displayName="Umbilical blood" level="1" type="L"/>
+            <concept code="UMED" codeSystem="2.16.840.1.113883.5.129" displayName="Unknown medicine" level="1" type="L"/>
+            <concept code="UR" codeSystem="2.16.840.1.113883.5.129" displayName="Urine" level="1" type="L"/>
+            <concept code="URC" codeSystem="2.16.840.1.113883.5.129" displayName="Urine clean catch" level="1" type="L"/>
+            <concept code="URNS" codeSystem="2.16.840.1.113883.5.129" displayName="Urine sediment" level="1" type="L"/>
+            <concept code="URT" codeSystem="2.16.840.1.113883.5.129" displayName="Urine catheter" level="1" type="L"/>
+            <concept code="URTH" codeSystem="2.16.840.1.113883.5.129" displayName="Urethra" level="1" type="L"/>
+            <concept code="USUB" codeSystem="2.16.840.1.113883.5.129" displayName="Unknown substance" level="1" type="L"/>
+            <concept code="VOM" codeSystem="2.16.840.1.113883.5.129" displayName="Vomitus" level="1" type="L"/>
+            <concept code="WAT" codeSystem="2.16.840.1.113883.5.129" displayName="Water" level="1" type="L"/>
+            <concept code="WBC" codeSystem="2.16.840.1.113883.5.129" displayName="Leukocytes" level="1" type="L"/>
+            <concept code="WICK" codeSystem="2.16.840.1.113883.5.129" displayName="Wick" level="1" type="L"/>
+            <concept code="WND" codeSystem="2.16.840.1.113883.5.129" displayName="Wound" level="1" type="L"/>
+            <concept code="WNDA" codeSystem="2.16.840.1.113883.5.129" displayName="Wound abscess" level="1" type="L"/>
+            <concept code="WNDD" codeSystem="2.16.840.1.113883.5.129" displayName="Wound drainage" level="1" type="L"/>
+            <concept code="WNDE" codeSystem="2.16.840.1.113883.5.129" displayName="Wound exudate" level="1" type="L"/>
         </conceptList>
     </valueSet>
 </valueSets>
