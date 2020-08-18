@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
- *
- * This code is licensed under the Eclipse Public License v1.0.
- *
- */
 package arztis.econnector.ihe.queries.common;
 
 import java.util.HashMap;

@@ -1,9 +1,3 @@
-/**
- * Copyright (C) 2020, ET-Innovations GmbH. All rights reserved
- *
- * This code is licensed under the Eclipse Public License v1.0.
- * 
- */
 package arztis.econnector.rest;
 
 import java.io.File;
@@ -11,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
@@ -34,10 +30,12 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
+import org.openhealthtools.ihe.utils.UUID;
 import org.openhealthtools.ihe.xds.document.XDSDocument;
 import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
 import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
@@ -1095,6 +1093,13 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 */
 	public Object generateCda(String json, String authorization) {
 		Bundle bundle = FhirUtil.getFhirContext().newJsonParser().parseResource(Bundle.class, json);
+		
+		if(!bundle.hasIdentifier() && authorization != null) {
+			Identifier identifier = new Identifier();
+			identifier.setValue(UUID.generate() + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
+			identifier.setSystem(getOrganizationIdByUserToken(authorization, false));			
+			bundle.setIdentifier(identifier);
+		}
 
 		UpdateImmunizationState updateImmunization = new UpdateImmunizationState(bundle);
 		return updateImmunization.getUpdateImmunizationState();

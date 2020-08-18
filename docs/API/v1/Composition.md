@@ -57,7 +57,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `family` *(String)* *(optional)* - last name of patient
     - `prefix`*(String)* *(optional)* - prefixes of patient like academic titles (Dr., Mag., ...)
     - `suffix` *(String)* *(optional)* - suffixes of patient like acadmeic titles (MSC, MBA, ...)
-  - `birthDate`*(String)* *(optional)* - date of birth of patient
+  - `birthDate`*(String)* *(required)* - date of birth of patient
   - `gender` *(String)* *(required)* - gender of patient. Possible values are `"male"`, `"femlae"`, `"unknown"` and `"other"`
   - `address` *(Array)* *(optional)* - addresses of patient  
     - `use` *(String)* *(required)* - usage of address
@@ -145,7 +145,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `code` *(String)* *(required)* - voucher code
     - `system` *(String)* *(required)* - OID of the body issuing the vaccination voucher e.g. "Land Steiermark"
   - `reportOrigin`*(String)* *(optional)* - reference to underlying finding with which this immunization was stored by GDA. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
-  - `recorded` *(String)* *(required)* - approval date of immunization
+  - `recorded` *(String)* *(required)* - approval date of immunization. Time of release of the documentation.
   - `performer`*(Array)* *(required)* - The person who carries out the vaccination, e.g. a physician or a midwife or DGKP in the transferred area of activity. If the details of performer was not given like name or organization, the data of the author will be used as default values. Only the function code have no default value.  
     - `function`*(Object)**(required) - role of vaccinating person. Possible values can be find under <https://termpub.gesundheit.gv.at> in the value set eImpf_Impfrollen_VS. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
     - `actor`*(Object)* *(required)* - reference to performer. Structure described at <https://www.hl7.org/fhir/references.html#Reference>. Referenced resource must be PractitionerRole
@@ -295,7 +295,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                         "city": "Graz",
                         "postalCode": "8020",
                         "state": "STMK",
-                        "country": "AT"
+                        "country": "AUT"
                     }
                 ],
                 "telecom": [
@@ -344,7 +344,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                         "city": "Wien",
                         "postalCode": "1020",
                         "state": "W",
-                        "country": "AT"
+                        "country": "AUT"
                     }
                 ],
                 "telecom": [
@@ -362,7 +362,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                 "id": "1",
                 "identifier": [ // default value is the OID of organization, which is authorized
                     {
-                        "value": "1.2.40.0.34.99.3.2.1046167"
+                        "system": "1.2.40.0.34.99.3.2.1046167"
                     }
                 ],
                 "name": "Ordination Dr. Musterärztin",
@@ -372,7 +372,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                         "city": "Wien",
                         "postalCode": "1020",
                         "state": "W",
-                        "country": "AT"
+                        "country": "AUT"
                     }
                 ],
                 "telecom": [
@@ -407,7 +407,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                 ],
                 "lotNumber": "12345", // "Chargennummer"
                 "protocolApplied": {
-                    "series": "SCHEM03", //schema
+                    "series": "SCHEMA003", //schema
                     "doseNumberString": "D1", //vaccination part
                     "authority": { //practitioner, which is responsible for vaccination
                         "reference": "PractitionerRole/2",
@@ -426,7 +426,8 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                             {
                                 "coding": [
                                     {
-                                        "code": "100" //general practitioner
+                                        "code": "100", //general practitioner
+                                        "system": "1.2.40.0.34.5.2"
                                     }
                                 ]
                             }
