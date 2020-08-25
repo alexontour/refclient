@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
@@ -351,7 +357,7 @@ public class FhirImmunization extends Immunization {
 		StrucDocText textKonsUeberwGrund = new StrucDocText();
 		ImmunizationTextBuilder textbuilder = new ImmunizationTextBuilder(targets, immunizationScheme, immunizationDose,
 				immunizationsCodes, historicImmunizations);
-		textKonsUeberwGrund.getContent().add(textbuilder.toString());
+		textKonsUeberwGrund.getContent().add(textbuilder.getTables().get(0).getSummary());
 		vaccinationSection.setText(textKonsUeberwGrund);
 
 		return vaccinationSection;
@@ -483,7 +489,7 @@ public class FhirImmunization extends Immunization {
 		if (immunization.getOccurrenceDateTimeType() != null) {
 			substanceAdministration.getEffectiveTime().clear();
 			substanceAdministration.getEffectiveTime()
-					.add(CdaUtil.createEffectiveTimeSXCMTS(immunization.getOccurrenceDateTimeType().getValue()));
+					.add(CdaUtil.createEffectiveTimeSXCMTS(immunization.getOccurrenceDateTimeType().getValue(), true));
 		}
 
 		substanceAdministration
@@ -711,10 +717,17 @@ public class FhirImmunization extends Immunization {
 		AtcdabbrEntryImmunizationSchedule schedule = new AtcdabbrEntryImmunizationSchedule();
 
 		EImpfImpfschemaVs schemaCode = EImpfImpfschemaVs.getEnum(series);
-		schedule.setCode(FhirCoding.createHl7CdaR2Ce(
-				new Coding(schemaCode.getCodeSystemId(), schemaCode.getCodeValue(), schemaCode.getDisplayName()),
-				NullFlavor.NOINFORMATION));
-
+		
+		if(schemaCode == null) {
+			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
+					new Coding("1.2.40.0.34.5.183", series, ""),
+					NullFlavor.NOINFORMATION));
+		} else {
+			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
+					new Coding(schemaCode.getCodeSystemId(), schemaCode.getCodeValue(), schemaCode.getDisplayName()),
+					NullFlavor.NOINFORMATION));
+		}
+		
 		StringBuilder sbEimpfDose = new StringBuilder(REFERENCE_TEXT_EIMPF_DOSE);
 		sbEimpfDose.append(index);
 
@@ -723,6 +736,10 @@ public class FhirImmunization extends Immunization {
 			if (codeDose != null) {
 				schedule.setValue(FhirCoding.createHl7CdaR2Cd(
 						new Coding(codeDose.getCodeSystemId(), codeDose.getCodeValue(), codeDose.getDisplayName()),
+						null));
+			} else {
+				schedule.setValue(FhirCoding.createHl7CdaR2Cd(
+						new Coding("1.2.40.0.34.5.183", doseNumber, ""),
 						null));
 			}
 		}

@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.ihe.utilities;
 
 import java.util.ArrayList;
@@ -212,10 +218,12 @@ public class CdaUtil {
 	 *
 	 * @return created {@link SXCMTS} element
 	 */
-	public static SXCMTS createEffectiveTimeSXCMTS(Date date) {
+	public static SXCMTS createEffectiveTimeSXCMTS(Date date, boolean withTime) {
 		SXCMTS time = new SXCMTS();
 		if (date == null) {
 			time.getNullFlavor().add(NullFlavor.UNKNOWN_CODE);
+		} else if(withTime) {
+			time.setValue(DateUtil.formatDateTimeTzon(date));			
 		} else {
 			time.setValue(DateUtil.formatDateOnly(date));
 		}
