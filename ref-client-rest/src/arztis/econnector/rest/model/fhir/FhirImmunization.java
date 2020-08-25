@@ -357,7 +357,7 @@ public class FhirImmunization extends Immunization {
 		StrucDocText textKonsUeberwGrund = new StrucDocText();
 		ImmunizationTextBuilder textbuilder = new ImmunizationTextBuilder(targets, immunizationScheme, immunizationDose,
 				immunizationsCodes, historicImmunizations);
-		textKonsUeberwGrund.getContent().add(textbuilder.getTables().get(0).getSummary());
+		textKonsUeberwGrund.getContent().add(textbuilder.toString());
 		vaccinationSection.setText(textKonsUeberwGrund);
 
 		return vaccinationSection;
