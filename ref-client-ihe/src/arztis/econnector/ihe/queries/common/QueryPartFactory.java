@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.ihe.queries.common;
 
 import java.util.List;

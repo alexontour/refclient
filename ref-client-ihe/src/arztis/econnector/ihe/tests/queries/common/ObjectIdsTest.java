@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.ihe.tests.queries.common;
 
 import static org.junit.Assert.assertEquals;

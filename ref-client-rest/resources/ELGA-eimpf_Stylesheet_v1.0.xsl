@@ -17,20 +17,13 @@ Die Anwendung sowie die allfällige Bearbeitung des "ELGA Referenz-Stylesheet" e
 Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rechtsansprüche gegen die ELGA GmbH erhoben oder abgeleitet werden.
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:n1="urn:hl7-org:v3" xmlns:n2="urn:hl7-org:v3/meta/voc" xmlns:voc="urn:hl7-org:v3/voc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="urn:ihe:pharm:medication"
-                exclude-result-prefixes="n1 n2 voc xsi ns2" id="ELGA-eimpf_Stylesheet_1.00.003.2">
+                exclude-result-prefixes="n1 n2 voc xsi ns2" id="ELGA-eimpf_Stylesheet_1.00.004.1">
     <xsl:output method="html" omit-xml-declaration="yes" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" doctype-system="http://www.w3.org/TR/html4/loose.dtd" />
 
 <!--
  gesundheit.gv.at service url, used for the info button.
 -->
 <xsl:param name="param_InfoButtonBaseUrl" />
-
-<!--
- enable / disable a notification banner between the document header and the "person box".
- 0: banner is hidden
- 1: banner is visible (default value)
--->
-<xsl:param name="param_ShowBanner" />
 
 <!--
  text of the notification banner.
@@ -46,18 +39,6 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
         </xsl:when>
         <xsl:otherwise>
             <xsl:value-of select="$param_InfoButtonBaseUrl" />
-        </xsl:otherwise>
-    </xsl:choose>
-</xsl:variable>
-
-<xsl:variable name="showBanner">
-    <xsl:choose>
-        <xsl:when test="not($param_ShowBanner)">
-            <!-- show banner by default -->
-            <xsl:value-of select="1" />
-        </xsl:when>
-        <xsl:otherwise>
-            <xsl:value-of select="$param_ShowBanner" />
         </xsl:otherwise>
     </xsl:choose>
 </xsl:variable>
@@ -5477,7 +5458,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     
     <xsl:template name="renderELGAImmunizationTargetAndereImpfungen">
         
-        <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '443651005' or @code = '427036009' or @code = '33234009' or @code = 'TEM103']">
+        <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '871772009' or @code = '427036009' or @code = '836389008' or @code = '840564009']">
             <xsl:call-template name="renderVaccinationSectionEntryOther">
                 <xsl:with-param name="immunizationTargetId" select="@code"/>
                 <xsl:with-param name="section" select="'other'" />
@@ -5487,7 +5468,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     
     <xsl:template name="hasOtherVaccinations">
         <xsl:choose>
-            <xsl:when test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.2']/../n1:code[@code = '443651005' or @code = '427036009' or @code = '33234009' or @code = 'TEM103']">
+            <xsl:when test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.2']/../n1:code[@code = '871772009' or @code = '427036009' or @code = '836389008' or @code = '840564009']">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>
@@ -5499,7 +5480,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     <xsl:template name="isOtherVaccination">
         <xsl:param name="immunizationTargetId" />
         <xsl:choose>
-            <xsl:when test="$immunizationTargetId = '443651005' or $immunizationTargetId = '427036009' or $immunizationTargetId = '33234009' or $immunizationTargetId = 'TEM103'">
+            <xsl:when test="$immunizationTargetId = '871772009' or $immunizationTargetId = '427036009' or $immunizationTargetId = '836389008' or $immunizationTargetId = '840564009'">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>
@@ -5520,7 +5501,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
         
         <xsl:choose>
             <xsl:when test="$isUpdate='true'">
-                <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '116077000' or @code = '428214002' or @code = '333621002' or @code = '61602008' or @code = '111164008' or @code = '333680004' or @code = '34689006' or @code = '333598008' or @code = '386012008' or @code = '90043005' or @code = '386013003' or @code = '420261000' or @code = '785864002' or @code = '422069000' or @code = '424519000' or @code = '333699008' or @code = '108729007' or @code = '14745005' or @code = '46233009' or @code = '407737004' or @code = '421281005' or @code = '423531006']">
+                <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '836387005' or @code = '836381006' or @code = '1101000221104' or @code = '601000221108' or @code = '1031000221108' or @code = '836380007' or @code = '836374004' or @code = '836398006' or @code = '836382004' or @code = '871738001' or @code = '836388000' or @code = '871873006' or @code = '1981000221108' or @code = '871866001' or @code = '836379009' or @code = '836403007' or @code = '836495005' or @code = '836375003' or @code = '836377006' or @code = '871919004' or @code = '836401009' or @code = '871871008']">
                     <xsl:variable name="isGroupVaccination">
                         <xsl:call-template name="isGruppenImmunization">
                             <xsl:with-param name="immunizationTargetId" select="@code" />
@@ -5534,16 +5515,16 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                 </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:variable name="isGroupVaccination116077000">
+                <xsl:variable name="isGroupVaccination836387005">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'116077000'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836387005'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination116077000='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='116077000']">
+                    <xsl:when test="$isGroupVaccination836387005='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836387005']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'116077000'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836387005'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5551,22 +5532,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'116077000'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836387005'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination428214002">
+                <xsl:variable name="isGroupVaccination836381006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'428214002'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836381006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination428214002='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='428214002']">
+                    <xsl:when test="$isGroupVaccination836381006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836381006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'428214002'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836381006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5574,22 +5555,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'428214002'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836381006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination426842004">
+                <xsl:variable name="isGroupVaccination871896006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'426842004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871896006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination426842004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='426842004']">
+                    <xsl:when test="$isGroupVaccination871896006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871896006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'426842004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871896006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5597,22 +5578,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'426842004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871896006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination426081003">
+                <xsl:variable name="isGroupVaccination871917002">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'426081003'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871917002'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination426081003='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='426081003']">
+                    <xsl:when test="$isGroupVaccination871917002='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871917002']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'426081003'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871917002'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5620,22 +5601,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'426081003'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871917002'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination396457007">
+                <xsl:variable name="isGroupVaccination871889009">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'396457007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871889009'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination396457007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='396457007']">
+                    <xsl:when test="$isGroupVaccination871889009='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871889009']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'396457007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871889009'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5643,22 +5624,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'396457007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871889009'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination414005006">
+                <xsl:variable name="isGroupVaccination836508001">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'414005006'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836508001'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination414005006='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='414005006']">
+                    <xsl:when test="$isGroupVaccination836508001='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836508001']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'414005006'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836508001'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5666,22 +5647,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'414005006'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836508001'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination421245007">
+                <xsl:variable name="isGroupVaccination836503005">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'421245007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836503005'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination421245007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='421245007']">
+                    <xsl:when test="$isGroupVaccination836503005='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836503005']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'421245007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836503005'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5689,22 +5670,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'421245007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836503005'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination412373007">
+                <xsl:variable name="isGroupVaccination836507006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'412373007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836507006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination412373007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='412373007']">
+                    <xsl:when test="$isGroupVaccination836507006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836507006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'412373007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836507006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5712,22 +5693,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'412373007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836507006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccinationTEM010">
+                <xsl:variable name="isGroupVaccination871928003">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'TEM010'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871928003'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccinationTEM010='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='TEM010']">
+                    <xsl:when test="$isGroupVaccination871928003='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871928003']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'TEM010'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871928003'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5735,22 +5716,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'TEM010'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871928003'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination414004005">
+                <xsl:variable name="isGroupVaccination838279002">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'414004005'" />
+                        <xsl:with-param name="immunizationTargetId" select="'838279002'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination414004005='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='414004005']">
+                    <xsl:when test="$isGroupVaccination838279002='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='838279002']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'414004005'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'838279002'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5758,22 +5739,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'414004005'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'838279002'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination427542001">
+                <xsl:variable name="isGroupVaccination871892008">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'427542001'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871892008'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination427542001='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='427542001']">
+                    <xsl:when test="$isGroupVaccination871892008='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871892008']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'427542001'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871892008'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5781,22 +5762,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'427542001'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871892008'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination414006007">
+                <xsl:variable name="isGroupVaccination836505003">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'414006007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836505003'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination414006007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='414006007']">
+                    <xsl:when test="$isGroupVaccination836505003='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836505003']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'414006007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836505003'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5804,22 +5785,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'414006007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836505003'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination350327004">
+                <xsl:variable name="isGroupVaccination836502000">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'350327004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836502000'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination350327004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='350327004']">
+                    <xsl:when test="$isGroupVaccination836502000='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836502000']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'350327004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836502000'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5827,22 +5808,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'350327004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836502000'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccinationTEM005">
+                <xsl:variable name="isGroupVaccination871929006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'TEM005'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871929006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccinationTEM005='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='TEM005']">
+                    <xsl:when test="$isGroupVaccination871929006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871929006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'TEM005'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871929006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5850,22 +5831,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'TEM005'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871929006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333621002">
+                <xsl:variable name="isGroupVaccination1101000221104">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333621002'" />
+                        <xsl:with-param name="immunizationTargetId" select="'1101000221104'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333621002='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333621002']">
+                    <xsl:when test="$isGroupVaccination1101000221104='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='1101000221104']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333621002'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'1101000221104'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5873,22 +5854,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333621002'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'1101000221104'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination61602008">
+                <xsl:variable name="isGroupVaccination601000221108">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'61602008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'601000221108'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination61602008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='61602008']">
+                    <xsl:when test="$isGroupVaccination601000221108='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='601000221108']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'61602008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'601000221108'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5896,22 +5877,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'61602008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'601000221108'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination111164008">
+                <xsl:variable name="isGroupVaccination1031000221108">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'111164008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'1031000221108'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination111164008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='111164008']">
+                    <xsl:when test="$isGroupVaccination1031000221108='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='1031000221108']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'111164008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'1031000221108'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5919,22 +5900,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'111164008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'1031000221108'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333680004">
+                <xsl:variable name="isGroupVaccination836380007">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333680004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836380007'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333680004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333680004']">
+                    <xsl:when test="$isGroupVaccination836380007='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836380007']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333680004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836380007'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5942,22 +5923,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333680004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836380007'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination425555004">
+                <xsl:variable name="isGroupVaccination836504004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'425555004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836504004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination425555004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='425555004']">
+                    <xsl:when test="$isGroupVaccination836504004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836504004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'425555004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836504004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5965,22 +5946,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'425555004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836504004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination34689006">
+                <xsl:variable name="isGroupVaccination836374004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'34689006'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836374004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination34689006='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='34689006']">
+                    <xsl:when test="$isGroupVaccination836374004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836374004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'34689006'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836374004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -5988,22 +5969,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'34689006'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836374004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333702001">
+                <xsl:variable name="isGroupVaccination836493003">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333702001'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836493003'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333702001='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333702001']">
+                    <xsl:when test="$isGroupVaccination836493003='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836493003']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333702001'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836493003'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6011,22 +5992,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333702001'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836493003'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination426971004">
+                <xsl:variable name="isGroupVaccination865946000">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'426971004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'865946000'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination426971004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='426971004']">
+                    <xsl:when test="$isGroupVaccination865946000='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='865946000']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'426971004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'865946000'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6034,22 +6015,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'426971004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'865946000'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333598008">
+                <xsl:variable name="isGroupVaccination836398006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333598008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836398006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333598008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333598008']">
+                    <xsl:when test="$isGroupVaccination836398006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836398006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333598008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836398006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6057,22 +6038,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333598008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836398006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination386012008">
+                <xsl:variable name="isGroupVaccination836382004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'386012008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836382004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination386012008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='386012008']">
+                    <xsl:when test="$isGroupVaccination836382004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836382004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'386012008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836382004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6080,22 +6061,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'386012008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836382004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination90043005">
+                <xsl:variable name="isGroupVaccination871738001">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'90043005'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871738001'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination90043005='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='90043005']">
+                    <xsl:when test="$isGroupVaccination871738001='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871738001']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'90043005'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871738001'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6103,22 +6084,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'90043005'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871738001'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination785865001">
+                <xsl:variable name="isGroupVaccination836499004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'785865001'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836499004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination785865001='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='785865001']">
+                    <xsl:when test="$isGroupVaccination836499004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836499004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'785865001'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836499004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6126,22 +6107,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'785865001'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836499004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination61153008">
+                <xsl:variable name="isGroupVaccination836494009">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'61153008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836494009'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination61153008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='61153008']">
+                    <xsl:when test="$isGroupVaccination836494009='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836494009']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'61153008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836494009'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6149,22 +6130,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'61153008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836494009'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination419550004">
+                <xsl:variable name="isGroupVaccination838280004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'419550004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'838280004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination419550004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='419550004']">
+                    <xsl:when test="$isGroupVaccination838280004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='838280004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'419550004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'838280004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6172,22 +6153,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'419550004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'838280004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination386013003">
+                <xsl:variable name="isGroupVaccination836388000">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'386013003'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836388000'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination386013003='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='386013003']">
+                    <xsl:when test="$isGroupVaccination836388000='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836388000']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'386013003'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836388000'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6195,22 +6176,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'386013003'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836388000'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination420261000">
+                <xsl:variable name="isGroupVaccination871873006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'420261000'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871873006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination420261000='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='420261000']">
+                    <xsl:when test="$isGroupVaccination871873006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871873006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'420261000'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871873006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6218,22 +6199,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'420261000'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871873006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination785864002">
+                <xsl:variable name="isGroupVaccination1981000221108">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'785864002'" />
+                        <xsl:with-param name="immunizationTargetId" select="'1981000221108'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination785864002='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='785864002']">
+                    <xsl:when test="$isGroupVaccination1981000221108='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='1981000221108']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'785864002'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'1981000221108'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6241,22 +6222,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'785864002'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'1981000221108'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination422069000">
+                <xsl:variable name="isGroupVaccination871866001">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'422069000'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871866001'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination422069000='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='422069000']">
+                    <xsl:when test="$isGroupVaccination871866001='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871866001']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'422069000'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871866001'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6264,22 +6245,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'422069000'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871866001'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination424519000">
+                <xsl:variable name="isGroupVaccination836379009">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'424519000'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836379009'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination424519000='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='424519000']">
+                    <xsl:when test="$isGroupVaccination836379009='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836379009']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'424519000'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836379009'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6287,22 +6268,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'424519000'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836379009'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333699008">
+                <xsl:variable name="isGroupVaccination836403007">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333699008'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836403007'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333699008='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333699008']">
+                    <xsl:when test="$isGroupVaccination836403007='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836403007']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333699008'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836403007'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6310,22 +6291,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333699008'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836403007'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination108729007">
+                <xsl:variable name="isGroupVaccination836495005">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'108729007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836495005'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination108729007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='108729007']">
+                    <xsl:when test="$isGroupVaccination836495005='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836495005']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'108729007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836495005'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6333,22 +6314,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'108729007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836495005'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination14745005">
+                <xsl:variable name="isGroupVaccination836375003">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'14745005'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836375003'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination14745005='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='14745005']">
+                    <xsl:when test="$isGroupVaccination836375003='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836375003']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'14745005'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836375003'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6356,22 +6337,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'14745005'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836375003'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination333707007">
+                <xsl:variable name="isGroupVaccination836501007">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'333707007'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836501007'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination333707007='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='333707007']">
+                    <xsl:when test="$isGroupVaccination836501007='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836501007']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'333707007'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836501007'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6379,22 +6360,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'333707007'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836501007'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination46233009">
+                <xsl:variable name="isGroupVaccination836377006">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'46233009'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836377006'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination46233009='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='46233009']">
+                    <xsl:when test="$isGroupVaccination836377006='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836377006']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'46233009'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836377006'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6402,22 +6383,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'46233009'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836377006'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination407737004">
+                <xsl:variable name="isGroupVaccination871919004">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'407737004'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871919004'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination407737004='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='407737004']">
+                    <xsl:when test="$isGroupVaccination871919004='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871919004']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'407737004'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871919004'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6425,22 +6406,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'407737004'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871919004'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination421281005">
+                <xsl:variable name="isGroupVaccination836401009">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'421281005'" />
+                        <xsl:with-param name="immunizationTargetId" select="'836401009'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination421281005='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='421281005']">
+                    <xsl:when test="$isGroupVaccination836401009='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='836401009']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'421281005'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'836401009'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6448,22 +6429,22 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'421281005'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'836401009'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
                 
-                <xsl:variable name="isGroupVaccination423531006">
+                <xsl:variable name="isGroupVaccination871871008">
                     <xsl:call-template name="isGruppenImmunization">
-                        <xsl:with-param name="immunizationTargetId" select="'423531006'" />
+                        <xsl:with-param name="immunizationTargetId" select="'871871008'" />
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$isGroupVaccination423531006='true'">
-                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='423531006']">
+                    <xsl:when test="$isGroupVaccination871871008='true'">
+                        <xsl:if test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code='871871008']">
                             <xsl:call-template name="renderVaccinationSectionEntry">
-                                <xsl:with-param name="immunizationTargetId" select="'423531006'"/>
+                                <xsl:with-param name="immunizationTargetId" select="'871871008'"/>
                                 <xsl:with-param name="section" select="'general'" />
                                 <xsl:with-param name="showGroupEntry" select="string(true())" />
                             </xsl:call-template>
@@ -6471,7 +6452,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="renderVaccinationSectionEntry">
-                            <xsl:with-param name="immunizationTargetId" select="'423531006'"/>
+                            <xsl:with-param name="immunizationTargetId" select="'871871008'"/>
                             <xsl:with-param name="section" select="'general'" />
                         </xsl:call-template>
                     </xsl:otherwise>
@@ -6484,7 +6465,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     <xsl:template name="isGeneralVaccination">
         <xsl:param name="immunizationTargetId" />
         <xsl:choose>
-            <xsl:when test="$immunizationTargetId = '116077000' or $immunizationTargetId = '428214002' or $immunizationTargetId = '426842004' or $immunizationTargetId = '426081003' or $immunizationTargetId = '396457007' or $immunizationTargetId = '414005006' or $immunizationTargetId = '421245007' or $immunizationTargetId = '412373007' or $immunizationTargetId = 'TEM010' or $immunizationTargetId = '414004005' or $immunizationTargetId = '427542001' or $immunizationTargetId = '414006007' or $immunizationTargetId = '350327004' or $immunizationTargetId = 'TEM005' or $immunizationTargetId = '333621002' or $immunizationTargetId = '61602008' or $immunizationTargetId = '111164008' or $immunizationTargetId = '333680004' or $immunizationTargetId = '425555004' or $immunizationTargetId = '34689006' or $immunizationTargetId = '333702001' or $immunizationTargetId = '426971004' or $immunizationTargetId = '333598008' or $immunizationTargetId = '386012008' or $immunizationTargetId = '90043005' or $immunizationTargetId = '785865001' or $immunizationTargetId = '61153008' or $immunizationTargetId = '419550004' or $immunizationTargetId = '386013003' or $immunizationTargetId = '420261000' or $immunizationTargetId = '785864002' or $immunizationTargetId = '422069000' or $immunizationTargetId = '424519000' or $immunizationTargetId = '333699008' or $immunizationTargetId = '108729007' or $immunizationTargetId = '14745005' or $immunizationTargetId = '333707007' or $immunizationTargetId = '46233009' or $immunizationTargetId = '407737004' or $immunizationTargetId = '421281005' or $immunizationTargetId = '423531006'">
+            <xsl:when test="$immunizationTargetId = '836387005' or $immunizationTargetId = '836381006' or $immunizationTargetId = '871896006' or $immunizationTargetId = '871917002' or $immunizationTargetId = '871889009' or $immunizationTargetId = '836508001' or $immunizationTargetId = '836503005' or $immunizationTargetId = '836507006' or $immunizationTargetId = '871928003' or $immunizationTargetId = '838279002' or $immunizationTargetId = '871892008' or $immunizationTargetId = '836505003' or $immunizationTargetId = '836502000' or $immunizationTargetId = '871929006' or $immunizationTargetId = '1101000221104' or $immunizationTargetId = '601000221108' or $immunizationTargetId = '1031000221108' or $immunizationTargetId = '836380007' or $immunizationTargetId = '836504004' or $immunizationTargetId = '836374004' or $immunizationTargetId = '836493003' or $immunizationTargetId = '865946000' or $immunizationTargetId = '836398006' or $immunizationTargetId = '836382004' or $immunizationTargetId = '871738001' or $immunizationTargetId = '836499004' or $immunizationTargetId = '836494009' or $immunizationTargetId = '838280004' or $immunizationTargetId = '836388000' or $immunizationTargetId = '871873006' or $immunizationTargetId = '1981000221108' or $immunizationTargetId = '871866001' or $immunizationTargetId = '836379009' or $immunizationTargetId = '836403007' or $immunizationTargetId = '836495005' or $immunizationTargetId = '836375003' or $immunizationTargetId = '836501007' or $immunizationTargetId = '836377006' or $immunizationTargetId = '871919004' or $immunizationTargetId = '836401009' or $immunizationTargetId = '871871008'">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>
@@ -6501,7 +6482,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     <xsl:template name="isGruppenImmunization">
         <xsl:param name="immunizationTargetId" />
         <xsl:choose>
-            <xsl:when test="$immunizationTargetId = '426842004' or $immunizationTargetId = '426081003' or $immunizationTargetId = '396457007' or $immunizationTargetId = '414005006' or $immunizationTargetId = '421245007' or $immunizationTargetId = '412373007' or $immunizationTargetId = 'TEM010' or $immunizationTargetId = '414004005' or $immunizationTargetId = '427542001' or $immunizationTargetId = '414006007' or $immunizationTargetId = '350327004' or $immunizationTargetId = 'TEM005' or $immunizationTargetId = '425555004' or $immunizationTargetId = '333702001' or $immunizationTargetId = '426971004' or $immunizationTargetId = '785865001' or $immunizationTargetId = '61153008' or $immunizationTargetId = '419550004' or $immunizationTargetId = '333707007'">
+            <xsl:when test="$immunizationTargetId = '871896006' or $immunizationTargetId = '871917002' or $immunizationTargetId = '871889009' or $immunizationTargetId = '836508001' or $immunizationTargetId = '836503005' or $immunizationTargetId = '836507006' or $immunizationTargetId = '871928003' or $immunizationTargetId = '838279002' or $immunizationTargetId = '871892008' or $immunizationTargetId = '836505003' or $immunizationTargetId = '836502000' or $immunizationTargetId = '871929006' or $immunizationTargetId = '836504004' or $immunizationTargetId = '836493003' or $immunizationTargetId = '865946000' or $immunizationTargetId = '836499004' or $immunizationTargetId = '836494009' or $immunizationTargetId = '838280004' or $immunizationTargetId = '836501007'">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>
@@ -6520,60 +6501,60 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
         <xsl:choose>
             <xsl:when test="$immunizationTargetId='_Einzel'"></xsl:when>
             <xsl:when test="$immunizationTargetId='_Empfohlene'"></xsl:when>
-            <xsl:when test="$immunizationTargetId='428214002'">Diphtherie</xsl:when>
-            <xsl:when test="$immunizationTargetId='333699008'">Frühsommermeningoencephalitis (FSME, Zecken-Impfung)</xsl:when>
-            <xsl:when test="$immunizationTargetId='333680004'">Haemophlius-influenzae B</xsl:when>
-            <xsl:when test="$immunizationTargetId='14745005'">Hepatitis A</xsl:when>
-            <xsl:when test="$immunizationTargetId='34689006'">Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='407737004'">Herpes Zoster (Gürtelrose)</xsl:when>
-            <xsl:when test="$immunizationTargetId='424519000'">Humane Papillomaviren (HPV)</xsl:when>
-            <xsl:when test="$immunizationTargetId='46233009'">Influenza ('echte Grippe')</xsl:when>
-            <xsl:when test="$immunizationTargetId='386012008'">Masern</xsl:when>
-            <xsl:when test="$immunizationTargetId='423531006'">Meningokokken</xsl:when>
-            <xsl:when test="$immunizationTargetId='785864002'">Meningokokken B</xsl:when>
-            <xsl:when test="$immunizationTargetId='422069000'">Meningokokken C</xsl:when>
-            <xsl:when test="$immunizationTargetId='421281005'">Meningokokken AC</xsl:when>
-            <xsl:when test="$immunizationTargetId='420261000'">Meningokokken ACWY</xsl:when>
-            <xsl:when test="$immunizationTargetId='90043005'">Mumps</xsl:when>
-            <xsl:when test="$immunizationTargetId='61602008'">Pertussis (Keuchhusten)</xsl:when>
-            <xsl:when test="$immunizationTargetId='333598008'">Pneumokokken</xsl:when>
-            <xsl:when test="$immunizationTargetId='111164008'">Poliomyelitis (Kinderlähmung)</xsl:when>
-            <xsl:when test="$immunizationTargetId='116077000'">Rotaviren</xsl:when>
-            <xsl:when test="$immunizationTargetId='386013003'">Röteln</xsl:when>
-            <xsl:when test="$immunizationTargetId='333621002'">Tetanus (Wundstarrkrampf)</xsl:when>
-            <xsl:when test="$immunizationTargetId='108729007'">Varizellen (Windpocken, Feuchtblattern)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836381006'">Diphtherie</xsl:when>
+            <xsl:when test="$immunizationTargetId='836403007'">Frühsommermeningoencephalitis (FSME, Zecken-Impfung)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836380007'">Haemophlius-influenzae B</xsl:when>
+            <xsl:when test="$immunizationTargetId='836375003'">Hepatitis A</xsl:when>
+            <xsl:when test="$immunizationTargetId='836374004'">Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871919004'">Herpes Zoster (Gürtelrose)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836379009'">Humane Papillomaviren (HPV)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836377006'">Influenza ('echte Grippe')</xsl:when>
+            <xsl:when test="$immunizationTargetId='836382004'">Masern</xsl:when>
+            <xsl:when test="$immunizationTargetId='836401009'">Meningokokken</xsl:when>
+            <xsl:when test="$immunizationTargetId='1981000221108'">Meningokokken B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871866001'">Meningokokken C</xsl:when>
+            <xsl:when test="$immunizationTargetId='871871008'">Meningokokken AC</xsl:when>
+            <xsl:when test="$immunizationTargetId='871873006'">Meningokokken ACWY</xsl:when>
+            <xsl:when test="$immunizationTargetId='871738001'">Mumps</xsl:when>
+            <xsl:when test="$immunizationTargetId='601000221108'">Pertussis (Keuchhusten)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836398006'">Pneumokokken</xsl:when>
+            <xsl:when test="$immunizationTargetId='1031000221108'">Poliomyelitis (Kinderlähmung)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836387005'">Rotaviren</xsl:when>
+            <xsl:when test="$immunizationTargetId='836388000'">Röteln</xsl:when>
+            <xsl:when test="$immunizationTargetId='1101000221104'">Tetanus (Wundstarrkrampf)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836495005'">Varizellen (Windpocken, Feuchtblattern)</xsl:when>
             <xsl:when test="$immunizationTargetId='_Reise'"></xsl:when>
-            <xsl:when test="$immunizationTargetId='35736007'">Cholera</xsl:when>
-            <xsl:when test="$immunizationTargetId='56844000'">Gelbfieber</xsl:when>
-            <xsl:when test="$immunizationTargetId='333697005'">Japanische Encephalitis</xsl:when>
-            <xsl:when test="$immunizationTargetId='333606008'">Tollwut</xsl:when>
-            <xsl:when test="$immunizationTargetId='89428009'">Typhus</xsl:when>
-            <xsl:when test="$immunizationTargetId='420538001'">Tuberkulose</xsl:when>
+            <xsl:when test="$immunizationTargetId='836383009'">Cholera</xsl:when>
+            <xsl:when test="$immunizationTargetId='836385002'">Gelbfieber</xsl:when>
+            <xsl:when test="$immunizationTargetId='836378001'">Japanische Encephalitis</xsl:when>
+            <xsl:when test="$immunizationTargetId='836393002'">Tollwut</xsl:when>
+            <xsl:when test="$immunizationTargetId='836390004'">Typhus</xsl:when>
+            <xsl:when test="$immunizationTargetId='836402002'">Tuberkulose</xsl:when>
             <xsl:when test="$immunizationTargetId='_Weitere'"></xsl:when>
-            <xsl:when test="$immunizationTargetId='443651005'">H1N1 Influenza (Grippeviren)</xsl:when>
-            <xsl:when test="$immunizationTargetId='427036009'">H5N1 Influenza (Grippeviren)</xsl:when>
-            <xsl:when test="$immunizationTargetId='33234009'">Pocken</xsl:when>
-            <xsl:when test="$immunizationTargetId='TEM103'">Leptospirose</xsl:when>
+            <xsl:when test="$immunizationTargetId='871772009'">H1N1 Grippeviren (Influenza)</xsl:when>
+            <xsl:when test="$immunizationTargetId='427036009'">H5N1 Grippeviren (Influenza)</xsl:when>
+            <xsl:when test="$immunizationTargetId='836389008'">Pocken</xsl:when>
+            <xsl:when test="$immunizationTargetId='840564009'">Leptospirose</xsl:when>
             <xsl:when test="$immunizationTargetId='_Kombinationen'"></xsl:when>
-            <xsl:when test="$immunizationTargetId='426842004'">Diphtherie-Haemophilus-influenzae B-Pertussis-Poliomyelitis-Tetanus-Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='426081003'">Diphtheria-Tetanus-Pertussis-Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='396457007'">Diphtherie-Pertussis-Hepatitis B-Polio</xsl:when>
-            <xsl:when test="$immunizationTargetId='414005006'">Diphtherie-Pertussis-Poliomyelitis-Tetanus</xsl:when>
-            <xsl:when test="$immunizationTargetId='421245007'">Diphtherie-Pertussis-Tetanus</xsl:when>
-            <xsl:when test="$immunizationTargetId='412373007'">Diphtherie-Pertussis-Tetanus-Haemophilus-influenzae B</xsl:when>
-            <xsl:when test="$immunizationTargetId='TEM010'">Diphtherie-Pertussis-Tetanus-Polio-Masern</xsl:when>
-            <xsl:when test="$immunizationTargetId='414004005'">Diphtherie-Pertussis-Tetanus-Poliomyelitis-Haemophilus-influenzae B</xsl:when>
-            <xsl:when test="$immunizationTargetId='427542001'">Diphtherie-Pertussis-Tetanus-Poliomyelitis-Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='414006007'">Diphtherie-Poliomyelitis-Tetanus</xsl:when>
-            <xsl:when test="$immunizationTargetId='350327004'">Diphtherie-Tetanus</xsl:when>
-            <xsl:when test="$immunizationTargetId='TEM005'">Diphtherie-Tetanus-Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='425555004'">Haemophilus influenzae Type B-Tetanus</xsl:when>
-            <xsl:when test="$immunizationTargetId='333702001'">Hepatitis A-Hepatitis B</xsl:when>
-            <xsl:when test="$immunizationTargetId='426971004'">Hepatitis B-Haemophilus-influenzae B</xsl:when>
-            <xsl:when test="$immunizationTargetId='785865001'">Masern-Mumps</xsl:when>
-            <xsl:when test="$immunizationTargetId='61153008'">Masern-Mumps-Röteln</xsl:when>
-            <xsl:when test="$immunizationTargetId='419550004'">Masern-Mumps-Röteln-Varizellen</xsl:when>
-            <xsl:when test="$immunizationTargetId='333707007'">Typhus-Hepatitis A</xsl:when>
+            <xsl:when test="$immunizationTargetId='871896006'">Diphtherie-Haemophilus-influenzae B-Pertussis-Poliomyelitis-Tetanus-Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871917002'">Diphtheria-Tetanus-Pertussis-Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871889009'">Diphtherie-Pertussis-Hepatitis B-Polio</xsl:when>
+            <xsl:when test="$immunizationTargetId='836508001'">Diphtherie-Pertussis-Poliomyelitis-Tetanus</xsl:when>
+            <xsl:when test="$immunizationTargetId='836503005'">Diphtherie-Pertussis-Tetanus</xsl:when>
+            <xsl:when test="$immunizationTargetId='836507006'">Diphtherie-Pertussis-Tetanus-Haemophilus-influenzae B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871928003'">Diphtherie-Pertussis-Tetanus-Polio-Masern</xsl:when>
+            <xsl:when test="$immunizationTargetId='838279002'">Diphtherie-Pertussis-Tetanus-Poliomyelitis-Haemophilus-influenzae B</xsl:when>
+            <xsl:when test="$immunizationTargetId='871892008'">Diphtherie-Pertussis-Tetanus-Poliomyelitis-Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='836505003'">Diphtherie-Poliomyelitis-Tetanus</xsl:when>
+            <xsl:when test="$immunizationTargetId='836502000'">Diphtherie-Tetanus</xsl:when>
+            <xsl:when test="$immunizationTargetId='871929006'">Diphtherie-Tetanus-Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='836504004'">Haemophilus influenzae Type B-Tetanus</xsl:when>
+            <xsl:when test="$immunizationTargetId='836493003'">Hepatitis A-Hepatitis B</xsl:when>
+            <xsl:when test="$immunizationTargetId='865946000'">Hepatitis B-Haemophilus-influenzae B</xsl:when>
+            <xsl:when test="$immunizationTargetId='836499004'">Masern-Mumps</xsl:when>
+            <xsl:when test="$immunizationTargetId='836494009'">Masern-Mumps-Röteln</xsl:when>
+            <xsl:when test="$immunizationTargetId='838280004'">Masern-Mumps-Röteln-Varizellen</xsl:when>
+            <xsl:when test="$immunizationTargetId='836501007'">Typhus-Hepatitis A</xsl:when>
             <xsl:otherwise><xsl:text>unbekannter Code (</xsl:text><xsl:value-of select="$immunizationTargetId" /><xsl:text>)</xsl:text></xsl:otherwise>
         
         </xsl:choose>
@@ -6587,7 +6568,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     
     <xsl:template name="renderELGAImmunizationTargetReiseimpfungen">
         
-        <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '35736007' or @code = '56844000' or @code = '333697005' or @code = '333606008' or @code = '89428009' or @code = '420538001' or @code = '426842004' or @code = '426081003' or @code = '396457007' or @code = '414005006' or @code = '421245007' or @code = '412373007' or @code = 'TEM010' or @code = '414004005' or @code = '427542001' or @code = '414006007' or @code = '350327004' or @code = 'TEM005' or @code = '425555004' or @code = '333702001' or @code = '426971004' or @code = '785865001' or @code = '61153008' or @code = '419550004' or @code = '333707007']">
+        <xsl:for-each select="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.1']/../n1:entryRelationship/n1:observation/n1:code[@code = '836383009' or @code = '836385002' or @code = '836378001' or @code = '836393002' or @code = '836390004' or @code = '836402002' or @code = '871896006' or @code = '871917002' or @code = '871889009' or @code = '836508001' or @code = '836503005' or @code = '836507006' or @code = '871928003' or @code = '838279002' or @code = '871892008' or @code = '836505003' or @code = '836502000' or @code = '871929006' or @code = '836504004' or @code = '836493003' or @code = '865946000' or @code = '836499004' or @code = '836494009' or @code = '838280004' or @code = '836501007']">
             <xsl:variable name="immunizationTargetId">
                 <xsl:value-of select="@code" />
             </xsl:variable>
@@ -6618,7 +6599,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     
     <xsl:template name="hasTravelVaccinations">
         <xsl:choose>
-            <xsl:when test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.2']/../n1:code[@code = '35736007' or @code = '56844000' or @code = '333697005' or @code = '333606008' or @code = '89428009' or @code = '420538001']">
+            <xsl:when test="//n1:templateId[@root='1.2.40.0.34.6.0.11.3.2']/../n1:code[@code = '836383009' or @code = '836385002' or @code = '836378001' or @code = '836393002' or @code = '836390004' or @code = '836402002']">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>
@@ -6630,7 +6611,7 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
     <xsl:template name="isTravelVaccination">
         <xsl:param name="immunizationTargetId" />
         <xsl:choose>
-            <xsl:when test="$immunizationTargetId = '35736007' or $immunizationTargetId = '56844000' or $immunizationTargetId = '333697005' or $immunizationTargetId = '333606008' or $immunizationTargetId = '89428009' or $immunizationTargetId = '420538001'">
+            <xsl:when test="$immunizationTargetId = '836383009' or $immunizationTargetId = '836385002' or $immunizationTargetId = '836378001' or $immunizationTargetId = '836393002' or $immunizationTargetId = '836390004' or $immunizationTargetId = '836402002'">
                 <xsl:value-of select="string(true())" />
             </xsl:when>
             <xsl:otherwise>

@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.rest.model.fhir;
 
 import java.math.BigInteger;

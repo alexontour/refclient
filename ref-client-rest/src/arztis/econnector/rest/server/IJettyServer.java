@@ -1,3 +1,9 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.rest.server;
 
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -11,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The Class IJettyServer.
  *
- * @author Tanja Reiterer and Anna Jungwirth
+ * @author Tanja Reiterer
  */
 public class IJettyServer extends Thread {
 

@@ -1,7 +1,15 @@
+/**
+ * 
+ * Contributors:
+ *   ET-Innovations GmbH - initial API and implementation
+ * 
+ */
 package arztis.econnector.ihe.utilities;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,6 +23,9 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.AddressingConstants;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.context.NamedValue;
+import org.apache.axis2.transport.http.HTTPConstants;
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -1377,6 +1388,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		etsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		etsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		etsServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1415,6 +1427,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		etsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		etsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		etsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1451,6 +1464,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		idaElgaAreaServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		idaElgaAreaServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		idaElgaAreaServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1490,6 +1504,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				.setProperty(HttpConstants.PROTOCOL_VERSION, HttpConstants.HEADER_PROTOCOL_11);
 		etsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED,
 				Boolean.FALSE);
+		etsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1585,6 +1600,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		kbsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		kbsServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		kbsServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1625,6 +1641,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		kbsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		kbsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		kbsEhealthPlusServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1666,6 +1683,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				.setProperty(HttpConstants.PROTOCOL_VERSION, HttpConstants.HEADER_PROTOCOL_11);
 		kbsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED,
 				Boolean.FALSE);
+		kbsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1709,6 +1727,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 
 		emedAtServiceStub._getServiceClient().getOptions()
 				.setAction("http://ns.elga.gv.at/emedat/2014/1/eMedikation/generateDocumentId");
+		emedAtServiceStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1766,6 +1785,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		service._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
 		service._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
+		service._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1807,6 +1827,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		emedAtSecurityTokenStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		emedAtSecurityTokenStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		emedAtSecurityTokenStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1851,6 +1872,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		communityPharmacyManagerStub._getServiceClient().getOptions().setProperty(HttpConstants.PROTOCOL_VERSION,
 				HttpConstants.HEADER_PROTOCOL_11);
 		communityPharmacyManagerStub._getServiceClient().getOptions().setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
+		communityPharmacyManagerStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 
 	}
 
@@ -1898,7 +1920,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				.setProperty(HttpConstants.PROTOCOL_VERSION, HttpConstants.HEADER_PROTOCOL_11);
 		communityPharmacyManagerEhealthPlusEImmunizationStub._getServiceClient().getOptions()
 				.setProperty(HttpConstants.CHUNKED, Boolean.FALSE);
-
+		communityPharmacyManagerEhealthPlusEImmunizationStub._getServiceClient().getOptions().setProperty(HTTPConstants.HTTP_HEADERS, getAcceptHeader());
 	}
 
 	/**
@@ -1928,6 +1950,17 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 				elgaDocumentRegistryAndRepository);
 		affinityDomain.setPdqDestination(pdq);
 		return affinityDomain;
+	}
+	
+	/**
+	 * creates accept header for soap requests
+	 * 
+	 * @return list including accept header
+	 */
+	private List<NamedValue> getAcceptHeader(){
+		List<NamedValue> headers = new LinkedList<>();
+		headers.add(new NamedValue("Accept", "application/soap+xml"));
+		return headers;
 	}
 
 }
