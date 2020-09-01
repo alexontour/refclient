@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.openhealthtools.mdht.uml.hl7</groupId>
+	<artifactId>org.openhealthtools.mdht.uml.hl7.datatypes</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.openhealthtools.mdht</groupId>
+		<artifactId>org.openhealthtools.mdht.parent</artifactId>
+		<version>2.5.0</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>projects.suisse-open-exchange.healthcare-sna</id>
+			<name>projects.suisse-open-exchange.healthcare-snapshots</name>
+			<url>https://projects.suisse-open-exchange.healthcare/artifactory/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>projects.suisse-open-exchange.healthcare-rel</id>
+			<name>projects.suisse-open-exchange.healthcare-releases</name>
+			<url>https://projects.suisse-open-exchange.healthcare/artifactory/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openhealthtools.mdht.uml.hl7</groupId>
+			<artifactId>org.openhealthtools.mdht.uml.hl7.vocab</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>types</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.ocl</groupId>
+			<artifactId>ecore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openhealthtools.mdht.emf</groupId>
+			<artifactId>runtime</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.eclipse.core</groupId> <artifactId>contenttype</artifactId> </dependency> <dependency> <groupId>org.eclipse.core</groupId> 
+			<artifactId>jobs</artifactId> </dependency> <dependency> <groupId>org.eclipse.core</groupId> <artifactId>runtime</artifactId> </dependency> <dependency> 
+			<groupId>org.eclipse.equinox</groupId> <artifactId>org.eclipse.equinox.app</artifactId> </dependency> <dependency> <groupId>org.eclipse.equinox</groupId> 
+			<artifactId>common</artifactId> </dependency> <dependency> <groupId>org.eclipse.equinox</groupId> <artifactId>preferences</artifactId> </dependency> <dependency> 
+			<groupId>org.eclipse.equinox</groupId> <artifactId>registry</artifactId> </dependency> <dependency> <groupId>org.eclipse.ocl</groupId> <artifactId>common</artifactId> 
+			</dependency> <dependency> <groupId>org.eclipse.ocl</groupId> <artifactId>ecore</artifactId> </dependency> <dependency> <groupId>org.eclipse</groupId> 
+			<artifactId>ocl</artifactId> </dependency> <dependency> <groupId>org.eclipse</groupId> <artifactId>osgi</artifactId> </dependency> <dependency> <groupId>org.eclipse.uml2</groupId> 
+			<artifactId>common</artifactId> </dependency> <dependency> <groupId>org.eclipse.uml2</groupId> <artifactId>types</artifactId> </dependency> <dependency> 
+			<groupId>org.eclipse.emf</groupId> <artifactId>ecore</artifactId> </dependency> <dependency> <groupId>org.eclipse.emf</groupId> <artifactId>common</artifactId> 
+			</dependency> <dependency> <groupId>org.openhealthtools.mdht.emf</groupId> <artifactId>runtime</artifactId> </dependency> -->
+	</dependencies>
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>model/*</include>
+					<include>plugin.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.ecore</include>
+				</includes>
+			</resource>
+
+		</resources>
+		<sourceDirectory>src</sourceDirectory>
+	</build>
+
+</project>
+	

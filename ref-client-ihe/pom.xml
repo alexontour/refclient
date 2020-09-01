@@ -100,22 +100,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>projects.suisse-open-exchange.healthcare-sna</id>
-			<name>projects.suisse-open-exchange.healthcare-snapshots</name>
-			<url>https://projects.suisse-open-exchange.healthcare/artifactory/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>projects.suisse-open-exchange.healthcare-rel</id>
-			<name>projects.suisse-open-exchange.healthcare-releases</name>
-			<url>https://projects.suisse-open-exchange.healthcare/artifactory/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
