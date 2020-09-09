@@ -49,7 +49,7 @@ import arztis.econnector.rest.model.fhir.FhirPractitionerRole;
  *
  * Details of how {@link Bundle} must be structured to generate a update
  * immunization state can be found under the following link <a href=
- * "https://git.et-innovations.org/java/elga-refclient/blob/master/docs/API/v1/Composition.md">https://git.et-innovations.org/java/elga-refclient/blob/master/docs/API/v1/Composition.md</a>
+ * "https://gitlab.com/elga-gmbh/refclient/-/blob/master/docs/API/v1/Composition.md">https://gitlab.com/elga-gmbh/refclient/-/blob/master/docs/API/v1/Composition.md</a>
  *
  * @author Anna Jungwirth
  *

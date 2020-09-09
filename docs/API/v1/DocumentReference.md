@@ -529,7 +529,7 @@ Example request: <http://localhost:50051/api/v1/DocumentReference?type=82593-5&p
 - Headers: `Authorization`
 - Response: JSON-Object
 
-Queries ELGA document. Value for content.attachment.url is available after querying metadata of documents. Possible content types are `"application/xml"` and `"application/fhir+json"`. JSON structure is described in <https://git.et-innovations.org/java/elga-refclient/tree/master/docs/API/v1/Composition.md>. Possible values for parameter type are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>. At the moment type is only needed for virtual organizations.
+Queries ELGA document. Value for content.attachment.url is available after querying metadata of documents. Possible content types are `"application/xml"` and `"application/fhir+json"`. JSON structure is described in <https://gitlab.com/elga-gmbh/refclient/-/blob/master/docs/API/v1/Composition.md>. Possible values for parameter type are the first level of <https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen>. At the moment type is only needed for virtual organizations.
 
 ### JSON Object Structure successfull response
 
