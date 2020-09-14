@@ -139,6 +139,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `series`*(String)* *(optional)* - vaccination scheme. It is required if the scheme differs from the default scheme. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_Impfschema_VS)
     - `doseNumberString` *(String)* *(required)* - information which vaccination or partial vaccination it was. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_Impfdosis_VS
     - `authority`*(Object)* *(required)* - reference to practitioner, who is responsible for the vaccination and its documentation. This object has the same structure like authors. If the responsible phsyician is not given the details form the first author will be used as default values. Structure described at <https://www.hl7.org/fhir/references.html#Reference>
+    - `targetDisease` *(Array)* *(optional)* - codes for target diseases. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_ImmunizationTarget_VS. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
   - `reasonCode` *(Object)* *(optional)* - code for the billability. Possible values are available under <https://termpub.gesundheit.gv.at> in the Value Set eImpf_Impfgrund_VS. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
   - `expirationDate` *(String)* *(optional)* - expiration date of the vaccine in the format yyyy-MM-dd
   - `programEligibility`*(Object)* *(optional)* - Identification mark of a vaccination voucher (if vaccination voucher booklets are available). It is only allowed for actual vaccinations and not for Addendums. Structure described at <http://hl7.org/fhir/R4/datatypes.html#CodeableConcept>
@@ -412,7 +413,18 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                     "authority": { //practitioner, which is responsible for vaccination
                         "reference": "PractitionerRole/2",
                         "type": "PractitionerRole"
-                    }
+                    }, 
+                    "targetDisease": [
+                       {
+                            "coding": [
+                                {
+                                    "code": "836403007", //general practitioner
+                                    "system": "2.16.840.1.113883.6.96", 
+                                    "display": "Frühsommer-Meningoencephalitis Impfstoff"
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "expirationDate": "2025-04-30",
                 "programEligibility": {
