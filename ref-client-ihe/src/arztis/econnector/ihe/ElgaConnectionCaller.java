@@ -1062,21 +1062,24 @@ public class ElgaConnectionCaller {
 	 * @return If the request was successful a list of {@link PatientAt} with the
 	 *         found demographic data is returned. If the query failed, the error
 	 *         message {@link Message} why the request failed is returned.
+	 * @throws UnauthorizedException
 	 */
-	public org.hl7.fhir.dstu3.model.Bundle queryPatientDemographics(ConnectionData connData, FhirPatient parameter) {
+	public org.hl7.fhir.dstu3.model.Bundle queryPatientDemographics(ConnectionData connData, FhirPatient parameter)
+			throws UnauthorizedException {
 		if (parameter != null) {
-			XUAAssertion hcpAssertion = null;
+			XUAAssertion assertion = null;
 
 			if (connData != null) {
 				try {
-					hcpAssertion = AssertionTypeUtil.transformAssertionTypeToXUAAssertion(connData.getHcpAssertion());
+					assertion = AssertionTypeUtil
+							.transformAssertionTypeToXUAAssertion(getAssertionForPatientRegistration(connData));
 				} catch (ParserConfigurationException | SAXException | IOException e) {
 					LOGGER.error(e.getMessage(), e);
 				}
 			}
 
 			return getPatientDemographicsResultBundle(
-					PatientIndexTransactions.queryPatientDemographics(parameter, hcpAssertion));
+					PatientIndexTransactions.queryPatientDemographics(parameter, assertion));
 		} else {
 			LOGGER.warn("There are no parameter to query the demographics of a patient");
 			return getErrorBundleEmptyPatientDemographics();
