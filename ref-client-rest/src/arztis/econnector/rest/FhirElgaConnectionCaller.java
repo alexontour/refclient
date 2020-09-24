@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletResponse;
@@ -36,8 +37,8 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.DocumentReference;
-import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
@@ -1125,7 +1126,17 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		ConnectionData connData = ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization);
 
 		if (connData != null) {
-			String organizationId = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(connData.getHcpAssertion());
+			String organizationId = "";
+
+			if (connData.getHcpAssertion() != null) {
+				organizationId = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(connData.getHcpAssertion());
+			} else if (connData.getContextAssertions() != null && !connData.getContextAssertions().isEmpty()) {
+				for (Entry<String, AssertionType> entry : connData.getContextAssertions().entrySet()) {
+					if (entry != null && entry.getValue() != null) {
+						organizationId = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(entry.getValue());
+					}
+				}
+			}
 
 			if (organizationId != null && organizationId.contains(URN_OID_FORMAT) && !urnNotation) {
 				return organizationId.replace(URN_OID_FORMAT, "");
