@@ -81,16 +81,16 @@ public class FhirImmunization extends Immunization {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The Constant REFERENCE_TEXT_EIMPF_DOSE. */
 	private static final String REFERENCE_TEXT_EIMPF_DOSE = "#schedule-immunization-";
-	
+
 	/** The Constant REFERENCE_IMMUNIZATION_INDEX. */
 	private static final String REFERENCE_IMMUNIZATION_INDEX = "immunization-%d";
 
 	/** map of vaccines. */
 	private static Map<String, Vaccine> vaccines = ImmunizationMapping.getInstance().getVaccineMap();
-	
+
 	/** The resources. */
 	private List<Resource> resources;
 
@@ -244,8 +244,10 @@ public class FhirImmunization extends Immunization {
 			if (consumable.getManufacturedProduct().getManufacturedMaterial() != null) {
 				setVaccineCode(new FhirCodeableConcept(
 						consumable.getManufacturedProduct().getManufacturedMaterial().getCode()));
-				setLotNumber(
-						consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText().xmlContent);
+				if (consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText() != null) {
+					setLotNumber(consumable.getManufacturedProduct().getManufacturedMaterial()
+							.getLotNumberText().xmlContent);
+				}
 			}
 
 			if (consumable.getManufacturedProduct().getManufacturerOrganization() != null) {
@@ -263,7 +265,7 @@ public class FhirImmunization extends Immunization {
 	 * contains information about target diseases. Entry relationship of type "SUBJ"
 	 * contains information about settlement.
 	 *
-	 * @param entryRels the entry rels
+	 * @param entryRels                   the entry rels
 	 * @param immunizationProtocolApplied the immunization protocol applied
 	 */
 	private void fromEntryRelationships(List<POCDMT000040EntryRelationship> entryRels,
@@ -717,17 +719,16 @@ public class FhirImmunization extends Immunization {
 		AtcdabbrEntryImmunizationSchedule schedule = new AtcdabbrEntryImmunizationSchedule();
 
 		EImpfImpfschemaVs schemaCode = EImpfImpfschemaVs.getEnum(series);
-		
-		if(schemaCode == null) {
-			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
-					new Coding("1.2.40.0.34.5.183", series, ""),
-					NullFlavor.NOINFORMATION));
+
+		if (schemaCode == null) {
+			schedule.setCode(
+					FhirCoding.createHl7CdaR2Ce(new Coding("1.2.40.0.34.5.183", series, ""), NullFlavor.NOINFORMATION));
 		} else {
 			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
 					new Coding(schemaCode.getCodeSystemId(), schemaCode.getCodeValue(), schemaCode.getDisplayName()),
 					NullFlavor.NOINFORMATION));
 		}
-		
+
 		StringBuilder sbEimpfDose = new StringBuilder(REFERENCE_TEXT_EIMPF_DOSE);
 		sbEimpfDose.append(index);
 
@@ -738,9 +739,7 @@ public class FhirImmunization extends Immunization {
 						new Coding(codeDose.getCodeSystemId(), codeDose.getCodeValue(), codeDose.getDisplayName()),
 						null));
 			} else {
-				schedule.setValue(FhirCoding.createHl7CdaR2Cd(
-						new Coding("1.2.40.0.34.5.183", doseNumber, ""),
-						null));
+				schedule.setValue(FhirCoding.createHl7CdaR2Cd(new Coding("1.2.40.0.34.5.183", doseNumber, ""), null));
 			}
 		}
 
