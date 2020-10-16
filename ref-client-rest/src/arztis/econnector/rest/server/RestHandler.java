@@ -30,7 +30,11 @@ import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmun
 import org.ehealth_connector.fhir.structures.gen.FhirPatient;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
+import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
+import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +53,7 @@ import arztis.econnector.ihe.parameters.RequestIdaParameter;
 import arztis.econnector.ihe.utilities.ConfigReader;
 import arztis.econnector.ihe.utilities.ElgaEHealthApplication;
 import arztis.econnector.ihe.utilities.IheConstants;
+import arztis.econnector.ihe.utilities.UnauthorizedException;
 import arztis.econnector.rest.ConnectionDataHandler;
 import arztis.econnector.rest.FhirElgaConnectionCaller;
 import arztis.econnector.rest.model.fhir.FhirBundle;
@@ -114,11 +119,11 @@ public class RestHandler extends AbstractHandler {
 	/**
 	 * Handle requests.
 	 *
-	 * @param target the target
+	 * @param target      the target
 	 * @param baseRequest the base request
-	 * @param request the request
-	 * @param response the response
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param request     the request
+	 * @param response    the response
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 * @throws ServletException the servlet exception
 	 */
 	@Override
@@ -189,7 +194,8 @@ public class RestHandler extends AbstractHandler {
 	}
 
 	/**
-	 * handles request to query document metadata</br>.
+	 * handles request to query document metadata</br>
+	 * .
 	 *
 	 * @param request       The {@link HttpServletRequest} either as the Request
 	 *                      object or a wrapper of that request.
@@ -224,7 +230,8 @@ public class RestHandler extends AbstractHandler {
 	}
 
 	/**
-	 * handles request to retrieve document</br>.
+	 * handles request to retrieve document</br>
+	 * .
 	 *
 	 * @param target        The target of the request - either a URI or a name.
 	 * @param request       The {@link HttpServletRequest} either as the Request
@@ -241,8 +248,7 @@ public class RestHandler extends AbstractHandler {
 		FhirDocumentReference documentReference = new FhirDocumentReference(target, contentType);
 		documentReference.setType(typeCode);
 		FhirBundle result = FhirElgaConnectionCaller.getInstance().retrieveDocuments(
-				ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization),
-				documentReference);
+				ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization), documentReference);
 
 		if (result != null) {
 			int statusResponse = 200;
@@ -257,7 +263,8 @@ public class RestHandler extends AbstractHandler {
 	}
 
 	/**
-	 * handles request to cancel document</br>.
+	 * handles request to cancel document</br>
+	 * .
 	 *
 	 * @param request       The {@link HttpServletRequest} either as the Request
 	 *                      object or a wrapper of that request.
@@ -290,7 +297,8 @@ public class RestHandler extends AbstractHandler {
 	}
 
 	/**
-	 * handles request to write document</br>.
+	 * handles request to write document</br>
+	 * .
 	 *
 	 * @param body          The body of the request, for example JSON
 	 * @param response      The {@link HttpServletResponse} as the Response object
@@ -573,6 +581,15 @@ public class RestHandler extends AbstractHandler {
 			patientId = FhirUtil.extractIdentifierFromTokenType(json.getString(JsonUtilRest.JSON_PARAM_IDENTIFIER));
 		} catch (JSONException ex) {
 			LOGGER.error(ex.getMessage(), ex);
+
+			try {
+				patientId = new Identifier();
+				JSONObject patientIdJson = json.getJSONObject(JsonUtilRest.JSON_PARAM_IDENTIFIER);
+				patientId.setValue(patientIdJson.getString("value"));
+				patientId.setSystem(patientIdJson.getString("system"));
+			} catch (JSONException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 
 		List<ElgaEHealthApplication> apps = new ArrayList<>();
@@ -649,8 +666,19 @@ public class RestHandler extends AbstractHandler {
 			patDemParam.addAddress(address);
 		}
 
-		org.hl7.fhir.dstu3.model.Bundle result = FhirElgaConnectionCaller.getInstance().queryPatientDemographics(
-				ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization), patDemParam);
+		org.hl7.fhir.dstu3.model.Bundle result = null;
+		try {
+			result = FhirElgaConnectionCaller.getInstance().queryPatientDemographics(
+					ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization), patDemParam);
+		} catch (UnauthorizedException e) {
+			LOGGER.error(e.getMessage(), e);
+			writeResponse(
+					FhirUtil.getFhirContext().newJsonParser()
+							.encodeResourceToString(new FhirBundle(BundleType.TRANSACTIONRESPONSE,
+									HttpServletResponse.SC_UNAUTHORIZED, IssueSeverity.ERROR, IssueType.LOGIN,
+									OperationOutcome.MSGAUTHREQUIRED, "No HCP assertion found")),
+					response, HttpServletResponse.SC_UNAUTHORIZED, HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
+		}
 
 		if (result != null) {
 			int statusResponse = 200;
