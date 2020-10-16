@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
@@ -329,6 +330,20 @@ public class XdsTransactions {
 
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("set id: {}", setId);
+
+				int index = 0;
+				for (org.ehealth_connector.common.mdht.Identificator id : metaData.getPatient().getIds()) {
+					if (id != null) {
+						LOGGER.debug("Found ID: {}, index: {}", id.getExtension(), index++);
+					}
+				}
+
+				index = 0;
+				Iterator eListIterator = metaData.getMdhtDocumentEntryType().getSourcePatientInfo()
+						.getPatientIdentifier().iterator();
+				while (eListIterator.hasNext()) {
+					LOGGER.debug("Found ID: {}, index: {}", eListIterator.next().toString(), index++);
+				}
 			}
 
 			communication.addXUserAssertion(oAssertion);
