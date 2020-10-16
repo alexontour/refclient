@@ -635,7 +635,7 @@ public class XdsTransactions {
 			if (patientId != null) {
 				if (!TypeCode.isMedications(typeCode)) {
 					if (patientId.getRoot() != null
-							&& ownOid.replace(URN_OID_FORMAT, "").equalsIgnoreCase(patientId.getRoot())) {
+							&& patientId.getRoot().startsWith(ownOid.replace(URN_OID_FORMAT, ""))) {
 						return patientId;
 					}
 				} else {
