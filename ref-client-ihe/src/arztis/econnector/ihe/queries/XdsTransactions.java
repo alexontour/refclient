@@ -320,7 +320,8 @@ public class XdsTransactions {
 		}
 
 		DocumentMetadataAt metaData = extractMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode,
-				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid);
+				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid,
+				config.isUrnOidNeededForOrganizationId());
 
 		if (metaData != null) {
 			inputStream.close();
@@ -497,13 +498,16 @@ public class XdsTransactions {
 	 * @param oid                    OID of ELGA area in which document should be
 	 *                               stored.
 	 * @param ownOid                 OID of document author
+	 * @param orgUrnOidNeeded        indicator, if "urn:oid" prefix is needed for
+	 *                               organization ID
 	 *
 	 * @return created {@link DocumentMetadataAt}
 	 */
 	private DocumentMetadataAt extractMetadata(AvailabilityStatusType status, String typeCode,
 			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
 			CodedMetadataType formatCode, Identificator patientId, String parentDoc, POCDMT000040ClinicalDocument cda,
-			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid) {
+			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid,
+			boolean orgUrnOidNeeded) {
 		DocumentMetadataAt metadata = null;
 		if (typeCode != null && cda != null) {
 			if (TypeCode.isImmunizationHistory(typeCode) && cda.getAuthor() != null && !cda.getAuthor().isEmpty()) {
@@ -517,7 +521,7 @@ public class XdsTransactions {
 			}
 
 			metadata = communication.addElgaDocument(DocumentDescriptor.CDA_R2, inputStream, cda,
-					isUrnOidNeeded(oid, typeCode));
+					isUrnOidNeeded(oid, typeCode), orgUrnOidNeeded);
 		}
 
 		addExplicitMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode, formatCode, patientId,

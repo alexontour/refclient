@@ -111,7 +111,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
 - `resource` *(Object)* - organization (<http://hl7.org/fhir/R4/organization.html>)
   - `resourceType` *(String)* *(required)* - type of resource here it is always `"Organization"`
   - `id` *(String)* *(required)* - id of the practitioner role resource to reference from other resources
-  - `identifier` *(Array)* *(optional)* - identifiers of organization. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>.
+  - `identifier` *(Array)* *(optional)* - identifiers of organization. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>. If this is the identifier for the organization of the author, it must be the OID of GDA-Index.
   - `name` *(String)* *(required)* - name of the organization. The default value is "Ordination `"given"` `"family"`"
   - `address` *(Object)* *(required)* - address of the organization  
     - `use` *(String)* *(required)* - usage of address
@@ -361,7 +361,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
             "resource": {
                 "resourceType": "Organization", //fix value
                 "id": "1",
-                "identifier": [ // default value is the OID of organization, which is authorized
+                "identifier": [ // value must be the OID of organization, which is authorized
                     {
                         "system": "1.2.40.0.34.99.3.2.1046167"
                     }
