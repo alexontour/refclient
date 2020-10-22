@@ -41,7 +41,9 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `targetIdentifier` *(Object)* *(required)* - identifier of previous document. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>
   - `event` *(Array)* *(optional)* - vaccination is documented
     - `period` *(Object)* *(optional)* - period of vaccination. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Period>. `"start"` and `"end"` must not have the same date. The format of the start and end have to be yyyy-MM-dd.
-  - `versionNumber` *(int)* *(optional)* - default value for the version is 1, so you only need to specify the version if you want to update an existing document
+  - `extension` *(Array)* *(optional)* - extension for version number. Default value for the version is 1, so you only need to specify the version if you want to update an existing document
+    - `url` *(String)* *(required)* - fix value for the version number extension is `http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber`
+    - `valueInteger` *(int)* *(required)* - version number to use
   - `identifier` *(Object)* *(optional)* - default value for the setid is a generated value, so you only need to specify the setid if you want to update an existing document. This means you must use the setid of the document to be updated. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>.
   - `section` *(Array)* *(required)* - sections of document like immunizations. At least one section is required, which includes immunization. All other sections are optional.
     - `entry` *(Array)* *(required)* - reference to immunization is required. Optional are references to immunization recommendation and observations.
@@ -247,6 +249,12 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                             "type": "PractitionerRole" //fix value
                         }
                     }
+                ],
+                "extension": [
+                  {
+                     "url": "http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber",
+                     "valueInteger": 1
+                  }
                 ],
                 "event": [
                     {

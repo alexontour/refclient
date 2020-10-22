@@ -24,8 +24,10 @@ import org.hl7.fhir.r4.model.Composition;
 import org.hl7.fhir.r4.model.Composition.CompositionAttestationMode;
 import org.hl7.fhir.r4.model.Composition.CompositionAttesterComponent;
 import org.hl7.fhir.r4.model.Composition.DocumentConfidentiality;
+import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Immunization;
 import org.hl7.fhir.r4.model.Immunization.ImmunizationPerformerComponent;
+import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
@@ -278,8 +280,16 @@ public class UpdateImmunizationState {
 			composition.setIdentifier(bundle.getIdentifier());
 		}
 
+		Extension versionExtension = composition.getExtensionByUrl(
+				"http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber");
+		int version = 1;
+		if (versionExtension != null) {
+			version = ((IntegerType) versionExtension.getValue()).getValue();
+		}
+
 		cda.setVersion(
-				new Identificator(composition.getIdentifier().getSystem(), composition.getIdentifier().getValue()), 1);
+				new Identificator(composition.getIdentifier().getSystem(), composition.getIdentifier().getValue()),
+				version);
 
 		cda.setTitle(CdaUtil.createTitle(composition.getTitle()));
 		cda.setEffectiveTime(CdaUtil.createEffectiveTimePoint(composition.getDate()));

@@ -37,6 +37,8 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.DocumentReference;
+import org.hl7.fhir.r4.model.DocumentReference.DocumentReferenceRelatesToComponent;
+import org.hl7.fhir.r4.model.DocumentReference.DocumentRelationshipType;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
@@ -866,6 +868,18 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
 			if (documentReference.hasContent()) {
 				formatCode = FhirDocumentReference.getFormatCode(documentReference);
+			}
+
+			if (documentReference.hasRelatesTo()) {
+				for (DocumentReferenceRelatesToComponent docRefRelatesToComp : documentReference.getRelatesTo()) {
+					if (docRefRelatesToComp != null
+							&& DocumentRelationshipType.REPLACES.equals(docRefRelatesToComp.getCode())
+							&& docRefRelatesToComp.getTarget() != null
+							&& docRefRelatesToComp.getTarget().getIdentifier() != null) {
+						parentDoc = docRefRelatesToComp.getTarget().getIdentifier().getValue();
+					}
+
+				}
 			}
 
 			if (documentReference.hasSubject() && documentReference.getSubject().hasIdentifier()) {
