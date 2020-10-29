@@ -720,9 +720,11 @@ public class FhirImmunization extends Immunization {
 
 		EImpfImpfschemaVs schemaCode = EImpfImpfschemaVs.getEnum(series);
 
-		if (schemaCode == null) {
+		if (series == null || series.isEmpty()) {
 			schedule.setCode(
 					FhirCoding.createHl7CdaR2Ce(null, NullFlavor.NOINFORMATION));
+		} else if (schemaCode == null) {
+			schedule.setCode(FhirCoding.createHl7CdaR2Ce(new Coding("1.2.40.0.34.5.183", series, ""), null));
 		} else {
 			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
 					new Coding(schemaCode.getCodeSystemId(), schemaCode.getCodeValue(), schemaCode.getDisplayName()),
@@ -732,7 +734,7 @@ public class FhirImmunization extends Immunization {
 		StringBuilder sbEimpfDose = new StringBuilder(REFERENCE_TEXT_EIMPF_DOSE);
 		sbEimpfDose.append(index);
 
-		if (doseNumber != null) {
+		if (doseNumber != null && !doseNumber.isEmpty()) {
 			EImpfImpfdosisVs codeDose = EImpfImpfdosisVs.getEnum(doseNumber);
 			if (codeDose != null) {
 				schedule.setValue(FhirCoding.createHl7CdaR2Cd(
