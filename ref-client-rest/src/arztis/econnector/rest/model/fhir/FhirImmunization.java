@@ -722,7 +722,7 @@ public class FhirImmunization extends Immunization {
 
 		if (schemaCode == null) {
 			schedule.setCode(
-					FhirCoding.createHl7CdaR2Ce(new Coding("1.2.40.0.34.5.183", series, ""), NullFlavor.NOINFORMATION));
+					FhirCoding.createHl7CdaR2Ce(null, NullFlavor.NOINFORMATION));
 		} else {
 			schedule.setCode(FhirCoding.createHl7CdaR2Ce(
 					new Coding(schemaCode.getCodeSystemId(), schemaCode.getCodeValue(), schemaCode.getDisplayName()),
@@ -741,6 +741,8 @@ public class FhirImmunization extends Immunization {
 			} else {
 				schedule.setValue(FhirCoding.createHl7CdaR2Cd(new Coding("1.2.40.0.34.5.183", doseNumber, ""), null));
 			}
+		} else {
+			schedule.setValue(FhirCoding.createHl7CdaR2Cd(null, NullFlavor.UNKNOWN));
 		}
 
 		schedule.setHl7Text(CdaUtil.createReference(sbEimpfDose.toString()));
