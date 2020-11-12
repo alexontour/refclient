@@ -62,7 +62,7 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
    
    ![alt text](Installationsanleitung_media/gitlab_settings_ssh_keys.png "gitlab settings ssh keys")
 
-6. Hier können Sie den Key eintragen. Öffnen Sie in ihrem Explorer dazu den Ordner in dem Sie den Key abgespeichert haben und geben Sie den Schlüssel ein.
+6. Hier können Sie den public-Key (Endung ".pub") eintragen. Öffnen Sie in ihrem Explorer dazu den Ordner in dem Sie den Key abgespeichert haben und geben Sie den Schlüssel ein. Der Text innerhalb dieser Datei beginnt mit "ssh-rsa" (kann einfach mit dem Notepad geöffnet werden). Ist dies nicht der Fall, dann ist diese Datei auch kein public-Key.
 
    ![alt text](Installationsanleitung_media/gitlab_ssh_keys.png "gitlab ssh keys")
 

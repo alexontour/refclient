@@ -44,22 +44,22 @@ Bevor Sie anfangen können, muss Ihr System folgende Voraussetzungen erfüllen:
 ### Setzen der JAVA_HOME Environment Variable
 Die folgenden Screenshots wurden im Windows 10 erstellt. Geben Sie im Suchfeld ihres Computers Environment ein. Windows schlägt Ihnen dabei die Systemumgebungsvariable, falls Sie auf Deutsch arbeiten, vor. Bei Auswahl dieses Feldes öffnet sich ein Fenster mit den Systemeigenschaften (siehe Abbildung).
 
-![alt text](Installationsanleitung_media/Systemeigenschaften.png "Systemeigenschaften")
+![alt text](docs/Installationsanleitung_media/Systemeigenschaften.png "Systemeigenschaften")
 
 Hier können Sie überprüfen, ob die Variablen richtig gesetzt wurden. Klicken sie dabei auf Umgebungsvariablen. Es öffnet sich ein neues Fenster in denen Sie die Variablen überprüfen können. 
 
-![alt text](Installationsanleitung_media/Systemvariablen.png "Systemvariablen")
+![alt text](docs/Installationsanleitung_media/Systemvariablen.png "Systemvariablen")
 
 Falls Sie keine Variable JAVA_HOME anfinden, müssen Sie diese anlegen. Dafür klicken Sie entweder im Bereich Benutzervariablen oder Systemvariablen auf Neu…. Worauf sich erneut ein Fenster öffnet. 
 
-![alt text](Installationsanleitung_media/Neue_Benutzervariable.png "Neue Benutzervariable")
+![alt text](docs/Installationsanleitung_media/Neue_Benutzervariable.png "Neue Benutzervariable")
 
 Bei der Vergabe des Namens der Variable geben Sie, JAVA_HOME ein (siehe Abbildung). Anschließend können Sie mittels dem Button Verzeichnis durchsuchen, den Pfad Ihrer entpackten Zip-Dateien angeben. Bestätigen Sie Ihre Eingaben mittels OK (mehrmals erforderlich).
 
 ### Installation von Eclipse
 Unter: https://www.eclipse.org/downloads/packages/installer finden Sie neben dem Download auch eine Installationsanleitung. Folgen Sie dieser bis zum Punkt 3. Wenn Sie folgendes Fenster (siehe Abbildung) vor sich haben, wählen Sie Eclipse IDE for Enterprise Java Developers aus.
 
-![alt text](Installationsanleitung_media/eclipseinstaller.png "eclipseinstaller")
+![alt text](docs/Installationsanleitung_media/eclipseinstaller.png "eclipseinstaller")
 
 Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite angeben.
 
@@ -68,26 +68,26 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
 ### Projekt herunterladen
 1. Damit Sie mit GitLab eine Verbindung aufbauen können benötigen Sie einen SSH-Key. Erstellen Sie einen SSH-Key, falls Sie noch keinen zur Verfügung haben sollten. Unter dem Link https://gitlab.com/help/ssh/README#generating-a-new-ssh-key-pair finden Sie eine detaillierte Anleitung zum Erstellen von SSH-Keys.
 
-   ![alt text](Installationsanleitung_media/generating_a_new_ssh_key_pair.png "generating a new ssh key pair")
+   ![alt text](docs/Installationsanleitung_media/generating_a_new_ssh_key_pair.png "generating a new ssh key pair")
 
    Geben Sie in ihren Terminal (öffnen bei Windows durch Eingabe von cmd im Suchfeld) den Code zum Generieren ein (siehe Abbildung oben).
 2. Sollten Sie schon über einen Key verfügen, finden Sie unter https://gitlab.com/help/ssh/README#review-existing-ssh-keys auch eine Anleitung zum hochladen. Achten Sie darauf einen öffentlichen SSH Key hochzuladen.
 
-   ![alt text](Installationsanleitung_media/adding_an_ssh_key_to_your_GitLab_account.png "adding an ssh key to your GitLab account")
+   ![alt text](docs/Installationsanleitung_media/adding_an_ssh_key_to_your_GitLab_account.png "adding an ssh key to your GitLab account")
    
    Verfahren Sie gleich wie in Punkt 1 beschrieben, durch Eingabe des passenden Codes im Terminal. Sollte es zu Fehlermeldungen kommen bzw. der Key nicht gefunden werden, starten Sie Ihr System neu und versuchen Sie es erneut. Es kommt in vielen Fällen vor, dass besonders unter Windows nach jeder Installation einen Neustart benötigt, um die Funktion zu gewährleisten.
 3. Öffnen Sie die Website https://gitlab.com/users/sign_in und loggen Sie sich mit Ihren Zugangsdaten ein.
 4. Klicken Sie im rechten oberen Bildschirm Bereich auf das Icon (siehe Abbildung) und wählen Sie Settings aus
    
-   ![alt text](Installationsanleitung_media/gitlab_settings.png "gitlab settings")
+   ![alt text](docs/Installationsanleitung_media/gitlab_settings.png "gitlab settings")
 
 5. In der linken Bildschirmhälfte finden Sie den Menüpunkt SSH Keys. Wählen Sie diesen aus um einen SSH Key zu erstellen oder einen bereits existierenden Key hochzuladen.
    
-   ![alt text](Installationsanleitung_media/gitlab_settings_ssh_keys.png "gitlab settings ssh keys")
+   ![alt text](docs/Installationsanleitung_media/gitlab_settings_ssh_keys.png "gitlab settings ssh keys")
 
-6. Hier können Sie den Key eintragen. Öffnen Sie in ihrem Explorer dazu den Ordner in dem Sie den Key abgespeichert haben und geben Sie den Schlüssel ein.
+6. Hier können Sie den public-Key (Endung ".pub") eintragen. Öffnen Sie in ihrem Explorer dazu den Ordner in dem Sie den Key abgespeichert haben und geben Sie den Schlüssel ein. Der Text innerhalb dieser Datei beginnt mit "ssh-rsa" (kann einfach mit dem Notepad geöffnet werden). Ist dies nicht der Fall, dann ist diese Datei auch kein public-Key. 
 
-   ![alt text](Installationsanleitung_media/gitlab_ssh_keys.png "gitlab ssh keys")
+   ![alt text](docs/Installationsanleitung_media/gitlab_ssh_keys.png "gitlab ssh keys")
 
 7. Geben Sie in ihrem Terminal nun folgendes ein: git@gitlab.com:elga-gmbh/refclient.git und führen Sie den Befehl aus.
 8. Nun können Sie Eclipse öffnen
@@ -96,30 +96,30 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
 1. Nach dem Öffnen von Eclipse wählen Sie in der Menüleiste File und Import…
 2. Öffnen Sie den Ordner Maven und wählen Existing Maven Projects aus
 
-   ![alt text](Installationsanleitung_media/eclipse_import.png "eclipse import")
+   ![alt text](docs/Installationsanleitung_media/eclipse_import.png "eclipse import")
 
 3. Wähle die root directory aus
 4. Aktivieren Sie das Kästchen bei /pom.xml, damit alle Felder zu markieren oder klicken Sie auf Select All
 
-   ![alt text](Installationsanleitung_media/eclipse_import_maven_project.png "eclipse import maven project")
+   ![alt text](docs/Installationsanleitung_media/eclipse_import_maven_project.png "eclipse import maven project")
 
 
 ### ELGA Referenzclient builden
 1. Klicken Sie mit der rechten Maustaste auf das Projekt ref-client und wählen Sie „Maven“ und „Update Project“ aus. Unter Windows können Sie stattdessen den Shortcut Alt F5 verwenden (siehe Abbildung). 
 
-   ![alt text](Installationsanleitung_media/maven_update_project.png "maven update project")
+   ![alt text](docs/Installationsanleitung_media/maven_update_project.png "maven update project")
 
 2. Als nächstes fügen Sie eine neue Maven Build Konfiguration hinzu. Klicken Sie wieder mit der rechten Maustaste auf den Projektordner und wählen Sie „Run as“ und „Run Configurations…“ aus (siehe Abbildung).
 
-   ![alt text](Installationsanleitung_media/eclipse_run_as.png "eclipse run as")
+   ![alt text](docs/Installationsanleitung_media/eclipse_run_as.png "eclipse run as")
 
 3. Im sich darauffolgenden Fenster, müssen Sie ihre Base directory einstellen, in dem Sie auf den Button Workspace klicken (siehe Abbildung).
 
-   ![alt text](Installationsanleitung_media/eclipse_run_configurations.png "eclipse run configurations")
+   ![alt text](docs/Installationsanleitung_media/eclipse_run_configurations.png "eclipse run configurations")
 
 4. Wählen Sie im nächsten Fenster die gewünschte Directory aus und klicken Sie auf OK.
 
-   ![alt text](Installationsanleitung_media/eclipse_folder_selection.png "eclipse folder selection")
+   ![alt text](docs/Installationsanleitung_media/eclipse_folder_selection.png "eclipse folder selection")
 
 5. Achten Sie darauf, dass Sie im Feld Goals den Text „clean install“ enthaltet. Klicken Sie auf Apply und anschließend auf den Button Run.
 
@@ -156,15 +156,15 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
 ### ELGA Referenzclient in Eclipse starten
 1. Legen Sie eine „Run Configuration“ an. Klicken Sie wieder mit der rechten Maustaste auf den Projektordner und wählen Sie „Run as“ und „Run Configurations…“ aus (siehe Abbildung).
 
-   ![alt text](Installationsanleitung_media/eclipse_run_as.png "eclipse run as")
+   ![alt text](docs/Installationsanleitung_media/eclipse_run_as.png "eclipse run as")
 
 2. Setzen Sie das Project auf „ref-client-rest“ und fügen Sie die Main Klasse (arztis.econnector.rest.ElgaRefClient) zur „Run Configuration“ hinzu (siehe Abbildung)
 
-   ![alt text](Installationsanleitung_media/eclipse_create_Manage_and_run_configurations.png "eclipse create Manage and run configurations")
+   ![alt text](docs/Installationsanleitung_media/eclipse_create_Manage_and_run_configurations.png "eclipse create Manage and run configurations")
 
 3. Als nächsten Schritt setzten Sie Ihr Keystore Passwort (welches Sie unter dem Punkt „Passwort für Keystore bereitstellen“ festgelegt haben) in die Programm Argumente (siehe Abbildung)
 
-   ![alt text](Installationsanleitung_media/eclipse_create_Manage_and_run_configurations_arguments.png "eclipse create Manage and run configurations arguments")
+   ![alt text](docs/Installationsanleitung_media/eclipse_create_Manage_and_run_configurations_arguments.png "eclipse create Manage and run configurations arguments")
 
 4. Klicken Sie auf Run, um den ELGA Referenzclient zu starten.
 
