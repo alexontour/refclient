@@ -6,12 +6,16 @@
 Beachten Sie, dass Sie nach jeder Installation einen Neustart durchführen!
 Bevor Sie anfangen können, muss Ihr System folgende Voraussetzungen erfüllen:
 1. **Java OpenJDK Version 12 oder 13**
+   
    Unter folgenden Link können Sie diese installieren: https://jdk.java.net/archive/
+   
    Für Linux-User finden Sie hier eine Installationsanleitung für JAVA OpenJDK: https://openjdk.java.net/install/
 2. **JAVA_HOME Environment Variable auf den Ordner OpenJDK 12 oder 13 setzen**
 3. **Git muss installiert sein**
+   
    Unter folgendem Link finden Sie den Download für Git: https://git-scm.com/downloads
 4. **Eclipse Version ab 2019-09 muss installiert sein**
+   
    Unter folgendem Link verfügbar: https://www.eclipse.org/downloads/packages/installer 
 
 ### Setzen der JAVA_HOME Environment Variable
