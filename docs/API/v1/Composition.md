@@ -41,7 +41,9 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
     - `targetIdentifier` *(Object)* *(required)* - identifier of previous document. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>
   - `event` *(Array)* *(optional)* - vaccination is documented
     - `period` *(Object)* *(optional)* - period of vaccination. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Period>. `"start"` and `"end"` must not have the same date. The format of the start and end have to be yyyy-MM-dd.
-  - `versionNumber` *(int)* *(optional)* - default value for the version is 1, so you only need to specify the version if you want to update an existing document
+  - `extension` *(Array)* *(optional)* - extension for version number. Default value for the version is 1, so you only need to specify the version if you want to update an existing document
+    - `url` *(String)* *(required)* - fix value for the version number extension is `http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber`
+    - `valueInteger` *(int)* *(required)* - version number to use
   - `identifier` *(Object)* *(optional)* - default value for the setid is a generated value, so you only need to specify the setid if you want to update an existing document. This means you must use the setid of the document to be updated. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>.
   - `section` *(Array)* *(required)* - sections of document like immunizations. At least one section is required, which includes immunization. All other sections are optional.
     - `entry` *(Array)* *(required)* - reference to immunization is required. Optional are references to immunization recommendation and observations.
@@ -111,7 +113,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
 - `resource` *(Object)* - organization (<http://hl7.org/fhir/R4/organization.html>)
   - `resourceType` *(String)* *(required)* - type of resource here it is always `"Organization"`
   - `id` *(String)* *(required)* - id of the practitioner role resource to reference from other resources
-  - `identifier` *(Array)* *(optional)* - identifiers of organization. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>.
+  - `identifier` *(Array)* *(optional)* - identifiers of organization. Structure described at <http://hl7.org/fhir/R4/datatypes.html#Identifier>. If this is the identifier for the organization of the author, it must be the OID of GDA-Index.
   - `name` *(String)* *(required)* - name of the organization. The default value is "Ordination `"given"` `"family"`"
   - `address` *(Object)* *(required)* - address of the organization  
     - `use` *(String)* *(required)* - usage of address
@@ -248,6 +250,12 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
                         }
                     }
                 ],
+                "extension": [
+                  {
+                     "url": "http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber",
+                     "valueInteger": 1
+                  }
+                ],
                 "event": [
                     {
                         "period": {
@@ -361,7 +369,7 @@ Generates a CDA document of the class "Update Immunisierungsstatus". Implemented
             "resource": {
                 "resourceType": "Organization", //fix value
                 "id": "1",
-                "identifier": [ // default value is the OID of organization, which is authorized
+                "identifier": [ // value must be the OID of organization, which is authorized
                     {
                         "system": "1.2.40.0.34.99.3.2.1046167"
                     }

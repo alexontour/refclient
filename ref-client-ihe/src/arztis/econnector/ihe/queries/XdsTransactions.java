@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.ServiceUnavailableException;
@@ -319,7 +320,8 @@ public class XdsTransactions {
 		}
 
 		DocumentMetadataAt metaData = extractMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode,
-				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid);
+				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid,
+				config.isUrnOidNeededForOrganizationId());
 
 		if (metaData != null) {
 			inputStream.close();
@@ -329,6 +331,20 @@ public class XdsTransactions {
 
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("set id: {}", setId);
+
+				int index = 0;
+				for (org.ehealth_connector.common.mdht.Identificator id : metaData.getPatient().getIds()) {
+					if (id != null) {
+						LOGGER.debug("Found ID: {}, index: {}", id.getExtension(), index++);
+					}
+				}
+
+				index = 0;
+				Iterator eListIterator = metaData.getMdhtDocumentEntryType().getSourcePatientInfo()
+						.getPatientIdentifier().iterator();
+				while (eListIterator.hasNext()) {
+					LOGGER.debug("Found ID: {}, index: {}", eListIterator.next().toString(), index++);
+				}
 			}
 
 			communication.addXUserAssertion(oAssertion);
@@ -482,13 +498,16 @@ public class XdsTransactions {
 	 * @param oid                    OID of ELGA area in which document should be
 	 *                               stored.
 	 * @param ownOid                 OID of document author
+	 * @param orgUrnOidNeeded        indicator, if "urn:oid" prefix is needed for
+	 *                               organization ID
 	 *
 	 * @return created {@link DocumentMetadataAt}
 	 */
 	private DocumentMetadataAt extractMetadata(AvailabilityStatusType status, String typeCode,
 			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
 			CodedMetadataType formatCode, Identificator patientId, String parentDoc, POCDMT000040ClinicalDocument cda,
-			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid) {
+			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid,
+			boolean orgUrnOidNeeded) {
 		DocumentMetadataAt metadata = null;
 		if (typeCode != null && cda != null) {
 			if (TypeCode.isImmunizationHistory(typeCode) && cda.getAuthor() != null && !cda.getAuthor().isEmpty()) {
@@ -502,7 +521,7 @@ public class XdsTransactions {
 			}
 
 			metadata = communication.addElgaDocument(DocumentDescriptor.CDA_R2, inputStream, cda,
-					isUrnOidNeeded(oid, typeCode));
+					isUrnOidNeeded(oid, typeCode), orgUrnOidNeeded);
 		}
 
 		addExplicitMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode, formatCode, patientId,
@@ -635,7 +654,7 @@ public class XdsTransactions {
 			if (patientId != null) {
 				if (!TypeCode.isMedications(typeCode)) {
 					if (patientId.getRoot() != null
-							&& ownOid.replace(URN_OID_FORMAT, "").equalsIgnoreCase(patientId.getRoot())) {
+							&& patientId.getRoot().startsWith(ownOid.replace(URN_OID_FORMAT, ""))) {
 						return patientId;
 					}
 				} else {

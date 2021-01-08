@@ -323,9 +323,13 @@ public class ElgaConnectionCaller {
 				}
 			}
 
-			Object result = PatientContactTransactions.registerConfirmationContact(
-					getAssertionForPatientRegistration(connData), sSamlTicket, cardToken,
-					contactParameter.getPatientId(), IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
+			Object result = null;
+
+			if (!CONFIG.isOnlyContext()) {
+				result = PatientContactTransactions.registerConfirmationContact(
+						getAssertionForPatientRegistration(connData), sSamlTicket, cardToken,
+						contactParameter.getPatientId(), IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
+			}
 
 			if (isKbsForAllAreasRequired(contactParameter.getEhealthApps())) {
 				return registerPatientContactForAllAreas(connData, cardToken, contactParameter.getPatientId(),
