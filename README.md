@@ -135,8 +135,20 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
       1. Staat oder Provinz
       1. Ländercode z.B. AT
    3. Kopieren Sie den generierten Keystore *.jks aus dem $JAVA_HOME/bin/ Ordner in den zuvor erstellten keystore Ordner.
-4. (Nur wenn mit GINA und e-Card gearbeitet wird, wird dieser Punkt benötigt) Importieren Sie die benötigten Zertifikate der SVC (https://www.chipkarte.at/cdscontent/?contentid=10007.678619&portal=ecardportal) in den cacerts1_keystore und den cacerts1_truststore.
-   1. keytool -importcert -file <cerfilepath>.cer -keystore <keystorename>.jks -alias <alias>
+4. (Nur wenn mit GINA und e-Card gearbeitet wird, wird dieser Punkt benötigt) Wenn Sie die benötigten Zertifikate bereits besitzen, springen Sie zum Unterpunkt 3. Ansonsten können Sie sich diese unter https://www.chipkarte.at/cdscontent/?contentid=10007.678619&portal=ecardportal herunterladen.
+   1. Hier sind die Links zu den Zertifikaten die Sie benötigen:
+      1. https://www.chipkarte.at/cdscontent/load?contentid=10008.551213&version=1391172959
+      1. https://www.chipkarte.at/cdscontent/load?contentid=10008.551176&version=1391172955
+      1. https://www.chipkarte.at/cdscontent/load?contentid=10008.632990&version=1472131007
+      1. https://www.chipkarte.at/cdscontent/load?contentid=10008.632986&version=1472130988
+   1. Weiters müssen Sie in der Konfigurationsdatei https://gitlab.com/elga-gmbh/refclient/-/blob/master/ref-client-rest/resources/config_elga_ref_client.properties folgende Endpunkte einstellen:
+      1. TARGETENDPOINT_PDQ = /elga-proxy/1/zpi-ihe-ws
+      1. TARGETENDPOINT_ELGAPLUS_ETS_IMPF = /elga-proxy/1/ETS
+      1. TARGETENDPOINT_ELGAPLUS_EHEALTH_IMPF = /elga-proxy/1/EHEALTH/XCA/eHealth
+      1. TARGETENDPOINT_ELGAPLUS_KBS_IMPF = /elga-proxy/1/KBS
+      1. Sie müssen in der Konfigurationsdatei die HERSTELLER_ID mit Ihrer Hersteller ID ausfüllen, welche Sie für die Anmeldung bei der GINA benötigen. Außerdem müssen Sie die IP Adresse der GINA in der Konfigurationsdatei angeben.
+   1. Importieren Sie die benötigten Zertifikate der SVC in den cacerts1_keystore und den cacerts1_truststore.
+      1. keytool -importcert -file <cerfilepath>.cer -keystore <keystorename>.jks -alias <alias>
 5. Importieren Sie den erhaltenen Key des jeweiligen ELGA Bereichs in den cacerts1_keystore mit privatem Schlüssel:
    1. openssl pkcs12 -export -in <pemfilepath>.pem -name test -out <name>.p12
    2. keytool -importkeystore -srckeystore <name>.p12 -srcstoretype pkcs12 -destkeystore <keystorename>.jks -deststoretype pkcs12
