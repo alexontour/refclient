@@ -28,14 +28,16 @@ import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.ehealth_connector.communication.AffinityDomain;
-import org.ehealth_connector.communication.AtnaConfig.AtnaConfigMode;
-import org.ehealth_connector.communication.Destination;
-import org.ehealth_connector.communication.DocumentMetadata.DocumentMetadataExtractionMode;
-import org.ehealth_connector.communication.SubmissionSetMetadata.SubmissionSetMetadataExtractionMode;
-import org.ehealth_connector.communication.at.ConvenienceCommunicationAt;
+import org.husky.common.communication.AffinityDomain;
+import org.husky.common.communication.AtnaConfig.AtnaConfigMode;
+import org.husky.common.communication.Destination;
+import org.husky.common.communication.DocumentMetadata.DocumentMetadataExtractionMode;
+import org.husky.common.communication.SubmissionSetMetadata.SubmissionSetMetadataExtractionMode;
+import org.husky.communication.ConvenienceMasterPatientIndexV3;
+import org.husky.communication.at.ConvenienceCommunicationAt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.auth.soap.AuthServiceStub;
 import arztis.econnector.common.generatedClasses.at.chipkarte.client.base.soap.BaseServiceStub;
@@ -50,6 +52,7 @@ import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub;
 import arztis.econnector.ihe.generatedClasses.ihe.registry.IHERegistryServiceStub;
 import arztis.econnector.ihe.generatedClasses.kbs.KBSServiceStub;
 import arztis.econnector.ihe.generatedClasses.pharm.CommunityPharmacyManagerStub;
+import arztis.econnector.ihe.model.ConvenienceCommunicationConnection;
 
 /**
  * This class serves as pool for all created <b>SOAP Services</b>, which are
@@ -219,19 +222,19 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	private CommunityPharmacyManagerStub communityPharmacyManagerEhealthPlusEImmunizationStub;
 
 	/** The XDS service. */
-	private ConvenienceCommunicationAt xdsService;
+	private ConvenienceCommunicationConnection xdsService;
 
 	/** The XDS EMED service. */
-	private ConvenienceCommunicationAt xdsEmedService;
+	private ConvenienceCommunicationConnection xdsEmedService;
 
 	/** The XDS write service. */
-	private ConvenienceCommunicationAt xdsWriteService;
+	private ConvenienceCommunicationConnection xdsWriteService;
 
 	/** The XDS ehealth plus service. */
-	private ConvenienceCommunicationAt xdsEhealthPlusService;
+	private ConvenienceCommunicationConnection xdsEhealthPlusService;
 
 	/** The XDS ehealth plus electronic immunization service. */
-	private ConvenienceCommunicationAt xdsEhealthPlusEImmunizationService;
+	private ConvenienceCommunicationConnection xdsEhealthPlusEImmunizationService;
 
 	/** The affinity domain ZPI. */
 	private AffinityDomain affinityDomainZpi;
@@ -248,11 +251,16 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	/** The ETS ehealth plus electronic immunization service stub. */
 	private ETSServiceStub etsEhealthPlusEImmunizationServiceStub;
 
+	/** The PDQ service stub. */
+	private ConvenienceMasterPatientIndexV3 pdqServiceStub;
+
 	/** The instance. */
 	private static IheServiceStubPool instance;
 
 	/** The keystore pass. */
 	private String keystorePass;
+
+	private ApplicationContext context;
 
 	/**
 	 * Constructor to create instance of {@link IheServiceStubPool} with passed
@@ -262,11 +270,13 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * @param mapServiceEndpoints map of service name and service target endpoints
 	 * @param keystorePass        password for keystore
 	 */
-	private IheServiceStubPool(Map<String, String> mapServiceEndpoints, String keystorePass) {
+	private IheServiceStubPool(Map<String, String> mapServiceEndpoints, String keystorePass,
+			ApplicationContext context) {
 		if (instance != null) {
 			throw new RuntimeException("Use getInstance() method to get the single instance of IHE service stub pool");
 		}
 
+		this.context = context;
 		portAddressEts = mapServiceEndpoints.get(IheConstants.ETS_SERVICE);
 		portAddressKbs = mapServiceEndpoints.get(IheConstants.KBS_SERVICE);
 		portAddressEmedAt = mapServiceEndpoints.get(IheConstants.EMED_AT_SERVICE);
@@ -325,14 +335,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * @return instance of {@link IheServiceStubPool}
 	 */
 	public static synchronized IheServiceStubPool getInstance(Map<String, String> mapServiceEndpoints,
-			String encryptedKeystorePass) {
+			String encryptedKeystorePass, ApplicationContext context) {
 		if (instance == null) {
 			if (mapServiceEndpoints == null) {
 				throw new IllegalStateException(
 						"Either serviceManagerTargetEndpoint or servicesVersionMap is not set. Cannot create instance");
 			}
 
-			instance = new IheServiceStubPool(mapServiceEndpoints, encryptedKeystorePass);
+			instance = new IheServiceStubPool(mapServiceEndpoints, encryptedKeystorePass, context);
 		}
 
 		return instance;
@@ -951,13 +961,17 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 			LOGGER.debug("created ihe document registry stub {}", portAddressXdsWrite);
 		}
 
-		xdsService = new ConvenienceCommunicationAt(createAffinityDomain("", portAddressXds), AtnaConfigMode.SECURE,
-				DocumentMetadataExtractionMode.DEFAULT_EXTRACTION,
-				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
+		xdsService = context.getBean(ConvenienceCommunicationConnection.class);
+		xdsService.setAtnaConfig(AtnaConfigMode.SECURE);
+		xdsService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsService.setAffinityDomain(createAffinityDomain("", portAddressXds));
 
-		xdsWriteService = new ConvenienceCommunicationAt(createAffinityDomain("", portAddressXdsWrite),
-				AtnaConfigMode.SECURE, DocumentMetadataExtractionMode.DEFAULT_EXTRACTION,
-				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
+		xdsWriteService = context.getBean(ConvenienceCommunicationConnection.class);
+		xdsWriteService.setAtnaConfig(AtnaConfigMode.SECURE);
+		xdsWriteService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsWriteService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsWriteService.setAffinityDomain(createAffinityDomain("", portAddressXdsWrite));
 	}
 
 	/**
@@ -1025,9 +1039,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 			LOGGER.debug("created community pharmacy manager stub {}", portAddressPharmacyManager);
 		}
 
-		xdsEmedService = new ConvenienceCommunicationAt(createAffinityDomain("", portAddressPharmacyManager),
-				AtnaConfigMode.SECURE, DocumentMetadataExtractionMode.DEFAULT_EXTRACTION,
-				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
+		xdsEmedService = context.getBean(ConvenienceCommunicationConnection.class);
+		xdsEmedService.setAtnaConfig(AtnaConfigMode.SECURE);
+		xdsEmedService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEmedService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEmedService.setAffinityDomain(createAffinityDomain("", portAddressPharmacyManager));
 	}
 
 	/**
@@ -1055,9 +1071,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 					portAddressElgaPlusDocuments);
 		}
 
-		xdsEhealthPlusService = new ConvenienceCommunicationAt(createAffinityDomain("", portAddressElgaPlusDocuments),
-				AtnaConfigMode.SECURE, DocumentMetadataExtractionMode.DEFAULT_EXTRACTION,
-				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
+		xdsEhealthPlusService = context.getBean(ConvenienceCommunicationConnection.class);
+		xdsEhealthPlusService.setAtnaConfig(AtnaConfigMode.SECURE);
+		xdsEhealthPlusService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEhealthPlusService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEhealthPlusService.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocuments));
 	}
 
 	/**
@@ -1091,10 +1109,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 					portAddressElgaPlusDocumentsEImmunization);
 		}
 
-		xdsEhealthPlusEImmunizationService = new ConvenienceCommunicationAt(
-				createAffinityDomain("", portAddressElgaPlusDocumentsEImmunization), AtnaConfigMode.SECURE,
-				DocumentMetadataExtractionMode.DEFAULT_EXTRACTION,
-				SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION, PATH_AXIS2_CONFIG);
+		xdsEhealthPlusEImmunizationService = context.getBean(ConvenienceCommunicationConnection.class);
+		xdsEhealthPlusEImmunizationService.setAtnaConfig(AtnaConfigMode.SECURE);
+		xdsEhealthPlusEImmunizationService
+				.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEhealthPlusEImmunizationService
+				.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
+		xdsEhealthPlusEImmunizationService
+				.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocumentsEImmunization));
 
 	}
 
@@ -1960,6 +1982,14 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		List<NamedValue> headers = new LinkedList<>();
 		headers.add(new NamedValue("Accept", "application/soap+xml"));
 		return headers;
+	}
+
+	public void setPdqService(ApplicationContext context) {
+		pdqServiceStub = context.getBean(ConvenienceMasterPatientIndexV3.class);
+	}
+
+	public ConvenienceMasterPatientIndexV3 getPdqService() {
+		return pdqServiceStub;
 	}
 
 }

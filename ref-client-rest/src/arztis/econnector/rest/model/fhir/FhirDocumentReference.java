@@ -9,18 +9,6 @@ package arztis.econnector.rest.model.fhir;
 import java.util.List;
 import java.util.Locale;
 
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EList;
-import org.ehealth_connector.common.at.enums.AvailabilityStatus;
-import org.ehealth_connector.common.at.enums.ClassCode;
-import org.ehealth_connector.common.at.enums.ConfidentialityCode;
-import org.ehealth_connector.common.at.enums.FormatCode;
-import org.ehealth_connector.common.at.enums.HealthcareFacilityTypeCode;
-import org.ehealth_connector.common.at.enums.PracticeSettingCode;
-import org.ehealth_connector.common.at.enums.ServiceEventCode;
-import org.ehealth_connector.common.at.enums.TypeCode;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Reference;
-import org.ehealth_connector.common.utils.XdsMetadataUtil;
 import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -32,10 +20,19 @@ import org.hl7.fhir.r4.model.Narrative;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
-import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
-import org.openhealthtools.ihe.xds.metadata.MetadataFactory;
-import org.openhealthtools.ihe.xds.metadata.impl.LocalizedStringTypeImpl;
-import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
+import org.husky.common.at.enums.ClassCode;
+import org.husky.common.at.enums.ConfidentialityCode;
+import org.husky.common.at.enums.FormatCode;
+import org.husky.common.at.enums.HealthcareFacilityTypeCode;
+import org.husky.common.at.enums.PracticeSettingCode;
+import org.husky.common.at.enums.ServiceEventCode;
+import org.husky.common.at.enums.TypeCode;
+import org.husky.common.hl7cdar2.POCDMT000040Reference;
+import org.husky.common.model.Code;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Association;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.DocumentEntry;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.LocalizedString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +42,7 @@ import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.Ex
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ExtrinsicObjectType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.SlotType1;
 import arztis.econnector.ihe.queries.common.ObjectIds;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.ihe.utilities.Hl7Utils;
 import arztis.econnector.ihe.utilities.MetadataConverter;
 import arztis.econnector.rest.utilities.FhirUtil;
@@ -95,8 +93,8 @@ public class FhirDocumentReference extends DocumentReference {
 	 * @param documentEntry document reference
 	 * @param index         index of document
 	 */
-	public FhirDocumentReference(DocumentEntryResponseType documentEntry, int index) {
-		fromDocumentEntryResponse(documentEntry, index);
+	public FhirDocumentReference(DocumentEntry documentEntry, Association association, int index) {
+		fromDocumentEntryResponse(documentEntry, association, index);
 	}
 
 	/**
@@ -327,19 +325,19 @@ public class FhirDocumentReference extends DocumentReference {
 
 	/**
 	 * converts format code of passed {@link DocumentReference} to
-	 * {@link CodedMetadataType}.
+	 * {@link Code}.
 	 *
 	 * @param reference resource to be extracted
-	 * @return converted {@link CodedMetadataType}
+	 * @return converted {@link Code}
 	 */
-	public static CodedMetadataType getFormatCode(DocumentReference reference) {
+	public static Code getFormatCode(DocumentReference reference) {
 		if (reference.getContentFirstRep() != null && reference.getContentFirstRep().getFormat() != null
 				&& reference.getContentFirstRep().getFormat().hasCode()) {
 
 			if (reference.getContentFirstRep().getFormat().hasSystem()) {
 				return getCodedMetadataType(reference.getContentFirstRep().getFormat());
 			} else {
-				return FormatCode.getEnum(reference.getContentFirstRep().getFormat().getCode()).getCodedMetadataType();
+				return FormatCode.getEnum(reference.getContentFirstRep().getFormat().getCode()).getCode();
 			}
 		}
 
@@ -348,12 +346,12 @@ public class FhirDocumentReference extends DocumentReference {
 
 	/**
 	 * converts health care facility code of passed {@link DocumentReference} to
-	 * {@link CodedMetadataType}.
+	 * {@link Code}.
 	 *
 	 * @param reference resource to be extracted
-	 * @return converted {@link CodedMetadataType}
+	 * @return converted {@link Code}
 	 */
-	public static CodedMetadataType getFacilityType(DocumentReference reference) {
+	public static Code getFacilityType(DocumentReference reference) {
 		if (reference != null && reference.getContext() != null && reference.getContext().getFacilityType() != null
 				&& reference.getContext().getFacilityType().getCodingFirstRep() != null
 				&& reference.getContext().getFacilityType().getCodingFirstRep().hasCode()) {
@@ -362,7 +360,7 @@ public class FhirDocumentReference extends DocumentReference {
 			} else {
 				return HealthcareFacilityTypeCode
 						.getEnum(reference.getContext().getFacilityType().getCodingFirstRep().getCode())
-						.getCodedMetadataType();
+						.getCode();
 			}
 		}
 
@@ -371,12 +369,12 @@ public class FhirDocumentReference extends DocumentReference {
 
 	/**
 	 * converts practice setting code of passed {@link DocumentReference} to
-	 * {@link CodedMetadataType}.
+	 * {@link Code}.
 	 *
 	 * @param reference resource to be extracted
-	 * @return converted {@link CodedMetadataType}
+	 * @return converted {@link Code}
 	 */
-	public static CodedMetadataType getPracticeSetting(DocumentReference reference) {
+	public static Code getPracticeSetting(DocumentReference reference) {
 		if (reference != null && reference.getContext() != null && reference.getContext().getPracticeSetting() != null
 				&& reference.getContext().getPracticeSetting().getCodingFirstRep() != null
 				&& reference.getContext().getPracticeSetting().getCodingFirstRep().hasCode()) {
@@ -385,7 +383,7 @@ public class FhirDocumentReference extends DocumentReference {
 			} else {
 				return PracticeSettingCode
 						.getEnum(reference.getContext().getPracticeSetting().getCodingFirstRep().getCode())
-						.getCodedMetadataType();
+						.getCode();
 			}
 		}
 
@@ -393,18 +391,18 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * converts HL7 FHIR {@link Coding} to {@link CodedMetadataType}. Language of
-	 * display name is set to "de-AT".
+	 * converts HL7 FHIR {@link Coding} to {@link Code}. Language of display name is
+	 * set to "de-AT".
 	 *
 	 * @param coding to convert
 	 *
-	 * @return converted {@link CodedMetadataType}
+	 * @return converted {@link Code}
 	 */
-	private static CodedMetadataType getCodedMetadataType(Coding coding) {
-		final CodedMetadataType cmt = MetadataFactory.eINSTANCE.createCodedMetadataType();
-		cmt.setSchemeName(coding.getSystem());
+	private static Code getCodedMetadataType(Coding coding) {
+		final Code cmt = new Code();
+		cmt.setCodeSystem(coding.getSystem());
 		cmt.setCode(coding.getCode());
-		cmt.setDisplayName(XdsMetadataUtil.createInternationalString(coding.getDisplay(), "de-at"));
+		cmt.setDisplayName(coding.getDisplay());
 		return cmt;
 	}
 
@@ -428,65 +426,60 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * Converts passed {@link DocumentEntryResponseType} to
-	 * {@link DocumentReference}. {@link DocumentEntryResponseType} is returned from
-	 * querying document metadata with ITI-18 transaction.
+	 * Converts passed {@link DocumentEntry} to {@link DocumentReference}.
+	 * {@link DocumentEntry} is returned from querying document metadata with ITI-18
+	 * transaction.
 	 *
 	 * @param documentEntry object to convert.
 	 * @param index         of document
 	 */
 
-	private void fromDocumentEntryResponse(DocumentEntryResponseType documentEntry, int index) {
-		if (documentEntry == null || documentEntry.getDocumentEntry() == null) {
+	private void fromDocumentEntryResponse(DocumentEntry documentEntry, Association association, int index) {
+		if (documentEntry == null) {
 			return;
 		}
 
-		if (documentEntry.getDocumentEntry() != null) {
+		if (documentEntry != null) {
 
 			addContextRelatedEntries(documentEntry, index);
 			addCodes(documentEntry);
 
-			if (documentEntry.getDocumentEntry().getCreationTime() != null) {
-				setDate(XdsMetadataUtil.convertDtmStringToDate(documentEntry.getDocumentEntry().getCreationTime()));
+			if (documentEntry.getCreationTime() != null) {
+				setDate(DateUtil.parseZonedDateTime(documentEntry.getCreationTime().getDateTime()));
 			}
 
 			addAllReferences(documentEntry, index);
 
-			if (documentEntry.getDocumentEntry().getAvailabilityStatus() != null
-					&& documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral() != null) {
-				setStatus(documentEntry.getDocumentEntry().getAvailabilityStatus().getLiteral()
+			if (documentEntry.getAvailabilityStatus() != null && documentEntry.getAvailabilityStatus().name() != null) {
+				setStatus(documentEntry.getAvailabilityStatus().name()
 						.toLowerCase(Locale.ENGLISH).contains("approved") ? DocumentReferenceStatus.CURRENT
 								: DocumentReferenceStatus.SUPERSEDED);
 			}
 
-			if (documentEntry.getDocumentEntry().getUniqueId() != null) {
+			if (documentEntry.getUniqueId() != null) {
 				Identifier id = new Identifier();
-				id.setValue(documentEntry.getDocumentEntry().getUniqueId());
+				id.setValue(documentEntry.getUniqueId());
 				setMasterIdentifier(id);
 			}
 
-			if (documentEntry.getDocumentEntry().getEntryUUID() != null) {
+			if (documentEntry.getEntryUuid() != null) {
 				Identifier id = new Identifier();
-				id.setValue(documentEntry.getDocumentEntry().getEntryUUID());
+				id.setValue(documentEntry.getEntryUuid());
 				setIdentifier(List.of(id));
 			}
 
-			if (documentEntry.getDocumentEntry().getComments() != null
-					&& documentEntry.getDocumentEntry().getComments().getLocalizedString() != null
-					&& !documentEntry.getDocumentEntry().getComments().getLocalizedString().isEmpty()) {
-				org.openhealthtools.ihe.xds.metadata.InternationalStringType comments = documentEntry.getDocumentEntry()
+			if (documentEntry.getComments() != null && documentEntry.getComments() != null) {
+				LocalizedString comments = documentEntry
 						.getComments();
-				setText(((LocalizedStringTypeImpl) comments.getLocalizedString().get(0)).getValue());
+				setText(comments.getValue());
 			}
 
-			if (documentEntry.getDocumentEntry().getParentDocument() != null) {
-				setRelatesTo(documentEntry.getDocumentEntry().getParentDocument().getParentDocumentId());
+			if (association.getEntryUuid() != null) {
+				setRelatesTo(association.getEntryUuid());
 			}
 
-			if (documentEntry.getDocumentEntry().getTitle() != null) {
-				org.openhealthtools.ihe.xds.metadata.InternationalStringType title = documentEntry.getDocumentEntry()
-						.getTitle();
-				setDescription(((LocalizedStringTypeImpl) title.getLocalizedString().get(0)).getValue());
+			if (documentEntry.getTitle() != null) {
+				setDescription(documentEntry.getTitle().getValue());
 			}
 
 			addContentRelatedEntries(documentEntry);
@@ -506,25 +499,25 @@ public class FhirDocumentReference extends DocumentReference {
 	 *
 	 * @param documentEntry to be extracted
 	 */
-	private void addCodes(DocumentEntryResponseType documentEntry) {
-		if (documentEntry.getDocumentEntry().getClassCode() != null) {
-			addCategory(new CodeableConcept(new Coding(documentEntry.getDocumentEntry().getClassCode().getSchemeUUID(),
-					documentEntry.getDocumentEntry().getClassCode().getCode(), null)));
+	private void addCodes(DocumentEntry documentEntry) {
+		if (documentEntry.getClassCode() != null) {
+			addCategory(new CodeableConcept(new Coding(documentEntry.getClassCode().getSchemeName(),
+					documentEntry.getClassCode().getCode(), null)));
 		}
 
-		if (documentEntry.getDocumentEntry().getTypeCode() != null) {
-			setType(new CodeableConcept(new Coding(documentEntry.getDocumentEntry().getTypeCode().getSchemeUUID(),
-					documentEntry.getDocumentEntry().getTypeCode().getCode(), null)));
+		if (documentEntry.getTypeCode() != null) {
+			setType(new CodeableConcept(new Coding(documentEntry.getTypeCode().getSchemeName(),
+					documentEntry.getTypeCode().getCode(), null)));
 		}
 
-		for (Object object : emptyIfNull(documentEntry.getDocumentEntry().getConfidentialityCode())) {
-			CodedMetadataType confidentialityCode = (CodedMetadataType) object;
+		for (org.openehealth.ipf.commons.ihe.xds.core.metadata.Code confidentialityCode : documentEntry
+				.getConfidentialityCodes()) {
 			addSecurityLabel(new CodeableConcept(
-					new Coding(confidentialityCode.getSchemeUUID(), confidentialityCode.getCode(), null)));
+					new Coding(confidentialityCode.getSchemeName(), confidentialityCode.getCode(), null)));
 		}
 
-		if (documentEntry.getDocumentEntry().getLanguageCode() != null) {
-			setLanguage(documentEntry.getDocumentEntry().getLanguageCode());
+		if (documentEntry.getLanguageCode() != null) {
+			setLanguage(documentEntry.getLanguageCode());
 		}
 	}
 
@@ -543,7 +536,7 @@ public class FhirDocumentReference extends DocumentReference {
 	 * @param documentEntry to be extracted
 	 * @param index         of document
 	 */
-	private void addAllReferences(DocumentEntryResponseType documentEntry, int index) {
+	private void addAllReferences(DocumentEntry documentEntry, int index) {
 		Reference reference = new Reference(String.format(PATIENT_REFERENCE, index));
 		reference.setType(ResourceType.PATIENT.getDefinition());
 		setSubject(reference);
@@ -552,7 +545,7 @@ public class FhirDocumentReference extends DocumentReference {
 		legalAuthenticatorReference.setType(ResourceType.PRACTITIONER.getDefinition());
 		setAuthenticator(legalAuthenticatorReference);
 
-		for (int count = 0; count < emptyIfNull(documentEntry.getDocumentEntry().getAuthors()).size(); count++) {
+		for (int count = 0; count < documentEntry.getAuthors().size(); count++) {
 			Reference author = new Reference(String.format("PractitionerRole/%d-%d", index, count + 2));
 			author.setType(ResourceType.PRACTITIONERROLE.getDefinition());
 			addAuthor(author);
@@ -576,27 +569,27 @@ public class FhirDocumentReference extends DocumentReference {
 	 *
 	 * @param documentEntry to be extracted
 	 */
-	private void addContentRelatedEntries(DocumentEntryResponseType documentEntry) {
+	private void addContentRelatedEntries(DocumentEntry documentEntry) {
 		int size = 0;
 		String contentType = null;
 
 		Coding format = null;
-		if (documentEntry.getDocumentEntry().getFormatCode() != null) {
-			format = new Coding(documentEntry.getDocumentEntry().getFormatCode().getSchemeUUID(),
-					documentEntry.getDocumentEntry().getFormatCode().getCode(), null);
+		if (documentEntry.getFormatCode() != null) {
+			format = new Coding(documentEntry.getFormatCode().getSchemeName(), documentEntry.getFormatCode().getCode(),
+					null);
 		}
 
-		if (documentEntry.getDocumentEntry().getSize() != null) {
-			size = Integer.valueOf(documentEntry.getDocumentEntry().getSize());
+		if (documentEntry.getSize() != null) {
+			size = documentEntry.getSize().intValue();
 		}
 
-		if (documentEntry.getDocumentEntry().getMimeType() != null) {
-			contentType = documentEntry.getDocumentEntry().getMimeType();
+		if (documentEntry.getMimeType() != null) {
+			contentType = documentEntry.getMimeType();
 		}
 
 		setContent(
-				String.format("%s/%s/%s", documentEntry.getDocumentEntry().getUniqueId(),
-						documentEntry.getDocumentEntry().getRepositoryUniqueId(), documentEntry.getHomeCommunityId()),
+				String.format("%s/%s/%s", documentEntry.getUniqueId(), documentEntry.getRepositoryUniqueId(),
+						documentEntry.getHomeCommunityId()),
 				contentType, format, size);
 	}
 
@@ -614,36 +607,34 @@ public class FhirDocumentReference extends DocumentReference {
 	 * @param documentEntry to be extracted
 	 * @param index the index
 	 */
-	private void addContextRelatedEntries(DocumentEntryResponseType documentEntry, int index) {
+	private void addContextRelatedEntries(DocumentEntry documentEntry, int index) {
 		Period period = new Period();
-		if (documentEntry.getDocumentEntry().getServiceStartTime() != null) {
-			period.setStart(
-					XdsMetadataUtil.convertDtmStringToDate(documentEntry.getDocumentEntry().getServiceStartTime()));
+		if (documentEntry.getServiceStartTime() != null) {
+			period.setStart(DateUtil.parseZonedDateTime(documentEntry.getServiceStartTime().getDateTime()));
 		}
 
-		if (documentEntry.getDocumentEntry().getServiceStopTime() != null) {
+		if (documentEntry.getServiceStopTime() != null) {
 			period.setEnd(
-					XdsMetadataUtil.convertDtmStringToDate(documentEntry.getDocumentEntry().getServiceStopTime()));
+					DateUtil.parseZonedDateTime(documentEntry.getServiceStopTime().getDateTime()));
 		}
 
 		CodeableConcept facilityType = null;
-		if (documentEntry.getDocumentEntry().getHealthCareFacilityTypeCode() != null) {
+		if (documentEntry.getHealthcareFacilityTypeCode() != null) {
 			facilityType = new CodeableConcept(
-					new Coding(documentEntry.getDocumentEntry().getHealthCareFacilityTypeCode().getSchemeUUID(),
-							documentEntry.getDocumentEntry().getHealthCareFacilityTypeCode().getCode(), null));
+					new Coding(documentEntry.getHealthcareFacilityTypeCode().getSchemeName(),
+							documentEntry.getHealthcareFacilityTypeCode().getCode(), null));
 		}
 
 		CodeableConcept practiceSetting = null;
-		if (documentEntry.getDocumentEntry().getPracticeSettingCode() != null) {
+		if (documentEntry.getPracticeSettingCode() != null) {
 			practiceSetting = new CodeableConcept(
-					new Coding(documentEntry.getDocumentEntry().getPracticeSettingCode().getSchemeUUID(),
-							documentEntry.getDocumentEntry().getPracticeSettingCode().getCode(), null));
+					new Coding(documentEntry.getPracticeSettingCode().getSchemeName(),
+							documentEntry.getPracticeSettingCode().getCode(), null));
 		}
 
 		CodeableConcept event = null;
-		for (Object object : emptyIfNull(documentEntry.getDocumentEntry().getEventCode())) {
-			CodedMetadataType eventCode = ((CodedMetadataType) object);
-			event = new CodeableConcept(new Coding(eventCode.getSchemeUUID(), eventCode.getCode(), null));
+		for (org.openehealth.ipf.commons.ihe.xds.core.metadata.Code eventCode : documentEntry.getEventCodeList()) {
+			event = new CodeableConcept(new Coding(eventCode.getSchemeName(), eventCode.getCode(), null));
 		}
 
 		Reference reference = new Reference(String.format(PATIENT_REFERENCE, index));
@@ -686,7 +677,7 @@ public class FhirDocumentReference extends DocumentReference {
 		entryUuid.setValue(extrinsicObject.getId());
 		addIdentifier(entryUuid);
 
-		if (AvailabilityStatus.DEPRECATED.getCodeValue().equalsIgnoreCase(extrinsicObject.getStatus())) {
+		if (AvailabilityStatus.DEPRECATED.getOpcode().equalsIgnoreCase(extrinsicObject.getStatus())) {
 			setStatus(DocumentReferenceStatus.SUPERSEDED);
 		} else {
 			setStatus(DocumentReferenceStatus.CURRENT);
@@ -746,16 +737,16 @@ public class FhirDocumentReference extends DocumentReference {
 		for (SlotType1 slot : slots) {
 			switch (slot.getName()) {
 			case "creationTime":
-				setDate(MetadataConverter.convertDateTime(slot));
+				setDate(DateUtil.parseZonedDateTime(MetadataConverter.convertDateTime(slot)));
 				break;
 			case "languageCode":
 				this.setLanguage(MetadataConverter.getStringFromSlot(slot));
 				break;
 			case "serviceStartTime":
-				getContext().getPeriod().setStart(MetadataConverter.convertDateTime(slot));
+				getContext().getPeriod().setStart(DateUtil.parseZonedDateTime(MetadataConverter.convertDateTime(slot)));
 				break;
 			case "serviceStopTime":
-				getContext().getPeriod().setEnd(MetadataConverter.convertDateTime(slot));
+				getContext().getPeriod().setEnd(DateUtil.parseZonedDateTime(MetadataConverter.convertDateTime(slot)));
 				break;
 			case "repositoryUniqueId":
 				repositoryId = MetadataConverter.getStringFromSlot(slot);
@@ -881,16 +872,6 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 
 		return uniqueId;
-	}
-
-	/**
-	 * checks if passed {@link EList} is empty or null.
-	 *
-	 * @param list to check
-	 * @return true if list is null or empty, otherwise false
-	 */
-	private static EList emptyIfNull(EList<?> list) {
-		return list == null ? ECollections.emptyEList() : list;
 	}
 
 	/**

@@ -13,17 +13,19 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.eclipse.jetty.server.HttpConfiguration;
-import org.ehealth_connector.common.utils.FileUtil;
-import org.ehealth_connector.common.utils.Util;
+import org.husky.common.utils.Util;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 
 import arztis.econnector.common.utilities.BaseServiceStubPool;
 import arztis.econnector.ihe.utilities.ConfigReader;
 import arztis.econnector.ihe.utilities.IheConstants;
 import arztis.econnector.ihe.utilities.IheServiceStubPool;
 import arztis.econnector.rest.server.IJettyServer;
+import arztis.econnector.rest.server.IpfApplication;
 
 /**
  * Main class of ELGA reference client, it initialize different things like
@@ -45,6 +47,10 @@ public class ElgaRefClient {
 	 *             PBEWithMD5AndDES
 	 */
 	public static void main(String[] args) {
+		var app = new SpringApplication(IpfApplication.class);
+		app.setWebApplicationType(WebApplicationType.NONE);
+
+		var context = app.run(args);
 		setLogFile();
 
 		Logger logger = LoggerFactory.getLogger(ElgaRefClient.class.getName());
@@ -73,7 +79,7 @@ public class ElgaRefClient {
 
 		ConfigReader config = ConfigReader.getInstance();
 		try {
-			IheServiceStubPool.getInstance(createServiceEndpointMap(config), keystorePass);
+			IheServiceStubPool.getInstance(createServiceEndpointMap(config), keystorePass, context);
 			BaseServiceStubPool.getInstance().setBaseService(IheServiceStubPool.getInstance().getBaseService());
 			BaseServiceStubPool.getInstance().setAuthServiceStub(IheServiceStubPool.getInstance().getAuthServiceStub());
 			BaseServiceStubPool.getInstance().setGinaService(IheServiceStubPool.getInstance().getGinaServiceStub());
@@ -109,7 +115,7 @@ public class ElgaRefClient {
 	 */
 	private static void createTempFolder(Logger logger) {
 		try {
-			String path = Util.getTempDirectory() + FileUtil.getPlatformSpecificPathSeparator() + "EConnectorTemp";
+			String path = Util.getTempDirectory() + "/EConnectorTemp";
 			File directory = new File(path);
 
 			if (!directory.exists()) {
@@ -138,6 +144,7 @@ public class ElgaRefClient {
 		serviceEndpointMap.put(IheConstants.BASE_SERVICE, config.getTargetEndpointBase());
 		serviceEndpointMap.put(IheConstants.AUTH_SERVICE, config.getTargetEndpointAuth());
 		serviceEndpointMap.put(IheConstants.GINA_SERVICE, config.getTargetEndpointGina());
+		serviceEndpointMap.put(IheConstants.CRS_SERVICE, config.getTargetEndpointCrs());
 		serviceEndpointMap.put(IheConstants.ETS_SERVICE, config.getTargetEndpointEts());
 		serviceEndpointMap.put(IheConstants.ELGA_PLUS_ETS_SERVICE, config.getTargetEndpointElgaPlusEts());
 		serviceEndpointMap.put(IheConstants.ELGA_PLUS_ETS_E_IMMUNIZATION_SERVICE,

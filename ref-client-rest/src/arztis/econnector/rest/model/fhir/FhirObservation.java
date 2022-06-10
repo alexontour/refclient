@@ -9,31 +9,6 @@ package arztis.econnector.rest.model.fhir;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.cdalab.enums.ElgaObservationInterpretation;
-import org.ehealth_connector.common.hl7cdar2.ANY;
-import org.ehealth_connector.common.hl7cdar2.BL;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.CV;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.INT;
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
-import org.ehealth_connector.common.hl7cdar2.IVLPQ;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Act;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component4;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Observation;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organizer;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Reference;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ReferenceRange;
-import org.ehealth_connector.common.hl7cdar2.PQ;
-import org.ehealth_connector.common.hl7cdar2.RTO;
-import org.ehealth_connector.common.hl7cdar2.RTOPQPQ;
-import org.ehealth_connector.common.hl7cdar2.RTOQTYQTY;
-import org.ehealth_connector.common.hl7cdar2.ST;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -46,6 +21,31 @@ import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Type;
 import org.hl7.fhir.r4.model.codesystems.ObservationCategory;
 import org.hl7.fhir.r4.model.codesystems.V3ObservationInterpretation;
+import org.husky.cda.elga.generated.artdecor.enums.ElgaObservationInterpretation;
+import org.husky.common.hl7cdar2.ANY;
+import org.husky.common.hl7cdar2.BL;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.CV;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.IVLINT;
+import org.husky.common.hl7cdar2.IVLPQ;
+import org.husky.common.hl7cdar2.POCDMT000040Act;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040Component4;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040Observation;
+import org.husky.common.hl7cdar2.POCDMT000040Organizer;
+import org.husky.common.hl7cdar2.POCDMT000040Reference;
+import org.husky.common.hl7cdar2.POCDMT000040ReferenceRange;
+import org.husky.common.hl7cdar2.PQ;
+import org.husky.common.hl7cdar2.RTO;
+import org.husky.common.hl7cdar2.RTOPQPQ;
+import org.husky.common.hl7cdar2.RTOQTYQTY;
+import org.husky.common.hl7cdar2.ST;
+import org.husky.common.hl7cdar2.TS;
+import org.husky.common.utils.DateUtil;
 
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
@@ -412,7 +412,7 @@ public class FhirObservation extends Observation {
 		} else if (value instanceof IVLINT) {
 			return new FhirRange((IVLINT) value);
 		} else if (value instanceof ST) {
-			return new StringType(((ST) value).xmlContent);
+			return new StringType(((ST) value).getMergedXmlMixed());
 		} else if (value instanceof CD) {
 			return new FhirCodeableConcept((CD) value);
 		} else if (value instanceof CV) {

@@ -17,33 +17,33 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
-import org.ehealth_connector.common.enums.AdministrativeGender;
-import org.ehealth_connector.common.hl7cdar2.ActClinicalDocument;
-import org.ehealth_connector.common.hl7cdar2.ActRelationshipHasComponent;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.EntityDeterminerDetermined;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Consumable;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Custodian;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040DocumentationOf;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040LegalAuthenticator;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Precondition;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RecordTarget;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Section;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040StructuredBody;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040SubstanceAdministration;
-import org.ehealth_connector.common.hl7cdar2.ParticipationPhysicalPerformer;
-import org.ehealth_connector.common.hl7cdar2.RoleClassManufacturedProduct;
-import org.ehealth_connector.common.hl7cdar2.XActClassDocumentEntryAct;
-import org.ehealth_connector.common.hl7cdar2.XActMoodDocumentObservation;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.XDocumentActMood;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.cda.elga.generated.artdecor.EimpfDocumentUpdateImmunisierungsstatus;
+import org.husky.common.enums.AdministrativeGender;
+import org.husky.common.hl7cdar2.ActClinicalDocument;
+import org.husky.common.hl7cdar2.ActRelationshipHasComponent;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.EntityDeterminerDetermined;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040Consumable;
+import org.husky.common.hl7cdar2.POCDMT000040Custodian;
+import org.husky.common.hl7cdar2.POCDMT000040DocumentationOf;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040LegalAuthenticator;
+import org.husky.common.hl7cdar2.POCDMT000040Performer2;
+import org.husky.common.hl7cdar2.POCDMT000040Precondition;
+import org.husky.common.hl7cdar2.POCDMT000040RecordTarget;
+import org.husky.common.hl7cdar2.POCDMT000040Section;
+import org.husky.common.hl7cdar2.POCDMT000040StructuredBody;
+import org.husky.common.hl7cdar2.POCDMT000040SubstanceAdministration;
+import org.husky.common.hl7cdar2.ParticipationPhysicalPerformer;
+import org.husky.common.hl7cdar2.RoleClassManufacturedProduct;
+import org.husky.common.hl7cdar2.XActClassDocumentEntryAct;
+import org.husky.common.hl7cdar2.XActMoodDocumentObservation;
+import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
+import org.husky.common.hl7cdar2.XDocumentActMood;
+import org.husky.common.utils.DateUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +145,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("Immunization note", immunizationState.getCode().getTranslation().get(0).getDisplayName());
 
 		assertNotNull(immunizationState.getTitle());
-		assertEquals("Update Immunisierungsstatus", immunizationState.getTitle().xmlContent);
+		assertEquals("Update Immunisierungsstatus", immunizationState.getTitle().getMergedXmlMixed());
 
 		assertNotNull(immunizationState.getEffectiveTime());
 		assertEquals("20200510143002+0200", immunizationState.getEffectiveTime().getValue());
@@ -261,7 +261,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getName());
 		assertEquals(ORGANIZATION_NAME,
-				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getName().get(0).xmlContent);
+				authors.get(0).getAssignedAuthor().getRepresentedOrganization().getName().get(0).getMergedXmlMixed());
 
 		assertNotNull(authors.get(0).getAssignedAuthor().getRepresentedOrganization().getAddr());
 		assertEquals(1, authors.get(0).getAssignedAuthor().getRepresentedOrganization().getAddr().size());
@@ -295,7 +295,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getId().get(0).getExtension());
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName());
 		assertEquals(ORGANIZATION_NAME,
-				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName().xmlContent);
+				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName().getMergedXmlMixed());
 
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getAddr());
 		testAddress(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getAddr().getContent(),
@@ -351,7 +351,8 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getName());
 		assertEquals(ORGANIZATION_NAME,
-				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
+				legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getName().get(0)
+						.getMergedXmlMixed());
 
 		assertNotNull(legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getAddr());
 		assertEquals(1, legalAuthenticator.getAssignedEntity().getRepresentedOrganization().getAddr().size());
@@ -428,7 +429,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 		assertEquals("11369-6", section.getCode().getCode());
 		assertEquals(OID_LOINC, section.getCode().getCodeSystem());
 		assertEquals("HISTORY OF IMMUNIZATIONS", section.getCode().getDisplayName());
-		assertEquals("Impfungen", section.getTitle().xmlContent);
+		assertEquals("Impfungen", section.getTitle().getMergedXmlMixed());
 
 		assertNotNull(section.getText());
 
@@ -504,7 +505,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 
 		assertNotNull(consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText());
 		assertEquals("12345",
-				consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText().xmlContent);
+				consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText().getMergedXmlMixed());
 
 		// test target diseases
 		POCDMT000040EntryRelationship entryRel = substance.getEntryRelationship().get(0);
@@ -610,7 +611,7 @@ public class UpdateImmunizationStateTest extends TestUtils {
 				performer.getAssignedEntity().getRepresentedOrganization().getId().get(0).getExtension());
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getName());
 		assertEquals(ORGANIZATION_NAME,
-				performer.getAssignedEntity().getRepresentedOrganization().getName().get(0).xmlContent);
+				performer.getAssignedEntity().getRepresentedOrganization().getName().get(0).getMergedXmlMixed());
 
 		assertNotNull(performer.getAssignedEntity().getRepresentedOrganization().getAddr());
 		assertEquals(1, performer.getAssignedEntity().getRepresentedOrganization().getAddr().size());

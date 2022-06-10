@@ -10,14 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.IVLTS;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Consumable;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Entry;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Precondition;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntryRelationship;
 import org.hl7.fhir.dstu3.model.codesystems.ImmunizationRecommendationDateCriterion;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -25,6 +17,14 @@ import org.hl7.fhir.r4.model.ImmunizationRecommendation;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.IVLTS;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040Consumable;
+import org.husky.common.hl7cdar2.POCDMT000040Entry;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040Precondition;
+import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
 
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 

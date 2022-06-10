@@ -9,38 +9,38 @@ package arztis.econnector.rest.model.fhir;
 import java.util.Date;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.HeaderRecordTarget;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderRecordTargetEImpfpass;
-import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaAdministrativeGender;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.AD;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.ObjectFactory;
-import org.ehealth_connector.common.hl7cdar2.PN;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Guardian;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Patient;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040PatientRole;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Person;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RecordTarget;
-import org.ehealth_connector.common.hl7cdar2.TEL;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.utils.DateUtil;
-import org.ehealth_connector.fhir.structures.gen.FhirPatient;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
-import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderRecordTargetEImpfpass;
+import org.husky.cda.elga.generated.artdecor.base.HeaderRecordTarget;
+import org.husky.cda.elga.generated.artdecor.enums.ElgaAdministrativeGender;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.AD;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.ObjectFactory;
+import org.husky.common.hl7cdar2.PN;
+import org.husky.common.hl7cdar2.POCDMT000040Guardian;
+import org.husky.common.hl7cdar2.POCDMT000040Patient;
+import org.husky.common.hl7cdar2.POCDMT000040PatientRole;
+import org.husky.common.hl7cdar2.POCDMT000040Person;
+import org.husky.common.hl7cdar2.POCDMT000040RecordTarget;
+import org.husky.common.hl7cdar2.TEL;
+import org.husky.common.hl7cdar2.TS;
+import org.husky.common.model.Identificator;
+import org.husky.fhir.structures.gen.FhirPatient;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.DocumentEntry;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ExternalIdentifierType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.ExtrinsicObjectType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.SlotType1;
 import arztis.econnector.ihe.queries.common.ObjectIds;
 import arztis.econnector.ihe.utilities.CdaUtil;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.ihe.utilities.Hl7Utils;
 import arztis.econnector.ihe.utilities.MetadataConverter;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
@@ -161,7 +161,7 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	 * @param index         index of response. It must be build of {document
 	 *                      response index} - {patient index}
 	 */
-	public FhirPatientAt(DocumentEntryResponseType documentResponse, String index) {
+	public FhirPatientAt(DocumentEntry documentResponse, String index) {
 		fromDocumentEntryResponse(documentResponse, index);
 	}
 
@@ -253,21 +253,21 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	 * @param documentEntry the document entry
 	 * @param index the index
 	 */
-	private void fromDocumentEntryResponse(DocumentEntryResponseType documentEntry, String index) {
+	private void fromDocumentEntryResponse(DocumentEntry documentEntry, String index) {
 		if (documentEntry == null) {
 			return;
 		}
 
 		setId(index);
 
-		if (documentEntry.getDocumentEntry().getPatientId() != null) {
-			addIdentifier(documentEntry.getDocumentEntry().getPatientId().getIdNumber(),
-					documentEntry.getDocumentEntry().getPatientId().getAssigningAuthorityUniversalId());
+		if (documentEntry.getPatientId() != null) {
+			addIdentifier(documentEntry.getPatientId().getId(),
+					documentEntry.getPatientId().getAssigningAuthority().getUniversalId());
 		}
 
-		if (documentEntry.getDocumentEntry().getSourcePatientInfo() != null) {
+		if (documentEntry.getSourcePatientInfo() != null) {
 			setGender(convertAdministrativeGenderToFhirGender(
-					documentEntry.getDocumentEntry().getSourcePatientInfo().getPatientSex()));
+					documentEntry.getSourcePatientInfo().getGender()));
 		}
 	}
 
@@ -359,11 +359,11 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	 * @return the administrative gender
 	 */
 	private AdministrativeGender convertAdministrativeGenderToFhirGender(String value) {
-		if (org.ehealth_connector.common.enums.AdministrativeGender.MALE_CODE.equalsIgnoreCase(value)) {
+		if (org.husky.common.enums.AdministrativeGender.MALE_CODE.equalsIgnoreCase(value)) {
 			return AdministrativeGender.MALE;
-		} else if (org.ehealth_connector.common.enums.AdministrativeGender.FEMALE_CODE.equalsIgnoreCase(value)) {
+		} else if (org.husky.common.enums.AdministrativeGender.FEMALE_CODE.equalsIgnoreCase(value)) {
 			return AdministrativeGender.FEMALE;
-		} else if (org.ehealth_connector.common.enums.AdministrativeGender.UNDIFFERENTIATED_CODE
+		} else if (org.husky.common.enums.AdministrativeGender.UNDIFFERENTIATED_CODE
 				.equalsIgnoreCase(value)) {
 			return AdministrativeGender.OTHER;
 		} else {
@@ -592,18 +592,18 @@ public class FhirPatientAt extends org.hl7.fhir.r4.model.Patient {
 	 * @return the fhir patient
 	 */
 	public static FhirPatient getFhirPatient(String given, String family, Identifier id,
-			org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender gender, Date birthDate) {
+			org.hl7.fhir.r4.model.Enumerations.AdministrativeGender gender, Date birthDate) {
 		FhirPatient patient = new FhirPatient();
 
 		if (family != null && !family.isEmpty()) {
-			org.hl7.fhir.dstu3.model.HumanName name = new org.hl7.fhir.dstu3.model.HumanName();
+			org.hl7.fhir.r4.model.HumanName name = new org.hl7.fhir.r4.model.HumanName();
 			name.addGiven(given);
 			name.setFamily(family);
 			patient.addName(name);
 		}
 
 		if (id != null) {
-			org.hl7.fhir.dstu3.model.Identifier patId = new org.hl7.fhir.dstu3.model.Identifier();
+			org.hl7.fhir.r4.model.Identifier patId = new org.hl7.fhir.r4.model.Identifier();
 			patId.setValue(id.getValue());
 			patId.setSystem(id.getSystem());
 			patient.addIdentifier(patId);

@@ -10,11 +10,10 @@ import org.apache.commons.lang3.RegExUtils;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
-import org.openhealthtools.ihe.common.hl7v2.CX;
-import org.openhealthtools.ihe.common.hl7v2.XAD;
-import org.openhealthtools.ihe.common.hl7v2.XCN;
-import org.openhealthtools.ihe.common.hl7v2.format.HL7V2MessageFormat;
-import org.openhealthtools.ihe.common.hl7v2.format.MessageDelimiters;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Hl7v2Based;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Identifiable;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.XpnName;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.InternationalStringType;
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.LocalizedStringType;
@@ -67,13 +66,12 @@ public class Hl7Utils {
 	 * @return extracted {@link Identifier}
 	 */
 	public static Identifier extractHl7Cx(String value) {
-		CX patientId = HL7V2MessageFormat.buildCXFromMessageString(value, MessageDelimiters.COMPONENT,
-				MessageDelimiters.SUBCOMPONENT);
-		patientId.setAssigningAuthorityUniversalId(
-				RegExUtils.replaceAll(patientId.getAssigningAuthorityUniversalId(), "&amp;|amp;", ""));
+		Identifiable patientId = Hl7v2Based.parse(value, Identifiable.class);
+		patientId.getAssigningAuthority().setUniversalId(
+				RegExUtils.replaceAll(patientId.getAssigningAuthority().getUniversalId(), "&amp;|amp;", ""));
 		Identifier id = new Identifier();
-		id.setSystem(patientId.getAssigningAuthorityUniversalId());
-		id.setValue(patientId.getIdNumber());
+		id.setSystem(patientId.getAssigningAuthority().getUniversalId());
+		id.setValue(patientId.getId());
 		return id;
 	}
 
@@ -86,8 +84,29 @@ public class Hl7Utils {
 	 * @return extracted {@link HumanName}
 	 */
 	public static HumanName extractHl7Xcn(String value) {
-		XCN patientName = HL7V2MessageFormat.buildXCNFromMessageString(value, MessageDelimiters.COMPONENT,
-				MessageDelimiters.SUBCOMPONENT);
+		Person patientName = Hl7v2Based.parse(value, Person.class);
+		HumanName name = new HumanName();
+		if (patientName != null) {
+			name.addGiven(patientName.getName().getGivenName());
+			name.setFamily(patientName.getName().getFamilyName());
+			name.addPrefix(patientName.getName().getPrefix());
+			name.addSuffix(patientName.getName().getSuffix());
+		}
+
+		return name;
+	}
+
+	/**
+	 * extracts {@link HumanName} from passed {@link String} value. Value is Hl7v2
+	 * XPN format. This looks like {family}^{given}^{further
+	 * given}^{suffix}^{prefix}^^^{assigning authority}&amp;&amp;ISO
+	 *
+	 * @param value Hl7v2 XPN formatted name
+	 *
+	 * @return extracted {@link HumanName}
+	 */
+	public static HumanName extractHl7Xpn(String value) {
+		XpnName patientName = Hl7v2Based.parse(value, XpnName.class);
 		HumanName name = new HumanName();
 		if (patientName != null) {
 			name.addGiven(patientName.getGivenName());
@@ -109,7 +128,8 @@ public class Hl7Utils {
 	 * @return extracted {@link Address}
 	 */
 	public static Address extractHl7Xad(String value) {
-		XAD xad = HL7V2MessageFormat.buildXADFromMessageString(value, MessageDelimiters.COMPONENT);
+		org.openehealth.ipf.commons.ihe.xds.core.metadata.Address xad = Hl7v2Based.parse(value,
+				org.openehealth.ipf.commons.ihe.xds.core.metadata.Address.class);
 		Address address = new Address();
 		if (xad != null) {
 			address.setCity(xad.getCity());

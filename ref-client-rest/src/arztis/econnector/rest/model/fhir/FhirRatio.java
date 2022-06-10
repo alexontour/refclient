@@ -6,9 +6,9 @@
  */
 package arztis.econnector.rest.model.fhir;
 
-import org.ehealth_connector.common.hl7cdar2.RTO;
-import org.ehealth_connector.common.hl7cdar2.RTOPQPQ;
 import org.hl7.fhir.r4.model.Ratio;
+import org.husky.common.hl7cdar2.RTO;
+import org.husky.common.hl7cdar2.RTOPQPQ;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 

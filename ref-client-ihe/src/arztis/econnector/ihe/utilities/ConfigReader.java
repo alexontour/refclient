@@ -32,6 +32,9 @@ public class ConfigReader {
 	/** The Constant KEY_GINA_ADDRESS. */
 	private static final String KEY_GINA_ADDRESS = "GINA-ADDRESS";
 
+	/** The Constant KEY_GINS_ENDPOINT. */
+	private static final String KEY_GINS_ENDPOINT = "GINS_ENDPOINT";
+
 	/** The Constant KEY_TARGETENDPOINT_ETS. */
 	private static final String KEY_TARGETENDPOINT_ETS = "TARGETENDPOINT_ETS";
 
@@ -61,6 +64,9 @@ public class ConfigReader {
 
 	/** The Constant KEY_TARGETENDPOINT_GINA. */
 	private static final String KEY_TARGETENDPOINT_GINA = "TARGETENDPOINT_GINA";
+
+	/** The Constant KEY_TARGETENDPOINT_CRS. */
+	private static final String KEY_TARGETENDPOINT_CRS = "TARGETENDPOINT_CRS";
 
 	/** The Constant KEY_TARGETENDPOINT_EMED. */
 	private static final String KEY_TARGETENDPOINT_EMED = "TARGETENDPOINT_EMED";
@@ -180,6 +186,9 @@ public class ConfigReader {
 	/** The target endpoint GINA. */
 	private String targetEndpointGina;
 
+	/** The target endpoint CRS. */
+	private String targetEndpointCrs;
+
 	/** The target endpoint XDS read. */
 	private String targetEndpointXdsRead;
 
@@ -224,6 +233,9 @@ public class ConfigReader {
 
 	/** The GINA address. */
 	private String ginaAddress;
+
+	/** The GINS endpoint. */
+	private String ginsEndpoint;
 
 	/** The gino endpoint. */
 	private String ginoEndpoint;
@@ -309,6 +321,18 @@ public class ConfigReader {
 	}
 
 	/**
+	 * Gets the GINS address.
+	 *
+	 * @return GINS address from configuration file
+	 */
+	public String getGinsEndpoint() {
+		if (ginsEndpoint == null) {
+			ginsEndpoint = getValueFromProperties(KEY_GINS_ENDPOINT);
+		}
+		return ginsEndpoint.trim();
+	}
+
+	/**
 	 * Gets the target endpoint KBS.
 	 *
 	 * @return target endpoint for patient contact confirmation from configuration
@@ -386,6 +410,19 @@ public class ConfigReader {
 		}
 
 		return getEndpoint(targetEndpointGina);
+	}
+
+	/**
+	 * Gets the target endpoint GINA.
+	 *
+	 * @return target endpoint for SVC SS12 GINA service from configuration file
+	 */
+	public String getTargetEndpointCrs() {
+		if (targetEndpointCrs == null) {
+			targetEndpointCrs = getValueFromProperties(KEY_TARGETENDPOINT_CRS);
+		}
+
+		return getEndpoint(targetEndpointCrs);
 	}
 
 	/**
@@ -813,7 +850,7 @@ public class ConfigReader {
 		if (targetendpoint.contains(":") && targetendpoint.contains(".")) {
 			return targetendpoint.trim();
 		} else if (!targetendpoint.trim().isEmpty()) {
-			return HttpConstants.HTTPS_CALL + getGinaAddress().trim() + targetendpoint.trim();
+			return HttpConstants.HTTPS_CALL + getGinsEndpoint() + targetendpoint.trim();
 		}
 
 		return "";

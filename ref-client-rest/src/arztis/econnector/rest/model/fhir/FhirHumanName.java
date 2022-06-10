@@ -13,17 +13,17 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.ehealth_connector.common.enums.EntityNameUse;
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.EN;
-import org.ehealth_connector.common.hl7cdar2.EnFamily;
-import org.ehealth_connector.common.hl7cdar2.EnGiven;
-import org.ehealth_connector.common.hl7cdar2.EnPrefix;
-import org.ehealth_connector.common.hl7cdar2.EnSuffix;
-import org.ehealth_connector.common.hl7cdar2.ON;
-import org.ehealth_connector.common.hl7cdar2.PN;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.common.enums.EntityNameUse;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.EN;
+import org.husky.common.hl7cdar2.EnFamily;
+import org.husky.common.hl7cdar2.EnGiven;
+import org.husky.common.hl7cdar2.EnPrefix;
+import org.husky.common.hl7cdar2.EnSuffix;
+import org.husky.common.hl7cdar2.ON;
+import org.husky.common.hl7cdar2.PN;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
@@ -84,7 +84,7 @@ public class FhirHumanName extends HumanName {
 	 *
 	 * @param hl7CdaR2Value name of CDA R2
 	 */
-	private void fromEN(org.ehealth_connector.common.hl7cdar2.EN hl7CdaR2Value) {
+	private void fromEN(org.husky.common.hl7cdar2.EN hl7CdaR2Value) {
 
 		if (hl7CdaR2Value != null) {
 			if (!hl7CdaR2Value.getUse().isEmpty()) {
@@ -97,23 +97,23 @@ public class FhirHumanName extends HumanName {
 						JAXBElement<?> elem = (JAXBElement<?>) element;
 						if (elem.getValue() instanceof EnFamily) {
 							EnFamily obj = (EnFamily) elem.getValue();
-							setFamily(obj.xmlContent);
+							setFamily(obj.getMergedXmlMixed());
 						} else if (elem.getValue() instanceof EnGiven) {
 							EnGiven obj = (EnGiven) elem.getValue();
-							addGiven(obj.xmlContent);
+							addGiven(obj.getMergedXmlMixed());
 						} else if (elem.getValue() instanceof EnPrefix) {
 							EnPrefix obj = (EnPrefix) elem.getValue();
-							addPrefix(obj.xmlContent);
+							addPrefix(obj.getMergedXmlMixed());
 						} else if (elem.getValue() instanceof EnSuffix) {
 							EnSuffix obj = (EnSuffix) elem.getValue();
-							addSuffix(obj.xmlContent);
+							addSuffix(obj.getMergedXmlMixed());
 						} else {
 							throw new NotImplementedException(elem.getValue().getClass().getName());
 						}
 					}
 				}
 			} else {
-				setText(hl7CdaR2Value.xmlContent);
+				setText(hl7CdaR2Value.getMergedXmlMixed());
 			}
 		}
 	}
@@ -199,8 +199,8 @@ public class FhirHumanName extends HumanName {
 	 * @param nf   null flavor, which should be used if name is null
 	 * @return created CDA R2 name
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.EN createHl7CdaR2En(HumanName name, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.EN retVal = new org.ehealth_connector.common.hl7cdar2.EN();
+	public static org.husky.common.hl7cdar2.EN createHl7CdaR2En(HumanName name, NullFlavor nf) {
+		org.husky.common.hl7cdar2.EN retVal = new org.husky.common.hl7cdar2.EN();
 		String value;
 
 		if (name == null) {
@@ -218,7 +218,7 @@ public class FhirHumanName extends HumanName {
 		value = name.getFamily();
 		if (value != null) {
 			EnFamily obj = new EnFamily();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent()
 					.add(new JAXBElement<EnFamily>(new QName(CdaUtil.NAMESPACE_HL7_V3, "family"), EnFamily.class, obj));
 		}
@@ -227,7 +227,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType given : name.getGiven()) {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
-					obj.xmlContent = given.getValue();
+					obj.setXmlMixed(given.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<EnGiven>(new QName(CdaUtil.NAMESPACE_HL7_V3, "given"), EnGiven.class, obj));
 				}
@@ -238,7 +238,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType prefix : name.getPrefix()) {
 				if (prefix != null) {
 					EnPrefix obj = new EnPrefix();
-					obj.xmlContent = prefix.getValue();
+					obj.setXmlMixed(prefix.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<EnPrefix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "prefix"), EnPrefix.class, obj));
 				}
@@ -249,7 +249,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType suffix : name.getSuffix()) {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
-					obj.xmlContent = suffix.getValue();
+					obj.setXmlMixed(suffix.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<EnSuffix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "suffix"), EnSuffix.class, obj));
 				}
@@ -258,7 +258,7 @@ public class FhirHumanName extends HumanName {
 
 		value = name.getText();
 		if (value != null && retVal.getContent().isEmpty()) {
-			retVal.xmlContent = value;
+			retVal.setXmlMixed(value);
 		}
 
 		return retVal;
@@ -271,11 +271,11 @@ public class FhirHumanName extends HumanName {
 	 *
 	 * @return HL7 CDA R2 {@link ON} value
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.ON createHl7CdaR2On(String name) {
-		org.ehealth_connector.common.hl7cdar2.ON retVal = new org.ehealth_connector.common.hl7cdar2.ON();
+	public static org.husky.common.hl7cdar2.ON createHl7CdaR2On(String name) {
+		org.husky.common.hl7cdar2.ON retVal = new org.husky.common.hl7cdar2.ON();
 
 		if (name != null && retVal.getContent().isEmpty()) {
-			retVal.xmlContent = name;
+			retVal.setXmlMixed(name);
 		}
 
 		return retVal;
@@ -288,8 +288,8 @@ public class FhirHumanName extends HumanName {
 	 * @param nf the nf
 	 * @return HL7 CDA R2  {@link PN} value
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.PN createHl7CdaR2Pn(HumanName name, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.PN retVal = new org.ehealth_connector.common.hl7cdar2.PN();
+	public static org.husky.common.hl7cdar2.PN createHl7CdaR2Pn(HumanName name, NullFlavor nf) {
+		org.husky.common.hl7cdar2.PN retVal = new org.husky.common.hl7cdar2.PN();
 		String value;
 
 		if (name == null) {
@@ -307,7 +307,7 @@ public class FhirHumanName extends HumanName {
 		value = name.getFamily();
 		if (value != null) {
 			EnFamily obj = new EnFamily();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent()
 					.add(new JAXBElement<EnFamily>(new QName(CdaUtil.NAMESPACE_HL7_V3, "family"), EnFamily.class, obj));
 		}
@@ -316,7 +316,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType given : name.getGiven()) {
 				if (given != null) {
 					EnGiven obj = new EnGiven();
-					obj.xmlContent = given.getValue();
+					obj.setXmlMixed(given.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<EnGiven>(new QName(CdaUtil.NAMESPACE_HL7_V3, "given"), EnGiven.class, obj));
 				}
@@ -327,7 +327,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType prefix : name.getPrefix()) {
 				if (prefix != null) {
 					EnPrefix obj = new EnPrefix();
-					obj.xmlContent = prefix.getValue();
+					obj.setXmlMixed(prefix.getValue());
 					obj.getQualifier().add("AC");
 					retVal.getContent()
 							.add(new JAXBElement<EnPrefix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "prefix"), EnPrefix.class, obj));
@@ -339,7 +339,7 @@ public class FhirHumanName extends HumanName {
 			for (StringType suffix : name.getSuffix()) {
 				if (suffix != null) {
 					EnSuffix obj = new EnSuffix();
-					obj.xmlContent = suffix.getValue();
+					obj.setXmlMixed(suffix.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<EnSuffix>(new QName(CdaUtil.NAMESPACE_HL7_V3, "suffix"), EnSuffix.class, obj));
 				}
@@ -348,7 +348,7 @@ public class FhirHumanName extends HumanName {
 
 		value = name.getText();
 		if (value != null && retVal.getContent().isEmpty()) {
-			retVal.xmlContent = value;
+			retVal.setXmlMixed(value);
 		}
 
 		EntityNameUse usage = getNameUse(name.getUse());

@@ -326,8 +326,16 @@ public class AssertionTransactions {
 			}
 
 		} catch (AxisFault af) {
-			return getErrorMessage(af.getFaultReasonElement().getText(),
-					af.getFaultCodeElement().getSubCode().getValue().getText(), af,
+			LOGGER.error("{}", af.getMessage(), af);
+			String errorMessage = SoapUtil.extractErrorMessageOfAxisFault(af);
+
+			if (errorMessage != null) {
+				return new Message(errorMessage, MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						af.getMessage());
+			}
+
+			return getErrorMessage("Die HCP Assertion konnte nicht abgerufen werden",
+					"Die HCP Assertion konnte nicht abgerufen werden", af,
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -412,11 +420,16 @@ public class AssertionTransactions {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} finally {
 			try {
-				IheServiceStubPool.getInstance().getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
-						._getServiceClient().cleanupTransport();
-				IheServiceStubPool.getInstance().getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
-						._getServiceClient().cleanup();
-				IheServiceStubPool.getInstance().instantiateEtsEhealthPlusService();
+				if (IheConstants.KIND_OF_REQUEST_VOS == kindOfRequest) {
+					IheServiceStubPool.getInstance()
+							.getEtsEhealthPlusService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)._getServiceClient()
+							.cleanupTransport();
+					IheServiceStubPool.getInstance().instantiateEtsEhealthPlusService();
+				} else {
+					IheServiceStubPool.getInstance()
+							.getEtsEhealthPlusEImmunizationService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+							._getServiceClient().cleanup();
+				}
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 			}

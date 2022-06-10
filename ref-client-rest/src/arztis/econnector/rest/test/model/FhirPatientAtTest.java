@@ -12,15 +12,14 @@ import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 
-import org.ehealth_connector.cda.at.elga.v2019.HeaderRecordTarget;
-import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PatientAt;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderRecordTargetEImpfpass;
-import org.ehealth_connector.common.enums.TelecomAddressUse;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RecordTarget;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Patient.ContactComponent;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderRecordTargetEImpfpass;
+import org.husky.common.at.PatientAt;
+import org.husky.common.enums.TelecomAddressUse;
+import org.husky.common.hl7cdar2.POCDMT000040RecordTarget;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -85,7 +84,7 @@ public class FhirPatientAtTest extends TestUtils {
 
 	/**
 	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getAtcdabbrHeaderRecordTargetEImpfpass()}.
+	 * {@link org.husky.cda.at.cdabuilder.PatientAt#getAtcdabbrHeaderRecordTargetEImpfpass()}.
 	 *
 	 */
 	@Test
@@ -137,12 +136,13 @@ public class FhirPatientAtTest extends TestUtils {
 
 	/**
 	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PatientAt#getHeaderRecordTarget()}.
+	 * {@link org.husky.cda.at.cdabuilder.PatientAt#getHeaderRecordTarget()}.
 	 *
 	 */
 	@Test
 	public void testGetHeaderRecordTarget() {
-		final HeaderRecordTarget headerRecordTarget = FhirPatientAt.getHeaderRecordTarget(testRecordTarget);
+		final org.husky.cda.elga.generated.artdecor.base.HeaderRecordTarget headerRecordTarget = FhirPatientAt
+				.getHeaderRecordTarget(testRecordTarget);
 		testFixedValues(headerRecordTarget);
 
 		assertNotNull(headerRecordTarget.getPatientRole().getAddr());

@@ -6,6 +6,7 @@
  */
 package arztis.econnector.ihe.utilities;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,18 +14,21 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.ehealth_connector.cda.at.elga.v2019.Einnahmedauer;
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.ED;
-import org.ehealth_connector.common.hl7cdar2.IVLTS;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component3;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Section;
-import org.ehealth_connector.common.hl7cdar2.SC;
-import org.ehealth_connector.common.hl7cdar2.ST;
-import org.ehealth_connector.common.hl7cdar2.SXCMTS;
-import org.ehealth_connector.common.hl7cdar2.TEL;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.utils.DateUtil;
+import org.husky.cda.elga.generated.artdecor.emed.Einnahmedauer;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.ED;
+import org.husky.common.hl7cdar2.IVLTS;
+import org.husky.common.hl7cdar2.POCDMT000040Component3;
+import org.husky.common.hl7cdar2.POCDMT000040Section;
+import org.husky.common.hl7cdar2.SC;
+import org.husky.common.hl7cdar2.ST;
+import org.husky.common.hl7cdar2.SXCMTS;
+import org.husky.common.hl7cdar2.TEL;
+import org.husky.common.hl7cdar2.TS;
+import org.husky.common.utils.DateUtil;
+import org.openehealth.ipf.commons.ihe.core.HL7DTM;
+
+import ca.uhn.hl7v2.model.DataTypeException;
 
 /**
  * This class contains utility functionalities to generate CDA documents.
@@ -128,8 +132,9 @@ public class CdaUtil {
 	}
 
 	/**
-	 * extracts {@link Date} from CDA R2 {@link TS} element. TS is a simple date
-	 * element. This method parse HL7 time stamps to {@link Date} </br>
+	 * extracts {@link ZonedDateTime} from CDA R2 {@link TS} element. TS is a simple
+	 * date element. This method parse HL7 time stamps to {@link ZonedDateTime}
+	 * </br>
 	 * XML to extract looks as follows:
 	 *
 	 * <pre>
@@ -140,20 +145,22 @@ public class CdaUtil {
 	 *
 	 * @param ts element to extract
 	 *
-	 * @return created {@link Date}
+	 * @return created {@link ZonedDateTime}
+	 * @throws DataTypeException
 	 */
-	public static Date fromTS(TS ts) {
-		Date date = null;
+	public static ZonedDateTime fromTS(TS ts) throws DataTypeException {
+		ZonedDateTime date = null;
 		if (ts != null) {
-			date = DateUtil.parseHl7Timestamp(ts.getValue());
+			date = HL7DTM.toZonedDateTime(ts.getValue());
 		}
 
 		return date;
 	}
 
 	/**
-	 * extracts {@link Date} from CDA R2 {@link SXCMTS} element. SXCMTS is a date
-	 * element. This method parse HL7 time stamps to {@link Date} </br>
+	 * extracts {@link ZonedDateTime} from CDA R2 {@link SXCMTS} element. SXCMTS is
+	 * a date element. This method parse HL7 time stamps to {@link ZonedDateTime}
+	 * </br>
 	 * XML to extract looks as follows:
 	 *
 	 * <pre>
@@ -164,21 +171,23 @@ public class CdaUtil {
 	 *
 	 * @param sxcmts element to extract
 	 *
-	 * @return created {@link Date}
+	 * @return created {@link ZonedDateTime}
+	 * @throws DataTypeException
 	 */
-	public static Date fromSXCMTS(SXCMTS sxcmts) {
-		Date date = null;
+	public static ZonedDateTime fromSXCMTS(SXCMTS sxcmts) throws DataTypeException {
+		ZonedDateTime date = null;
 		if (sxcmts != null) {
-			date = DateUtil.parseHl7Timestamp(sxcmts.getValue());
+			date = HL7DTM.toZonedDateTime(sxcmts.getValue());
 		}
 
 		return date;
 	}
 
 	/**
-	 * creates CDA R2 element {@link SXCMTS} from passed {@link Date}. SXCMTS is a
-	 * time element. If null is passed as {@link Date} the null flavor "UNK" is
-	 * added. This method formats passed date with time and time zone. </br>
+	 * creates CDA R2 element {@link SXCMTS} from passed {@link ZonedDateTime}.
+	 * SXCMTS is a time element. If null is passed as {@link ZonedDateTime} the null
+	 * flavor "UNK" is added. This method formats passed date with time and time
+	 * zone. </br>
 	 * In XML it looks as follows:
 	 *
 	 * <pre>
@@ -191,12 +200,12 @@ public class CdaUtil {
 	 *
 	 * @return created {@link SXCMTS} element
 	 */
-	public static SXCMTS createEffectiveTimePointSXCMTS(Date date) {
+	public static SXCMTS createEffectiveTimePointSXCMTS(ZonedDateTime date) {
 		SXCMTS time = new SXCMTS();
 		if (date == null) {
 			time.getNullFlavor().add(NullFlavor.UNKNOWN_CODE);
 		} else {
-			time.setValue(DateUtil.formatDateTimeTzon(date));
+			time.setValue(HL7DTM.toSimpleString(date));
 		}
 
 		return time;
@@ -310,7 +319,7 @@ public class CdaUtil {
 	 */
 	public static SC createSC(String value) {
 		SC sc = new SC();
-		sc.xmlContent = value;
+		sc.setXmlMixed(value);
 		return sc;
 	}
 
@@ -353,7 +362,7 @@ public class CdaUtil {
 	public static ST createTitleNullFlavor(String text, String nullFlavor) {
 		ST title = new ST();
 		if (text != null) {
-			title.xmlContent = text;
+			title.setXmlMixed(text);
 		} else {
 			title.getNullFlavor().add(nullFlavor);
 		}

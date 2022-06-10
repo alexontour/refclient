@@ -9,16 +9,19 @@ package arztis.econnector.ihe.queries;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ehealth_connector.communication.at.ConvenienceMasterPatientIndexV3At;
-import org.ehealth_connector.communication.at.MasterPatientIndexQueryAt;
-import org.ehealth_connector.communication.at.MasterPatientIndexQueryResponseAt;
-import org.ehealth_connector.fhir.structures.gen.FhirPatient;
-import org.hl7.fhir.dstu3.model.Address;
-import org.hl7.fhir.dstu3.model.HumanName;
-import org.hl7.fhir.dstu3.model.Identifier;
-import org.openhealthtools.ihe.xua.XUAAssertion;
+import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Identifier;
+import org.husky.common.enums.AdministrativeGender;
+import org.husky.communication.ConvenienceMasterPatientIndexV3;
+import org.husky.communication.MasterPatientIndexQuery;
+import org.husky.communication.MasterPatientIndexQueryResponse;
+import org.husky.communication.mpi.impl.pdq.V3PdqQueryResponse;
+import org.husky.fhir.structures.gen.FhirPatient;
+import org.husky.xua.core.SecurityHeaderElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import arztis.econnector.ihe.utilities.IheServiceStubPool;
 
@@ -32,6 +35,7 @@ import arztis.econnector.ihe.utilities.IheServiceStubPool;
  * @author Anna Jungwirth
  *
  */
+@Component
 public class PatientIndexTransactions {
 
 	/** The Constant LOGGER. */
@@ -40,8 +44,8 @@ public class PatientIndexTransactions {
 	/**
 	 * Default constructor.
 	 */
-	private PatientIndexTransactions() {
-		throw new IllegalStateException("Utility class");
+	public PatientIndexTransactions() {
+		super();
 	}
 
 	/**
@@ -55,31 +59,33 @@ public class PatientIndexTransactions {
 	 *
 	 * @return list of found {@link FhirPatient}
 	 */
-	public static List<FhirPatient> queryPatientDemographics(FhirPatient fhirPatient, XUAAssertion assertion) {
+	public List<FhirPatient> queryPatientDemographics(FhirPatient fhirPatient, SecurityHeaderElement assertion) {
 		if (fhirPatient == null) {
 			return new ArrayList<>();
 		}
 
-		MasterPatientIndexQueryAt query;
+		MasterPatientIndexQuery query;
 		try {
-			query = new MasterPatientIndexQueryAt(
+			ConvenienceMasterPatientIndexV3 connection = IheServiceStubPool.getInstance().getPdqService();
+
+			query = new MasterPatientIndexQuery(
 					IheServiceStubPool.getInstance().getAffinityDomainZpi().getPdqDestination());
 
 			if (fhirPatient.getName() != null && !fhirPatient.getName().isEmpty()) {
 				for (HumanName humanName : fhirPatient.getName()) {
-					query.addPatientNameAt(true, humanName);
+					query.addPatientName(true, humanName);
 				}
 			}
 
 			if (fhirPatient.getIdentifier() != null && !fhirPatient.getIdentifier().isEmpty()) {
 				for (Identifier identifier : fhirPatient.getIdentifier()) {
-					query.addPatientIdentificatorAt(identifier);
+					query.addPatientIdentificator(identifier);
 				}
 			}
 
 			if (fhirPatient.getAddress() != null) {
 				for (Address address : fhirPatient.getAddress()) {
-					query.addPatientAddressAt(address);
+					query.addPatientAddress(address);
 				}
 			}
 
@@ -88,21 +94,23 @@ public class PatientIndexTransactions {
 			}
 
 			if (fhirPatient.getGenderElement() != null && fhirPatient.getGenderElement().getValue() != null) {
-				query.setPatientSexAt(fhirPatient.getGenderElement().getValue());
+				query.setPatientSex(AdministrativeGender.valueOf(fhirPatient.getGenderElement().getValueAsString()));
 			}
 
-			MasterPatientIndexQueryResponseAt response = ConvenienceMasterPatientIndexV3At.queryPatientDemographics(
-					query, IheServiceStubPool.getInstance().getAffinityDomainZpi(), assertion);
+			MasterPatientIndexQueryResponse response = connection.queryPatientDemographics(query,
+					IheServiceStubPool.getInstance().getAffinityDomainZpi(), assertion, null);
 
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("Found {} patients.", response.getTotalNumbers());
 			}
 
-			for (FhirPatient patient : response.getFhirPatients()) {
+			V3PdqQueryResponse mpiQueryResponse = (V3PdqQueryResponse) response.getMpiQueryResponse();
+
+			for (FhirPatient patient : mpiQueryResponse.getPatients()) {
 				patient.setActive(true);
 			}
 
-			return response.getFhirPatients();
+			return mpiQueryResponse.getPatients();
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}

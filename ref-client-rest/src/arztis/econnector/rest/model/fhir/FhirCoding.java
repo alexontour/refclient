@@ -8,11 +8,11 @@ package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.CS;
 import org.hl7.fhir.r4.model.Coding;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.CS;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
@@ -54,7 +54,7 @@ public class FhirCoding extends Coding {
 	 *
 	 * @param hl7CdaR2Value the hl 7 cda R 2 value
 	 */
-	private void fromCD(org.ehealth_connector.common.hl7cdar2.CD hl7CdaR2Value) {
+	private void fromCD(org.husky.common.hl7cdar2.CD hl7CdaR2Value) {
 
 		if (hl7CdaR2Value != null) {
 			setCode(hl7CdaR2Value.getCode());
@@ -72,11 +72,11 @@ public class FhirCoding extends Coding {
 	 *
 	 * @return the HL7 CDA R2 CD data typed value
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.CD createHl7CdaR2Cd(Coding coding, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.CD retVal = null;
+	public static org.husky.common.hl7cdar2.CD createHl7CdaR2Cd(Coding coding, NullFlavor nf) {
+		org.husky.common.hl7cdar2.CD retVal = null;
 
 		if (coding == null && nf != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CD();
+			retVal = new org.husky.common.hl7cdar2.CD();
 			if (retVal.nullFlavor == null)
 				retVal.nullFlavor = new ArrayList<String>();
 			retVal.nullFlavor.add(nf.getCodeValue());
@@ -84,7 +84,7 @@ public class FhirCoding extends Coding {
 		}
 
 		if (coding != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CD();
+			retVal = new org.husky.common.hl7cdar2.CD();
 			String value = coding.getCode();
 			if (value != null) {
 				retVal.setCode(value);
@@ -116,11 +116,11 @@ public class FhirCoding extends Coding {
 	 * @param nf     null flavor, which should be used if coding is null
 	 * @return the HL7 CDA R2 CE data typed value
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.CE createHl7CdaR2Ce(Coding coding, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.CE retVal = null;
+	public static org.husky.common.hl7cdar2.CE createHl7CdaR2Ce(Coding coding, NullFlavor nf) {
+		org.husky.common.hl7cdar2.CE retVal = null;
 
 		if (coding == null && nf != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CE();
+			retVal = new org.husky.common.hl7cdar2.CE();
 			if (retVal.nullFlavor == null)
 				retVal.nullFlavor = new ArrayList<String>();
 			retVal.nullFlavor.add(nf.getCodeValue());
@@ -128,7 +128,7 @@ public class FhirCoding extends Coding {
 		}
 
 		if (coding != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CE();
+			retVal = new org.husky.common.hl7cdar2.CE();
 			String value = coding.getCode();
 			if (value != null) {
 				retVal.setCode(value);
@@ -161,11 +161,11 @@ public class FhirCoding extends Coding {
 	 *
 	 * @return the HL7 CDA R2 CS data typed value
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.CS createHl7CdaR2Cs(Coding coding, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.CS retVal = null;
+	public static org.husky.common.hl7cdar2.CS createHl7CdaR2Cs(Coding coding, NullFlavor nf) {
+		org.husky.common.hl7cdar2.CS retVal = null;
 
 		if (coding == null && nf != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CS();
+			retVal = new org.husky.common.hl7cdar2.CS();
 			if (retVal.nullFlavor == null)
 				retVal.nullFlavor = new ArrayList<String>();
 			retVal.nullFlavor.add(nf.getCodeValue());
@@ -173,7 +173,7 @@ public class FhirCoding extends Coding {
 		}
 
 		if (coding != null) {
-			retVal = new org.ehealth_connector.common.hl7cdar2.CS();
+			retVal = new org.husky.common.hl7cdar2.CS();
 			String value = coding.getCode();
 			if (value != null) {
 				retVal.setCode(value);

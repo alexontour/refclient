@@ -9,9 +9,9 @@ package arztis.econnector.rest.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Custodian;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
 import org.hl7.fhir.r4.model.Organization;
+import org.husky.common.hl7cdar2.POCDMT000040Custodian;
+import org.husky.common.hl7cdar2.POCDMT000040Organization;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +62,8 @@ public class FhirOrganizationTest extends TestUtils {
 		assertEquals(getNumS1(),
 				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getId().get(0).getExtension());
 
-		assertEquals(getTs1(), custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName().xmlContent);
+		assertEquals(getTs1(),
+				custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getName().getMergedXmlMixed());
 
 		assertNotNull(custodian.getAssignedCustodian().getRepresentedCustodianOrganization().getAddr());
 
@@ -92,7 +93,7 @@ public class FhirOrganizationTest extends TestUtils {
 
 		assertNotNull(organization.getName());
 		assertEquals(1, organization.getName().size());
-		assertEquals(getTs1(), organization.getName().get(0).xmlContent);
+		assertEquals(getTs1(), organization.getName().get(0).getMergedXmlMixed());
 
 		assertNotNull(organization.getAddr());
 		assertEquals(1, organization.getAddr().size());

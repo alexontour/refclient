@@ -11,13 +11,13 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import org.ehealth_connector.common.hl7cdar2.IVLTS;
-import org.ehealth_connector.common.hl7cdar2.IVXBTS;
-import org.ehealth_connector.common.hl7cdar2.QTY;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Period;
+import org.husky.common.hl7cdar2.IVLTS;
+import org.husky.common.hl7cdar2.IVXBTS;
+import org.husky.common.hl7cdar2.QTY;
+import org.husky.common.hl7cdar2.TS;
 
+import arztis.econnector.ihe.utilities.DateUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
 /**

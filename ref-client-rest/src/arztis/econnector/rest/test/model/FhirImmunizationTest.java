@@ -13,21 +13,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrSectionImpfungenKodiert;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.EntityDeterminerDetermined;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Consumable;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Precondition;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040SubstanceAdministration;
-import org.ehealth_connector.common.hl7cdar2.ParticipationPhysicalPerformer;
-import org.ehealth_connector.common.hl7cdar2.RoleClassManufacturedProduct;
-import org.ehealth_connector.common.hl7cdar2.XActClassDocumentEntryAct;
-import org.ehealth_connector.common.hl7cdar2.XActMoodDocumentObservation;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.XDocumentActMood;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DateTimeType;
@@ -38,6 +23,21 @@ import org.hl7.fhir.r4.model.Immunization.ImmunizationStatus;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.cda.elga.generated.artdecor.AtcdabrrSectionImpfungenKodiert;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.EntityDeterminerDetermined;
+import org.husky.common.hl7cdar2.POCDMT000040Consumable;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040Performer2;
+import org.husky.common.hl7cdar2.POCDMT000040Precondition;
+import org.husky.common.hl7cdar2.POCDMT000040SubstanceAdministration;
+import org.husky.common.hl7cdar2.ParticipationPhysicalPerformer;
+import org.husky.common.hl7cdar2.RoleClassManufacturedProduct;
+import org.husky.common.hl7cdar2.XActClassDocumentEntryAct;
+import org.husky.common.hl7cdar2.XActMoodDocumentObservation;
+import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
+import org.husky.common.hl7cdar2.XDocumentActMood;
+import org.husky.common.utils.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -98,7 +98,7 @@ public class FhirImmunizationTest extends TestUtils {
 	public void testGetAtcdabbrSectionImpfungenKodiert() {
 		Map<Immunization, PractitionerRole> immunizationMap = new HashMap<>();
 		immunizationMap.put(testImmunization, null);
-		final AtcdabbrSectionImpfungenKodiert section = FhirImmunization
+		final AtcdabrrSectionImpfungenKodiert section = FhirImmunization
 				.getAtcdabbrSectionImpfungenKodiert(immunizationMap);
 
 		assertNotNull(section);
@@ -112,7 +112,7 @@ public class FhirImmunizationTest extends TestUtils {
 		assertEquals("11369-6", section.getCode().getCode());
 		assertEquals("2.16.840.1.113883.6.1", section.getCode().getCodeSystem());
 		assertEquals("HISTORY OF IMMUNIZATIONS", section.getCode().getDisplayName());
-		assertEquals("Impfungen", section.getTitle().xmlContent);
+		assertEquals("Impfungen", section.getTitle().getMergedXmlMixed());
 
 		assertNotNull(section.getText());
 
@@ -187,7 +187,7 @@ public class FhirImmunizationTest extends TestUtils {
 
 		assertNotNull(consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText());
 		assertEquals("12345",
-				consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText().xmlContent);
+				consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText().getMergedXmlMixed());
 
 		// performer
 		assertNotNull(substance.getPerformer());

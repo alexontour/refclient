@@ -6,14 +6,17 @@
  */
 package arztis.econnector.ihe.utilities;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-import org.ehealth_connector.common.utils.DateUtil;
+import org.openehealth.ipf.commons.ihe.core.HL7DTM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.SlotType1;
+import ca.uhn.hl7v2.model.DataTypeException;
 
 /**
  * This class contains utility functionalities to extract retrieved document
@@ -24,6 +27,9 @@ import arztis.econnector.ihe.generatedClasses.rim.ebxml_regrep.tc.names.oasis.Sl
  */
 public class MetadataConverter {
 
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataConverter.class.getName());
+
 	/**
 	 * Default constructor.
 	 */
@@ -32,8 +38,8 @@ public class MetadataConverter {
 	}
 
 	/**
-	 * extracts {@link Date} from passed {@link SlotType1}. Passed slot in XML
-	 * format looks as follows:
+	 * extracts {@link ZonedDateTime} from passed {@link SlotType1}. Passed slot in
+	 * XML format looks as follows:
 	 *
 	 * <pre>
 	 * {@code
@@ -50,11 +56,17 @@ public class MetadataConverter {
 	 *
 	 * @param slot XML element from which to extract
 	 *
-	 * @return extracted {@link Date}
+	 * @return extracted {@link ZonedDateTime}
 	 */
-	public static Date convertDateTime(SlotType1 slot) {
-		String time = getStringFromSlot(slot);
-		return DateUtil.parseHl7Timestamp(time);
+	public static ZonedDateTime convertDateTime(SlotType1 slot) {
+		try {
+			String time = getStringFromSlot(slot);
+			return HL7DTM.toZonedDateTime(time);
+		} catch (DataTypeException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+
+		return null;
 	}
 
 	/**

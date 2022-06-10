@@ -8,6 +8,12 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<name>ELGA Referenz Client der Firma et-Innovations</name>
 
+     <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.5</version>
+	</parent>
+
 	<modules>
 		<module>ref-client-common</module>
 		<module>ref-client-ihe</module>
@@ -16,7 +22,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>12</maven.compiler.release>
+		<maven.compiler.release>17</maven.compiler.release>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 		<maven.install.plugin.version>3.0.0-M1</maven.install.plugin.version>
 		<maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -103,9 +112,9 @@
 				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
 					<forceJavacCompilerUse>true</forceJavacCompilerUse>
-					<source>12</source>
-					<target>12</target>
-					<release>12</release>
+					<source>17</source>
+					<target>17</target>
+					<release>17</release>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
@@ -183,29 +192,29 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<descriptors>
-					  <descriptor>
-					    distribution.xml
-					  </descriptor>
-					</descriptors>
+					<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
+					<fork>true</fork>
+					<requiresUnpack>
+						<dependency>
+							<groupId>org.apache.axis2</groupId>
+							<artifactId>addressing</artifactId>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.axis2</groupId>
+							<artifactId>axis2-jaxws</artifactId>
+						</dependency>
+					</requiresUnpack>
 				</configuration>
 				<executions>
 					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
+						<id>repackage</id>
+						<configuration>
+							<mainClass>arztis.econnector.rest.ElgaRefClient</mainClass>
+							<classifier>jar-with-dependencies</classifier>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

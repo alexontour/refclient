@@ -13,14 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.AvailabilityStatus;
-import org.ehealth_connector.common.at.enums.ClassCode;
 import org.hl7.fhir.r4.model.CodeableConcept;
-import org.openhealthtools.ihe.common.hl7v2.Hl7v2Factory;
-import org.openhealthtools.ihe.common.hl7v2.XON;
-import org.openhealthtools.ihe.common.hl7v2.format.HL7V2MessageFormat;
-import org.openhealthtools.ihe.utils.OID;
+import org.husky.common.at.enums.ClassCode;
+import org.husky.common.model.Identificator;
+import org.openehealth.ipf.commons.core.OidGenerator;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Hl7v2Based;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,7 +152,7 @@ public class IheQueryTransformer {
 		}
 
 		if (practitionerOrganizationName != null) {
-			XON authorInstitution = Hl7v2Factory.eINSTANCE.createXON();
+			Organization authorInstitution = new Organization();
 
 			if (organizationId != null) {
 				authorInstitution.setIdNumber(organizationId);
@@ -162,7 +161,7 @@ public class IheQueryTransformer {
 			authorInstitution.setOrganizationName(practitionerOrganizationName);
 
 			List<String> authorInstitutionList = new ArrayList<>();
-			authorInstitutionList.add(HL7V2MessageFormat.toMessageString(authorInstitution, '^', '&'));
+			authorInstitutionList.add(Hl7v2Based.render(authorInstitution));
 
 			values = QueryPartFactory.generateValueList(authorInstitutionList);
 			List<SlotType1> slotList = new ArrayList<>();
@@ -184,7 +183,7 @@ public class IheQueryTransformer {
 		name = QueryPartFactory.generateInternationalString("XDSSubmissionSet.uniqueId", null, null);
 		externalIds.add(QueryPartFactory.generateExternalIdentifier(
 				ObjectIds.EXTERNAL_IDENTIFIER_UNIQUEID_SUBMISSION_SET_CODE, registryObject,
-				OID.createOIDGivenRoot(organizationId, 64), ObjectTypes.EXTERNAL_IDENTIFIER, name));
+				OidGenerator.uniqueOid().toString(), ObjectTypes.EXTERNAL_IDENTIFIER, name));
 
 		name = QueryPartFactory.generateInternationalString("XDSSubmissionSet.sourceId", null, null);
 		externalIds.add(
@@ -192,7 +191,7 @@ public class IheQueryTransformer {
 						registryObject, organizationId, ObjectTypes.EXTERNAL_IDENTIFIER, name));
 
 		RegistryPackageType registryPackage = QueryPartFactory.generateRegistryPackage(
-				AvailabilityStatus.APPROVED.getCodeValue(), registryObject, ObjectTypes.REGSITRY_PACKAGE,
+				AvailabilityStatus.APPROVED.getOpcode(), registryObject, ObjectTypes.REGSITRY_PACKAGE,
 				classifications, externalIds, slots, null, null, null);
 
 		ClassificationType classificationStatus = QueryPartFactory.generateClassification(
@@ -200,13 +199,13 @@ public class IheQueryTransformer {
 				null, null);
 
 		List<String> stateList = new ArrayList<>();
-		stateList.add(AvailabilityStatus.APPROVED.getCodeValue());
+		stateList.add(AvailabilityStatus.APPROVED.getOpcode());
 
 		values = QueryPartFactory.generateValueList(stateList);
 		SlotType1 slotOriginalState = QueryPartFactory.generateSlot(values, "OriginalStatus");
 
 		stateList = new ArrayList<>();
-		stateList.add(AvailabilityStatus.DEPRECATED.getCodeValue());
+		stateList.add(AvailabilityStatus.DEPRECATED.getOpcode());
 		values = QueryPartFactory.generateValueList(stateList);
 		SlotType1 slotNewState = QueryPartFactory.generateSlot(values, "NewStatus");
 
@@ -510,7 +509,7 @@ public class IheQueryTransformer {
 		}
 
 		if (status != null) {
-			slots.add(createStringSlot(status.getCodeValue(), "$XDSDocumentEntryStatus"));
+			slots.add(createStringSlot(status.getOpcode(), "$XDSDocumentEntryStatus"));
 		}
 
 		if (authorInstitution != null && !authorInstitution.isEmpty()) {

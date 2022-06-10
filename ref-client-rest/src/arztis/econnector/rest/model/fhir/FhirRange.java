@@ -12,14 +12,14 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import org.ehealth_connector.common.hl7cdar2.INT;
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
-import org.ehealth_connector.common.hl7cdar2.IVLPQ;
-import org.ehealth_connector.common.hl7cdar2.IVXBPQ;
-import org.ehealth_connector.common.hl7cdar2.PQ;
-import org.ehealth_connector.common.hl7cdar2.QTY;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.IVLINT;
+import org.husky.common.hl7cdar2.IVLPQ;
+import org.husky.common.hl7cdar2.IVXBPQ;
+import org.husky.common.hl7cdar2.PQ;
+import org.husky.common.hl7cdar2.QTY;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 

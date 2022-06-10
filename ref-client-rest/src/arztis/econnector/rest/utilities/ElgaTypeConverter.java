@@ -11,19 +11,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.ehealth_connector.common.at.enums.AuthorRole;
-import org.ehealth_connector.common.at.enums.AuthorSpeciality;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
-import org.openhealthtools.ihe.common.hl7v2.XCN;
-import org.openhealthtools.ihe.common.hl7v2.XON;
-import org.openhealthtools.ihe.common.hl7v2.format.HL7V2MessageFormat;
-import org.openhealthtools.ihe.common.hl7v2.format.MessageDelimiters;
-import org.openhealthtools.ihe.xds.metadata.impl.AuthorTypeImpl;
-import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
+import org.husky.common.at.enums.AuthorRole;
+import org.husky.common.at.enums.AuthorSpeciality;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Association;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Author;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.DocumentEntry;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -81,39 +80,37 @@ public class ElgaTypeConverter {
 	 *
 	 * @return created {@link FhirBundle}
 	 */
-	public static FhirBundle createFhirBundleOfDocumentResponseType(List<DocumentEntryResponseType> documentResponses) {
+	public static FhirBundle createFhirBundleOfDocumentResponseType(List<DocumentEntry> documentResponses,
+			List<Association> associations) {
 		List<Resource> resources = new ArrayList<>();
 		if (documentResponses != null && !documentResponses.isEmpty()) {
 			int index = 0;
-			for (DocumentEntryResponseType documentResponse : documentResponses) {
+			for (DocumentEntry documentResponse : documentResponses) {
 				if (documentResponse != null) {
-					resources.add(new FhirDocumentReference(documentResponse, index));
+					resources.add(new FhirDocumentReference(documentResponse, associations.get(0), index));
 
-					if (documentResponse.getDocumentEntry().getLegalAuthenticator() != null) {
-						resources.add(new FhirPractitioner(documentResponse.getDocumentEntry().getLegalAuthenticator(),
+					if (documentResponse.getLegalAuthenticator() != null) {
+						resources.add(new FhirPractitioner(documentResponse.getLegalAuthenticator(),
 								String.format(DIGIT_DIGIT_PLACEHOLDER, index, 1)));
 					}
 
-					if (documentResponse.getDocumentEntry().getAuthors() != null) {
+					if (documentResponse.getAuthors() != null) {
 						int count = 0;
-						for (Object object : documentResponse.getDocumentEntry().getAuthors()) {
-							if (object instanceof AuthorTypeImpl) {
-								AuthorTypeImpl author = (AuthorTypeImpl) object;
-								resources.add(new FhirPractitionerRole(author,
+						for (Author author : documentResponse.getAuthors()) {
+							resources.add(new FhirPractitionerRole(author,
+									String.format(DIGIT_DIGIT_PLACEHOLDER, index, count + 2)));
+
+							if (author != null && author.getAuthorPerson() != null) {
+								resources.add(new FhirPractitioner(author.getAuthorPerson(),
 										String.format(DIGIT_DIGIT_PLACEHOLDER, index, count + 2)));
-
-								if (author != null && author.getAuthorPerson() != null) {
-									resources.add(new FhirPractitioner(author.getAuthorPerson(),
-											String.format(DIGIT_DIGIT_PLACEHOLDER, index, count + 2)));
-								}
-
-								if (author != null && author.getAuthorPerson() != null) {
-									resources.add(new FhirOrganization(author,
-											String.format(DIGIT_DIGIT_PLACEHOLDER, index, count + 2)));
-								}
 							}
-						}
+
+							if (author != null && author.getAuthorPerson() != null) {
+								resources.add(new FhirOrganization(author,
+										String.format(DIGIT_DIGIT_PLACEHOLDER, index, count + 2)));
+							}
 					}
+				}
 
 					index++;
 				}
@@ -232,25 +229,23 @@ public class ElgaTypeConverter {
 	}
 
 	/**
-	 * extracts HL7 V2 {@link XCN} from passed {@link SlotType1}.
+	 * extracts HL7 V2 {@link Person} from passed {@link SlotType1}.
 	 *
-	 * @param slot with value formatted as HL7 V2 XCN
-	 * @return extracted HL7 V2 {@link XCN}
+	 * @param slot with value formatted as HL7 V2 Person
+	 * @return extracted HL7 V2 {@link Person}
 	 */
-	private static XCN extractAuthorPerson(SlotType1 slot) {
-		return HL7V2MessageFormat.buildXCNFromMessageString(MetadataConverter.getStringFromSlot(slot),
-				MessageDelimiters.COMPONENT, MessageDelimiters.SUBCOMPONENT);
+	private static Person extractAuthorPerson(SlotType1 slot) {
+		return Person.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
 	}
 
 	/**
-	 * extracts HL7 V2 {@link XON} from passed {@link SlotType1}.
+	 * extracts HL7 V2 {@link Organization} from passed {@link SlotType1}.
 	 *
 	 * @param slot with value formatted as HL7 V2 XON
-	 * @return extracted HL7 V2 {@link XON}
+	 * @return extracted HL7 V2 {@link Organization}
 	 */
-	private static XON extractAuthorInstitution(SlotType1 slot) {
-		return HL7V2MessageFormat.buildXONFromMessageString(MetadataConverter.getStringFromSlot(slot),
-				MessageDelimiters.COMPONENT, MessageDelimiters.SUBCOMPONENT);
+	private static Organization extractAuthorInstitution(SlotType1 slot) {
+		return Organization.parse(MetadataConverter.getStringFromSlot(slot), Organization.class);
 	}
 
 	/**

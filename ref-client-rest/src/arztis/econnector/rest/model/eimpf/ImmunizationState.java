@@ -8,17 +8,17 @@ package arztis.econnector.rest.model.eimpf;
 
 import java.util.Map;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDocumentReplacementRelatedDocument;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderDocumentationOfServiceEventEImpfpass;
-import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaEventCodeList;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040StructuredBody;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Composition;
 import org.hl7.fhir.r4.model.Immunization;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.ResourceType;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderDocumentReplacementRelatedDocument;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderDocumentationOfServiceEventEImpfpass;
+import org.husky.cda.elga.generated.artdecor.enums.ElgaEventCodeList;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.POCDMT000040StructuredBody;
+import org.husky.common.utils.DateUtil;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.fhir.FhirCoding;

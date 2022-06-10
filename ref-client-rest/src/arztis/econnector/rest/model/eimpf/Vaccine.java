@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ehealth_connector.common.Code;
+import org.husky.common.model.Code;
 
 /**
  * This class contains information about a vaccine.

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,30 +21,31 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.xmlbeans.XmlException;
-import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PatientAt;
-import org.ehealth_connector.cda.at.elga.v2019.cdalab.Laborbefund;
-import org.ehealth_connector.cda.at.elga.v2019.disch.CdaentlassbriefAerztlich;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
-import org.ehealth_connector.cda.at.elga.v2019.emed.Cdarezept;
-import org.ehealth_connector.cda.at.elga.v2019.phc.ElgapatientConsultationSummary;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.AvailabilityStatus;
-import org.ehealth_connector.common.at.enums.ClassCode;
-import org.ehealth_connector.common.at.enums.FormatCode;
-import org.ehealth_connector.common.at.enums.TypeCode;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ClinicalDocument;
-import org.ehealth_connector.communication.at.xd.storedquery.FindDocumentsQuery;
-import org.ehealth_connector.fhir.structures.gen.FhirPatient;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
-import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
-import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
-import org.openhealthtools.ihe.xds.response.XDSQueryResponseType;
-import org.openhealthtools.ihe.xds.response.XDSResponseType;
-import org.openhealthtools.ihe.xds.response.XDSRetrieveResponseType;
-import org.openhealthtools.ihe.xua.XUAAssertion;
+import org.husky.cda.elga.generated.artdecor.EimpfDocumentUpdateImmunisierungsstatus;
+import org.husky.cda.elga.generated.artdecor.base.Laborbefund;
+import org.husky.cda.elga.generated.artdecor.emed.Cdarezept;
+import org.husky.cda.elga.generated.artdecor.ps.ElgapatientConsultationSummary;
+import org.husky.cda.elga.xml.CdaDocumentMarshaller;
+import org.husky.cda.elga.xml.CdaDocumentUnmarshaller;
+import org.husky.common.at.PatientAt;
+import org.husky.common.at.enums.ClassCode;
+import org.husky.common.at.enums.FormatCode;
+import org.husky.common.at.enums.TypeCode;
+import org.husky.common.hl7cdar2.POCDMT000040ClinicalDocument;
+import org.husky.common.model.Code;
+import org.husky.common.model.Identificator;
+import org.husky.communication.xd.storedquery.FindDocumentsQuery;
+import org.husky.fhir.structures.gen.FhirPatient;
+import org.husky.xua.core.SecurityHeaderElement;
+import org.husky.xua.exceptions.DeserializeException;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.QueryResponse;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.Response;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.RetrievedDocumentSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -181,16 +181,10 @@ public class ElgaConnectionCaller {
 	 * @param connData  Connection data of the respective user requesting the
 	 *                  documents
 	 * @return found metadata of documents
-	 * @throws UnauthorizedException        the unauthorized exception
-	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException                 the SAX exception
-	 * @throws IOException                  Signals that an I/O exception has
-	 *                                      occurred.
-	 * @throws ServiceUnavailableException  the service unavailable exception
+	 * @throws Exception
 	 */
-	public XDSQueryResponseType requestDocumentList(Identificator patientId, String typeCode, AvailabilityStatus status,
-			ConnectionData connData) throws UnauthorizedException, ParserConfigurationException, SAXException,
-			IOException, ServiceUnavailableException {
+	public QueryResponse requestDocumentList(Identificator patientId, String typeCode, AvailabilityStatus status,
+			ConnectionData connData) throws Exception {
 		ElgaEHealthApplication eHealthApplication = getElgaEHealthApplication(typeCode);
 		AssertionType assertion = getAssertion(eHealthApplication, connData, typeCode);
 		XdsTransactions oXdsTransactions = new XdsTransactions(
@@ -198,7 +192,7 @@ public class ElgaConnectionCaller {
 		LOGGER.debug("Method to query the metadata of the documents is called");
 
 		return oXdsTransactions.queryDocumentList(
-				new FindDocumentsQuery(patientId, null, null, null, null, null, null, null, status), typeCode);
+				new FindDocumentsQuery(patientId, status), typeCode);
 	}
 
 	/**
@@ -219,15 +213,11 @@ public class ElgaConnectionCaller {
 	 * @return If the document was found, a list of {@link Document} is returned,
 	 *         otherwise an {@link Message} with the detailed error message is
 	 *         returned.
-	 * @throws UnauthorizedException        the unauthorized exception
-	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException                 the SAX exception
-	 * @throws IOException                  Signals that an I/O exception has
-	 *                                      occurred.
+	 * @throws Exception
 	 */
-	public XDSRetrieveResponseType retrieveDocuments(ConnectionData connData, String uniqueId, String repositoryId,
+	public RetrievedDocumentSet retrieveDocuments(ConnectionData connData, String uniqueId, String repositoryId,
 			String homeCommunityId, String typeCode)
-			throws UnauthorizedException, ParserConfigurationException, SAXException, IOException {
+			throws Exception {
 		ElgaEHealthApplication eHealthApplication = getElgaEHealthApplication(typeCode);
 		AssertionType assertion = getAssertion(eHealthApplication, connData, typeCode);
 		return retrieveDocuments(assertion, uniqueId, repositoryId, homeCommunityId, typeCode, eHealthApplication);
@@ -254,14 +244,11 @@ public class ElgaConnectionCaller {
 	 *                           electronic immunization record.
 	 * @return {@link XDSRetrieveResponseType} with details about success or failure
 	 *         of request
-	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException                 the SAX exception
-	 * @throws IOException                  Signals that an I/O exception has
-	 *                                      occurred.
+	 * @throws Exception
 	 */
-	protected XDSRetrieveResponseType retrieveDocuments(AssertionType assertion, String uniqueId, String repositoryId,
+	protected RetrievedDocumentSet retrieveDocuments(AssertionType assertion, String uniqueId, String repositoryId,
 			String homeCommunityId, String typeCode, ElgaEHealthApplication eHealthApplication)
-			throws ParserConfigurationException, SAXException, IOException {
+			throws Exception {
 		XdsTransactions oXdsTransactions = new XdsTransactions(
 				AssertionTypeUtil.getOrganizationIdOfHcpAssertion(assertion), assertion, eHealthApplication);
 		LOGGER.debug("Method to retrieve documents is called");
@@ -821,16 +808,11 @@ public class ElgaConnectionCaller {
 	 * @return If the user was registered successfully and a medication list was
 	 *         found the document is returned. If the query failed, the error
 	 *         message {@link Message} why the request failed is returned.
-	 * @throws XmlException                 the xml exception
-	 * @throws UnauthorizedException        the unauthorized exception
-	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException                 the SAX exception
-	 * @throws IOException                  Signals that an I/O exception has
-	 *                                      occurred.
+	 * @throws Exception
 	 */
-	public XDSRetrieveResponseType findMedicationList(ConnectionData connData, Identificator patientId,
+	public RetrievedDocumentSet findMedicationList(ConnectionData connData, Identificator patientId,
 			AvailabilityStatus status, String typeCode)
-			throws XmlException, UnauthorizedException, ParserConfigurationException, SAXException, IOException {
+			throws Exception {
 
 		ElgaEHealthApplication eHealthApplication = getElgaEHealthApplication(typeCode);
 		AssertionType assertion = getAssertion(eHealthApplication, connData, typeCode);
@@ -1019,9 +1001,9 @@ public class ElgaConnectionCaller {
 	 *         why the request failed is returned.
 	 * @throws Exception the exception
 	 */
-	public XDSResponseType provideAndRegisterDocuments(AvailabilityStatusType status, String typeCode,
-			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
-			CodedMetadataType formatCode, Identificator patientId, byte[] doc, POCDMT000040ClinicalDocument cda,
+	public Response provideAndRegisterDocuments(AvailabilityStatus status, String typeCode,
+			Code healthCareFacilityCode, Code practiceSettingCode, Code formatCode, Identificator patientId, byte[] doc,
+			POCDMT000040ClinicalDocument cda,
 			String parentDoc, ConnectionData connData, String oidTargetElgaArea) throws Exception {
 
 		ElgaEHealthApplication eHealthApplication = getElgaEHealthApplication(typeCode);
@@ -1068,22 +1050,23 @@ public class ElgaConnectionCaller {
 	 *         message {@link Message} why the request failed is returned.
 	 * @throws UnauthorizedException
 	 */
-	public org.hl7.fhir.dstu3.model.Bundle queryPatientDemographics(ConnectionData connData, FhirPatient parameter)
+	public org.hl7.fhir.r4.model.Bundle queryPatientDemographics(ConnectionData connData, FhirPatient parameter)
 			throws UnauthorizedException {
 		if (parameter != null) {
-			XUAAssertion assertion = null;
+			SecurityHeaderElement assertion = null;
 
 			if (connData != null) {
 				try {
 					assertion = AssertionTypeUtil
 							.transformAssertionTypeToXUAAssertion(getAssertionForPatientRegistration(connData));
-				} catch (ParserConfigurationException | SAXException | IOException e) {
+				} catch (DeserializeException e) {
 					LOGGER.error(e.getMessage(), e);
 				}
 			}
 
+			PatientIndexTransactions patIndexTrans = new PatientIndexTransactions();
 			return getPatientDemographicsResultBundle(
-					PatientIndexTransactions.queryPatientDemographics(parameter, assertion));
+					patIndexTrans.queryPatientDemographics(parameter, assertion));
 		} else {
 			LOGGER.warn("There are no parameter to query the demographics of a patient");
 			return getErrorBundleEmptyPatientDemographics();
@@ -1096,18 +1079,18 @@ public class ElgaConnectionCaller {
 	 * @param patients search result
 	 * @return the created {@link Bundle}
 	 */
-	private org.hl7.fhir.dstu3.model.Bundle getPatientDemographicsResultBundle(List<FhirPatient> patients) {
-		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
-		bundle.setType(org.hl7.fhir.dstu3.model.Bundle.BundleType.SEARCHSET);
+	private org.hl7.fhir.r4.model.Bundle getPatientDemographicsResultBundle(List<FhirPatient> patients) {
+		org.hl7.fhir.r4.model.Bundle bundle = new org.hl7.fhir.r4.model.Bundle();
+		bundle.setType(org.hl7.fhir.r4.model.Bundle.BundleType.SEARCHSET);
 
 		if (patients != null) {
 			bundle.setTotal(patients.size());
 
 			for (FhirPatient resultEntry : patients) {
 				if (resultEntry != null) {
-					org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent entryComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
-					org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent searchComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntrySearchComponent();
-					searchComponent.setMode(org.hl7.fhir.dstu3.model.Bundle.SearchEntryMode.MATCH);
+					org.hl7.fhir.r4.model.Bundle.BundleEntryComponent entryComponent = new org.hl7.fhir.r4.model.Bundle.BundleEntryComponent();
+					org.hl7.fhir.r4.model.Bundle.BundleEntrySearchComponent searchComponent = new org.hl7.fhir.r4.model.Bundle.BundleEntrySearchComponent();
+					searchComponent.setMode(org.hl7.fhir.r4.model.Bundle.SearchEntryMode.MATCH);
 					entryComponent.setSearch(searchComponent);
 					entryComponent.setResource(resultEntry);
 					bundle.addEntry(entryComponent);
@@ -1124,18 +1107,18 @@ public class ElgaConnectionCaller {
 	 *
 	 * @return the {@link Bundle} with error
 	 */
-	private org.hl7.fhir.dstu3.model.Bundle getErrorBundleEmptyPatientDemographics() {
-		org.hl7.fhir.dstu3.model.Bundle bundle = new org.hl7.fhir.dstu3.model.Bundle();
-		org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent component = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent();
-		org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent responseComponent = new org.hl7.fhir.dstu3.model.Bundle.BundleEntryResponseComponent();
+	private org.hl7.fhir.r4.model.Bundle getErrorBundleEmptyPatientDemographics() {
+		org.hl7.fhir.r4.model.Bundle bundle = new org.hl7.fhir.r4.model.Bundle();
+		org.hl7.fhir.r4.model.Bundle.BundleEntryComponent component = new org.hl7.fhir.r4.model.Bundle.BundleEntryComponent();
+		org.hl7.fhir.r4.model.Bundle.BundleEntryResponseComponent responseComponent = new org.hl7.fhir.r4.model.Bundle.BundleEntryResponseComponent();
 		responseComponent.setStatus(String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
-		org.hl7.fhir.dstu3.model.OperationOutcome outcome = new org.hl7.fhir.dstu3.model.OperationOutcome();
-		org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent issue = new org.hl7.fhir.dstu3.model.OperationOutcome.OperationOutcomeIssueComponent();
-		issue.setSeverity(org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity.ERROR);
-		issue.setCode(org.hl7.fhir.dstu3.model.OperationOutcome.IssueType.NOTFOUND);
+		org.hl7.fhir.r4.model.OperationOutcome outcome = new org.hl7.fhir.r4.model.OperationOutcome();
+		org.hl7.fhir.r4.model.OperationOutcome.OperationOutcomeIssueComponent issue = new org.hl7.fhir.r4.model.OperationOutcome.OperationOutcomeIssueComponent();
+		issue.setSeverity(org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity.ERROR);
+		issue.setCode(org.hl7.fhir.r4.model.OperationOutcome.IssueType.NOTFOUND);
 
-		org.hl7.fhir.dstu3.model.CodeableConcept details = new org.hl7.fhir.dstu3.model.CodeableConcept(
-				new org.hl7.fhir.dstu3.model.Coding(OperationOutcome.MSGPARAMINVALID.getSystem(),
+		org.hl7.fhir.r4.model.CodeableConcept details = new org.hl7.fhir.r4.model.CodeableConcept(
+				new org.hl7.fhir.r4.model.Coding(OperationOutcome.MSGPARAMINVALID.getSystem(),
 						OperationOutcome.MSGPARAMINVALID.getDefinition(),
 						OperationOutcome.MSGPARAMINVALID.getDisplay()));
 		issue.setDetails(details);
@@ -1168,10 +1151,12 @@ public class ElgaConnectionCaller {
 	 *                                      occurred.
 	 * @throws XmlException                 the xml exception
 	 * @throws AccessDeniedMessage          the access denied message
+	 * @throws DeserializeException
 	 */
 	public RegistryResponseType cancelDocument(ConnectionData connData, String uniqueId, Identificator patientId,
 			String categoryCode, String authorInstitution, String oidTargetElgaArea) throws UnauthorizedException,
-			ParserConfigurationException, SAXException, IOException, XmlException, AccessDeniedMessage {
+			ParserConfigurationException, SAXException, IOException, XmlException, AccessDeniedMessage,
+			DeserializeException {
 		AssertionType assertion = null;
 
 		if (connData == null) {
@@ -1261,15 +1246,11 @@ public class ElgaConnectionCaller {
 	 *         otherwise an error message {@link Message} is returned.
 	 */
 	public String getUpdateImmunizationEntryXml(EimpfDocumentUpdateImmunisierungsstatus updateImmunizationState) {
-		File file = null;
+		LOGGER.info("generate XML document from CDA of Update immunization state");
 		String document = "";
 
 		try {
-			file = new File("resources/cda_immunization_entry_example.xml");
-			synchronized (file) {
-				updateImmunizationState.saveToFile(file, "eimpf-stylesheet_v1.0.xsl", null);
-				document = FileUtils.readFileToString(file, StandardCharsets.UTF_8.name());
-			}
+			document = CdaDocumentMarshaller.marshall(updateImmunizationState, "eimpf-stylesheet_v1.0.xsl");
 
 			if (document.indexOf(PHARM_NAMESPACE) != -1) {
 				document = RegExUtils.replaceAll(document, PHARM_NAMESPACE, PHARM_MEDICATION_NAMESPACE);
@@ -1280,11 +1261,11 @@ public class ElgaConnectionCaller {
 						SNOMEDCT_DISPLAY_NAME_WITH_WHITESPACE);
 			}
 
+			LOGGER.debug("created update immunization CDA {}", document);
+
 			return document;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-		} finally {
-			deleteFile(file);
 		}
 
 		return null;
@@ -1342,19 +1323,14 @@ public class ElgaConnectionCaller {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfUpdateImmunization(byte[] document) throws IOException {
-		File file = new File("resources/update_immunization_example.xml");
-
-		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
-			try {
-				return EimpfDocumentUpdateImmunisierungsstatus.loadFromFile(file);
-			} catch (JAXBException e) {
-				LOGGER.error(e.getMessage(), e);
-			} finally {
-				java.nio.file.Files.delete(file.toPath());
-			}
+		try {
+			LOGGER.info("Load CDA information from passed XML document");
+			return CdaDocumentUnmarshaller.unmarshall(new String(document));
+		} catch (JAXBException | SAXException e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 
+		LOGGER.error("Details of update immunization state can't be extracted");
 		return null;
 	}
 
@@ -1369,19 +1345,14 @@ public class ElgaConnectionCaller {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfLabReport(byte[] document) throws IOException {
-		File file = new File("resources/lab_report_example.xml");
-
-		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
-			try {
-				return Laborbefund.loadFromFile(file);
-			} catch (JAXBException e) {
-				LOGGER.error(e.getMessage(), e);
-			} finally {
-				java.nio.file.Files.delete(file.toPath());
-			}
+		try {
+			LOGGER.info("Load CDA information from passed XML document");
+			return CdaDocumentUnmarshaller.unmarshall(new String(document));
+		} catch (JAXBException | SAXException e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 
+		LOGGER.error("Details of lab report can't be extracted");
 		return null;
 	}
 
@@ -1396,19 +1367,14 @@ public class ElgaConnectionCaller {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfPrescription(byte[] document) throws IOException {
-		File file = new File("resources/cda_prescription_example.xml");
-
-		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
-			try {
-				return Cdarezept.loadFromFile(file);
-			} catch (JAXBException e) {
-				LOGGER.error(e.getMessage(), e);
-			} finally {
-				java.nio.file.Files.delete(file.toPath());
-			}
+		try {
+			LOGGER.info("Load CDA information from passed XML document");
+			return CdaDocumentUnmarshaller.unmarshall(new String(document));
+		} catch (JAXBException | SAXException e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 
+		LOGGER.error("Details of prescription can't be extracted");
 		return null;
 	}
 
@@ -1420,19 +1386,15 @@ public class ElgaConnectionCaller {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfDischargeLetter(byte[] document) throws IOException {
-		File file = new File("resources/discharge_letter_example.xml");
+		try {
+			LOGGER.info("Load CDA information from passed XML document");
 
-		synchronized (file) {
-			FileUtils.write(file, new String(document), StandardCharsets.UTF_8.name());
-			try {
-				return CdaentlassbriefAerztlich.loadFromFile(file);
-			} catch (JAXBException e) {
-				LOGGER.error(e.getMessage(), e);
-			} finally {
-				java.nio.file.Files.delete(file.toPath());
-			}
+			return CdaDocumentUnmarshaller.unmarshall(new String(document));
+		} catch (JAXBException | SAXException e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 
+		LOGGER.error("Details of discharge letter can't be extracted");
 		return null;
 	}
 

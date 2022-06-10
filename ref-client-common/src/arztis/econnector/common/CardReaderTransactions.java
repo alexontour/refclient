@@ -9,10 +9,13 @@ package arztis.econnector.common;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.axis2.AxisFault;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +24,14 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.GinaServiceStub.CardReader;
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.GinaServiceStub.GetCardReaders;
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.GinaServiceStub.GetCardReadersE;
 import arztis.econnector.common.model.Card;
+import arztis.econnector.common.model.CardReader;
+import arztis.econnector.common.model.CardReaderVersion;
 import arztis.econnector.common.model.Message;
 import arztis.econnector.common.model.MessageTypes;
 import arztis.econnector.common.model.SexCode;
 import arztis.econnector.common.utilities.BaseServiceStubPool;
 import arztis.econnector.common.utilities.HttpConstants;
-import arztis.econnector.common.utilities.SoapUtil;
 
 /**
  * This class includes all requests to query cards readers and cards in card
@@ -188,29 +189,61 @@ public class CardReaderTransactions implements Serializable {
 	 *         {@link Message} with received error details
 	 */
 	public static Object requestAllCardReaders() {
+		HttpResponse<String> response = null;
 		try {
-			GetCardReadersE getCardReadersE = new GetCardReadersE();
-			GetCardReaders getCardReaders = new GetCardReaders();
-			getCardReadersE.setGetCardReaders(getCardReaders);
-			return BaseServiceStubPool.getInstance().getGinaServiceStub().getCardReaders(getCardReadersE)
-					.getGetCardReadersResponse().get_return();
-		} catch (arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.ServiceException e) {
-			LOGGER.error(e.getFaultMessage().getServiceException().getMessage(), e);
-			return new Message(e.getFaultMessage().getServiceException().getMessage(), MessageTypes.ERROR,
-					HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-		} catch (AxisFault af) {
-			String returnMessage = SoapUtil.extractErrorMessageOfAxisFault(af);
-			LOGGER.error("There is a problem to request all card readers: ", af);
-
-			return new Message(returnMessage, MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} catch (Exception e) {
+			response = Unirest
+					.get(String.format("%s/readersUrl",
+							BaseServiceStubPool.getInstance().getPortAddressCrs()))
+					.asString();
+		} catch (UnirestException e) {
 			LOGGER.error(e.getMessage(), e);
-			return new Message(e.getMessage(), MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} finally {
+			return new Message("Die Kartenleser konnten nicht ermittelt werden.", MessageTypes.ERROR,
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+
+		if (response == null) {
+			return new Message("Die Kartenleser konnten nicht ermittelt werden.", MessageTypes.ERROR,
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} else {
+
+			LOGGER.debug("Response of card readers request {}", response.getBody());
 			try {
-				BaseServiceStubPool.getInstance().getGinaServiceStub()._getServiceClient().cleanupTransport();
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage(), e);
+				JSONArray json = new JSONArray(response.getBody());
+
+				List<CardReader> cardReaders = new LinkedList<>();
+
+				for (int index = 0; index < json.length(); index++) {
+					JSONObject jsonObj = json.getJSONObject(index);
+					CardReader cardReader = new CardReader();
+					cardReader.setId(jsonObj.getString("id"));
+					cardReader.setCheckIp(jsonObj.getString("checkIp"));
+					cardReader.setType(jsonObj.getString("type"));
+
+					if (jsonObj.has("group")) {
+						cardReader.setGroup(jsonObj.getString("group"));
+					}
+
+					JSONArray jsonVersions = jsonObj.getJSONArray("urlWithVersion");
+
+					List<CardReaderVersion> versions = new LinkedList<>();
+					for (int indexVers = 0; indexVers < jsonVersions.length(); indexVers++) {
+						JSONObject jsonObjVers = jsonVersions.getJSONObject(indexVers);
+						CardReaderVersion version = new CardReaderVersion();
+						version.setUrl(jsonObjVers.getString("url"));
+						version.setVersion(jsonObjVers.getString("version"));
+						versions.add(version);
+					}
+
+					cardReaders.add(cardReader);
+				}
+
+				return cardReaders;
+			} catch (JSONException ex) {
+				LOGGER.error(ex.getMessage(), ex);
+				JSONObject jsonMessage = new JSONObject(response.getBody());
+				return new Message(
+						String.format("%s (%s)", jsonMessage.getString("text"), jsonMessage.getString("code")),
+						MessageTypes.ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 		}
 	}

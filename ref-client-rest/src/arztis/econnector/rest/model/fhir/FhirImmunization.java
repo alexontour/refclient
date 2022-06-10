@@ -6,49 +6,14 @@
  */
 package arztis.econnector.rest.model.fhir;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunization;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunizationBillability;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunizationImpfungNichtAngegeben;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunizationSchedule;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrEntryImmunizationTarget;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherPerformerBodyImpfendePerson;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherVaccineProduct;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherVaccineProductNichtAngegeben;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrSectionImpfungenKodiert;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfHistorischeImpfstoffeVs;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfImmunizationTargetVs;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfImpfdosisVs;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfImpfschemaVs;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfImpfstoffeVs;
-import org.ehealth_connector.cda.at.elga.v2019.textbuilder.ImmunizationTextBuilder;
-import org.ehealth_connector.common.Code;
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.CR;
-import org.ehealth_connector.common.hl7cdar2.CS;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Consumable;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Entry;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Material;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Precondition;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Reference;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040SubstanceAdministration;
-import org.ehealth_connector.common.hl7cdar2.StrucDocText;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntry;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipEntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipExternalReference;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -60,6 +25,41 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrEntryImmunization;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrEntryImmunizationBillability;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrEntryImmunizationImpfungNichtAngegeben;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrEntryImmunizationSchedule;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrEntryImmunizationTarget;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrOtherPerformerBodyImpfendePerson;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrOtherVaccineProduct;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrOtherVaccineProductNichtAngegeben;
+import org.husky.cda.elga.generated.artdecor.AtcdabrrSectionImpfungenKodiert;
+import org.husky.cda.elga.generated.artdecor.ps.enums.EImpfImpfdosisVs;
+import org.husky.cda.elga.generated.artdecor.ps.enums.EImpfImpfschemaVs;
+import org.husky.cda.elga.narrative.ImmunizationNarrativeTextGenerator;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.CR;
+import org.husky.common.hl7cdar2.CS;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040Consumable;
+import org.husky.common.hl7cdar2.POCDMT000040Entry;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040Material;
+import org.husky.common.hl7cdar2.POCDMT000040Performer2;
+import org.husky.common.hl7cdar2.POCDMT000040Precondition;
+import org.husky.common.hl7cdar2.POCDMT000040Reference;
+import org.husky.common.hl7cdar2.POCDMT000040SubstanceAdministration;
+import org.husky.common.hl7cdar2.StrucDocText;
+import org.husky.common.hl7cdar2.TS;
+import org.husky.common.hl7cdar2.XActRelationshipEntry;
+import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
+import org.husky.common.hl7cdar2.XActRelationshipExternalReference;
+import org.husky.common.model.Code;
+import org.husky.common.utils.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.eimpf.Vaccine;
@@ -78,6 +78,8 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
  */
 @ResourceDef(name = "Immunization", profile = "http://hl7.org/fhir/StructureDefinition/Immunization")
 public class FhirImmunization extends Immunization {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(FhirImmunization.class.getName());
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -146,7 +148,8 @@ public class FhirImmunization extends Immunization {
 			}
 
 			DateTimeType occurenceTime = new DateTimeType(
-					CdaUtil.fromSXCMTS(entry.getSubstanceAdministration().getEffectiveTime().get(0)));
+					arztis.econnector.ihe.utilities.DateUtil.parseHl7Timestamp(
+							entry.getSubstanceAdministration().getEffectiveTime().get(0).getValue()));
 			setOccurrence(occurenceTime);
 
 			setDoseQuantity(new FhirQuantity(entry.getSubstanceAdministration().getDoseQuantity()));
@@ -246,7 +249,7 @@ public class FhirImmunization extends Immunization {
 						consumable.getManufacturedProduct().getManufacturedMaterial().getCode()));
 				if (consumable.getManufacturedProduct().getManufacturedMaterial().getLotNumberText() != null) {
 					setLotNumber(consumable.getManufacturedProduct().getManufacturedMaterial()
-							.getLotNumberText().xmlContent);
+							.getLotNumberText().getMergedXmlMixed());
 				}
 			}
 
@@ -306,7 +309,12 @@ public class FhirImmunization extends Immunization {
 		Date expDate = DateUtil.parseDateyyyyMMdd(expirationDate);
 
 		if (expDate != null) {
-			expDate = DateUtil.parseDateyyyy(expirationDate);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			try {
+				expDate = sdf.parse(expirationDate);
+			} catch (ParseException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 
 		if (expDate != null) {
@@ -325,13 +333,13 @@ public class FhirImmunization extends Immunization {
 	 * @return created {@link AtcdabbrSectionImpfungenKodiert}
 	 *
 	 */
-	public static AtcdabbrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(
+	public static AtcdabrrSectionImpfungenKodiert getAtcdabbrSectionImpfungenKodiert(
 			Map<Immunization, PractitionerRole> immunizations) {
 		if (immunizations == null || immunizations.isEmpty()) {
 			return null;
 		}
 
-		AtcdabbrSectionImpfungenKodiert vaccinationSection = new AtcdabbrSectionImpfungenKodiert();
+		AtcdabrrSectionImpfungenKodiert vaccinationSection = new AtcdabrrSectionImpfungenKodiert();
 		vaccinationSection.setTitle(CdaUtil.createTitle("Impfungen"));
 
 		int index = 0;
@@ -342,93 +350,13 @@ public class FhirImmunization extends Immunization {
 			}
 		}
 
-		Map<String, List<EImpfImmunizationTargetVs>> targets = new HashMap<>();
-		Map<String, EImpfHistorischeImpfstoffeVs> historicImmunizations = new HashMap<>();
-		Map<String, EImpfImpfstoffeVs> immunizationsCodes = new HashMap<>();
-		Map<String, EImpfImpfdosisVs> immunizationDose = new HashMap<>();
-		Map<String, EImpfImpfschemaVs> immunizationScheme = new HashMap<>();
-
-		int immIndex = 0;
-		for (Entry<Immunization, PractitionerRole> immunization : immunizations.entrySet()) {
-			if (immunization != null && immunization.getKey() != null) {
-				fillMapsForTextBuilder(targets, immunizationDose, immunizationScheme, historicImmunizations,
-						immunizationsCodes, immunization.getKey(), immIndex);
-			}
-		}
-
 		StrucDocText textKonsUeberwGrund = new StrucDocText();
-		ImmunizationTextBuilder textbuilder = new ImmunizationTextBuilder(targets, immunizationScheme, immunizationDose,
-				immunizationsCodes, historicImmunizations);
-		textKonsUeberwGrund.getContent().addAll(textbuilder.getTables());
+		ImmunizationNarrativeTextGenerator textbuilder = new ImmunizationNarrativeTextGenerator(
+				vaccinationSection.getEntry());
+		textKonsUeberwGrund.getContent().addAll(textbuilder.getTablesFromCda());
 		vaccinationSection.setText(textKonsUeberwGrund);
 
 		return vaccinationSection;
-	}
-
-	/**
-	 * fills passed maps with values of passed {@link Immunization}. Key of map is
-	 * immunization reference, e.g. immunization-1. These maps are intended to
-	 * create human readable text in immunization CDA document.
-	 *
-	 * @param targets               map for target diseases
-	 * @param immunizationDose      map for dose
-	 * @param immunizationScheme    map for scheme
-	 * @param historicImmunizations map for historic vaccine
-	 * @param immunizationsCodes    map for vaccine
-	 * @param immunization          resource to extract from
-	 * @param index                 of immunization entry
-	 */
-	private static void fillMapsForTextBuilder(Map<String, List<EImpfImmunizationTargetVs>> targets,
-			Map<String, EImpfImpfdosisVs> immunizationDose, Map<String, EImpfImpfschemaVs> immunizationScheme,
-			Map<String, EImpfHistorischeImpfstoffeVs> historicImmunizations,
-			Map<String, EImpfImpfstoffeVs> immunizationsCodes, Immunization immunization, int index) {
-		if (immunization.hasProtocolApplied()) {
-
-			if (immunization.getProtocolAppliedFirstRep().hasSeries()
-					|| immunization.getProtocolAppliedFirstRep().hasDoseNumberStringType()) {
-				immunizationScheme.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index),
-						EImpfImpfschemaVs.getEnum(immunization.getProtocolAppliedFirstRep().getSeries()));
-				immunizationDose.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index), EImpfImpfdosisVs
-						.getEnum(immunization.getProtocolAppliedFirstRep().getDoseNumberStringType().asStringValue()));
-			}
-
-			if (immunization.getProtocolAppliedFirstRep().hasTargetDisease()) {
-				List<EImpfImmunizationTargetVs> immunizationTargets = new ArrayList<>();
-				for (CodeableConcept immunizationTarget : immunization.getProtocolAppliedFirstRep()
-						.getTargetDisease()) {
-					immunizationTargets
-							.add(EImpfImmunizationTargetVs.getEnum(immunizationTarget.getCodingFirstRep().getCode()));
-				}
-
-				targets.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index), immunizationTargets);
-			} else {
-				List<EImpfImmunizationTargetVs> immunizationTargets = new ArrayList<>();
-				for (Code immunizationTarget : vaccines.get(immunization.getVaccineCode().getCodingFirstRep().getCode())
-						.getTargetDisease()) {
-					if (immunizationTarget != null && immunizationTarget.getCode() != null) {
-						immunizationTargets.add(EImpfImmunizationTargetVs.getEnum(immunizationTarget.getCode()));
-					}
-				}
-
-				targets.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index), immunizationTargets);
-			}
-		}
-
-		if (immunization.hasVaccineCode()) {
-			Vaccine vaccine = vaccines.get(immunization.getVaccineCode().getCodingFirstRep().getCode());
-
-			if (vaccine != null && vaccine.getCode() != null) {
-				immunizationsCodes.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index),
-						EImpfImpfstoffeVs.getEnum(vaccine.getCode().getCode()));
-			}
-
-			EImpfHistorischeImpfstoffeVs historicVaccination = EImpfHistorischeImpfstoffeVs
-					.getEnum(immunization.getVaccineCode().getCodingFirstRep().getCode());
-
-			if (historicVaccination != null) {
-				historicImmunizations.put(String.format(REFERENCE_IMMUNIZATION_INDEX, index), historicVaccination);
-			}
-		}
 	}
 
 	/**

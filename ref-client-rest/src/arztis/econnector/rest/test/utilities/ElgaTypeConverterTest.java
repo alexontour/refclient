@@ -16,34 +16,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.activation.DataHandler;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.ehealth_connector.common.utils.XdsMetadataUtil;
+import org.apache.axis2.builder.unknowncontent.InputStreamDataSource;
 import org.hl7.fhir.dstu3.model.Enumerations.ResourceType;
 import org.hl7.fhir.r4.model.DocumentReference.DocumentRelationshipType;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
+import org.husky.common.utils.XdsMetadataUtil;
+import org.husky.xua.core.SecurityHeaderElement;
+import org.husky.xua.exceptions.DeserializeException;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openhealthtools.ihe.common.hl7v2.CX;
-import org.openhealthtools.ihe.common.hl7v2.Hl7v2Factory;
-import org.openhealthtools.ihe.common.hl7v2.SourcePatientInfoType;
-import org.openhealthtools.ihe.common.hl7v2.XAD;
-import org.openhealthtools.ihe.common.hl7v2.XCN;
-import org.openhealthtools.ihe.xds.document.DocumentDescriptor;
-import org.openhealthtools.ihe.xds.document.XDSDocument;
-import org.openhealthtools.ihe.xds.document.XDSDocumentFromStream;
-import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
-import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
-import org.openhealthtools.ihe.xds.metadata.DocumentEntryType;
-import org.openhealthtools.ihe.xds.metadata.MetadataFactory;
-import org.openhealthtools.ihe.xds.metadata.ParentDocumentRelationshipType;
-import org.openhealthtools.ihe.xds.metadata.ParentDocumentType;
-import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
-import org.openhealthtools.ihe.xds.response.impl.DocumentEntryResponseTypeImpl;
-import org.openhealthtools.ihe.xua.XUAAssertion;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Address;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AssigningAuthority;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Association;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AssociationType;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Code;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.DocumentEntry;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Identifiable;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.PatientInfo;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.XpnName;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.RetrievedDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import arztis.econnector.ihe.generatedClasses.assertion._0._2.saml.tc.names.oasis.AssertionType;
@@ -85,7 +83,7 @@ public class ElgaTypeConverterTest {
 	 */
 	@Test
 	public void testCastDocument() {
-		XDSDocument xdsDocument = getDocumentFromFile("resources/tests/xml/ELGA-Entlassungsbrief-Beispiel.xml");
+		RetrievedDocument xdsDocument = getDocumentFromFile("resources/tests/xml/ELGA-Entlassungsbrief-Beispiel.xml");
 
 		FhirDocumentReference reference = new FhirDocumentReference(ID_PATH, APPLICATION_XML);
 		FhirElgaConnectionCaller.getInstance().addXdsDocumentToDocumentReference(List.of(xdsDocument), reference, "");
@@ -102,7 +100,7 @@ public class ElgaTypeConverterTest {
 	 */
 	@Test
 	public void testCastDocumentPrescription() {
-		XDSDocument xdsDocument = getDocumentFromFile(
+		RetrievedDocument xdsDocument = getDocumentFromFile(
 				"resources/tests/xml/ELGA-083-e-Medikation_1-Rezept_mit_Verordnungen1-4 Dosierungsvarianten an EINEM Tag.xml");
 
 		FhirDocumentReference reference = new FhirDocumentReference(ID_PATH, APPLICATION_XML);
@@ -122,13 +120,13 @@ public class ElgaTypeConverterTest {
 	 * @param path the path
 	 * @return the document from file
 	 */
-	private XDSDocument getDocumentFromFile(String path) {
+	private RetrievedDocument getDocumentFromFile(String path) {
 		try (InputStream documentStream = new FileInputStream(path)) {
-			DocumentDescriptor descriptor = new DocumentDescriptor("xml", APPLICATION_XML);
-			XDSDocumentFromStream document = new XDSDocumentFromStream(descriptor, documentStream);
-			document.setHomeCommunityId(HOME_COMMUNITY_ID);
-			document.setDocumentUniqueId(DOCUMENT_ID);
-			document.setRepositoryUniqueId(REPOSITORY_ID);
+			RetrievedDocument document = new RetrievedDocument();
+			document.setMimeType(APPLICATION_XML);
+			document.setDataHandler(new DataHandler(new InputStreamDataSource(documentStream)));
+			document.setNewDocumentUniqueId(DOCUMENT_ID);
+			document.setNewRepositoryUniqueId(REPOSITORY_ID);
 			return document;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
@@ -143,19 +141,17 @@ public class ElgaTypeConverterTest {
 	public void testTransformAssertionTypeToXUAAssertion() {
 		try {
 			AssertionType assertion = AssertionType.Factory.parse(new File("resources/tests/xml/hcpAssertion.xml"));
-			XUAAssertion xuaAssertion = AssertionTypeUtil.transformAssertionTypeToXUAAssertion(assertion);
+			SecurityHeaderElement xuaAssertion = AssertionTypeUtil.transformAssertionTypeToXUAAssertion(assertion);
 
-			Element[] elements = xuaAssertion.getAssertionElements();
-			Assert.assertEquals(1, elements.length);
+			org.opensaml.saml.saml2.core.Assertion element = (org.opensaml.saml.saml2.core.Assertion) xuaAssertion
+					.getWrappedObject();
 
 			Assert.assertEquals("urn:elga:ets",
-					elements[0].getElementsByTagName("saml2:Issuer").item(0).getTextContent());
+					element.getIssuer().getValue());
 
-			Assert.assertEquals(2,
-					elements[0].getElementsByTagName("saml2:Conditions").item(0).getAttributes().getLength());
+			Assert.assertEquals(2, element.getConditions().getConditions().size());
 
-			Assert.assertEquals("2019-07-29T12:05:10.933Z", elements[0].getElementsByTagName("saml2:Conditions").item(0)
-					.getAttributes().getNamedItem("NotBefore").getTextContent());
+			Assert.assertEquals("2019-07-29T12:05:10.933Z", element.getConditions().getConditions().get(0));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
@@ -167,101 +163,100 @@ public class ElgaTypeConverterTest {
 	 */
 	@Test
 	public void testCastDocumentEntryResponse() {
-		DocumentEntryResponseType documentEntryResponse = new DocumentEntryResponseTypeImpl();
-		documentEntryResponse.setHomeCommunityId("1.2.3.4.5");
+		DocumentEntry documentEntry = new DocumentEntry();
+		documentEntry.setHomeCommunityId("1.2.3.4.5");
 
-		DocumentEntryType documentEntry = MetadataFactory.eINSTANCE.createDocumentEntryType();
-		documentEntry.setAvailabilityStatus(AvailabilityStatusType.APPROVED_LITERAL);
+		documentEntry.setAvailabilityStatus(AvailabilityStatus.APPROVED);
 
-		CodedMetadataType classCode = MetadataFactory.eINSTANCE.createCodedMetadataType();
+		Code classCode = new Code();
 		classCode.setCode("18842-5");
 		classCode.setDisplayName(XdsMetadataUtil.createInternationalString("Discharge summary"));
-		classCode.setSchemeUUID("1.2.3.4.5.6");
+		classCode.setSchemeName("1.2.3.4.5.6");
 		documentEntry.setClassCode(classCode);
 
-		CodedMetadataType typeCode = MetadataFactory.eINSTANCE.createCodedMetadataType();
+		Code typeCode = new Code();
 		typeCode.setCode("34745-0");
 		typeCode.setDisplayName(XdsMetadataUtil.createInternationalString("Nurse Discharge summary"));
-		typeCode.setSchemeUUID("1.2.3.4.5.6");
+		typeCode.setSchemeName("1.2.3.4.5.6");
 		documentEntry.setTypeCode(typeCode);
 
 		documentEntry.setComments(XdsMetadataUtil.createInternationalString("asdfg"));
 
 		documentEntry.setCreationTime("2019-08-02T14:42:22.5353");
-		documentEntry.setEntryUUID("urn:uuid:34234234234");
+		documentEntry.setEntryUuid("urn:uuid:34234234234");
 
-		CodedMetadataType formatCode = MetadataFactory.eINSTANCE.createCodedMetadataType();
+		Code formatCode = new Code();
 		formatCode.setCode("urn:elga:dissum-n:2015:EIS_FullSupport");
 		documentEntry.setFormatCode(formatCode);
 
-		CodedMetadataType healthCareFacilityTypeCode = MetadataFactory.eINSTANCE.createCodedMetadataType();
+		Code healthCareFacilityTypeCode = new Code();
 		healthCareFacilityTypeCode.setCode("100");
 		healthCareFacilityTypeCode
 				.setDisplayName(XdsMetadataUtil.createInternationalString("Ärztin/Arzt für Allgemeinmedizin"));
-		documentEntry.setHealthCareFacilityTypeCode(healthCareFacilityTypeCode);
+		documentEntry.setHealthcareFacilityTypeCode(healthCareFacilityTypeCode);
 
 		documentEntry.setLanguageCode("de-AT");
 
-		XCN legalAuthenticator = Hl7v2Factory.eINSTANCE.createXCN();
-		legalAuthenticator.setGivenName("Sonja");
-		legalAuthenticator.setFamilyName("Huber");
-		legalAuthenticator.setPrefix("Mag.");
-		legalAuthenticator.setSuffix("Bac");
+		Person legalAuthenticator = new Person();
+		XpnName xpnName = new XpnName();
+		xpnName.setGivenName("Sonja");
+		xpnName.setFamilyName("Huber");
+		xpnName.setPrefix("Mag.");
+		xpnName.setSuffix("Bac");
+		legalAuthenticator.setName(xpnName);
 		documentEntry.setLegalAuthenticator(legalAuthenticator);
 
 		documentEntry.setMimeType("xml");
 
-		ParentDocumentType parentDocument = MetadataFactory.eINSTANCE.createParentDocumentType();
-		parentDocument.setParentDocumentId("11111");
-		parentDocument.setParentDocumentRelationship(ParentDocumentRelationshipType.RPLC_LITERAL);
-		documentEntry.setParentDocument(parentDocument);
+		Association parentDocument = new Association();
+		parentDocument.setEntryUuid("11111");
+		parentDocument.setAssociationType(AssociationType.REPLACE);
 
-		CX patientId = Hl7v2Factory.eINSTANCE.createCX();
-		patientId.setIdNumber("1002120995");
-		patientId.setAssigningAuthorityUniversalId(IheConstants.OID_SVNR);
-		patientId.setAssigningAuthorityName("SVNR");
-		patientId.setAssigningAuthorityUniversalIdType("ISO");
+		Identifiable patientId = new Identifiable();
+		patientId.setId("1002120995");
+		AssigningAuthority authority = new AssigningAuthority();
+		authority.setUniversalId(IheConstants.OID_SVNR);
+		authority.setUniversalIdType("ISO");
+		patientId.setAssigningAuthority(authority);
 		documentEntry.setPatientId(patientId);
 
-		CX sourcePatientId = Hl7v2Factory.eINSTANCE.createCX();
-		sourcePatientId.setIdNumber("77");
-		sourcePatientId.setAssigningAuthorityUniversalId("10.9.8.7.6.5.4.3");
-		sourcePatientId.setAssigningAuthorityName("Ordination Dr. Musterärztin");
-		sourcePatientId.setAssigningAuthorityUniversalIdType("ISO");
+		Identifiable sourcePatientId = new Identifiable();
+		sourcePatientId.setId("77");
+		authority = new AssigningAuthority();
+		authority.setUniversalId("10.9.8.7.6.5.4.3");
+		authority.setUniversalIdType("ISO");
+		sourcePatientId.setAssigningAuthority(authority);
 		documentEntry.setSourcePatientId(sourcePatientId);
 
-		SourcePatientInfoType sourcePatientInfo = Hl7v2Factory.eINSTANCE.createSourcePatientInfoType();
-		sourcePatientInfo.setPatientDateOfBirth("1980-01-01");
-		sourcePatientInfo.setPatientSex("M");
+		PatientInfo sourcePatientInfo = new PatientInfo();
+		sourcePatientInfo.setDateOfBirth("1980-01-01");
+		sourcePatientInfo.setGender("M");
 
-		XAD address = Hl7v2Factory.eINSTANCE.createXAD();
+		Address address = new Address();
 		address.setCity("Graz");
 		address.setCountry("AT");
 		address.setStateOrProvince("Steiermark");
 		address.setStreetAddress("Grabenstraße 110b");
 		address.setZipOrPostalCode("8010");
 
-		sourcePatientInfo.setPatientAddress(address);
+		sourcePatientInfo.getAddresses().add(address);
 		documentEntry.setSourcePatientInfo(sourcePatientInfo);
 
-		CodedMetadataType practiceSettingCode = MetadataFactory.eINSTANCE.createCodedMetadataType();
+		Code practiceSettingCode = new Code();
 		practiceSettingCode.setCode("F001");
 		practiceSettingCode.setDisplayName(XdsMetadataUtil.createInternationalString("Allgemeinmedizin"));
-		practiceSettingCode.setSchemeName("ELGA");
-		practiceSettingCode.setSchemeUUID("1.2.3.4.5.6.7");
+		practiceSettingCode.setSchemeName("1.2.3.4.5.6.7");
 		documentEntry.setPracticeSettingCode(practiceSettingCode);
 
 		documentEntry.setRepositoryUniqueId("1.2.3.4.5.56.7");
 		documentEntry.setServiceStartTime("2019-07-04T16:12:22.5353");
 		documentEntry.setServiceStopTime("2019-07-14T10:42:22.5353");
 
-		documentEntry.setSize("12334");
+		documentEntry.setSize(12334L);
 		documentEntry.setTitle(XdsMetadataUtil.createInternationalString("Arztbrief"));
 		documentEntry.setUniqueId(UNIQUE_ID);
 
-		documentEntryResponse.setDocumentEntry(documentEntry);
-
-		FhirDocumentReference actualDocument = new FhirDocumentReference(documentEntryResponse, 0);
+		FhirDocumentReference actualDocument = new FhirDocumentReference(documentEntry, parentDocument, 0);
 
 		assertNotNull(actualDocument);
 
@@ -303,7 +298,7 @@ public class ElgaTypeConverterTest {
 		assertNotNull(actualDocument.getContext().getSourcePatientInfo());
 		Assert.assertEquals("Patient/0-1", actualDocument.getContext().getSourcePatientInfo().getReference());
 
-		FhirPatientAt fhirPatient = new FhirPatientAt(documentEntryResponse, "0-1");
+		FhirPatientAt fhirPatient = new FhirPatientAt(documentEntry, "0-1");
 		Assert.assertEquals(org.hl7.fhir.r4.model.Enumerations.AdministrativeGender.MALE, fhirPatient.getGender());
 		Assert.assertEquals("1002120995", fhirPatient.getIdentifierFirstRep().getValue());
 
@@ -323,11 +318,14 @@ public class ElgaTypeConverterTest {
 	 * Test transform null to XUA assertion.
 	 *
 	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException the SAX exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
+	 * @throws DeserializeException
 	 */
 	@Test
-	public void testTransformNullToXUAAssertion() throws ParserConfigurationException, SAXException, IOException {
+	public void testTransformNullToXUAAssertion()
+			throws ParserConfigurationException, SAXException, IOException, DeserializeException {
 		Assert.assertEquals(null, AssertionTypeUtil.transformAssertionTypeToXUAAssertion(null));
 	}
 

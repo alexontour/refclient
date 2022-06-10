@@ -9,9 +9,9 @@ package arztis.econnector.rest.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.AD;
 import org.hl7.fhir.r4.model.Address;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.AD;
 import org.junit.Before;
 import org.junit.Test;
 

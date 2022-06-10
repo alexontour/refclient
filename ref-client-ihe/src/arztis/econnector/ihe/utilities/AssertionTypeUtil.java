@@ -23,7 +23,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlObject;
-import org.openhealthtools.ihe.xua.XUAAssertion;
+import org.husky.xua.core.SecurityHeaderElement;
+import org.husky.xua.deserialization.impl.AssertionDeserializerImpl;
+import org.husky.xua.exceptions.DeserializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -358,25 +360,29 @@ public class AssertionTypeUtil {
 	}
 
 	/**
-	 * transforms {@link AssertionType} to {@link XUAAssertion}. {@link AssertionType} is needed for all requests defined in
-	 * ELGA Ref Client like PHARM-1 transactions. </br>
-	 * {@link XUAAssertion} is needed for all requests defined in ehealth connetor like ITI-18 or ITI-43 transactions in XDS profile.
+	 * transforms {@link AssertionType} to {@link SecurityHeaderElement}.
+	 * {@link AssertionType} is needed for all requests defined in ELGA Ref Client
+	 * like PHARM-1 transactions. </br>
+	 * {@link SecurityHeaderElement} is needed for all requests defined in ehealth
+	 * connetor like ITI-18 or ITI-43 transactions in XDS profile.
 	 *
 	 * @param hcpAssertion assertion to transform
-	 * @return transformed {@link XUAAssertion}
+	 * @return transformed {@link SecurityHeaderElement}
 	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException the SAX exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
 	 */
-	public static XUAAssertion transformAssertionTypeToXUAAssertion(AssertionType hcpAssertion)
-			throws ParserConfigurationException, SAXException, IOException {
+	public static SecurityHeaderElement transformAssertionTypeToXUAAssertion(AssertionType hcpAssertion)
+			throws DeserializeException {
 		if (hcpAssertion == null) {
 			return null;
 		}
 
 		String hcpAssertionString = StringUtils.replace(hcpAssertion.xmlText(), "xml-fragment", "saml2:Assertion");
-		org.w3c.dom.Element assertionElement = castStringToDomElement(hcpAssertionString);
-		return new XUAAssertion(assertionElement);
+		AssertionDeserializerImpl deserializer = new AssertionDeserializerImpl();
+
+		return deserializer.fromXmlString(hcpAssertionString);
 	}
 
 	/**

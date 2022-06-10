@@ -8,10 +8,6 @@ package arztis.econnector.rest.utilities;
 
 import java.util.List;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedEntity;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Person;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -20,6 +16,10 @@ import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Practitioner;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.POCDMT000040AssignedEntity;
+import org.husky.common.hl7cdar2.POCDMT000040Organization;
+import org.husky.common.hl7cdar2.POCDMT000040Person;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.model.fhir.FhirAddress;

@@ -10,23 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.HeaderAuthor;
-import org.ehealth_connector.cda.at.elga.v2019.HeaderLegalAuthenticator;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrHeaderAuthor;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.AtcdabbrOtherAuthorBodyEImpfpass;
-import org.ehealth_connector.cda.at.elga.v2019.ps.AuthorBodyPs;
-import org.ehealth_connector.common.at.enums.AuthorRole;
-import org.ehealth_connector.common.at.enums.AuthorSpeciality;
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.AD;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedAuthor;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedEntity;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040LegalAuthenticator;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Performer2;
-import org.ehealth_connector.common.hl7cdar2.TEL;
 import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -37,7 +20,23 @@ import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
-import org.openhealthtools.ihe.xds.metadata.impl.AuthorTypeImpl;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderAuthor;
+import org.husky.cda.elga.generated.artdecor.AtcdabbrOtherAuthorBodyEImpfpass;
+import org.husky.cda.elga.generated.artdecor.base.HeaderAuthor;
+import org.husky.cda.elga.generated.artdecor.base.HeaderLegalAuthenticator;
+import org.husky.cda.elga.generated.artdecor.ps.AuthorBodyPs;
+import org.husky.common.at.enums.AuthorRole;
+import org.husky.common.at.enums.AuthorSpeciality;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.AD;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.POCDMT000040AssignedAuthor;
+import org.husky.common.hl7cdar2.POCDMT000040AssignedEntity;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040LegalAuthenticator;
+import org.husky.common.hl7cdar2.POCDMT000040Organization;
+import org.husky.common.hl7cdar2.POCDMT000040Performer2;
+import org.husky.common.hl7cdar2.TEL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +111,7 @@ public class FhirPractitionerRole extends PractitionerRole {
 	 * @param index  index of author to create. It must be build of {document
 	 *               response index} - {author index}
 	 */
-	public FhirPractitionerRole(AuthorTypeImpl author, String index) {
+	public FhirPractitionerRole(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author author, String index) {
 		fromDocumentEntryResponse(author, index);
 	}
 
@@ -172,7 +171,8 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 	/**
 	 * Creates practitioner role from authors in document response (ITI-18). In
-	 * document response author are of type {@link AuthorTypeImpl}. </br>
+	 * document response author are of type
+	 * {@link org.openehealth.ipf.commons.ihe.xds.core.metadata.Author}. </br>
 	 * This method extracts role and subject of author. Moreover, it resolves
 	 * references of {@link Organization} and {@link Practitioner} resource.
 	 *
@@ -180,7 +180,8 @@ public class FhirPractitionerRole extends PractitionerRole {
 	 * @param index  index of author to create. It must be build of {document
 	 *               response index} - {author index}
 	 */
-	private void fromDocumentEntryResponse(AuthorTypeImpl author, String index) {
+	private void fromDocumentEntryResponse(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author author,
+			String index) {
 		if (author == null) {
 			return;
 		}
@@ -197,17 +198,18 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	/**
-	 * Extracts subject of passed {@link AuthorTypeImpl}. This method checks if
-	 * extracted code is available in {@link AuthorSpeciality}.
+	 * Extracts subject of passed
+	 * {@link org.openehealth.ipf.commons.ihe.xds.core.metadata.Author}. This method
+	 * checks if extracted code is available in {@link AuthorSpeciality}.
 	 *
 	 * @param authorTypeImpl author of document
 	 */
-	private void addSpeciality(AuthorTypeImpl authorTypeImpl) {
+	private void addSpeciality(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author authorTypeImpl) {
 		try {
-			if (authorTypeImpl.getAuthorSpeciality() != null && !authorTypeImpl.getAuthorSpeciality().isEmpty()
-					&& authorTypeImpl.getAuthorSpeciality().get(0) instanceof String) {
+			if (authorTypeImpl.getAuthorSpecialty() != null && !authorTypeImpl.getAuthorSpecialty().isEmpty()
+					&& authorTypeImpl.getAuthorSpecialty().get(0) != null) {
 				AuthorSpeciality authorSpeciality = AuthorSpeciality
-						.getEnum((String) authorTypeImpl.getAuthorSpeciality().get(0));
+						.getEnum(authorTypeImpl.getAuthorSpecialty().get(0).getId());
 
 				if (authorSpeciality != null) {
 					addSpecialty(new CodeableConcept(new Coding(authorSpeciality.getCodeSystemOid(),
@@ -220,16 +222,19 @@ public class FhirPractitionerRole extends PractitionerRole {
 	}
 
 	/**
-	 * Extracts role of passed {@link AuthorTypeImpl}. This method adds extracted
-	 * value as code.
+	 * Extracts role of passed
+	 * {@link org.openehealth.ipf.commons.ihe.xds.core.metadata.Author}. This method
+	 * adds extracted value as code.
 	 *
 	 * @param authorTypeImpl author of document
 	 */
-	private void addRole(AuthorTypeImpl authorTypeImpl) {
+	private void addRole(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author authorTypeImpl) {
 		try {
 			if (authorTypeImpl.getAuthorRole() != null && !authorTypeImpl.getAuthorRole().isEmpty()
-					&& authorTypeImpl.getAuthorRole().get(0) instanceof String) {
-				addCode(new CodeableConcept(new Coding(null, (String) authorTypeImpl.getAuthorRole().get(0), null)));
+					&& authorTypeImpl.getAuthorRole().get(0) != null) {
+				addCode(new CodeableConcept(
+						new Coding(authorTypeImpl.getAuthorRole().get(0).getAssigningAuthority().getUniversalId(),
+								authorTypeImpl.getAuthorRole().get(0).getId(), null)));
 			}
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage(), ex);

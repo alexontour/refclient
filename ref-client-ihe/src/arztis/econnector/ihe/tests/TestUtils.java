@@ -32,29 +32,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
-import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.Appendix;
-import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PractitionerAt;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.enums.EImpfImpfrollenVs;
-import org.ehealth_connector.common.enums.CodeSystems;
-import org.ehealth_connector.common.hl7cdar2.AdxpCity;
-import org.ehealth_connector.common.hl7cdar2.AdxpCountry;
-import org.ehealth_connector.common.hl7cdar2.AdxpPostalCode;
-import org.ehealth_connector.common.hl7cdar2.AdxpState;
-import org.ehealth_connector.common.hl7cdar2.AdxpStreetAddressLine;
-import org.ehealth_connector.common.hl7cdar2.EnFamily;
-import org.ehealth_connector.common.hl7cdar2.EnGiven;
-import org.ehealth_connector.common.hl7cdar2.EnPrefix;
-import org.ehealth_connector.common.hl7cdar2.EnSuffix;
-import org.ehealth_connector.common.hl7cdar2.INT;
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
-import org.ehealth_connector.common.hl7cdar2.IVLPQ;
-import org.ehealth_connector.common.hl7cdar2.IVLTS;
-import org.ehealth_connector.common.hl7cdar2.PQ;
-import org.ehealth_connector.common.hl7cdar2.QTY;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.mdht.Code;
-import org.ehealth_connector.common.mdht.Telecoms;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -71,6 +48,29 @@ import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.cda.elga.generated.artdecor.enums.EImpfImpfrollenVs;
+import org.husky.cda.elga.models.Appendix;
+import org.husky.common.at.PractitionerAt;
+import org.husky.common.enums.CodeSystems;
+import org.husky.common.hl7cdar2.AdxpCity;
+import org.husky.common.hl7cdar2.AdxpCountry;
+import org.husky.common.hl7cdar2.AdxpPostalCode;
+import org.husky.common.hl7cdar2.AdxpState;
+import org.husky.common.hl7cdar2.AdxpStreetAddressLine;
+import org.husky.common.hl7cdar2.EnFamily;
+import org.husky.common.hl7cdar2.EnGiven;
+import org.husky.common.hl7cdar2.EnPrefix;
+import org.husky.common.hl7cdar2.EnSuffix;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.IVLINT;
+import org.husky.common.hl7cdar2.IVLPQ;
+import org.husky.common.hl7cdar2.IVLTS;
+import org.husky.common.hl7cdar2.PQ;
+import org.husky.common.hl7cdar2.QTY;
+import org.husky.common.hl7cdar2.TS;
+import org.husky.common.model.Code;
+import org.husky.common.model.Telecoms;
+import org.husky.common.utils.DateUtil;
 
 public class TestUtils {
 
@@ -88,11 +88,12 @@ public class TestUtils {
 	}
 
 	public static boolean isEqual(PractitionerAt a1, PractitionerAt a2) {
-		if (a1.getIds() == null || a1.getIds().isEmpty() || a2.getIds() == null || a2.getIds().isEmpty()) {
+		if (a1.getIdentifier() == null || a1.getIdentifier().isEmpty() || a2.getIdentifier() == null
+				|| a2.getIdentifier().isEmpty()) {
 			return false;
 		}
-		for (int i = 0; i < a1.getIds().size(); i++) {
-			if (!a1.getIds().get(i).equals(a2.getIds().get(i)))
+		for (int i = 0; i < a1.getIdentifier().size(); i++) {
+			if (!a1.getIdentifier().get(i).equals(a2.getIdentifier().get(i)))
 				return false;
 		}
 		return true;
@@ -110,11 +111,11 @@ public class TestUtils {
 			}
 
 			if ("low".equalsIgnoreCase(element.getName().getLocalPart()) && element.getValue() instanceof TS
-					&& !((org.ehealth_connector.common.hl7cdar2.TS) element.getValue()).getValue()
+					&& !((org.husky.common.hl7cdar2.TS) element.getValue()).getValue()
 							.equalsIgnoreCase(lowTime)) {
 				result = false;
 			} else if ("high".equalsIgnoreCase(element.getName().getLocalPart()) && element.getValue() instanceof TS
-					&& !((org.ehealth_connector.common.hl7cdar2.TS) element.getValue()).getValue()
+					&& !((org.husky.common.hl7cdar2.TS) element.getValue()).getValue()
 							.equalsIgnoreCase(highTime)) {
 				result = false;
 			}
@@ -223,20 +224,20 @@ public class TestUtils {
 				JAXBElement<?> elem = (JAXBElement<?>) element;
 				if (elem.getValue() instanceof AdxpPostalCode) {
 					AdxpPostalCode obj = (AdxpPostalCode) elem.getValue();
-					assertEquals(postalCode, obj.xmlContent);
+					assertEquals(postalCode, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof AdxpCity) {
 					AdxpCity obj = (AdxpCity) elem.getValue();
-					assertEquals(city, obj.xmlContent);
+					assertEquals(city, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof AdxpCountry) {
 					AdxpCountry obj = (AdxpCountry) elem.getValue();
-					assertEquals(country, obj.xmlContent);
+					assertEquals(country, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof AdxpState) {
 					AdxpState obj = (AdxpState) elem.getValue();
-					assertEquals(state, obj.xmlContent);
+					assertEquals(state, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof AdxpStreetAddressLine) {
 					AdxpStreetAddressLine obj = (AdxpStreetAddressLine) elem.getValue();
-					assertTrue(lines.get(0).asStringValue().equalsIgnoreCase(obj.xmlContent)
-							|| lines.get(1).asStringValue().equalsIgnoreCase(obj.xmlContent));
+					assertTrue(lines.get(0).asStringValue().equalsIgnoreCase(obj.getMergedXmlMixed())
+							|| lines.get(1).asStringValue().equalsIgnoreCase(obj.getMergedXmlMixed()));
 				}
 			}
 		}
@@ -251,16 +252,16 @@ public class TestUtils {
 				JAXBElement<?> elem = (JAXBElement<?>) element;
 				if (elem.getValue() instanceof EnFamily) {
 					EnFamily obj = (EnFamily) elem.getValue();
-					assertEquals(familyName, obj.xmlContent);
+					assertEquals(familyName, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof EnGiven) {
 					EnGiven obj = (EnGiven) elem.getValue();
-					assertEquals(givenName, obj.xmlContent);
+					assertEquals(givenName, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof EnPrefix) {
 					EnPrefix obj = (EnPrefix) elem.getValue();
-					assertEquals(prefix, obj.xmlContent);
+					assertEquals(prefix, obj.getMergedXmlMixed());
 				} else if (elem.getValue() instanceof EnSuffix) {
 					EnSuffix obj = (EnSuffix) elem.getValue();
-					assertEquals(suffix, obj.xmlContent);
+					assertEquals(suffix, obj.getMergedXmlMixed());
 				}
 			}
 		}

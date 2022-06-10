@@ -26,15 +26,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
-import org.ehealth_connector.fhir.structures.gen.FhirPatient;
-import org.hl7.fhir.dstu3.model.Address;
+import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
+import org.husky.cda.elga.generated.artdecor.EimpfDocumentUpdateImmunisierungsstatus;
+import org.husky.fhir.structures.gen.FhirPatient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -341,22 +341,15 @@ public class RestHandler extends AbstractHandler {
 			return;
 		}
 
-		Object result = null;
-		Object resultXml = null;
+		EimpfDocumentUpdateImmunisierungsstatus result = null;
+		String resultXml = null;
 
 		result = FhirElgaConnectionCaller.getInstance().generateCda(body, authorization);
+		resultXml = FhirElgaConnectionCaller.getInstance()
+				.getUpdateImmunizationEntryXml(result);
 
-		if (result instanceof EimpfDocumentUpdateImmunisierungsstatus) {
-			resultXml = FhirElgaConnectionCaller.getInstance()
-					.getUpdateImmunizationEntryXml((EimpfDocumentUpdateImmunisierungsstatus) result);
-		}
-
-		if (resultXml instanceof String) {
-			writeResponse((String) resultXml, response, HttpServletResponse.SC_OK, HttpConstants.MEDIA_TYPE_TEXT_HTML);
-		} else if (result instanceof Message) {
-			Message messageResult = (Message) result;
-			writeResponse(messageResult.toJson().toString(), response, messageResult.getRequestStatus(),
-					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
+		if (resultXml != null && resultXml.length() > 0) {
+			writeResponse(resultXml, response, HttpServletResponse.SC_OK, HttpConstants.MEDIA_TYPE_TEXT_XML);
 		}
 	}
 
@@ -653,7 +646,7 @@ public class RestHandler extends AbstractHandler {
 				FhirUtil.extractIdentifierFromTokenType(identifier), null, birthDate);
 
 		if (gender != null && !gender.isEmpty()) {
-			patDemParam.setGender(org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender.valueOf(gender));
+			patDemParam.setGender(org.hl7.fhir.r4.model.Enumerations.AdministrativeGender.valueOf(gender));
 		}
 
 		if (addressline != null) {
@@ -666,7 +659,7 @@ public class RestHandler extends AbstractHandler {
 			patDemParam.addAddress(address);
 		}
 
-		org.hl7.fhir.dstu3.model.Bundle result = null;
+		org.hl7.fhir.r4.model.Bundle result = null;
 		try {
 			result = FhirElgaConnectionCaller.getInstance().queryPatientDemographics(
 					ConnectionDataHandler.getInstance().getConnectionDataWithUserToken(authorization), patDemParam);
