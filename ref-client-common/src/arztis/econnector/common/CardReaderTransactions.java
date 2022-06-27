@@ -48,6 +48,9 @@ public class CardReaderTransactions implements Serializable {
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(CardReaderTransactions.class);
 
+	/** The Constant JSON_PARAM_HANDLE. */
+	private static final String JSON_PARAM_HANDLE = "handle";
+
 	/** The Constant JSON_PARAM_RETURN_CARD_DATA. */
 	private static final String JSON_PARAM_RETURN_CARD_DATA = "returnCardData";
 
@@ -383,8 +386,9 @@ public class CardReaderTransactions implements Serializable {
 	 * @return {@link Card} if the request was successful, otherwise {@link Message}
 	 *         with received error details
 	 */
-	public Object getCardData(String cardReaderId) {
+	public Object getCardData(String cardReaderId, String handle) {
 		JSONObject jo = new JSONObject();
+		jo.put(JSON_PARAM_HANDLE, handle);
 		buildJsonForCardData(jo);
 
 		try {

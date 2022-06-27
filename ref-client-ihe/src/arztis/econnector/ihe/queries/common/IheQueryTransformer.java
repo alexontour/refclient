@@ -199,13 +199,13 @@ public class IheQueryTransformer {
 				null, null);
 
 		List<String> stateList = new ArrayList<>();
-		stateList.add(AvailabilityStatus.APPROVED.getOpcode());
+		stateList.add(AvailabilityStatus.APPROVED.getQueryOpcode());
 
 		values = QueryPartFactory.generateValueList(stateList);
 		SlotType1 slotOriginalState = QueryPartFactory.generateSlot(values, "OriginalStatus");
 
 		stateList = new ArrayList<>();
-		stateList.add(AvailabilityStatus.DEPRECATED.getOpcode());
+		stateList.add(AvailabilityStatus.DEPRECATED.getQueryOpcode());
 		values = QueryPartFactory.generateValueList(stateList);
 		SlotType1 slotNewState = QueryPartFactory.generateSlot(values, "NewStatus");
 
@@ -509,7 +509,7 @@ public class IheQueryTransformer {
 		}
 
 		if (status != null) {
-			slots.add(createStringSlot(status.getOpcode(), "$XDSDocumentEntryStatus"));
+			slots.add(createStringSlot(status.getQueryOpcode(), "$XDSDocumentEntryStatus"));
 		}
 
 		if (authorInstitution != null && !authorInstitution.isEmpty()) {

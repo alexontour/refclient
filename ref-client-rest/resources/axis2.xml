@@ -427,7 +427,7 @@
         <!--  System predefined phases       -->
         <!--   After Postdispatch phase module author or service author can add any phase he want      -->
         <phase name="OperationInPhase">
-            <handler name="MustUnderstandChecker"
+             <handler name="MustUnderstandChecker"
                      class="org.apache.axis2.jaxws.dispatchers.MustUnderstandChecker">
                 <order phase="OperationInPhase"/>
             </handler>

@@ -56,7 +56,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven.resources.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>copy_schemaorg_apache_xmlbeans</id>
@@ -109,7 +108,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
 					<forceJavacCompilerUse>true</forceJavacCompilerUse>
 					<source>17</source>
@@ -120,7 +118,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>${maven.enforcer.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>enforce-versions</id>
@@ -152,7 +149,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven.jar.plugin.version}</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -173,7 +169,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven.dependency.plugin.version}</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -182,11 +177,8 @@
 						</goals>
 						<configuration>
 							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<!-- optional -->
-							<!-- exclude copying test and provided dependencies -->
 							<includeScope>runtime</includeScope>
 							<excludeScope>provided</excludeScope>
-							<!-- optional -->
 						</configuration>
 					</execution>
 				</executions>

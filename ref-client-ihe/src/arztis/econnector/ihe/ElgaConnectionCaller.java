@@ -42,6 +42,7 @@ import org.husky.communication.xd.storedquery.FindDocumentsQuery;
 import org.husky.fhir.structures.gen.FhirPatient;
 import org.husky.xua.core.SecurityHeaderElement;
 import org.husky.xua.exceptions.DeserializeException;
+import org.json.JSONException;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
 import org.openehealth.ipf.commons.ihe.xds.core.responses.QueryResponse;
 import org.openehealth.ipf.commons.ihe.xds.core.responses.Response;
@@ -284,12 +285,17 @@ public class ElgaConnectionCaller {
 				contactParameter.setPatientId(patientId);
 			}
 
-			Object resultCard = getECardToken(connData, contactParameter.getCardReaderId(), ginoEndpoint);
+			Object resultCard = null;
+			try {
+				resultCard = getECardToken(connData, contactParameter.getCardReaderId(), ginoEndpoint);
+			} catch (JSONException ex) {
+				LOGGER.info(ex.getMessage());
+			}
 
 			if (resultCard instanceof Message) {
 				return resultCard;
-			} else if (resultCard instanceof String) {
-				cardToken = (String) resultCard;
+			} else if (resultCard instanceof String stringResult) {
+				cardToken = stringResult;
 			}
 		}
 
@@ -303,10 +309,10 @@ public class ElgaConnectionCaller {
 						getECardSubjectTicket(contactParameter.getPatientId().getValue(),
 								connData.getDialog().getVertragspartnerInfos().getVpNummer()));
 
-				if (!(returnObject instanceof String)) {
+				if (!(returnObject instanceof String stringResult)) {
 					return returnObject;
 				} else {
-					sSamlTicket = (String) returnObject;
+					sSamlTicket = stringResult;
 				}
 			}
 
@@ -387,14 +393,10 @@ public class ElgaConnectionCaller {
 	 * @return the ssno from E card data
 	 */
 	private String getSsnoFromECardData(String cardReaderId, String ginoEndpoint) {
-		Object result = CardReaderTransactions.getInstance(ginoEndpoint).getCardData(cardReaderId);
+		Object result = CardReaderTransactions.getInstance(ginoEndpoint).getCardData(cardReaderId, null);
 
-		if (result instanceof Card) {
-			Card card = (Card) result;
-
-			if ("e-card".equalsIgnoreCase(card.getCardType())) {
-				return card.getNumber();
-			}
+		if (result instanceof Card card && "e-card".equalsIgnoreCase(card.getCardType())) {
+			return card.getNumber();
 		}
 
 		return null;
@@ -415,6 +417,8 @@ public class ElgaConnectionCaller {
 				&& connData.getDialog().getVertragspartnerInfos() != null) {
 			vpnr = connData.getDialog().getVertragspartnerInfos().getVpNummer();
 		}
+
+		LOGGER.info("VPNR to use for e-card token: {}", vpnr);
 
 		return CardReaderTransactions.getInstance(ginoEndpoint).getCardTokenECard(cardReaderId, null, vpnr);
 	}
@@ -455,10 +459,10 @@ public class ElgaConnectionCaller {
 			returnObject = assertionTransactions.requestEcardOnlyAssertion(cardToken,
 					connData.getDialog().getDialogId(), getECardSubjectTicket(patientId.getValue(),
 							connData.getDialog().getVertragspartnerInfos().getVpNummer()));
-			if (!(returnObject instanceof String)) {
+			if (!(returnObject instanceof String resultString)) {
 				return returnObject;
 			} else {
-				samlTicket = (String) returnObject;
+				samlTicket = resultString;
 			}
 		}
 
@@ -524,10 +528,10 @@ public class ElgaConnectionCaller {
 		}
 
 		LOGGER.debug("Dialog succesfully created: Connection data: {}", connData);
-		if (result instanceof String) {
-			samlTicketIdentityAssertion = (String) result;
-		} else if (result instanceof Message) {
-			LOGGER.warn(((Message) result).getText());
+		if (result instanceof String stringResult) {
+			samlTicketIdentityAssertion = stringResult;
+		} else if (result instanceof Message messageResult) {
+			LOGGER.warn(messageResult.getText());
 			return result;
 		}
 
@@ -614,8 +618,8 @@ public class ElgaConnectionCaller {
 
 			if (resultCard instanceof Message) {
 				return resultCard;
-			} else if (resultCard instanceof String) {
-				cardToken = (String) resultCard;
+			} else if (resultCard instanceof String resultString) {
+				cardToken = resultString;
 			}
 
 		} catch (Exception e) {
@@ -731,8 +735,15 @@ public class ElgaConnectionCaller {
 		}
 
 		Object resultCxtAssert = null;
-		Object contextResult = assertionTransactions.requestHCPAssertion(role, samlTicketIdentityAssertion,
-				IheConstants.KIND_OF_REQUEST_VOS);
+		Object contextResult = null;
+
+		if (connData.getHcpAssertion() == null) {
+			contextResult = assertionTransactions.requestHCPAssertion(role, samlTicketIdentityAssertion,
+					IheConstants.KIND_OF_REQUEST_VOS);
+		} else {
+			contextResult = connData.getHcpAssertion();
+		}
+
 		try {
 			connData.setHcpContextAssertion((AssertionType) contextResult);
 			resultCxtAssert = requestContextAssertion(connData.getHcpContextAssertion(), application,
@@ -771,8 +782,13 @@ public class ElgaConnectionCaller {
 		try {
 
 			if (!CONFIG.isOnlyContext()) {
-				contextResult = assertionTransactions.requestHCPAssertion(role, samlTicketIdentityAssertion,
-						IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
+				if (connData.getHcpAssertion() == null) {
+					contextResult = assertionTransactions.requestHCPAssertion(role, samlTicketIdentityAssertion,
+							IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD);
+				} else {
+					contextResult = connData.getHcpAssertion();
+				}
+
 				connData.setHcpEImmunContextAssertion((AssertionType) contextResult);
 				resultCxtAssert = requestContextAssertion(connData.getHcpEImmunizationContextAssertion(), application,
 						IheConstants.KIND_OF_REQUEST_IMMUNIZATION_RECORD, null);
@@ -1054,11 +1070,14 @@ public class ElgaConnectionCaller {
 			throws UnauthorizedException {
 		if (parameter != null) {
 			SecurityHeaderElement assertion = null;
+			String oid = null;
 
 			if (connData != null) {
 				try {
+					AssertionType assertionType = getAssertionForPatientRegistration(connData);
 					assertion = AssertionTypeUtil
-							.transformAssertionTypeToXUAAssertion(getAssertionForPatientRegistration(connData));
+							.transformAssertionTypeToXUAAssertion(assertionType);
+					oid = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(assertionType).replace("urn:oid:", "");
 				} catch (DeserializeException e) {
 					LOGGER.error(e.getMessage(), e);
 				}
@@ -1066,7 +1085,7 @@ public class ElgaConnectionCaller {
 
 			PatientIndexTransactions patIndexTrans = new PatientIndexTransactions();
 			return getPatientDemographicsResultBundle(
-					patIndexTrans.queryPatientDemographics(parameter, assertion));
+					patIndexTrans.queryPatientDemographics(parameter, assertion, oid));
 		} else {
 			LOGGER.warn("There are no parameter to query the demographics of a patient");
 			return getErrorBundleEmptyPatientDemographics();
@@ -1227,7 +1246,7 @@ public class ElgaConnectionCaller {
 	 */
 	public Object getCardData(String cardReaderId, String ginoEndpoint) {
 		try {
-			return CardReaderTransactions.getInstance(ginoEndpoint).getCardData(cardReaderId);
+			return CardReaderTransactions.getInstance(ginoEndpoint).getCardData(cardReaderId, null);
 		} catch (Exception e) {
 			LOGGER.error("Don't receive data form the card reader: {}", cardReaderId);
 			return new Message(MessageUtil.getMessageFromProperties(CHECK_CARD_READER_MESSAGE_KEY, cardReaderId),
@@ -1324,7 +1343,6 @@ public class ElgaConnectionCaller {
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfUpdateImmunization(byte[] document) throws IOException {
 		try {
-			LOGGER.info("Load CDA information from passed XML document");
 			return CdaDocumentUnmarshaller.unmarshall(new String(document));
 		} catch (JAXBException | SAXException e) {
 			LOGGER.error(e.getMessage(), e);
@@ -1346,7 +1364,6 @@ public class ElgaConnectionCaller {
 	 */
 	public POCDMT000040ClinicalDocument getDetailsOfLabReport(byte[] document) throws IOException {
 		try {
-			LOGGER.info("Load CDA information from passed XML document");
 			return CdaDocumentUnmarshaller.unmarshall(new String(document));
 		} catch (JAXBException | SAXException e) {
 			LOGGER.error(e.getMessage(), e);

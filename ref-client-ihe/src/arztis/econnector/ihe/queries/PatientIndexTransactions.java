@@ -12,6 +12,7 @@ import java.util.List;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
+import org.husky.common.communication.AffinityDomain;
 import org.husky.common.enums.AdministrativeGender;
 import org.husky.communication.ConvenienceMasterPatientIndexV3;
 import org.husky.communication.MasterPatientIndexQuery;
@@ -59,7 +60,8 @@ public class PatientIndexTransactions {
 	 *
 	 * @return list of found {@link FhirPatient}
 	 */
-	public List<FhirPatient> queryPatientDemographics(FhirPatient fhirPatient, SecurityHeaderElement assertion) {
+	public List<FhirPatient> queryPatientDemographics(FhirPatient fhirPatient, SecurityHeaderElement assertion,
+			String oid) {
 		if (fhirPatient == null) {
 			return new ArrayList<>();
 		}
@@ -68,8 +70,11 @@ public class PatientIndexTransactions {
 		try {
 			ConvenienceMasterPatientIndexV3 connection = IheServiceStubPool.getInstance().getPdqService();
 
+			AffinityDomain affinityDomain = IheServiceStubPool.getInstance().getAffinityDomainZpi();
+			affinityDomain.getPdqDestination().setSenderOrganizationalOid(oid);
+			affinityDomain.getPdqDestination().setSenderApplicationOid(oid);
 			query = new MasterPatientIndexQuery(
-					IheServiceStubPool.getInstance().getAffinityDomainZpi().getPdqDestination());
+					affinityDomain.getPdqDestination());
 
 			if (fhirPatient.getName() != null && !fhirPatient.getName().isEmpty()) {
 				for (HumanName humanName : fhirPatient.getName()) {
@@ -98,7 +103,8 @@ public class PatientIndexTransactions {
 			}
 
 			MasterPatientIndexQueryResponse response = connection.queryPatientDemographics(query,
-					IheServiceStubPool.getInstance().getAffinityDomainZpi(), assertion, null);
+					IheServiceStubPool.getInstance().getAffinityDomainZpi(), assertion,
+					null);
 
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("Found {} patients.", response.getTotalNumbers());

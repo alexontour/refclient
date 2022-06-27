@@ -474,7 +474,7 @@ public class FhirDocumentReference extends DocumentReference {
 				setText(comments.getValue());
 			}
 
-			if (association.getEntryUuid() != null) {
+			if (association != null && association.getEntryUuid() != null) {
 				setRelatesTo(association.getEntryUuid());
 			}
 

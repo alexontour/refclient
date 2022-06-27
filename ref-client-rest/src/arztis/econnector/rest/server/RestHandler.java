@@ -680,7 +680,7 @@ public class RestHandler extends AbstractHandler {
 				statusResponse = Integer.valueOf(result.getEntry().get(0).getResponse().getStatus());
 			}
 
-			writeResponse(FhirUtil.getFhirContextDstu3().newJsonParser().encodeResourceToString(result), response,
+			writeResponse(FhirUtil.getFhirContext().newJsonParser().encodeResourceToString(result), response,
 					statusResponse, HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		}
 	}

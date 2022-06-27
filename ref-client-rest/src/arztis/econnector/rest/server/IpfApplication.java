@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "arztis.econnector")
+@ComponentScan(basePackages = { "arztis.econnector", "org.openehealth.ipf", "org.husky.communication" })
 public class IpfApplication extends SpringBootServletInitializer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IpfApplication.class.getName());

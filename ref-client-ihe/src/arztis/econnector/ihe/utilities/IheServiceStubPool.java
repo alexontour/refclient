@@ -32,7 +32,6 @@ import org.husky.common.communication.AffinityDomain;
 import org.husky.common.communication.AtnaConfig.AtnaConfigMode;
 import org.husky.common.communication.Destination;
 import org.husky.common.communication.DocumentMetadata.DocumentMetadataExtractionMode;
-import org.husky.common.communication.SubmissionSetMetadata.SubmissionSetMetadataExtractionMode;
 import org.husky.communication.ConvenienceMasterPatientIndexV3;
 import org.husky.communication.at.ConvenienceCommunicationAt;
 import org.slf4j.Logger;
@@ -440,8 +439,10 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * gets service stub for requesting documents in ELGA application eBefund.
 	 *
 	 * @return {@link ConvenienceCommunicationAt}
+	 * @throws URISyntaxException
 	 */
-	public ConvenienceCommunicationAt getXdsService() {
+	public ConvenienceCommunicationAt getXdsService() throws URISyntaxException {
+		xdsService.setAffinityDomain(createAffinityDomain("", portAddressXds));
 		return xdsService;
 	}
 
@@ -449,8 +450,10 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * gets service stub for providing documents in ELGA application eBefund.
 	 *
 	 * @return {@link ConvenienceCommunicationAt}
+	 * @throws URISyntaxException
 	 */
-	public ConvenienceCommunicationAt getXdsWriteService() {
+	public ConvenienceCommunicationAt getXdsWriteService() throws URISyntaxException {
+		xdsWriteService.setAffinityDomain(createAffinityDomain("", portAddressXdsWrite));
 		return xdsWriteService;
 	}
 
@@ -459,8 +462,10 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * application virtual organizations.
 	 *
 	 * @return {@link ConvenienceCommunicationAt}
+	 * @throws URISyntaxException
 	 */
-	public ConvenienceCommunicationAt getXdsEHealthPlusService() {
+	public ConvenienceCommunicationAt getXdsEHealthPlusService() throws URISyntaxException {
+		xdsEhealthPlusService.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocuments));
 		return xdsEhealthPlusService;
 	}
 
@@ -469,8 +474,11 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * application eImpfpass.
 	 *
 	 * @return {@link ConvenienceCommunicationAt}
+	 * @throws URISyntaxException
 	 */
-	public ConvenienceCommunicationAt getXdsEHealthPlusEImmunizationService() {
+	public ConvenienceCommunicationAt getXdsEHealthPlusEImmunizationService() throws URISyntaxException {
+		xdsEhealthPlusEImmunizationService
+				.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocumentsEImmunization));
 		return xdsEhealthPlusEImmunizationService;
 	}
 
@@ -488,8 +496,10 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	 * eMedikation.
 	 *
 	 * @return {@link ConvenienceCommunicationAt}
+	 * @throws URISyntaxException
 	 */
-	public ConvenienceCommunicationAt getXdsEmedService() {
+	public ConvenienceCommunicationAt getXdsEmedService() throws URISyntaxException {
+		xdsEmedService.setAffinityDomain(createAffinityDomain("", portAddressPharmacyManager));
 		return xdsEmedService;
 	}
 
@@ -964,14 +974,12 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		xdsService = context.getBean(ConvenienceCommunicationConnection.class);
 		xdsService.setAtnaConfig(AtnaConfigMode.SECURE);
 		xdsService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsService.setAffinityDomain(createAffinityDomain("", portAddressXds));
 
 		xdsWriteService = context.getBean(ConvenienceCommunicationConnection.class);
 		xdsWriteService.setAtnaConfig(AtnaConfigMode.SECURE);
 		xdsWriteService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsWriteService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsWriteService.setAffinityDomain(createAffinityDomain("", portAddressXdsWrite));
+
+		setPdqService(context);
 	}
 
 	/**
@@ -1042,8 +1050,6 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		xdsEmedService = context.getBean(ConvenienceCommunicationConnection.class);
 		xdsEmedService.setAtnaConfig(AtnaConfigMode.SECURE);
 		xdsEmedService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEmedService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEmedService.setAffinityDomain(createAffinityDomain("", portAddressPharmacyManager));
 	}
 
 	/**
@@ -1074,8 +1080,6 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		xdsEhealthPlusService = context.getBean(ConvenienceCommunicationConnection.class);
 		xdsEhealthPlusService.setAtnaConfig(AtnaConfigMode.SECURE);
 		xdsEhealthPlusService.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEhealthPlusService.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEhealthPlusService.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocuments));
 	}
 
 	/**
@@ -1113,10 +1117,6 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		xdsEhealthPlusEImmunizationService.setAtnaConfig(AtnaConfigMode.SECURE);
 		xdsEhealthPlusEImmunizationService
 				.setAutomaticExtractionEnabled(DocumentMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEhealthPlusEImmunizationService
-				.setAutomaticExtractionEnabled(SubmissionSetMetadataExtractionMode.DEFAULT_EXTRACTION);
-		xdsEhealthPlusEImmunizationService
-				.setAffinityDomain(createAffinityDomain("", portAddressElgaPlusDocumentsEImmunization));
 
 	}
 
@@ -1133,6 +1133,9 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 			etsServiceStub._getServiceClient().removeHeaders();
 			setSoapHeadersEts(action, portAddressEts);
 			etsServiceStub._getServiceClient().getOptions().setAction(action);
+		} else {
+			etsServiceStub._getServiceClient().removeHeaders();
+			setSoapHeadersEts(action, portAddressEts);
 		}
 
 		return etsServiceStub;
@@ -1195,7 +1198,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 			etsEhealthPlusEImmunizationServiceStub._getServiceClient().getOptions().setAction(action);
 		} else {
 			etsEhealthPlusEImmunizationServiceStub._getServiceClient().removeHeaders();
-			setSoapHeadersEtsEhealthPlus(action, portAddressElgaPlusEtsEImmunization);
+			setSoapHeadersEtsEhealthPlusEImmunization(action, portAddressElgaPlusEtsEImmunization);
 		}
 
 		return etsEhealthPlusEImmunizationServiceStub;

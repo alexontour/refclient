@@ -87,7 +87,12 @@ public class ElgaTypeConverter {
 			int index = 0;
 			for (DocumentEntry documentResponse : documentResponses) {
 				if (documentResponse != null) {
-					resources.add(new FhirDocumentReference(documentResponse, associations.get(0), index));
+					Association association = null;
+
+					if (!associations.isEmpty()) {
+						association = associations.get(index);
+					}
+					resources.add(new FhirDocumentReference(documentResponse, association, index));
 
 					if (documentResponse.getLegalAuthenticator() != null) {
 						resources.add(new FhirPractitioner(documentResponse.getLegalAuthenticator(),

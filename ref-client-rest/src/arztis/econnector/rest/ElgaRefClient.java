@@ -15,6 +15,8 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.husky.common.utils.Util;
 import org.jasypt.util.text.BasicTextEncryptor;
+import org.opensaml.core.config.InitializationException;
+import org.opensaml.core.config.InitializationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -85,6 +87,12 @@ public class ElgaRefClient {
 			BaseServiceStubPool.getInstance().setGinaService(IheServiceStubPool.getInstance().getGinaServiceStub());
 		} catch (Exception e1) {
 			logger.error("Could not initialize the soap services", e1);
+		}
+
+		try {
+			InitializationService.initialize();
+		} catch (InitializationException e) {
+			logger.error(e.getMessage(), e);
 		}
 
 		try {

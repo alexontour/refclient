@@ -282,7 +282,7 @@ public class FhirContactPoint extends ContactPoint {
 	 * @return concatenated prefix and value
 	 */
 	private static String getValueWithContactPointSystem(ContactPointSystem system, String value) {
-		if (system != null) {
+		if (system != null && value != null) {
 			switch (system) {
 			case FAX:
 				return concatenateSystemAndValue("fax:", value);

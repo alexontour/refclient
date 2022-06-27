@@ -92,6 +92,8 @@ public class XdsTransactions {
 	/** The HCP or context assertion. */
 	private SecurityHeaderElement oAssertion;
 
+	private String oid;
+
 	/** The xml assertion. */
 	private AssertionType xmlAssertion;
 
@@ -116,6 +118,7 @@ public class XdsTransactions {
 			throws ParserConfigurationException, SAXException, IOException, DeserializeException {
 		xmlAssertion = assertion;
 		oAssertion = AssertionTypeUtil.transformAssertionTypeToXUAAssertion(assertion);
+		oid = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(assertion).replace(URN_OID_FORMAT, "");
 		this.virtualOrganizationId = voId;
 	}
 
@@ -689,15 +692,15 @@ public class XdsTransactions {
 
 		var patIndexTransactions = new PatientIndexTransactions();
 
-		List<FhirPatient> patients = patIndexTransactions.queryPatientDemographics(patient, oAssertion);
+		List<FhirPatient> patients = patIndexTransactions.queryPatientDemographics(patient, oAssertion, oid);
 		if (patients != null && !patients.isEmpty() && patients.get(0) != null) {
 			for (Identifier id : patients.get(0).getIdentifier()) {
-				String oid = "";
+				String patIdOid = "";
 				if (id != null && id.getSystem().startsWith(FhirCommon.OID_URN)) {
-					oid = FhirCommon.removeUrnOidPrefix(id.getSystem());
+					patIdOid = FhirCommon.removeUrnOidPrefix(id.getSystem());
 
-					if (oid != null && oid.contains(elgaAreaOid)) {
-						return new Identificator(oid, id.getValue());
+					if (patIdOid != null && patIdOid.contains(elgaAreaOid)) {
+						return new Identificator(patIdOid, id.getValue());
 					}
 				}
 			}

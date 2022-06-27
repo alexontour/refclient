@@ -248,7 +248,15 @@ public class AssertionTransactions {
 		} catch (Exception e) {
 			return getErrorMessage(e.getMessage(), e.getMessage(), e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} finally {
-			cleanupEtsServices(QueryPartFactory.WS_TRUST_200512_RST_ISSUE);
+			try {
+				IheServiceStubPool.getInstance().getIdaGdaService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+						._getServiceClient().cleanupTransport();
+				IheServiceStubPool.getInstance().getIdaGdaService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+						._getServiceClient().cleanup();
+				IheServiceStubPool.getInstance().instantiateIdaElgaAreaService();
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 	}
 
@@ -428,7 +436,11 @@ public class AssertionTransactions {
 				} else {
 					IheServiceStubPool.getInstance()
 							.getEtsEhealthPlusEImmunizationService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
+							._getServiceClient().cleanupTransport();
+					IheServiceStubPool.getInstance()
+							.getEtsEhealthPlusEImmunizationService(QueryPartFactory.WS_TRUST_200512_RST_ISSUE)
 							._getServiceClient().cleanup();
+					IheServiceStubPool.getInstance().instantiateEtsEhealthPlusEImmunizationService();
 				}
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);

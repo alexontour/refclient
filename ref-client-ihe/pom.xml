@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ref-client-ihe</artifactId>
 	<name>ref-client-ihe</name>
@@ -17,12 +14,9 @@
 		<hapi.fhir.version>5.7.2</hapi.fhir.version>
 		<jackson.version>2.10.1</jackson.version>
 		<skip.assembly>false</skip.assembly>
-        <husky.version>2.0-ALPHA</husky.version>        
-        <ipf.version>4.3.1</ipf.version>
-		<spring.version>5.3.18</spring.version>
-		<spring.boot.version>2.6.6</spring.boot.version>
+		<husky.version>2.0-ALPHA</husky.version>
+		<ipf.version>4.2.0</ipf.version>
 		<log4j2.version>2.17.2</log4j2.version>
-		<camel.version>3.14.2</camel.version>
 	</properties>
 	<build>
 		<plugins>
@@ -254,14 +248,14 @@
 			<artifactId>husky-fhir-structures-gen</artifactId>
 			<version>${husky.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.openehealth.ipf.commons</groupId>
 			<artifactId>ipf-commons-ihe-xds</artifactId>
 			<version>4.3-ALPHA</version>
 		</dependency>
 
-       <dependency>
+		<dependency>
 			<groupId>org.openehealth.ipf.platform-camel</groupId>
 			<artifactId>ipf-platform-camel-ihe-ws</artifactId>
 			<version>4.3-ALPHA</version>
@@ -271,12 +265,16 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>${jackson.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>stax2-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- libraries needed for cda validation -->
