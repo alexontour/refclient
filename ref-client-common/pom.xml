@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>elga</groupId>
 		<artifactId>ref-client</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.json.version>20190722</org.json.version>
-		<log4j.version>2.13.3</log4j.version>
+		<log4j.version>2.17.2</log4j.version>
 		<axis2.version>1.7.9</axis2.version>
 		<org.apache.xmlbeans.version>3.1.0</org.apache.xmlbeans.version>
 		<org.apache.ws.commons.axiom.version>1.2.21</org.apache.ws.commons.axiom.version>
