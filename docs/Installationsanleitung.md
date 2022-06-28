@@ -5,16 +5,16 @@
 ## Systemvoraussetzungen 
 Beachten Sie, dass Sie nach jeder Installation einen Neustart durchführen!
 Bevor Sie anfangen können, muss Ihr System folgende Voraussetzungen erfüllen:
-1. **Java OpenJDK Version 12 oder 13**
+1. **Java OpenJDK Version 17**
    
    Unter folgenden Link können Sie diese installieren: https://jdk.java.net/archive/
    
    Für Linux-User finden Sie hier eine Installationsanleitung für JAVA OpenJDK: https://openjdk.java.net/install/
-2. **JAVA_HOME Environment Variable auf den Ordner OpenJDK 12 oder 13 setzen**
+2. **JAVA_HOME Environment Variable auf den Ordner OpenJDK 17 setzen**
 3. **Git muss installiert sein**
    
    Unter folgendem Link finden Sie den Download für Git: https://git-scm.com/downloads
-4. **Eclipse Version ab 2019-09 muss installiert sein**
+4. **Eclipse Version ab 2021-12 muss installiert sein**
    
    Unter folgendem Link verfügbar: https://www.eclipse.org/downloads/packages/installer 
 
@@ -149,9 +149,9 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
 1. Legen Sie einen Ordner an mit folgenden Unterordnern:
    1. resources (diesen Unterordner können Sie aus dem Eclipse Projekt kopieren)
    2. keystore (dieser Unterordner wurde unter Punkt „Keystore anlegen“ beschrieben)
-2. Speichern Sie die Datei ref-client-rest-0.0.2-SNAPSHOT.jar ebenfalls in diesen Ordner
+2. Speichern Sie die Datei ref-client-rest-1.0.0-SNAPSHOT.jar ebenfalls in diesen Ordner
 3. Das Programm kann mit Hilfe des Befehls aus dem Punkt „ELGA Referenz Client aus der Kommandozeile starten“ gestartet werden.
 
 ### ELGA Referenzclient aus der Kommandozeile starten 
 1. Öffnen Sie ein Terminal geben Sie folgenden Befehl ein:
-   1. <JAVA_HOME>/bin/java -Dfile.encoding=UTF-8 -jar ref-client-rest-0.0.2-SNAPSHOT.jar <encrypted keystore password>. Ersezten Sie die Platzhalter <> mit Ihrem Wert
+   1. <JAVA_HOME>/bin/java -Dfile.encoding=UTF-8 -jar ref-client-rest-1.0.0-SNAPSHOT.jar <encrypted keystore password>. Ersezten Sie die Platzhalter <> mit Ihrem Wert
