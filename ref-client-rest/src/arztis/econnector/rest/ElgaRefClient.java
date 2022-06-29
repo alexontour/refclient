@@ -85,6 +85,7 @@ public class ElgaRefClient {
 			BaseServiceStubPool.getInstance().setBaseService(IheServiceStubPool.getInstance().getBaseService());
 			BaseServiceStubPool.getInstance().setAuthServiceStub(IheServiceStubPool.getInstance().getAuthServiceStub());
 			BaseServiceStubPool.getInstance().setGinaService(IheServiceStubPool.getInstance().getGinaServiceStub());
+			BaseServiceStubPool.getInstance().setPortAddressCrs(IheServiceStubPool.getInstance().getPortAddressCrs());
 		} catch (Exception e1) {
 			logger.error("Could not initialize the soap services", e1);
 		}

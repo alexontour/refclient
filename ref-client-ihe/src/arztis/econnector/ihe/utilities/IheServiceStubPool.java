@@ -300,6 +300,7 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 		portAddressBase = mapServiceEndpoints.get(IheConstants.BASE_SERVICE);
 		portAddressGina = mapServiceEndpoints.get(IheConstants.GINA_SERVICE);
 		portAddressSts = mapServiceEndpoints.get(IheConstants.STS_SERVICE);
+		setPortAddressCrs(mapServiceEndpoints.get(IheConstants.CRS_SERVICE));
 		this.keystorePass = keystorePass;
 
 		httpConnectionManager = new MultiThreadedHttpConnectionManager();

@@ -41,7 +41,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import arztis.econnector.common.generatedClasses.at.chipkarte.client.gina.soap.GinaServiceStub.CardReader;
 import arztis.econnector.common.model.Card;
 import arztis.econnector.common.model.Message;
 import arztis.econnector.common.model.MessageTypes;
@@ -713,10 +712,12 @@ public class RestHandler extends AbstractHandler {
 	private void handleQueryCardReadersCall(HttpServletResponse response) {
 		Object result = FhirElgaConnectionCaller.getInstance().queryAllCardReaders();
 
-		if (result instanceof CardReader[] cardReaders) {
-			JSONArray array = new JSONArray();
-			for (CardReader reader : cardReaders) {
-				array.put(reader.getId());
+		JSONArray array = new JSONArray();
+		if (result instanceof List<?>) {
+			for (Object reader : (List<?>) result) {
+				if (reader instanceof arztis.econnector.common.model.CardReader cardReader) {
+					array.put(cardReader.getId());
+				}
 			}
 
 			JSONObject obj = new JSONObject();
