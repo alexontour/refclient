@@ -574,7 +574,9 @@ public class XdsTransactions {
 		}
 
 		metaData.setRefrencedIdList(new Identificator(cda.getSetId()),
-				String.format("urn:oid:%s", getHomeCommunityId(emed, elgaAreaOid)));
+				isUrnOidNeeded(elgaAreaOid, typeCode)
+						? String.format("urn:oid:%s", getHomeCommunityId(emed, elgaAreaOid))
+						: getHomeCommunityId(emed, elgaAreaOid));
 
 		for (org.openehealth.ipf.commons.ihe.xds.core.metadata.Code code : metaData.getDocumentEntry()
 				.getConfidentialityCodes()) {
