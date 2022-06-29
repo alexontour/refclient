@@ -70,6 +70,7 @@ public class IJettyServer extends Thread {
             server.join();
         } catch (Exception e) {
         	LOGGER.error(e.getMessage(), e);
+			Thread.currentThread().interrupt();
         } finally {
             if (httpConnector != null) {
                 httpConnector.close();

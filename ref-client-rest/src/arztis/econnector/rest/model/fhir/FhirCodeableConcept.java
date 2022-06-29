@@ -107,7 +107,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 
 		if (translationCodes != null) {
 			for (CodeableConcept item : translationCodes) {
-				if (item != null && retVal.getTranslation() != null) {
+				if (item != null) {
 					retVal.getTranslation().add(FhirCodeableConcept.createHl7CdaR2Cd(item, null, null));
 				}
 			}
@@ -153,7 +153,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 
 		if (translationCodes != null) {
 			for (CodeableConcept item : translationCodes) {
-				if (item != null && retVal.getTranslation() != null) {
+				if (item != null) {
 					retVal.getTranslation().add(FhirCodeableConcept.createHl7CdaR2Cd(item, null, null));
 				}
 			}
@@ -199,7 +199,7 @@ public class FhirCodeableConcept extends CodeableConcept {
 
 		if (translationCodes != null) {
 			for (CodeableConcept item : translationCodes) {
-				if (item != null && retVal.getTranslation() != null) {
+				if (item != null) {
 					retVal.getTranslation().add(FhirCodeableConcept.createHl7CdaR2Cd(item, null, null));
 				}
 			}

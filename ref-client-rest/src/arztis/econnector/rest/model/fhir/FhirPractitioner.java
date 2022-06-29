@@ -15,6 +15,7 @@ import org.hl7.fhir.r4.model.Practitioner;
 import org.husky.common.at.enums.AuthorRole;
 import org.husky.common.hl7cdar2.PN;
 import org.husky.common.hl7cdar2.POCDMT000040Person;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Hl7v2Based;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
 
 import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.GdaAddress;
@@ -257,7 +258,7 @@ public class FhirPractitioner extends Practitioner {
 
 		for (SlotType1 slot : slots) {
 			if (slot != null && "legalAuthenticator".equalsIgnoreCase(slot.getName())) {
-				Person xcn = Person.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
+				Person xcn = Hl7v2Based.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
 				if (xcn != null) {
 					fromDocumentEntryResponse(xcn, index);
 				}
@@ -314,7 +315,7 @@ public class FhirPractitioner extends Practitioner {
 	 */
 	private void fromPOCDMT000040Person(POCDMT000040Person person, String id) {
 		setId(id);
-		if (person != null && person.getName() != null) {
+		if (person != null) {
 			for (PN pn : person.getName()) {
 				if (pn != null) {
 					addName(new FhirHumanName(pn));
@@ -352,7 +353,7 @@ public class FhirPractitioner extends Practitioner {
 				}
 			}
 
-			if (person.getClassCode() != null && person.getClassCode().isEmpty()) {
+			if (person.getClassCode().isEmpty()) {
 				person.getClassCode().add("PSN");
 			}
 			person.setDeterminerCode(CdaUtil.DETERMINERCODE_INSTANCE);

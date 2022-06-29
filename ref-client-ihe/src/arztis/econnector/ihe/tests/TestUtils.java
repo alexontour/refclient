@@ -69,8 +69,8 @@ import org.husky.common.hl7cdar2.PQ;
 import org.husky.common.hl7cdar2.QTY;
 import org.husky.common.hl7cdar2.TS;
 import org.husky.common.model.Code;
-import org.husky.common.model.Telecoms;
-import org.husky.common.utils.DateUtil;
+
+import arztis.econnector.ihe.utilities.DateUtil;
 
 public class TestUtils {
 
@@ -101,7 +101,7 @@ public class TestUtils {
 
 	public static boolean isEqual(IVLTS time1, String lowTime, String highTime) {
 		boolean result = true;
-		if (time1 == null || time1.getRest() == null) {
+		if (time1 == null) {
 			return false;
 		}
 
@@ -125,34 +125,10 @@ public class TestUtils {
 		return result;
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
-	public static boolean isEqual(Telecoms t1, Telecoms t2) {
-		if (t1.getEMails() != null) {
-			for (int i = 0; i < t1.getEMails().size(); i++) {
-				if (t1.getEMails().get(i) != t2.getEMails().get(i))
-					return false;
-			}
-		}
-		if (t1.getFaxes() != null) {
-			for (int i = 0; i < t1.getFaxes().size(); i++) {
-				if (t1.getFaxes().get(i) != t2.getFaxes().get(i))
-					return false;
-			}
-		}
-		if (t1.getPhones() != null) {
-			for (int i = 0; i < t1.getPhones().size(); i++) {
-				if (t1.getPhones().get(i) != t2.getPhones().get(i))
-					return false;
-			}
-		}
-
-		return true;
-	}
-
 	public boolean isEqual(IVLPQ ivlpq, String expectedLowValue, String expectedHighValue, String expectedUnit) {
 		boolean result = true;
 		boolean expectNullFlavor = false;
-		if (ivlpq == null || ivlpq.getRest() == null) {
+		if (ivlpq == null) {
 			return false;
 		}
 
@@ -174,7 +150,7 @@ public class TestUtils {
 					&& !(element.getValue()).getValue().equalsIgnoreCase(expectedHighValue)) {
 				result = false;
 			} else if (expectNullFlavor && "high".equalsIgnoreCase(element.getName().getLocalPart())
-					&& (element.getValue().getNullFlavor() == null || element.getValue().getNullFlavor().isEmpty())) {
+					&& (element.getValue().getNullFlavor().isEmpty())) {
 				result = false;
 			}
 		}
@@ -738,7 +714,7 @@ public class TestUtils {
 	}
 
 	public Date createStartDate() {
-		return DateUtil.parseDate("06.04.2020");
+		return DateUtil.parseDateyyyyMMdd("20200406");
 	}
 
 	public List<ContactPoint> createTelecoms1() {
@@ -809,8 +785,8 @@ public class TestUtils {
 		startDateString = "28.02.2015";
 		endDateString = "28.02.2018";
 
-		startDate = DateUtil.parseDate("28.09.2019");
-		endDate = DateUtil.parseDate("21.02.2020");
+		startDate = DateUtil.parseDateyyyyMMdd("20190928");
+		endDate = DateUtil.parseDateyyyyMMdd("20200221");
 
 		// Test String with German, French and Italic special characters
 		ts1 = TestUtils.generateString(NUMBER_OF_RANDOM_STRING_LETTERS);

@@ -57,11 +57,11 @@ import org.husky.common.hl7cdar2.XActRelationshipEntry;
 import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
 import org.husky.common.hl7cdar2.XActRelationshipExternalReference;
 import org.husky.common.model.Code;
-import org.husky.common.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.eimpf.Vaccine;
 import arztis.econnector.rest.utilities.ImmunizationMapping;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
@@ -86,9 +86,6 @@ public class FhirImmunization extends Immunization {
 
 	/** The Constant REFERENCE_TEXT_EIMPF_DOSE. */
 	private static final String REFERENCE_TEXT_EIMPF_DOSE = "#schedule-immunization-";
-
-	/** The Constant REFERENCE_IMMUNIZATION_INDEX. */
-	private static final String REFERENCE_IMMUNIZATION_INDEX = "immunization-%d";
 
 	/** map of vaccines. */
 	private static Map<String, Vaccine> vaccines = ImmunizationMapping.getInstance().getVaccineMap();
@@ -134,11 +131,9 @@ public class FhirImmunization extends Immunization {
 		if (entry != null && entry.getSubstanceAdministration() != null) {
 			setId(index);
 
-			if (entry.getSubstanceAdministration().getId() != null) {
-				for (II id : entry.getSubstanceAdministration().getId()) {
-					if (id != null) {
-						addIdentifier(new FhirIdentifier(id));
-					}
+			for (II id : entry.getSubstanceAdministration().getId()) {
+				if (id != null) {
+					addIdentifier(new FhirIdentifier(id));
 				}
 			}
 
@@ -184,9 +179,9 @@ public class FhirImmunization extends Immunization {
 		if (preconditions != null && !preconditions.isEmpty() && preconditions.get(0).getCriterion() != null) {
 			immunizationProtocolApplied.setSeries(preconditions.get(0).getCriterion().getCode().getCode());
 
-			if (preconditions.get(0).getCriterion().getValue() instanceof CD) {
+			if (preconditions.get(0).getCriterion().getValue() instanceof CD cd) {
 				immunizationProtocolApplied
-						.setDoseNumber(new StringType(((CD) preconditions.get(0).getCriterion().getValue()).getCode()));
+						.setDoseNumber(new StringType(cd.getCode()));
 			}
 		}
 	}
@@ -299,7 +294,7 @@ public class FhirImmunization extends Immunization {
 			return;
 		}
 
-		if (entryRel.getAct().getId() != null && !entryRel.getAct().getId().isEmpty()
+		if (!entryRel.getAct().getId().isEmpty()
 				&& entryRel.getAct().getId().get(0) != null) {
 			addProgramEligibility(new CodeableConcept(new Coding(entryRel.getAct().getId().get(0).getRoot(),
 					entryRel.getAct().getId().get(0).getExtension(), "")));
@@ -541,7 +536,8 @@ public class FhirImmunization extends Immunization {
 		}
 
 		immunizationTargetObservation
-				.setText(CdaUtil.createReference(String.format("#target-immunization-%d", indexImmunization)));
+				.setText(CdaUtil
+						.createReference(String.format("#target-immunization-%d-%d", indexImmunization, indexTarget)));
 
 		return immunizationTargetObservation;
 	}

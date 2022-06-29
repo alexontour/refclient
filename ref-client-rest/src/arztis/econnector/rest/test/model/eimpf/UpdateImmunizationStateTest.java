@@ -43,12 +43,12 @@ import org.husky.common.hl7cdar2.XActClassDocumentEntryAct;
 import org.husky.common.hl7cdar2.XActMoodDocumentObservation;
 import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
 import org.husky.common.hl7cdar2.XDocumentActMood;
-import org.husky.common.utils.DateUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import arztis.econnector.ihe.tests.TestUtils;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.eimpf.UpdateImmunizationState;
 import arztis.econnector.rest.model.fhir.FhirPeriod;
 import ca.uhn.fhir.context.FhirContext;

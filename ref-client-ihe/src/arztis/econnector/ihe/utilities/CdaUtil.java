@@ -25,7 +25,6 @@ import org.husky.common.hl7cdar2.ST;
 import org.husky.common.hl7cdar2.SXCMTS;
 import org.husky.common.hl7cdar2.TEL;
 import org.husky.common.hl7cdar2.TS;
-import org.husky.common.utils.DateUtil;
 import org.openehealth.ipf.commons.ihe.core.HL7DTM;
 
 import ca.uhn.hl7v2.model.DataTypeException;

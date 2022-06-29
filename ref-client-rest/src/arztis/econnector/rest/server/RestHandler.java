@@ -390,11 +390,10 @@ public class RestHandler extends AbstractHandler {
 		Object result = FhirElgaConnectionCaller.getInstance()
 				.requestIdaGdaHospital(new RequestIdaParameter(subjectId, organizationId, organizationName));
 
-		if (result instanceof String) {
-			writeResponse((String) result, response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		if (result instanceof String stringResult) {
+			writeResponse(stringResult, response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					HttpConstants.MEDIA_TYPE_APPLICATION_XML);
-		} else if (result instanceof Message) {
-			Message messageResult = (Message) result;
+		} else if (result instanceof Message messageResult) {
 			writeResponse(messageResult.toJson().toString(), response, messageResult.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		} else {
@@ -491,8 +490,7 @@ public class RestHandler extends AbstractHandler {
 		Object result = FhirElgaConnectionCaller.getInstance().registerUser(new ConnectionData(), registerParam,
 				ConfigReader.getInstance().getGinoEndpoint(), applications);
 
-		if (result instanceof ConnectionData) {
-			ConnectionData connData = (ConnectionData) result;
+		if (result instanceof ConnectionData connData) {
 			connData.setUserJwtToken(getJwtToken(connData));
 			ConnectionDataHandler.getInstance().addConnData(connData);
 			Message message = new Message("Die Registrierung war erfolgreich", MessageTypes.SUCCESS,
@@ -501,8 +499,7 @@ public class RestHandler extends AbstractHandler {
 			responseJson.put("jwt", connData.getUserJwtToken());
 			writeResponse(responseJson.toString(), response, message.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
-		} else if (result instanceof Message) {
-			Message messageResult = (Message) result;
+		} else if (result instanceof Message messageResult) {
 			writeResponse(messageResult.toJson().toString(), response, messageResult.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		} else {
@@ -698,11 +695,10 @@ public class RestHandler extends AbstractHandler {
 		Object result = FhirElgaConnectionCaller.getInstance().getCardData(cardReaderId,
 				ConfigReader.getInstance().getGinoEndpoint());
 
-		if (result instanceof Card) {
-			writeResponse(((Card) result).toJson().toString(), response, HttpServletResponse.SC_OK,
+		if (result instanceof Card cardResult) {
+			writeResponse(cardResult.toJson().toString(), response, HttpServletResponse.SC_OK,
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
-		} else if (result instanceof Message) {
-			Message messageResult = (Message) result;
+		} else if (result instanceof Message messageResult) {
 			writeResponse(messageResult.toJson().toString(), response, messageResult.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		}
@@ -717,9 +713,9 @@ public class RestHandler extends AbstractHandler {
 	private void handleQueryCardReadersCall(HttpServletResponse response) {
 		Object result = FhirElgaConnectionCaller.getInstance().queryAllCardReaders();
 
-		if (result instanceof CardReader[]) {
+		if (result instanceof CardReader[] cardReaders) {
 			JSONArray array = new JSONArray();
-			for (CardReader reader : (CardReader[]) result) {
+			for (CardReader reader : cardReaders) {
 				array.put(reader.getId());
 			}
 
@@ -728,8 +724,7 @@ public class RestHandler extends AbstractHandler {
 
 			writeResponse(obj.toString(), response, HttpServletResponse.SC_OK,
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
-		} else if (result instanceof Message) {
-			Message messageResult = (Message) result;
+		} else if (result instanceof Message messageResult) {
 			writeResponse(messageResult.toJson().toString(), response, messageResult.getRequestStatus(),
 					HttpConstants.MEDIA_TYPE_APPLICATION_JSON);
 		}

@@ -6,8 +6,6 @@
  */
 package arztis.econnector.rest.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -19,12 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = { "arztis.econnector", "org.openehealth.ipf", "org.husky.communication" })
 public class IpfApplication extends SpringBootServletInitializer {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(IpfApplication.class.getName());
-
-
-
 	public static void main(final String[] args) {
-		LOGGER.info("Configuring IPF app for a JAR deployment");
 		final SpringApplication application = new SpringApplication(IpfApplication.class);
 		addApplicationStartupHook(application);
 		var context = application.run(args);
@@ -40,7 +33,6 @@ public class IpfApplication extends SpringBootServletInitializer {
 		application.addListeners((ApplicationListener<ApplicationReadyEvent>) event -> {
 			// Do some configuration magic...
 
-			LOGGER.info("IPF app has been configured and has started");
 		});
 	}
 

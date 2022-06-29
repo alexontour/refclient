@@ -5,41 +5,46 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Locale;
 
 import org.husky.common.hl7cdar2.TS;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author anna
- *
+ * 
+ * This class contains utility functionalities to parse and format dates
+ * 
  */
 public class DateUtil {
 
 	/** The Constant LOGGER. */
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);
 
+	/**
+	 * Converts the given {@link ZonedDateTime} into a {@link Date}.
+	 * 
+	 * @param timestamp
+	 * @return converted {@link Date}
+	 */
 	public static Date parseZonedDateTime(ZonedDateTime timestamp) {
 		return Date.from(timestamp.toInstant());
 	}
 
+	/**
+	 * Converts the given {@link Date} into a {@link ZonedDateTime}.
+	 * 
+	 * @param timestamp
+	 * @return converted {@link ZonedDateTime}
+	 */
 	public static ZonedDateTime parseDate(Date timestamp) {
 		return ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.systemDefault());
 	}
 
-	public static String formatDateOnly(Date timestamp) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		return sdf.format(timestamp);
-	}
-
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * dd.MM.yyyy HH:mm or dd.MM.yyyy HH:mm:ss</div>
+	 * Parses the given String into a timestamp. Expected format: dd.MM.yyyy HH:mm
+	 * or dd.MM.yyyy HH:mm:ss
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: dd.MM.yyyy HH:mm oder dd.MM.yyyy HH:mm:ss</div>
-	 *
-	 * @param dateSt <br>
-	 *               <div class="de"> date String</div>
+	 * @param dateSt date String
 	 * @return the date
 	 */
 	public static Date parseDateAndTime(String dateSt) {
@@ -58,14 +63,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyy</div>
+	 * Parses the given String into a timestamp. Expected format: yyyy
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyy</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de">value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyy(String value) {
@@ -73,19 +73,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException("Cannot parse date, value=[" + value + "]. Expected format is yyyy.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMM</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMM
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMM</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de">value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMM(String value) {
@@ -93,20 +90,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException("Cannot parse date, value=[" + value + "]. Expected format is yyyyMM.",
-					e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMdd</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMdd
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMdd</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de">value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMdd(String value) {
@@ -114,20 +107,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException("Cannot parse date, value=[" + value + "]. Expected format is yyyyMMdd.",
-					e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyy-MM-dd</div>
+	 * Parses the given String into a timestamp. Expected format: yyyy-MM-dd
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyy-MM-dd</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de">value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMdd2(String value) {
@@ -135,20 +124,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyy-MM-dd.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHH</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHH
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHH</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHH(String value) {
@@ -156,20 +141,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHH.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmm</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHmm
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmm</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmm(String value) {
@@ -177,20 +158,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHmm.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmmss</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHmmss
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmmss</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmmss(String value) {
@@ -198,20 +175,17 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHmmss.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmmssSSSZZZZ</div>
+	 * Parses the given String into a timestamp. Expected format:
+	 * yyyyMMddHHmmssSSSZZZZ
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmmssSSSZZZZ</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmmssSSSZZZZ(String value) {
@@ -219,20 +193,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSZZZZ");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHmmssSSSZZZZ.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmmssZZZZ</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHmmssZZZZ
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmmssZZZZ</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmmssZZZZ(String value) {
@@ -240,20 +210,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHmmssZZZZ.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmmZ</div>
-	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmmZ</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHmmZ
+	 * 
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmmZ(String value) {
@@ -261,20 +227,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmZ");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException("Cannot parse date, value=[" + value + "]. Expected format is yyyyMMdd.",
-					e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHmmZZZZ</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHmmZZZZ
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHmmZZZZ</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHmmZZZZ(String value) {
@@ -282,20 +244,16 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmZZZZ");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHmmZZZZ.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyyMMddHHZZZZ</div>
+	 * Parses the given String into a timestamp. Expected format: yyyyMMddHHZZZZ
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyyMMddHHZZZZ</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddHHZZZZ(String value) {
@@ -303,20 +261,17 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHZZZZ");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyyMMddHHZZZZ.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+		
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyy-MM-dd'T'HH:mm:ss</div>
+	 * Parses the given String into a timestamp. Expected format:
+	 * yyyy-MM-dd'T'HH:mm:ss
 	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyy-MM-dd'T'HH:mm:ss</div>
-	 *
-	 * @param value <br>
-	 *              <div class="de"> value</div>
+	 * @param value value
 	 * @return java.util.Date
 	 */
 	public static Date parseDateyyyyMMddTHHmmss(String value) {
@@ -325,17 +280,15 @@ public class DateUtil {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			return sdf.parse(value);
 		} catch (final ParseException e) {
-			throw new IllegalArgumentException(
-					"Cannot parse date, value=[" + value + "]. Expected format is yyyy-MM-ddTHH:mm:ss.", e);
+			LOGGER.error(e.getMessage(), e);
 		}
+
+		return null;
 	}
 
 	/**
-	 * <div class="en">Parses the given String into a timestamp. Expected format:
-	 * yyyy[MM[dd[HH[mm[ss[ZZZZ]]]]]]</div>
-	 *
-	 * <div class="de">Parst den angegebenen String in einen Zeitstempel. Erwartetes
-	 * Format: yyyy[MM[dd[HH[mm[ss[ZZZZ]]]]]]</div>
+	 * Parses the given String into a timestamp. Expected format:
+	 * yyyy[MM[dd[HH[mm[ss[ZZZZ]]]]]]
 	 *
 	 * @param value the value
 	 * @return the date
@@ -369,10 +322,18 @@ public class DateUtil {
 	}
 
 	/**
-	 * <div class="en">Parses the given HL7 CDA R2 TS into a timestamp</div>
-	 *
-	 * <div class="de">Parst den angegebenen HL7 CDA R2 TS in einen
-	 * Zeitstempel./div>
+	 * Formats the passed timestamp as String: yyyyMMdd
+	 * 
+	 * @param timestamp value
+	 * @return the string
+	 */
+	public static String formatDateOnly(Date timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.format(timestamp);
+	}
+
+	/**
+	 * Parses the given HL7 CDA R2 TS into a timestamp
 	 *
 	 * @param value the value
 	 * @return the date
@@ -382,16 +343,24 @@ public class DateUtil {
 	}
 
 	/**
-	 * <div class="en">Formats the given timestamp as String: yyyyMMddHHmmss</div>
-	 *
-	 * <div class="de">Formatiert den angegebenen Zeitstempel als String:
-	 * yyyyMMddHHmmss</div>
+	 * Formats the given timestamp as String: yyyyMMddHHmmss
 	 *
 	 * @param value the value
 	 * @return the string
 	 */
 	public static String formatDateTime(Date value) {
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		return sdf.format(value);
+	}
+
+	/**
+	 * Formats the given timestamp as String: yyyyMMddHHmmssZ
+	 *
+	 * @param value the value
+	 * @return the string
+	 */
+	public static String formatDateTimeTzon(Date value) {
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssZ", Locale.GERMANY);
 		return sdf.format(value);
 	}
 

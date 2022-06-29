@@ -655,8 +655,8 @@ public class ElgaConnectionCaller {
 			if (!CONFIG.isOnlyContext()) {
 				oResult = assertionTransactions.requestHCPAssertion(role, samlTicketIdentityAssertion,
 						IheConstants.KIND_OF_REQUEST_ELGA_RECORDS);
-				if (oResult instanceof AssertionType) {
-					connData.setHcpAssertion((AssertionType) oResult);
+				if (oResult instanceof AssertionType assertion) {
+					connData.setHcpAssertion(assertion);
 					LOGGER.info("HCP Assertion is added to the connection data");
 				}
 			}

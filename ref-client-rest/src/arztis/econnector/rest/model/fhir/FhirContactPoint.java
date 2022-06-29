@@ -58,7 +58,7 @@ public class FhirContactPoint extends ContactPoint {
 		if (hl7CdaR2Value != null) {
 			String usage = null;
 
-			if (hl7CdaR2Value.getUse() != null && !hl7CdaR2Value.getUse().isEmpty()) {
+			if (!hl7CdaR2Value.getUse().isEmpty()) {
 				usage = hl7CdaR2Value.getUse().get(0);
 			}
 

@@ -148,7 +148,7 @@ public class IheQueryTransformer {
 			slotTypeList.add(QueryPartFactory.generateSlot(values, "codingScheme"));
 			classifications.add(QueryPartFactory.generateClassification(
 					ObjectIds.CLASSIFICATION_SCHEME_CONTENTTYPECODE_CODE, registryObject, ObjectTypes.CLASSIFICATION,
-					classCode.getCodeValue(), new ArrayList<SlotType1>(slotTypeList), name));
+					classCode.getCodeValue(), new ArrayList<>(slotTypeList), name));
 		}
 
 		if (practitionerOrganizationName != null) {

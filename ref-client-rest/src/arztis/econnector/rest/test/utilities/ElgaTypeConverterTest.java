@@ -59,10 +59,7 @@ public class ElgaTypeConverterTest {
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ElgaTypeConverterTest.class.getName());
-	
-	/** The Constant HOME_COMMUNITY_ID. */
-	private static final String HOME_COMMUNITY_ID = "1234.23";
-	
+
 	/** The Constant REPOSITORY_ID. */
 	private static final String REPOSITORY_ID = "1234.22";
 	

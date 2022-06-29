@@ -21,6 +21,7 @@ import org.husky.common.at.enums.AuthorSpeciality;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.Association;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.Author;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.DocumentEntry;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Hl7v2Based;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization;
 import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
 import org.slf4j.Logger;
@@ -240,7 +241,7 @@ public class ElgaTypeConverter {
 	 * @return extracted HL7 V2 {@link Person}
 	 */
 	private static Person extractAuthorPerson(SlotType1 slot) {
-		return Person.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
+		return Hl7v2Based.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
 	}
 
 	/**
@@ -250,7 +251,7 @@ public class ElgaTypeConverter {
 	 * @return extracted HL7 V2 {@link Organization}
 	 */
 	private static Organization extractAuthorInstitution(SlotType1 slot) {
-		return Organization.parse(MetadataConverter.getStringFromSlot(slot), Organization.class);
+		return Hl7v2Based.parse(MetadataConverter.getStringFromSlot(slot), Organization.class);
 	}
 
 	/**

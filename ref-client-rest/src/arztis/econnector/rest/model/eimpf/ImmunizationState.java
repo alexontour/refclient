@@ -18,9 +18,9 @@ import org.husky.cda.elga.generated.artdecor.AtcdabbrHeaderDocumentationOfServic
 import org.husky.cda.elga.generated.artdecor.enums.ElgaEventCodeList;
 import org.husky.common.hl7cdar2.CE;
 import org.husky.common.hl7cdar2.POCDMT000040StructuredBody;
-import org.husky.common.utils.DateUtil;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.fhir.FhirCoding;
 import arztis.econnector.rest.model.fhir.FhirIdentifier;
 import arztis.econnector.rest.model.fhir.FhirImmunization;

@@ -84,10 +84,10 @@ public class FhirQuantity extends Quantity {
 	 * @param qty measured quantity HL7 CDA R2 {@link QTY}
 	 */
 	private void fromQty(QTY qty) {
-		if (qty instanceof INT) {
-			setValue(((INT) qty).getValue().intValue());
-		} else if (qty instanceof IVLINT) {
-			FhirRange range = new FhirRange((IVLINT) qty);
+		if (qty instanceof INT intVal) {
+			setValue(intVal.getValue().intValue());
+		} else if (qty instanceof IVLINT ivlint) {
+			FhirRange range = new FhirRange(ivlint);
 
 			if (range.getLow() != null && range.getLow().getValue() != null) {
 				setValue(range.getLow().getValue());
@@ -96,8 +96,8 @@ public class FhirQuantity extends Quantity {
 				setValue(range.getHigh().getValue());
 				setComparator(range.getLow().getComparator());
 			}
-		} else if (qty instanceof PQ) {
-			fromPq((PQ) qty);
+		} else if (qty instanceof PQ pq) {
+			fromPq(pq);
 		}
 	}
 

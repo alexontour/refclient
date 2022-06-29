@@ -71,11 +71,9 @@ public class FhirDevice extends Device {
 
 		setId(id);
 
-		if (hl7CdaR2Value.getAssignedAuthor().getId() != null) {
-			this.identifier = new ArrayList<>();
-			for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
-				this.identifier.add(new FhirIdentifier(identifier));
-			}
+		this.identifier = new ArrayList<>();
+		for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
+			this.identifier.add(new FhirIdentifier(identifier));
 		}
 
 		if (hl7CdaR2Value.getAssignedAuthor().getRepresentedOrganization() != null) {

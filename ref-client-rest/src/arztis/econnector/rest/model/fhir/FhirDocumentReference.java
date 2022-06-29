@@ -63,10 +63,10 @@ public class FhirDocumentReference extends DocumentReference {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FhirDocumentReference.class.getName());
-	
+
 	/** The Constant PATIENT_REFERENCE. */
 	private static final String PATIENT_REFERENCE = "Patient/%d-1";
 
@@ -324,8 +324,7 @@ public class FhirDocumentReference extends DocumentReference {
 	}
 
 	/**
-	 * converts format code of passed {@link DocumentReference} to
-	 * {@link Code}.
+	 * converts format code of passed {@link DocumentReference} to {@link Code}.
 	 *
 	 * @param reference resource to be extracted
 	 * @return converted {@link Code}
@@ -359,8 +358,7 @@ public class FhirDocumentReference extends DocumentReference {
 				return getCodedMetadataType(reference.getContext().getFacilityType().getCodingFirstRep());
 			} else {
 				return HealthcareFacilityTypeCode
-						.getEnum(reference.getContext().getFacilityType().getCodingFirstRep().getCode())
-						.getCode();
+						.getEnum(reference.getContext().getFacilityType().getCodingFirstRep().getCode()).getCode();
 			}
 		}
 
@@ -382,8 +380,7 @@ public class FhirDocumentReference extends DocumentReference {
 				return getCodedMetadataType(reference.getContext().getPracticeSetting().getCodingFirstRep());
 			} else {
 				return PracticeSettingCode
-						.getEnum(reference.getContext().getPracticeSetting().getCodingFirstRep().getCode())
-						.getCode();
+						.getEnum(reference.getContext().getPracticeSetting().getCodingFirstRep().getCode()).getCode();
 			}
 		}
 
@@ -439,52 +436,48 @@ public class FhirDocumentReference extends DocumentReference {
 			return;
 		}
 
-		if (documentEntry != null) {
+		addContextRelatedEntries(documentEntry, index);
+		addCodes(documentEntry);
 
-			addContextRelatedEntries(documentEntry, index);
-			addCodes(documentEntry);
-
-			if (documentEntry.getCreationTime() != null) {
-				setDate(DateUtil.parseZonedDateTime(documentEntry.getCreationTime().getDateTime()));
-			}
-
-			addAllReferences(documentEntry, index);
-
-			if (documentEntry.getAvailabilityStatus() != null && documentEntry.getAvailabilityStatus().name() != null) {
-				setStatus(documentEntry.getAvailabilityStatus().name()
-						.toLowerCase(Locale.ENGLISH).contains("approved") ? DocumentReferenceStatus.CURRENT
-								: DocumentReferenceStatus.SUPERSEDED);
-			}
-
-			if (documentEntry.getUniqueId() != null) {
-				Identifier id = new Identifier();
-				id.setValue(documentEntry.getUniqueId());
-				setMasterIdentifier(id);
-			}
-
-			if (documentEntry.getEntryUuid() != null) {
-				Identifier id = new Identifier();
-				id.setValue(documentEntry.getEntryUuid());
-				setIdentifier(List.of(id));
-			}
-
-			if (documentEntry.getComments() != null && documentEntry.getComments() != null) {
-				LocalizedString comments = documentEntry
-						.getComments();
-				setText(comments.getValue());
-			}
-
-			if (association != null && association.getEntryUuid() != null) {
-				setRelatesTo(association.getEntryUuid());
-			}
-
-			if (documentEntry.getTitle() != null) {
-				setDescription(documentEntry.getTitle().getValue());
-			}
-
-			addContentRelatedEntries(documentEntry);
-
+		if (documentEntry.getCreationTime() != null) {
+			setDate(DateUtil.parseZonedDateTime(documentEntry.getCreationTime().getDateTime()));
 		}
+
+		addAllReferences(documentEntry, index);
+
+		if (documentEntry.getAvailabilityStatus() != null && documentEntry.getAvailabilityStatus().name() != null) {
+			setStatus(documentEntry.getAvailabilityStatus().name().toLowerCase(Locale.ENGLISH).contains("approved")
+					? DocumentReferenceStatus.CURRENT
+					: DocumentReferenceStatus.SUPERSEDED);
+		}
+
+		if (documentEntry.getUniqueId() != null) {
+			Identifier id = new Identifier();
+			id.setValue(documentEntry.getUniqueId());
+			setMasterIdentifier(id);
+		}
+
+		if (documentEntry.getEntryUuid() != null) {
+			Identifier id = new Identifier();
+			id.setValue(documentEntry.getEntryUuid());
+			setIdentifier(List.of(id));
+		}
+
+		if (documentEntry.getComments() != null) {
+			LocalizedString comments = documentEntry.getComments();
+			setText(comments.getValue());
+		}
+
+		if (association != null && association.getEntryUuid() != null) {
+			setRelatesTo(association.getEntryUuid());
+		}
+
+		if (documentEntry.getTitle() != null) {
+			setDescription(documentEntry.getTitle().getValue());
+		}
+
+		addContentRelatedEntries(documentEntry);
+
 	}
 
 	/**
@@ -495,7 +488,8 @@ public class FhirDocumentReference extends DocumentReference {
 	 * <li>type code (type)</li>
 	 * <li>confidentiality code (security label)</li>
 	 * <li>language code (language)</li>
-	 * </ul>.
+	 * </ul>
+	 * .
 	 *
 	 * @param documentEntry to be extracted
 	 */
@@ -587,10 +581,8 @@ public class FhirDocumentReference extends DocumentReference {
 			contentType = documentEntry.getMimeType();
 		}
 
-		setContent(
-				String.format("%s/%s/%s", documentEntry.getUniqueId(), documentEntry.getRepositoryUniqueId(),
-						documentEntry.getHomeCommunityId()),
-				contentType, format, size);
+		setContent(String.format("%s/%s/%s", documentEntry.getUniqueId(), documentEntry.getRepositoryUniqueId(),
+				documentEntry.getHomeCommunityId()), contentType, format, size);
 	}
 
 	/**
@@ -602,10 +594,11 @@ public class FhirDocumentReference extends DocumentReference {
 	 * <li>practice setting code (practice setting)</li>
 	 * <li>event code (event)</li>
 	 * <li>patient reference</li>
-	 * </ul>.
+	 * </ul>
+	 * .
 	 *
 	 * @param documentEntry to be extracted
-	 * @param index the index
+	 * @param index         the index
 	 */
 	private void addContextRelatedEntries(DocumentEntry documentEntry, int index) {
 		Period period = new Period();
@@ -614,22 +607,19 @@ public class FhirDocumentReference extends DocumentReference {
 		}
 
 		if (documentEntry.getServiceStopTime() != null) {
-			period.setEnd(
-					DateUtil.parseZonedDateTime(documentEntry.getServiceStopTime().getDateTime()));
+			period.setEnd(DateUtil.parseZonedDateTime(documentEntry.getServiceStopTime().getDateTime()));
 		}
 
 		CodeableConcept facilityType = null;
 		if (documentEntry.getHealthcareFacilityTypeCode() != null) {
-			facilityType = new CodeableConcept(
-					new Coding(documentEntry.getHealthcareFacilityTypeCode().getSchemeName(),
-							documentEntry.getHealthcareFacilityTypeCode().getCode(), null));
+			facilityType = new CodeableConcept(new Coding(documentEntry.getHealthcareFacilityTypeCode().getSchemeName(),
+					documentEntry.getHealthcareFacilityTypeCode().getCode(), null));
 		}
 
 		CodeableConcept practiceSetting = null;
 		if (documentEntry.getPracticeSettingCode() != null) {
-			practiceSetting = new CodeableConcept(
-					new Coding(documentEntry.getPracticeSettingCode().getSchemeName(),
-							documentEntry.getPracticeSettingCode().getCode(), null));
+			practiceSetting = new CodeableConcept(new Coding(documentEntry.getPracticeSettingCode().getSchemeName(),
+					documentEntry.getPracticeSettingCode().getCode(), null));
 		}
 
 		CodeableConcept event = null;
@@ -889,7 +879,7 @@ public class FhirDocumentReference extends DocumentReference {
 
 		setId(id);
 
-		if (reference.getExternalDocument().getId() != null) {
+		if (!reference.getExternalDocument().getId().isEmpty()) {
 			addIdentifier(new FhirIdentifier(reference.getExternalDocument().getId().get(0)));
 		}
 

@@ -257,11 +257,9 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 		setId(id);
 
-		if (hl7CdaR2Value.getAssignedAuthor().getId() != null) {
-			this.identifier = new ArrayList<>();
-			for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
-				this.identifier.add(new FhirIdentifier(identifier));
-			}
+		this.identifier = new ArrayList<>();
+		for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
+			this.identifier.add(new FhirIdentifier(identifier));
 		}
 
 		if (hl7CdaR2Value.getAssignedAuthor().getAssignedPerson() != null
@@ -277,11 +275,9 @@ public class FhirPractitionerRole extends PractitionerRole {
 			addCode(new FhirCodeableConcept(hl7CdaR2Value.getAssignedAuthor().getCode()));
 		}
 
-		if (hl7CdaR2Value.getAssignedAuthor().getTelecom() != null) {
-			this.telecom = new ArrayList<>();
-			for (TEL tel : hl7CdaR2Value.getAssignedAuthor().getTelecom()) {
-				addTelecom(new FhirContactPoint(tel));
-			}
+		this.telecom = new ArrayList<>();
+		for (TEL tel : hl7CdaR2Value.getAssignedAuthor().getTelecom()) {
+			addTelecom(new FhirContactPoint(tel));
 		}
 	}
 
@@ -302,21 +298,17 @@ public class FhirPractitionerRole extends PractitionerRole {
 
 		setId(id);
 
-		if (hl7CdaR2Value.getAssignedEntity().getId() != null) {
-			this.identifier = new ArrayList<>();
-			for (II identifier : hl7CdaR2Value.getAssignedEntity().getId()) {
-				this.identifier.add(new FhirIdentifier(identifier));
-			}
+		this.identifier = new ArrayList<>();
+		for (II identifier : hl7CdaR2Value.getAssignedEntity().getId()) {
+			this.identifier.add(new FhirIdentifier(identifier));
 		}
 
 		if (hl7CdaR2Value.getAssignedEntity().getCode() != null) {
 			addCode(new FhirCodeableConcept(hl7CdaR2Value.getAssignedEntity().getCode()));
 		}
 
-		if (hl7CdaR2Value.getAssignedEntity().getTelecom() != null) {
-			for (TEL tel : hl7CdaR2Value.getAssignedEntity().getTelecom()) {
-				addTelecom(new FhirContactPoint(tel));
-			}
+		for (TEL tel : hl7CdaR2Value.getAssignedEntity().getTelecom()) {
+			addTelecom(new FhirContactPoint(tel));
 		}
 
 		if (hl7CdaR2Value.getSignatureCode() != null) {

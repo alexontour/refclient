@@ -37,11 +37,11 @@ import org.husky.common.hl7cdar2.XActClassDocumentEntryAct;
 import org.husky.common.hl7cdar2.XActMoodDocumentObservation;
 import org.husky.common.hl7cdar2.XActRelationshipEntryRelationship;
 import org.husky.common.hl7cdar2.XDocumentActMood;
-import org.husky.common.utils.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import arztis.econnector.ihe.tests.TestUtils;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.fhir.FhirImmunization;
 
 /**

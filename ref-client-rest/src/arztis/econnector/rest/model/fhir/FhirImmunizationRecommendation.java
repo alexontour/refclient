@@ -153,9 +153,9 @@ public class FhirImmunizationRecommendation extends ImmunizationRecommendation {
 		if (preconditions != null && !preconditions.isEmpty() && preconditions.get(0).getCriterion() != null) {
 			recommendation.setSeries(preconditions.get(0).getCriterion().getCode().getCode());
 
-			if (preconditions.get(0).getCriterion().getValue() instanceof CD) {
+			if (preconditions.get(0).getCriterion().getValue() instanceof CD cd) {
 				recommendation
-						.setDoseNumber(new StringType(((CD) preconditions.get(0).getCriterion().getValue()).getCode()));
+						.setDoseNumber(new StringType(cd.getCode()));
 			}
 		}
 	}

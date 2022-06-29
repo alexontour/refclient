@@ -8,6 +8,7 @@ package arztis.econnector.ihe.queries;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -298,7 +299,7 @@ public class AssertionTransactions {
 
 		pSamlTicket = pSamlTicket.trim();
 
-		try (InputStream is = new ByteArrayInputStream(pSamlTicket.getBytes("utf-8"))) {
+		try (InputStream is = new ByteArrayInputStream(pSamlTicket.getBytes(StandardCharsets.UTF_8))) {
 			XmlObject xmlSecurityToken = XmlObject.Factory.parse(claims.xmlText());
 			elgaRequestSecurityToken.setELGARequestSecurityTokenChoice(xmlSecurityToken);
 

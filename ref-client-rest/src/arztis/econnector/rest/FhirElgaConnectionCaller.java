@@ -157,8 +157,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			return requestDocumentList(documentReference, connData, typeCode);
 		} else {
 			switch (TypeCode.getEnum(typeCode)) {
-			case MEDICATION_SUMMARY_DOCUMENT:
-			case IMMUNIZATION_SUMMARY_REPORT:
+			case MEDICATION_SUMMARY_DOCUMENT, IMMUNIZATION_SUMMARY_REPORT:
 				return findMedicationList(connData, documentReference, typeCode);
 			case PRESCRIPTION_FOR_MEDICAITON:
 				return findPrescriptions(connData, documentReference, typeCode);
@@ -298,7 +297,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
 			return extractFhirBundleFromResponse(rrt, documentReference, typeCode);
 		} catch (NullPointerException ex) {
-			LOGGER.error("NullPointerException: {}", ex);
+			LOGGER.error("NullPointerException: ", ex);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_UNAUTHORIZED,
 					IssueSeverity.ERROR, IssueType.LOGIN, OperationOutcome.MSGAUTHREQUIRED, null);
 		} catch (UnauthorizedException ex) {
@@ -363,17 +362,17 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
 			int index = 0;
 			for (RetrievedDocument document : documents) {
-				byte[] bytesDoc = getAttachmentAsBytes(document, typeCode, null);
+				byte[] bytesDoc = getAttachmentAsBytes(document);
 
 				if (bytesDoc != null) {
-					addCdaDocToDocumentReference(reference, index, typeCode, bytesDoc, null);
+					addCdaDocToDocumentReference(reference, index, typeCode, bytesDoc);
 				}
 			}
 		}
 	}
 
-	private void addCdaDocToDocumentReference(DocumentReference reference, int index, String typeCode, byte[] bytesDoc,
-			String requestId) {
+	private void addCdaDocToDocumentReference(DocumentReference reference, int index, String typeCode,
+			byte[] bytesDoc) {
 		if (reference.getContent().get(index) != null && reference.getContent().get(index).getAttachment() != null) {
 			if (reference.getContent().get(index).getAttachment().getContentType() != null
 					&& reference.getContent().get(index).getAttachment().getContentType().contains("json")) {
@@ -384,14 +383,14 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		}
 	}
 
-	private byte[] getAttachmentAsBytes(RetrievedDocument document, String typeCode, String requestId) {
+	private byte[] getAttachmentAsBytes(RetrievedDocument document) {
 		byte[] bytesDoc = null;
 		try (InputStream is = document.getDataHandler().getInputStream()) {
 			if (is != null) {
 				bytesDoc = IOUtils.toByteArray(is);
 			}
 		} catch (IOException e) {
-			LOGGER.error("Document couldn't be read due to {} in transaction {}", e.getMessage(), requestId, e);
+			LOGGER.error("Document couldn't be read due to {}", e.getMessage(), e);
 		}
 
 		return bytesDoc;
@@ -518,8 +517,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			if (response instanceof Boolean) {
 				return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_ACCEPTED,
 						IssueSeverity.INFORMATION, null, null, null);
-			} else if (response instanceof Message) {
-				Message message = (Message) response;
+			} else if (response instanceof Message message) {
 				return new FhirBundle(BundleType.TRANSACTIONRESPONSE, message.getRequestStatus(), IssueSeverity.ERROR,
 						null, null, message.getText());
 			}
@@ -897,8 +895,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			String message = "";
-			if (e.getCause() instanceof AxisFault) {
-				message = ((AxisFault) e.getCause()).getMessage();
+			if (e.getCause() instanceof AxisFault axisFault) {
+				message = axisFault.getMessage();
 			} else {
 				message = e.getMessage();
 			}
@@ -918,7 +916,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * @return created {@link FhirBundle}
 	 */
 	private FhirBundle extractFhirBundleFromResponse(Response response) {
-		if (response != null && response.getErrors() != null && response.getErrors() != null
+		if (response != null && response.getErrors() != null 
 				&& !response.getErrors().isEmpty()) {
 			String error = getError(response.getErrors());
 			LOGGER.error(error);

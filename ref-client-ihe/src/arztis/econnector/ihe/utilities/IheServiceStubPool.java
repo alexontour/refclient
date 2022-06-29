@@ -938,9 +938,8 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	/**
 	 * instantiates all service clients for ELGA, which are needed for application eBefund.
 	 *
-	 * @throws URISyntaxException the URI syntax exception
 	 */
-	private void initiateBaseElgaServices() throws URISyntaxException {
+	private void initiateBaseElgaServices() {
 		instantiateGdaService();
 
 		if (LOGGER.isDebugEnabled()) {
@@ -1020,9 +1019,8 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	/**
 	 * instantiates all service clients for ELGA, which are needed for application eMedikation.
 	 *
-	 * @throws URISyntaxException the URI syntax exception
 	 */
-	private void initiateEMedServices() throws URISyntaxException {
+	private void initiateEMedServices() {
 		instantiateIheEmedRegistryDocumentService();
 
 		if (LOGGER.isDebugEnabled()) {
@@ -1055,9 +1053,8 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	/**
 	 * instantiates all service clients for ELGA, which are needed for eHealth application virtual organizations.
 	 *
-	 * @throws URISyntaxException the URI syntax exception
 	 */
-	private void initiateVirtualOrganizationServices() throws URISyntaxException {
+	private void initiateVirtualOrganizationServices() {
 		instantiateEtsEhealthPlusService();
 
 		if (LOGGER.isDebugEnabled()) {
@@ -1085,9 +1082,8 @@ public class IheServiceStubPool extends BaseServiceStubPool {
 	/**
 	 * instantiates all service clients for ELGA, which are needed for eHealth application eImpfpass.
 	 *
-	 * @throws URISyntaxException the URI syntax exception
 	 */
-	private void initiateEImmunizationServices() throws URISyntaxException {
+	private void initiateEImmunizationServices() {
 		instantiateEtsEhealthPlusEImmunizationService();
 
 		if (LOGGER.isDebugEnabled()) {
