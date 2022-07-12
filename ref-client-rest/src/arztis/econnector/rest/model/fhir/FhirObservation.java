@@ -9,31 +9,6 @@ package arztis.econnector.rest.model.fhir;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.cdalab.enums.ElgaObservationInterpretation;
-import org.ehealth_connector.common.hl7cdar2.ANY;
-import org.ehealth_connector.common.hl7cdar2.BL;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.CV;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.INT;
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
-import org.ehealth_connector.common.hl7cdar2.IVLPQ;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Act;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component4;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040EntryRelationship;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Observation;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organizer;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Reference;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ReferenceRange;
-import org.ehealth_connector.common.hl7cdar2.PQ;
-import org.ehealth_connector.common.hl7cdar2.RTO;
-import org.ehealth_connector.common.hl7cdar2.RTOPQPQ;
-import org.ehealth_connector.common.hl7cdar2.RTOQTYQTY;
-import org.ehealth_connector.common.hl7cdar2.ST;
-import org.ehealth_connector.common.hl7cdar2.TS;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -46,7 +21,32 @@ import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Type;
 import org.hl7.fhir.r4.model.codesystems.ObservationCategory;
 import org.hl7.fhir.r4.model.codesystems.V3ObservationInterpretation;
+import org.husky.cda.elga.generated.artdecor.enums.ElgaObservationInterpretation;
+import org.husky.common.hl7cdar2.ANY;
+import org.husky.common.hl7cdar2.BL;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.CV;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.IVLINT;
+import org.husky.common.hl7cdar2.IVLPQ;
+import org.husky.common.hl7cdar2.POCDMT000040Act;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040Component4;
+import org.husky.common.hl7cdar2.POCDMT000040EntryRelationship;
+import org.husky.common.hl7cdar2.POCDMT000040Observation;
+import org.husky.common.hl7cdar2.POCDMT000040Organizer;
+import org.husky.common.hl7cdar2.POCDMT000040Reference;
+import org.husky.common.hl7cdar2.POCDMT000040ReferenceRange;
+import org.husky.common.hl7cdar2.PQ;
+import org.husky.common.hl7cdar2.RTO;
+import org.husky.common.hl7cdar2.RTOPQPQ;
+import org.husky.common.hl7cdar2.RTOQTYQTY;
+import org.husky.common.hl7cdar2.ST;
+import org.husky.common.hl7cdar2.TS;
 
+import arztis.econnector.ihe.utilities.DateUtil;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
 /**
@@ -177,7 +177,7 @@ public class FhirObservation extends Observation {
 	 */
 	private void fromPOCDMT000040Observation(POCDMT000040Observation observation) {
 		if (observation != null) {
-			if (observation.getValue() != null && !observation.getValue().isEmpty()) {
+			if (!observation.getValue().isEmpty()) {
 				setValue(extractValue(observation.getValue().get(0)));
 			}
 
@@ -197,7 +197,7 @@ public class FhirObservation extends Observation {
 	 *
 	 */
 	private void fromPOCDMT000040Organizer(POCDMT000040Organizer organizer) {
-		if (organizer != null && organizer.getComponent() != null) {
+		if (organizer != null) {
 			for (POCDMT000040Component4 comp : organizer.getComponent()) {
 				if (comp != null && comp.getObservation() != null) {
 					ObservationComponentComponent observationComp = new ObservationComponentComponent();
@@ -310,12 +310,12 @@ public class FhirObservation extends Observation {
 								extractInterpretation(referenceRange.getObservationRange().getInterpretationCode()));
 					}
 
-					if (referenceRange.getObservationRange().getValue() instanceof IVLPQ) {
-						FhirRange range = new FhirRange((IVLPQ) referenceRange.getObservationRange().getValue());
+					if (referenceRange.getObservationRange().getValue() instanceof IVLPQ ivlpq) {
+						FhirRange range = new FhirRange(ivlpq);
 						referenceRangeComp.setLow(range.getLow());
 						referenceRangeComp.setHigh(range.getHigh());
-					} else if (referenceRange.getObservationRange().getValue() instanceof RTO) {
-						FhirRatio ratio = new FhirRatio((RTO) referenceRange.getObservationRange().getValue());
+					} else if (referenceRange.getObservationRange().getValue() instanceof RTO rto) {
+						FhirRatio ratio = new FhirRatio(rto);
 						referenceRangeComp.setText(String.format("%d%s%d", ratio.getNumerator().getValue(),
 								ratio.getDenominator().getComparator().getDisplay(),
 								ratio.getDenominator().getValue()));
@@ -401,28 +401,28 @@ public class FhirObservation extends Observation {
 	 * @return created {@link Type}
 	 */
 	private Type extractValue(ANY value) {
-		if (value instanceof PQ) {
-			return new FhirQuantity((PQ) value);
-		} else if (value instanceof IVLPQ) {
-			return new FhirRange((IVLPQ) value);
-		} else if (value instanceof BL) {
-			return new BooleanType(((BL) value).isValue());
-		} else if (value instanceof INT) {
-			return new IntegerType(((INT) value).getValue().intValue());
-		} else if (value instanceof IVLINT) {
-			return new FhirRange((IVLINT) value);
-		} else if (value instanceof ST) {
-			return new StringType(((ST) value).xmlContent);
-		} else if (value instanceof CD) {
-			return new FhirCodeableConcept((CD) value);
-		} else if (value instanceof CV) {
-			return new FhirCodeableConcept((CV) value);
-		} else if (value instanceof TS) {
-			return new DateTimeType(DateUtil.parseDateAndTime(((TS) value).getValue()));
+		if (value instanceof PQ pq) {
+			return new FhirQuantity(pq);
+		} else if (value instanceof IVLPQ ivlpq) {
+			return new FhirRange(ivlpq);
+		} else if (value instanceof BL bl) {
+			return new BooleanType(bl.isValue());
+		} else if (value instanceof INT intVal) {
+			return new IntegerType(intVal.getValue().intValue());
+		} else if (value instanceof IVLINT ivlint) {
+			return new FhirRange(ivlint);
+		} else if (value instanceof ST st) {
+			return new StringType(st.getMergedXmlMixed());
+		} else if (value instanceof CD cd) {
+			return new FhirCodeableConcept(cd);
+		} else if (value instanceof CV cv) {
+			return new FhirCodeableConcept(cv);
+		} else if (value instanceof TS ts) {
+			return new DateTimeType(DateUtil.parseDateAndTime(ts.getValue()));
 		} else if (value instanceof RTO || value instanceof RTOQTYQTY) {
 			return new FhirRatio((RTO) value);
-		} else if (value instanceof RTOPQPQ) {
-			return new FhirRatio((RTOPQPQ) value);
+		} else if (value instanceof RTOPQPQ rtopqpq) {
+			return new FhirRatio(rtopqpq);
 		}
 
 		return null;

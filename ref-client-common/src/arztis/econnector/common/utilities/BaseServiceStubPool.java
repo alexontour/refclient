@@ -47,6 +47,8 @@ public class BaseServiceStubPool implements Serializable {
 	/** The gina service stub. */
 	protected GinaServiceStub ginaServiceStub;
 
+	protected String portAddressCrs = "";
+
 	/**
 	 * The Class LazyHolder.
 	 */
@@ -119,6 +121,14 @@ public class BaseServiceStubPool implements Serializable {
 	 */
 	public void setGinaService(GinaServiceStub ginaServiceStub) {
 		this.ginaServiceStub = ginaServiceStub;
+	}
+
+	public String getPortAddressCrs() {
+		return portAddressCrs;
+	}
+
+	public void setPortAddressCrs(String portAddressCrs) {
+		this.portAddressCrs = portAddressCrs;
 	}
 
 	/**

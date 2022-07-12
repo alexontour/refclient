@@ -9,11 +9,11 @@ package arztis.econnector.rest.test.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.EN;
-import org.ehealth_connector.common.hl7cdar2.ON;
-import org.ehealth_connector.common.hl7cdar2.PN;
 import org.hl7.fhir.r4.model.HumanName;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.EN;
+import org.husky.common.hl7cdar2.ON;
+import org.husky.common.hl7cdar2.PN;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,7 +78,7 @@ public class FhirHumanNameTest extends TestUtils {
 
 		assertNotNull(on);
 		assertNotNull(on.getContent());
-		assertEquals("Ordination Dr. Musterärztin", on.xmlContent);
+		assertEquals("Ordination Dr. Musterärztin", on.getMergedXmlMixed());
 	}
 
 	/**

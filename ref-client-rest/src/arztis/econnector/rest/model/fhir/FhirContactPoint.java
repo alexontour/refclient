@@ -8,11 +8,11 @@ package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.enums.TelecomAddressUse;
-import org.ehealth_connector.common.hl7cdar2.TEL;
 import org.hl7.fhir.r4.model.Address.AddressUse;
 import org.hl7.fhir.r4.model.ContactPoint;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.enums.TelecomAddressUse;
+import org.husky.common.hl7cdar2.TEL;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
@@ -58,7 +58,7 @@ public class FhirContactPoint extends ContactPoint {
 		if (hl7CdaR2Value != null) {
 			String usage = null;
 
-			if (hl7CdaR2Value.getUse() != null && !hl7CdaR2Value.getUse().isEmpty()) {
+			if (!hl7CdaR2Value.getUse().isEmpty()) {
 				usage = hl7CdaR2Value.getUse().get(0);
 			}
 
@@ -282,7 +282,7 @@ public class FhirContactPoint extends ContactPoint {
 	 * @return concatenated prefix and value
 	 */
 	private static String getValueWithContactPointSystem(ContactPointSystem system, String value) {
-		if (system != null) {
+		if (system != null && value != null) {
 			switch (system) {
 			case FAX:
 				return concatenateSystemAndValue("fax:", value);
@@ -323,7 +323,7 @@ public class FhirContactPoint extends ContactPoint {
 	 * @return CDA telecom {@link TEL}
 	 */
 	public static TEL createHl7CdaR2Tel(ContactPoint contactPoint, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.TEL retVal = new org.ehealth_connector.common.hl7cdar2.TEL();
+		org.husky.common.hl7cdar2.TEL retVal = new org.husky.common.hl7cdar2.TEL();
 
 		if (contactPoint == null) {
 			if (retVal.nullFlavor == null) {

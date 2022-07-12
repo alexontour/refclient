@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletResponse;
@@ -23,38 +24,32 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 
 import org.apache.axis2.AxisFault;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentKompletterImmunisierungsstatus;
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.AvailabilityStatus;
-import org.ehealth_connector.common.at.enums.FormatCode;
-import org.ehealth_connector.common.at.enums.TypeCode;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ClinicalDocument;
-import org.ehealth_connector.common.utils.DebugUtil;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.hl7.fhir.r4.model.DocumentReference;
-import org.hl7.fhir.r4.model.DocumentReference.DocumentReferenceRelatesToComponent;
-import org.hl7.fhir.r4.model.DocumentReference.DocumentRelationshipType;
 import org.hl7.fhir.r4.model.Enumerations.DocumentReferenceStatus;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.r4.model.OperationOutcome.IssueType;
 import org.hl7.fhir.r4.model.codesystems.OperationOutcome;
-import org.openhealthtools.ihe.utils.UUID;
-import org.openhealthtools.ihe.xds.document.XDSDocument;
-import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
-import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
-import org.openhealthtools.ihe.xds.response.DocumentEntryResponseType;
-import org.openhealthtools.ihe.xds.response.XDSErrorType;
-import org.openhealthtools.ihe.xds.response.XDSQueryResponseType;
-import org.openhealthtools.ihe.xds.response.XDSResponseType;
-import org.openhealthtools.ihe.xds.response.XDSRetrieveResponseType;
+import org.husky.cda.elga.generated.artdecor.EimpfDocumentUpdateImmunisierungsstatus;
+import org.husky.cda.elga.xml.CdaDocumentUnmarshaller;
+import org.husky.common.at.enums.FormatCode;
+import org.husky.common.at.enums.TypeCode;
+import org.husky.common.hl7cdar2.POCDMT000040ClinicalDocument;
+import org.husky.common.model.Code;
+import org.husky.common.model.Identificator;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.ErrorInfo;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.QueryResponse;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.Response;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.RetrievedDocument;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.RetrievedDocumentSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import arztis.econnector.common.model.Message;
 import arztis.econnector.ihe.ElgaConnectionCaller;
@@ -162,8 +157,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			return requestDocumentList(documentReference, connData, typeCode);
 		} else {
 			switch (TypeCode.getEnum(typeCode)) {
-			case MEDICATION_SUMMARY_DOCUMENT:
-			case IMMUNIZATION_SUMMARY_REPORT:
+			case MEDICATION_SUMMARY_DOCUMENT, IMMUNIZATION_SUMMARY_REPORT:
 				return findMedicationList(connData, documentReference, typeCode);
 			case PRESCRIPTION_FOR_MEDICAITON:
 				return findPrescriptions(connData, documentReference, typeCode);
@@ -242,29 +236,21 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 *
 	 * @return created {@link FhirBundle}
 	 */
-	private FhirBundle extractFhirBundleFromResponse(XDSQueryResponseType qr) {
+	private FhirBundle extractFhirBundleFromResponse(QueryResponse qr) {
 		if (qr == null) {
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					IssueSeverity.ERROR, null, null, "No response received");
-		} else if (qr.getDocumentEntryResponses().isEmpty() && qr.getErrorList() == null) {
+		} else if (qr.getDocumentEntries().isEmpty() && qr.getErrors() == null) {
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					IssueSeverity.ERROR, null, null, null);
-		} else if (qr.getErrorList() != null && qr.getDocumentEntryResponses().isEmpty()) {
-			String error = getError(qr.getErrorList().getError());
+		} else if (qr.getErrors() != null && qr.getDocumentEntries().isEmpty()) {
+			String error = getError(qr.getErrors());
 			LOGGER.error("{}", error);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					IssueSeverity.ERROR, null, null, error);
 		} else {
-			if (LOGGER.isDebugEnabled()) {
-				StringBuilder sb = new StringBuilder();
-				for (DocumentEntryResponseType entryType : qr.getDocumentEntryResponses()) {
-					sb.append(DebugUtil.debugDocumentMetaData(entryType.getDocumentEntry()));
-				}
-
-				LOGGER.debug("Found documents: {}", sb);
-			}
-
-			return ElgaTypeConverter.createFhirBundleOfDocumentResponseType(qr.getDocumentEntryResponses());
+			return ElgaTypeConverter.createFhirBundleOfDocumentResponseType(qr.getDocumentEntries(),
+					qr.getAssociations());
 		}
 	}
 
@@ -306,12 +292,12 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 				homeCommunityId = pathes[pathes.length - 1];
 			}
 
-			XDSRetrieveResponseType rrt = super.retrieveDocuments(connData, uniqueId, repositoryId, homeCommunityId,
+			RetrievedDocumentSet rrt = super.retrieveDocuments(connData, uniqueId, repositoryId, homeCommunityId,
 					typeCode);
 
 			return extractFhirBundleFromResponse(rrt, documentReference, typeCode);
 		} catch (NullPointerException ex) {
-			LOGGER.error("NullPointerException: {}", ex);
+			LOGGER.error("NullPointerException: ", ex);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_UNAUTHORIZED,
 					IssueSeverity.ERROR, IssueType.LOGIN, OperationOutcome.MSGAUTHREQUIRED, null);
 		} catch (UnauthorizedException ex) {
@@ -335,24 +321,24 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 *
 	 * @return created {@link FhirBundle}
 	 */
-	private FhirBundle extractFhirBundleFromResponse(XDSRetrieveResponseType rrt,
+	private FhirBundle extractFhirBundleFromResponse(RetrievedDocumentSet rrt,
 			FhirDocumentReference documentReference, String typeCode) {
 		if (rrt != null) {
 
-			if (rrt.getAttachments() != null) {
-				if (rrt.getAttachments().isEmpty()) {
-					LOGGER.error("{}", getErrorMessage(rrt.getErrorList().getError()));
+			if (rrt.getDocuments() != null) {
+				if (rrt.getDocuments().isEmpty()) {
+					LOGGER.error("{}", getErrorMessage(rrt.getErrors()));
 					return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_NOT_FOUND,
-							IssueSeverity.ERROR, IssueType.NOTFOUND, null, getError(rrt.getErrorList().getError()));
+							IssueSeverity.ERROR, IssueType.NOTFOUND, null, getError(rrt.getErrors()));
 				} else {
-					addXdsDocumentToDocumentReference(rrt.getAttachments(), documentReference, typeCode);
+					addXdsDocumentToDocumentReference(rrt.getDocuments(), documentReference, typeCode);
 					return new FhirBundle(List.of(documentReference));
 				}
 			}
 
-			if (rrt.getErrorList() != null) {
+			if (rrt.getErrors() != null) {
 				return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_NOT_FOUND,
-						IssueSeverity.ERROR, IssueType.NOTFOUND, null, getError(rrt.getErrorList().getError()));
+						IssueSeverity.ERROR, IssueType.NOTFOUND, null, getError(rrt.getErrors()));
 
 			}
 		}
@@ -369,35 +355,45 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * @param typeCode  type of document
 	 * @return document reference with returned document
 	 */
-	public void addXdsDocumentToDocumentReference(List<XDSDocument> documents, DocumentReference reference,
+	public void addXdsDocumentToDocumentReference(List<RetrievedDocument> documents, DocumentReference reference,
 			String typeCode) {
 
 		if (reference != null && reference.getContent() != null && documents != null) {
 
 			int index = 0;
-			for (XDSDocument document : documents) {
-				if (document.getStream() != null) {
-					byte[] bytesDoc = null;
-					InputStream is = document.getStream();
-					try {
-						bytesDoc = IOUtils.toByteArray(is);
-					} catch (IOException e) {
-						LOGGER.error(e.getMessage(), e);
-					}
+			for (RetrievedDocument document : documents) {
+				byte[] bytesDoc = getAttachmentAsBytes(document);
 
-					if (reference.getContent().get(index) != null
-							&& reference.getContent().get(index).getAttachment() != null) {
-						if (reference.getContent().get(index).getAttachment().getContentType() != null && reference
-								.getContent().get(index).getAttachment().getContentType().contains("json")) {
-							reference.getContent().get(index).getAttachment()
-									.setData(convertXmlToJson(typeCode, bytesDoc));
-						} else {
-							reference.getContent().get(index).getAttachment().setData(bytesDoc);
-						}
-					}
+				if (bytesDoc != null) {
+					addCdaDocToDocumentReference(reference, index, typeCode, bytesDoc);
 				}
 			}
 		}
+	}
+
+	private void addCdaDocToDocumentReference(DocumentReference reference, int index, String typeCode,
+			byte[] bytesDoc) {
+		if (reference.getContent().get(index) != null && reference.getContent().get(index).getAttachment() != null) {
+			if (reference.getContent().get(index).getAttachment().getContentType() != null
+					&& reference.getContent().get(index).getAttachment().getContentType().contains("json")) {
+				reference.getContent().get(index).getAttachment().setData(convertXmlToJson(typeCode, bytesDoc));
+			} else {
+				reference.getContent().get(index).getAttachment().setData(bytesDoc);
+			}
+		}
+	}
+
+	private byte[] getAttachmentAsBytes(RetrievedDocument document) {
+		byte[] bytesDoc = null;
+		try (InputStream is = document.getDataHandler().getInputStream()) {
+			if (is != null) {
+				bytesDoc = IOUtils.toByteArray(is);
+			}
+		} catch (IOException e) {
+			LOGGER.error("Document couldn't be read due to {}", e.getMessage(), e);
+		}
+
+		return bytesDoc;
 	}
 
 	/**
@@ -414,13 +410,12 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		if (TypeCode.IMMUNIZATION_SUMMARY_REPORT.getCodeValue().equalsIgnoreCase(typeCode)) {
 			File file = new File("resources/update_immunization_example.xml");
 			try {
-				FileUtils.write(file, new String(bytesDoc), StandardCharsets.UTF_8);
-				EimpfDocumentKompletterImmunisierungsstatus completeImmunizationState = EimpfDocumentKompletterImmunisierungsstatus
-						.loadFromFile(file);
+				POCDMT000040ClinicalDocument completeImmunizationState = CdaDocumentUnmarshaller
+						.unmarshall(new String(bytesDoc));
 				CompleteImmunizationState fhirCompleteImmunisationState = new CompleteImmunizationState(
 						completeImmunizationState);
 				return fhirCompleteImmunisationState.toJson().getBytes(StandardCharsets.UTF_8);
-			} catch (JAXBException | IOException e) {
+			} catch (JAXBException | SAXException e) {
 				LOGGER.error(e.getMessage(), e);
 			} finally {
 				try {
@@ -440,14 +435,14 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * @param errors the errors
 	 * @return the error
 	 */
-	private String getError(List<XDSErrorType> errors) {
+	private String getError(List<ErrorInfo> errors) {
 		StringBuilder sb = new StringBuilder();
 
 		if (errors == null || errors.isEmpty()) {
 			return sb.toString();
 		}
 
-		for (XDSErrorType xdsError : errors) {
+		for (ErrorInfo xdsError : errors) {
 			if (xdsError.getCodeContext() != null && xdsError.getCodeContext().contains("EmedReturn")) {
 				List<XMLEvent> xmlEvents = XmlUtil.parse(xdsError.getCodeContext());
 				for (int index = 0; index < xmlEvents.size(); index++) {
@@ -474,20 +469,20 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 * @param errors the errors
 	 * @return the error message
 	 */
-	public String getErrorMessage(List<XDSErrorType> errors) {
+	public String getErrorMessage(List<ErrorInfo> errors) {
 		StringBuilder sb = new StringBuilder();
 
 		if (errors == null || errors.isEmpty()) {
 			return sb.toString();
 		}
 
-		for (XDSErrorType xdsError : errors) {
+		for (ErrorInfo xdsError : errors) {
 			if (xdsError != null) {
 				sb.append(" ");
 				sb.append(" Status: ");
-				sb.append(xdsError.getErrorCode().getLiteral());
+				sb.append(xdsError.getErrorCode().getOpcode());
 				sb.append(" ");
-				sb.append(xdsError.getValue());
+				sb.append(xdsError.getCustomErrorCode());
 				sb.append(" ");
 				sb.append(xdsError.getCodeContext());
 			}
@@ -522,8 +517,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			if (response instanceof Boolean) {
 				return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_ACCEPTED,
 						IssueSeverity.INFORMATION, null, null, null);
-			} else if (response instanceof Message) {
-				Message message = (Message) response;
+			} else if (response instanceof Message message) {
 				return new FhirBundle(BundleType.TRANSACTIONRESPONSE, message.getRequestStatus(), IssueSeverity.ERROR,
 						null, null, message.getText());
 			}
@@ -843,10 +837,10 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 			}
 
 			String typeCode = documentReference.getType().getCoding().get(0).getCode();
-			AvailabilityStatusType status = null;
-			CodedMetadataType facilityTypeCode = null;
-			CodedMetadataType practiceSettingCode = null;
-			CodedMetadataType formatCode = null;
+			AvailabilityStatus status = null;
+			Code facilityTypeCode = null;
+			Code practiceSettingCode = null;
+			Code formatCode = null;
 			String parentDoc = null;
 			Identificator patientId = null;
 			byte[] doc = null;
@@ -870,18 +864,6 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 				formatCode = FhirDocumentReference.getFormatCode(documentReference);
 			}
 
-			if (documentReference.hasRelatesTo()) {
-				for (DocumentReferenceRelatesToComponent docRefRelatesToComp : documentReference.getRelatesTo()) {
-					if (docRefRelatesToComp != null
-							&& DocumentRelationshipType.REPLACES.equals(docRefRelatesToComp.getCode())
-							&& docRefRelatesToComp.getTarget() != null
-							&& docRefRelatesToComp.getTarget().getIdentifier() != null) {
-						parentDoc = docRefRelatesToComp.getTarget().getIdentifier().getValue();
-					}
-
-				}
-			}
-
 			if (documentReference.hasSubject() && documentReference.getSubject().hasIdentifier()) {
 				patientId = new Identificator(documentReference.getSubject().getIdentifier().getSystem(),
 						documentReference.getSubject().getIdentifier().getValue());
@@ -889,8 +871,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 
 			if (documentReference.hasStatus()) {
 				status = DocumentReferenceStatus.SUPERSEDED.equals(documentReference.getStatus())
-						? AvailabilityStatusType.DEPRECATED_LITERAL
-						: AvailabilityStatusType.APPROVED_LITERAL;
+						? AvailabilityStatus.DEPRECATED
+						: AvailabilityStatus.APPROVED;
 			}
 
 			POCDMT000040ClinicalDocument cda = null;
@@ -913,8 +895,8 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			String message = "";
-			if (e.getCause() instanceof AxisFault) {
-				message = ((AxisFault) e.getCause()).getMessage();
+			if (e.getCause() instanceof AxisFault axisFault) {
+				message = axisFault.getMessage();
 			} else {
 				message = e.getMessage();
 			}
@@ -933,17 +915,17 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 *
 	 * @return created {@link FhirBundle}
 	 */
-	private FhirBundle extractFhirBundleFromResponse(XDSResponseType response) {
-		if (response != null && response.getErrorList() != null && response.getErrorList().getError() != null
-				&& !response.getErrorList().getError().isEmpty()) {
-			String error = getError(response.getErrorList().getError());
+	private FhirBundle extractFhirBundleFromResponse(Response response) {
+		if (response != null && response.getErrors() != null 
+				&& !response.getErrors().isEmpty()) {
+			String error = getError(response.getErrors());
 			LOGGER.error(error);
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					IssueSeverity.ERROR, IssueType.EXCEPTION, OperationOutcome.NULL, error);
 		} else if (response != null && response.getStatus() != null) {
 
 			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("Document is successfully registered: {}", response.getStatus().getLiteral());
+				LOGGER.info("Document is successfully registered: {}", response.getStatus().getOpcode21());
 			}
 
 			return new FhirBundle(BundleType.TRANSACTIONRESPONSE, HttpServletResponse.SC_CREATED);
@@ -986,7 +968,7 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	protected POCDMT000040ClinicalDocument generateCdaDocument(DocumentReference documentReference, String formatCode,
 			String userToken) {
 		if (FormatCode.ELGA_IMMUNIZATION_RECORD_2019.getCodeValue().equalsIgnoreCase(formatCode)) {
-			EimpfDocumentUpdateImmunisierungsstatus cda = (EimpfDocumentUpdateImmunisierungsstatus) generateCda(
+			EimpfDocumentUpdateImmunisierungsstatus cda = generateCda(
 					new String(documentReference.getContentFirstRep().getAttachment().getData(),
 							StandardCharsets.UTF_8),
 					userToken);
@@ -1112,13 +1094,14 @@ public class FhirElgaConnectionCaller extends ElgaConnectionCaller {
 	 *         {@link EimpfDocumentUpdateImmunisierungsstatus} is returned,
 	 *         otherwise an error message {@link Message} is returned.
 	 */
-	public Object generateCda(String json, String authorization) {
+	public EimpfDocumentUpdateImmunisierungsstatus generateCda(String json, String authorization) {
 		Bundle bundle = FhirUtil.getFhirContext().newJsonParser().parseResource(Bundle.class, json);
-		
+
 		if(!bundle.hasIdentifier() && authorization != null) {
 			Identifier identifier = new Identifier();
-			identifier.setValue(UUID.generate() + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
-			identifier.setSystem(getOrganizationIdByUserToken(authorization, false));			
+			identifier.setValue(UUID.randomUUID().toString() + "_"
+					+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
+			identifier.setSystem(getOrganizationIdByUserToken(authorization, false));
 			bundle.setIdentifier(identifier);
 		}
 

@@ -8,16 +8,16 @@ package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
-import org.ehealth_connector.common.hl7cdar2.EntityClassDevice;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedAuthor;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AuthoringDevice;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.Device;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Reference;
+import org.husky.common.hl7cdar2.EntityClassDevice;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.POCDMT000040AssignedAuthor;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040AuthoringDevice;
+import org.husky.common.hl7cdar2.POCDMT000040Organization;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
@@ -71,11 +71,9 @@ public class FhirDevice extends Device {
 
 		setId(id);
 
-		if (hl7CdaR2Value.getAssignedAuthor().getId() != null) {
-			this.identifier = new ArrayList<>();
-			for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
-				this.identifier.add(new FhirIdentifier(identifier));
-			}
+		this.identifier = new ArrayList<>();
+		for (II identifier : hl7CdaR2Value.getAssignedAuthor().getId()) {
+			this.identifier.add(new FhirIdentifier(identifier));
 		}
 
 		if (hl7CdaR2Value.getAssignedAuthor().getRepresentedOrganization() != null) {
@@ -86,11 +84,12 @@ public class FhirDevice extends Device {
 		if (hl7CdaR2Value.getAssignedAuthor().getAssignedAuthoringDevice() != null) {
 			DeviceDeviceNameComponent deviceName = new DeviceDeviceNameComponent();
 			deviceName.setName(
-					hl7CdaR2Value.getAssignedAuthor().getAssignedAuthoringDevice().getSoftwareName().xmlContent);
+					hl7CdaR2Value.getAssignedAuthor().getAssignedAuthoringDevice().getSoftwareName()
+							.getMergedXmlMixed());
 			deviceName.setType(DeviceNameType.MANUFACTURERNAME);
 			addDeviceName(deviceName);
 			setModelNumber(hl7CdaR2Value.getAssignedAuthor().getAssignedAuthoringDevice()
-					.getManufacturerModelName().xmlContent);
+					.getManufacturerModelName().getMergedXmlMixed());
 		}
 	}
 

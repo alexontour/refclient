@@ -12,11 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.CD;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.CS;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.CD;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.CS;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +62,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 		assertEquals(testCode.getCodingFirstRep().getCode(), cd.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), cd.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), cd.getDisplayName());
-		assertEquals(ORIGINAL_TEXT, cd.getOriginalText().xmlContent);
+		assertEquals(ORIGINAL_TEXT, cd.getOriginalText().getMergedXmlMixed());
 
 		assertNotNull(cd.getTranslation());
 		assertEquals(1, cd.getTranslation().size());
@@ -97,7 +97,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 		assertEquals(testCode.getCodingFirstRep().getCode(), cs.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), cs.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), cs.getDisplayName());
-		assertEquals(ORIGINAL_TEXT, cs.getOriginalText().xmlContent);
+		assertEquals(ORIGINAL_TEXT, cs.getOriginalText().getMergedXmlMixed());
 
 		assertNotNull(cs.getTranslation());
 		assertEquals(1, cs.getTranslation().size());
@@ -132,7 +132,7 @@ public class FhirCodeableConceptTest extends TestUtils {
 		assertEquals(testCode.getCodingFirstRep().getCode(), ce.getCode());
 		assertEquals(testCode.getCodingFirstRep().getSystem(), ce.getCodeSystem());
 		assertEquals(testCode.getCodingFirstRep().getDisplay(), ce.getDisplayName());
-		assertEquals(ORIGINAL_TEXT, ce.getOriginalText().xmlContent);
+		assertEquals(ORIGINAL_TEXT, ce.getOriginalText().getMergedXmlMixed());
 
 		assertTrue(ce.getTranslation().isEmpty());
 	}

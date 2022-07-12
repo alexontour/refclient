@@ -6,19 +6,17 @@
  */
 package arztis.econnector.rest.model.fhir;
 
-import org.ehealth_connector.common.hl7cdar2.AD;
-import org.ehealth_connector.common.hl7cdar2.II;
-import org.ehealth_connector.common.hl7cdar2.ON;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040AssignedCustodian;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Custodian;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040CustodianOrganization;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization;
-import org.ehealth_connector.common.hl7cdar2.TEL;
 import org.hl7.fhir.r4.model.ContactPoint;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Organization;
-import org.openhealthtools.ihe.common.hl7v2.XON;
-import org.openhealthtools.ihe.xds.metadata.impl.AuthorTypeImpl;
+import org.husky.common.hl7cdar2.AD;
+import org.husky.common.hl7cdar2.II;
+import org.husky.common.hl7cdar2.ON;
+import org.husky.common.hl7cdar2.POCDMT000040AssignedCustodian;
+import org.husky.common.hl7cdar2.POCDMT000040Custodian;
+import org.husky.common.hl7cdar2.POCDMT000040CustodianOrganization;
+import org.husky.common.hl7cdar2.POCDMT000040Organization;
+import org.husky.common.hl7cdar2.TEL;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import arztis.econnector.rest.utilities.FhirUtil;
@@ -56,7 +54,7 @@ public class FhirOrganization extends Organization {
 	 * @param index  index of author to create. It must be build of {document
 	 *               response index} - {author index}
 	 */
-	public FhirOrganization(AuthorTypeImpl author, String index) {
+	public FhirOrganization(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author author, String index) {
 		fromDocumentEntryResponse(author, index);
 	}
 
@@ -68,7 +66,7 @@ public class FhirOrganization extends Organization {
 	 * @param index index of author to create. It must be build of {document
 	 *              response index} - {author index}
 	 */
-	public FhirOrganization(XON xon, String index) {
+	public FhirOrganization(org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization xon, String index) {
 		fromXon(xon, index);
 	}
 
@@ -114,40 +112,42 @@ public class FhirOrganization extends Organization {
 
 	/**
 	 * Creates HL7 FHIR {@link Organization} instance from passed
-	 * {@link AuthorTypeImpl}. Passed <code>index</code> is used as resource ID.
-	 * Name and identifier are added to organization.
+	 * {@link org.openehealth.ipf.commons.ihe.xds.core.metadata.Author}. Passed
+	 * <code>index</code> is used as resource ID. Name and identifier are added to
+	 * organization.
 	 *
 	 * @param authorTypeImpl organization details
 	 * @param index          index of organization. It must be build of {document
 	 *                       response index} - {organization index}
 	 */
-	private void fromDocumentEntryResponse(AuthorTypeImpl authorTypeImpl, String index) {
+	private void fromDocumentEntryResponse(org.openehealth.ipf.commons.ihe.xds.core.metadata.Author authorTypeImpl,
+			String index) {
 		if (authorTypeImpl == null) {
 			return;
 		}
 
 		setId(index);
 
-		if (authorTypeImpl.getAuthorInstitution() != null && !authorTypeImpl.getAuthorInstitution().isEmpty()
-				&& (authorTypeImpl.getAuthorInstitution().get(0) instanceof XON)) {
-			XON xon = ((XON) authorTypeImpl.getAuthorInstitution().get(0));
-
+		if (authorTypeImpl.getAuthorInstitution() != null && !authorTypeImpl.getAuthorInstitution().isEmpty()) {
+			org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization xon = authorTypeImpl.getAuthorInstitution()
+					.get(0);
 			if (xon != null) {
-				fromXon(xon, index);
+				fromXon(authorTypeImpl.getAuthorInstitution().get(0), index);
 			}
 		}
 	}
 
 	/**
-	 * Creates HL7 FHIR {@link Organization} instance from passed {@link XON}.
+	 * Creates HL7 FHIR {@link Organization} instance from passed
+	 * {@link org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization}.
 	 * Passed <code>index</code> is used as resource ID. Name and identifier are
 	 * added to organization.
 	 *
 	 * @param institution the institution
-	 * @param index          index of organization. It must be build of {document
-	 *                       response index} - {organization index}
+	 * @param index       index of organization. It must be build of {document
+	 *                    response index} - {organization index}
 	 */
-	private void fromXon(XON institution, String index) {
+	private void fromXon(org.openehealth.ipf.commons.ihe.xds.core.metadata.Organization institution, String index) {
 		if (institution == null) {
 			return;
 		}
@@ -156,7 +156,11 @@ public class FhirOrganization extends Organization {
 		setName(institution.getOrganizationName());
 
 		Identifier identifier = new Identifier();
-		identifier.setSystem(institution.getAssigningAuthorityUniversalId());
+
+		if (institution.getAssigningAuthority() != null) {
+			identifier.setSystem(institution.getAssigningAuthority().getUniversalId());
+		}
+
 		identifier.setValue(institution.getIdNumber());
 		addIdentifier(identifier);
 	}
@@ -187,7 +191,7 @@ public class FhirOrganization extends Organization {
 		}
 
 		for (ON item : hl7CdaR2Value.getName()) {
-			setName(item.xmlContent);
+			setName(item.getMergedXmlMixed());
 		}
 
 		for (TEL item : hl7CdaR2Value.getTelecom()) {
@@ -217,7 +221,7 @@ public class FhirOrganization extends Organization {
 			addIdentifier(new FhirIdentifier(item));
 		}
 
-		setName(hl7CdaR2Value.getName().xmlContent);
+		setName(hl7CdaR2Value.getName().getMergedXmlMixed());
 		addTelecom(new FhirContactPoint(hl7CdaR2Value.getTelecom()));
 	}
 
@@ -232,10 +236,10 @@ public class FhirOrganization extends Organization {
 	 * @return created {@link POCDMT000040Organization}
 	 *
 	 */
-	public static org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization createHl7CdaR2Pocdmt000040Organization(
+	public static org.husky.common.hl7cdar2.POCDMT000040Organization createHl7CdaR2Pocdmt000040Organization(
 			Organization org) {
 
-		org.ehealth_connector.common.hl7cdar2.POCDMT000040Organization retVal = new POCDMT000040Organization();
+		org.husky.common.hl7cdar2.POCDMT000040Organization retVal = new POCDMT000040Organization();
 
 		if (org != null) {
 			for (org.hl7.fhir.r4.model.Address item : org.getAddress()) {

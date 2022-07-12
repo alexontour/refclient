@@ -15,8 +15,16 @@ gestellt werden. Bei der Veröffentlichung von bearbeiteten Fassungen ist darauf
 Die Anwendung sowie die allfällige Bearbeitung des "ELGA e-Medikations-Stylesheet" erfolgt in ausschließlicher Verantwortung der AnwenderInnen.
 Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rechtsansprüche gegen die ELGA GmbH erhoben oder abgeleitet werden.
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:n1="urn:hl7-org:v3" xmlns:n2="urn:hl7-org:v3/meta/voc" xmlns:voc="urn:hl7-org:v3/voc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="urn:ihe:pharm:medication"
-                exclude-result-prefixes="n1 n2 voc xsi ns2" id="ELGA-emed_Stylesheet_1.03.002.4">
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:n1="urn:hl7-org:v3"
+                xmlns:n2="urn:hl7-org:v3/meta/voc"
+                xmlns:voc="urn:hl7-org:v3/voc"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:ns2="urn:ihe:pharm:medication"
+                xmlns:sdtc="urn:hl7-org:sdtc"
+                exclude-result-prefixes="n1 n2 voc xsi ns2 sdtc"
+                id="ELGA-emed_Stylesheet_1.4.1+20220602">
   <xsl:output method="html" omit-xml-declaration="yes" indent="yes" encoding="utf-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" doctype-system="http://www.w3.org/TR/html4/loose.dtd" />
 
   <!--    
@@ -93,6 +101,9 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
   
   <xsl:variable name="isdeprecated">
     <xsl:choose>
+      <xsl:when test="//n1:ClinicalDocument/*[local-name()='statusCode']/@code='nullified'">
+        <xsl:value-of select="1" />
+      </xsl:when>
       <xsl:when test="not($param_isdeprecated)">
         <xsl:value-of select="0" />
       </xsl:when>
@@ -129,14 +140,14 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
 <xsl:param name="param_showEMedicationWarnContainer" />
 
 <xsl:variable name="isShowEMedicationWarnContainer">
-<xsl:choose>
-    <xsl:when test="not($param_showEMedicationWarnContainer)">
-        <xsl:value-of select="0" />
-    </xsl:when>
-    <xsl:otherwise>
-        <xsl:value-of select="$param_showEMedicationWarnContainer" />
-    </xsl:otherwise>
-</xsl:choose>
+    <xsl:choose>
+        <xsl:when test="not($param_showEMedicationWarnContainer)">
+            <xsl:value-of select="0" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$param_showEMedicationWarnContainer" />
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:variable>
 
 <!--
@@ -147,10 +158,16 @@ Aus der Veröffentlichung, Verwendung und/oder Bearbeitung können keinerlei Rec
 <xsl:param name="param_eMedicationWarnContainerText" />
 
 <xsl:variable name="eMedicationWarnContainerText">
-<xsl:if test="$param_eMedicationWarnContainerText">
-    <xsl:value-of select="$param_eMedicationWarnContainerText" />
-</xsl:if>
+    <xsl:if test="$param_eMedicationWarnContainerText">
+        <xsl:value-of select="$param_eMedicationWarnContainerText" />
+    </xsl:if>
 </xsl:variable>
+
+<!--
+  mock parameter and variable "param_hideAllergyAndRiskSummary" from default stylesheet,
+  cause we share the same codebase
+-->
+<xsl:variable name="hideAllergyAndRiskSummary" select="0" />
 
   <!-- helper vars, transform to lower / uppercase -->
   <xsl:variable name="lc" select="'abcdefghijklmnopqrstuvwxyz'" />
@@ -272,17 +289,6 @@ hr {
   font-size: 1.015em;
 }
 
-.sectionTitle {
-  background-color: #c9c9c9;
-  padding-left: 12px;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-  margin-top: 1.3em;
-  font-weight: bold;
-  font-size: 1.204em;
-}
-
 .sectionSubTitle {
   font-weight: bold;
 }
@@ -355,10 +361,11 @@ p {
 .header h1 {
   margin: 0;
   font-size: 1.652em;
+  line-height: 1.1;
 }
 
 .header p {
-  padding-top: 0.7em;
+  padding-top: 0.3em;
 }
 
 .header .logo {
@@ -416,15 +423,20 @@ h2 {
 h3 {
   font-size: 1em;
   font-weight: normal;
-}
-
-.section_indent h2, h3 {
+  padding: 0.4em 0.4em 0.4em 0;
   margin-bottom: 0.2em;
   margin-top: 0.75em;
 }
 
-.risk h2, h3 {
-  padding: 0.4em 0.4em 0.4em 0em;
+.section_indent h2, .section_indent h3 {
+  margin-bottom: 0.5em;
+  margin-top: 1.1em;
+  padding: 0 0 0 0px;
+}
+
+.risk h2, .risk h3 {
+  padding: 0 0 5px 0;
+  margin: 0 0 0 0px;
 }
 
 .risk h2 {
@@ -455,6 +467,7 @@ h4 .backlink {
   text-decoration: none;
   background: no-repeat left center url(<xsl:value-of select="translate(normalize-space($toTopIcon),'&#32;','')" />);
 }
+
 .backlink:hover {
   background: no-repeat left center url(<xsl:value-of select="translate(normalize-space($toTopIconHover),'&#32;','')" />);
 }
@@ -462,8 +475,16 @@ h4 .backlink {
 .caption {
   font-size: 120%;
   padding: 0.5em 0 0.5em 0;
+}
+
+.elementCaption {
+  font-size: 12px;
+  font-style: italic;
+  padding-top: 0.3em;
+  padding-bottom: 0.5em;
   display: block;
 }
+
 .paragraph {
   padding: 0.5em 0 0.5em 0;
 }
@@ -478,6 +499,10 @@ h4 {
 
 .risk {
   padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+  margin-top: 12px;
   background-color: #FFE17F;
 }
 
@@ -499,7 +524,9 @@ h4 {
 }
 
 .xMonoSpaced {
+  font-size: 0.9em;
   font-family: monospace;
+  white-space: pre-wrap;
 }
 
 .lighter {
@@ -636,6 +663,10 @@ h1.body_section_header {
 /* Addresses */
 .address {
   margin-bottom: 1em;
+}
+
+.addressClean .address {
+  margin-bottom: 0em;
 }
 
 .recipient {
@@ -945,7 +976,7 @@ h2 .collapseLinks, h3 .collapseLinks {
   font-weight: bold;
 }
 
-.tooltipTrigger:hover .tooltip,.showTooltip .tooltip {
+.tooltipTrigger:hover .tooltip, .showTooltip .tooltip {
   display: block;
   position: absolute;
   top: 2em;
@@ -958,17 +989,63 @@ h2 .collapseLinks, h3 .collapseLinks {
   color: black;
 }
 
+@media only screen and (max-width: 1110px) {
+  .backlinktooltipTrigger:hover .backlinktooltip {
+    position: absolute;
+    top: 7px;
+    left: -79px;
+  }
+}
+
+.backlinktooltipTrigger {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 1005px) {
+  .backlinktooltipTrigger {
+    margin-right: 60px;
+  }
+}
+
 .tooltipentry {
   display: block;
 }
 
 .backlinktooltip {
-  width: 80px;
+  width: 60px;
 }
 
-.warning_icon .collapseLinks, .law_icon .collapseLinks {
+.warning .collapseLinks {
   font-weight: normal;
   float: none;
+}
+
+.warningBody .section_text {
+  padding: 0 0 0 20px;
+}
+
+.warningBody .section_table {
+  margin-left: 0px;
+  width: 856px;
+}
+
+.warningBody .section_table th {
+  background-color: transparent;
+  border-left: none;
+}
+
+.warningBody .section_table tr.even {
+  background-color: transparent;
+}
+
+.warningBody .section_table {
+  margin-left: 0px;
+  width: 856px;
+}
+
+.warningBody ul {
+  padding-left: 25px;
+  margin: 3px 0px 3px 0px;
 }
 
 .infotooltip {
@@ -1049,7 +1126,7 @@ html .hideCreatedByTo .leftwide p.organisationName {
 .warncontainer {
   background-color: #FFE17F;
   margin-bottom: 1em;
-  padding: 0.7em 0.7em 0.2em 12px;
+  padding: 0.7em 12px 0.2em 12px;
   font-size: 1.015em;
 }
 
@@ -1097,11 +1174,11 @@ html .hideCreatedByTo .leftwide p.organisationName {
   white-space: nowrap;
 }
 
-#IDPatientContainer {
+#patientContainer {
   background-color: #BFD5EE;
 }
 
-#IDEncounterContainer {
+#encounterContainer {
   background-color: #E4ECF7;
 }
 
@@ -1138,19 +1215,19 @@ html .hideCreatedByTo .leftwide p.organisationName {
   line-height: 100%;
 }
 
-.warning_icon, .law_icon {
+.warning {
   float: left;
   width: 100%;
   margin-bottom: 0.5em;
 }
 
-p.warning_icon img, p.law_icon img {
+p.warning img {
   float: left;
 }
 
 .tableofcontentsMinimize {
-  float: left; 
-  padding: 0 0.5em; 
+  float: left;
+  padding: 0 0.5em;
   width: 20px;
 }
 
@@ -1204,10 +1281,16 @@ p.warning_icon img, p.law_icon img {
 }
 
 #backToTopContainer {
-    width: 953px;
-    position: fixed;
-    bottom: 0%;
-    margin-bottom: 30px;
+  width: 963px;
+  position: fixed;
+  bottom: 0%;
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 1005px) {
+  #backToTopContainer {
+    width: 100%;
+  }
 }
 
 .modal {
@@ -1280,6 +1363,11 @@ p.warning_icon img, p.law_icon img {
   height: 13px;
   width: 13px;
   vertical-align: middle;
+}
+
+.deceasedIcon {
+  height: 20px;
+  vertical-align: text-bottom;
 }
         </style>
         <style type="text/css" media="print">
@@ -1598,6 +1686,10 @@ a {
     padding: 0;
   }
 
+  .boxLeft tr.spacer td {
+    padding-bottom: 1em;
+  }
+
   .tableToolTip {
     padding-left: 3px;
     display: block;
@@ -1885,6 +1977,11 @@ function start() {
  **** SORT FUNCTIONS ****
  ***********************/
 function sortTable(tableId, sortby, direction) {
+
+  if(document.getElementById(tableId) == null) {
+    return
+  }
+
   var dataMap = [];
   var rows = document.getElementById(tableId).getElementsByTagName("tr");
   for(var i=0; i<rows.length; i++) {
@@ -2363,9 +2460,26 @@ window.onload = function () {
                 </span>
               </b>
               <span class="tooltip">
-                <xsl:call-template name="getHL7ATXDSDokumentenklassen">
-                  <xsl:with-param name="code" select="/n1:ClinicalDocument/n1:code/@code" />
-                </xsl:call-template>
+                <xsl:variable name="documentType">
+                  <xsl:call-template name="getDocumentClassesSecondary">
+                    <xsl:with-param name="code" select="//n1:ClinicalDocument/n1:code/@code" />
+                  </xsl:call-template>
+                </xsl:variable>
+
+                <xsl:choose>
+                  <xsl:when test="$documentType != ''">
+                    <xsl:value-of select="$documentType" />
+                  </xsl:when>
+                  <xsl:when test="//n1:ClinicalDocument/n1:code/@code != '' and //n1:ClinicalDocument/n1:code/@displayName != ''">
+                    <xsl:value-of select="//n1:ClinicalDocument/n1:code/@displayName" />
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="//n1:ClinicalDocument/n1:code/@code" />
+                    <xsl:text>)</xsl:text>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:text>unbekannt</xsl:text>
+                  </xsl:otherwise>
+                </xsl:choose>
               </span>
             </h1>
             <p class="subtitle_create">
@@ -2375,6 +2489,13 @@ window.onload = function () {
                 <xsl:with-param name="date_shortmode">false</xsl:with-param>
               </xsl:call-template>
               <xsl:text> | Version: </xsl:text><xsl:value-of select="/n1:ClinicalDocument/n1:versionNumber/@value" />
+              <xsl:variable name="hasStatusCode">
+                <xsl:call-template name="hasStatusCode" />
+              </xsl:variable>
+              <xsl:if test="$hasStatusCode='true'">
+                <xsl:text> | Dokumentenstatus: </xsl:text>
+                <xsl:call-template name="getStatusCode" />
+              </xsl:if>
             </p>
           </div>
           <div class="clearer" />
@@ -2434,12 +2555,19 @@ window.onload = function () {
           <div class="left">
             <div class="container">
               <p>
-                <a href="#IDPatientContainer" onclick="jump('IDPatientContainer');"><xsl:value-of select="$genderedpatient" /></a>
+                <a href="#patientContainer" onclick="jump('patientContainer');"><xsl:value-of select="$genderedpatient" /></a>
               </p>
               <xsl:if test="//n1:ClinicalDocument/n1:componentOf">
                 <p>
-                  <a href="#IDEncounterContainer" onclick="jump('IDEncounterContainer');">
+                  <a href="#encounterContainer" onclick="jump('encounterContainer');">
                     <xsl:call-template name="getEncounter" />
+                  </a>
+                </p>
+              </xsl:if>
+              <xsl:if test="//n1:ClinicalDocument/n1:inFulfillmentOf">
+                <p>
+                  <a href="#orderingProviderContainer" onclick="jump('orderingProviderContainer');">
+                    <xsl:text>Auftraggeber(in)</xsl:text>
                   </a>
                 </p>
               </xsl:if>
@@ -2466,10 +2594,16 @@ window.onload = function () {
 
         <xsl:variable name="sexName">
           <xsl:choose>
-            <xsl:when test="$sex='M'">M&#xE4;nnlich</xsl:when>
+            <xsl:when test="$sex='M'">Männlich</xsl:when>
             <xsl:when test="$sex='F'">Weiblich</xsl:when>
-            <xsl:when test="$sex='UN'">Nicht zugewiesen</xsl:when>
-            <xsl:otherwise>Unbekannt</xsl:otherwise>
+            <xsl:when test="$sex='UN'">Divers</xsl:when>
+            <xsl:when test="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:administrativeGenderCode/@nullFlavor='NA'">
+              offen
+            </xsl:when>
+            <xsl:when test="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:administrativeGenderCode/@nullFlavor='UNK'">
+              unbekannt
+            </xsl:when>
+            <xsl:otherwise>unbekannt</xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
 
@@ -2477,7 +2611,12 @@ window.onload = function () {
           <xsl:choose>
             <xsl:when test="$sex='M'">M</xsl:when>
             <xsl:when test="$sex='F'">W</xsl:when>
-            <xsl:otherwise>unbekannt</xsl:otherwise>
+            <xsl:when test="$sex='UN'">D</xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unbekannt (</xsl:text>
+              <xsl:value-of select="$sex" />
+              <xsl:text>)</xsl:text>
+            </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
 
@@ -2505,7 +2644,7 @@ window.onload = function () {
         </xsl:variable>
 
         <div class="patientContainer">
-          <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="IDPatientContainer">
+          <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="patientContainer">
             <div class="patientTitle">
               <h1>
                 <b>
@@ -2520,11 +2659,31 @@ window.onload = function () {
                   <xsl:with-param name="name" select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:name"/>
                   <xsl:with-param name="printNameBold" select="string(true())" />
                 </xsl:call-template>
-                <xsl:text> (</xsl:text>
-                <span>
-                  <xsl:value-of select="$localizedSex" />
-                </span>
-                <xsl:text>) SVN: </xsl:text>
+
+                <xsl:if test="$sex != ''">
+                  <xsl:text> (</xsl:text>
+                  <span>
+                    <xsl:value-of select="$localizedSex" />
+                  </span>
+                  <xsl:text>)</xsl:text>
+                </xsl:if>
+
+                <xsl:if test="//n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/*[local-name()='deceasedTime'] or
+                        //n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/*[local-name()='deceasedInd']/@value='true'">
+                  <xsl:text> </xsl:text>
+                  <span class="tooltipTrigger">
+                    <img alt="" class="deceasedIcon" src="data:image/png;base64,{$patientDeceasedIndicator}" />
+                    <span class="tooltip" style="width: 120px;">
+                      <span>
+                        <xsl:value-of select="$genderedpatient" />
+                        <xsl:text> verstorben</xsl:text>
+                      </span>
+                    </span>
+                  </span>
+
+                </xsl:if>
+
+                <xsl:text> SVN: </xsl:text>
                 <xsl:value-of select="$svnnumber"/>
                 
                 <xsl:if test="//n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:guardian">
@@ -2569,7 +2728,7 @@ window.onload = function () {
         <!-- Encounter / Aufenthalt -->
         <xsl:if test="//n1:ClinicalDocument/n1:componentOf">
           <div class="patientContainer">
-            <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="IDEncounterContainer">
+            <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="encounterContainer">
               <div class="patientTitle">
                 <h1>
                   <b>
@@ -2587,11 +2746,7 @@ window.onload = function () {
                   </p>
                   <p class="name">
                     <b>
-                      <xsl:call-template name="getAmbulatory">
-                        <xsl:with-param name="code" select="/n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:code"/>
-                        <xsl:with-param name="effectiveTime" select="/n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime"/>
-                        <xsl:with-param name="date_shortmode">true</xsl:with-param>
-                      </xsl:call-template>
+                      <xsl:call-template name="getEncounterText" />
                     </b>
                   </p>
                 </h1>
@@ -2609,7 +2764,7 @@ window.onload = function () {
         <!-- START fullfillment element -->
         <xsl:if test="//n1:ClinicalDocument/n1:inFulfillmentOf">
           <div class="patientContainer">
-            <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="IDEncounterContainer">
+            <div class="collapseTrigger" onclick="toggleCollapseable(this);" id="orderingProviderContainer">
               <div class="patientTitle">
                 <h1>
                   <b>
@@ -2639,7 +2794,7 @@ window.onload = function () {
               <div class="clearer"/>
             </div>
             <div class="collapsable">
-              <xsl:call-template name="getReferrer"/>
+              <xsl:call-template name="getOrderingProvider"/>
             </div>
           </div>
         </xsl:if>
@@ -2687,25 +2842,21 @@ window.onload = function () {
 	</xsl:variable>
 
     <xsl:choose>
-      <xsl:when test="$hasWarnings='true'">
+      <xsl:when test="$hideAllergyAndRiskSummary='0' and $hasWarnings='true'">
         <div class="warncontainer" id="IDWarnContainer">
           <div class="warncontainer_content">
-            <xsl:for-each select="//*/n1:code[(@code='51898-5' or @code='48765-2') and @codeSystem ='2.16.840.1.113883.6.1']">
+            <xsl:for-each select="//*/n1:component/n1:section/n1:code[(@code='51898-5' or @code='48765-2') and @codeSystem ='2.16.840.1.113883.6.1']">
               <xsl:variable name="riskId">
                 <xsl:value-of select="concat('#', @code, '-', ../../../n1:code/@code)"/>
               </xsl:variable>
-              <p class="warning_icon">
+              <p class="warning">
                 <span class="collapseLinks tooltipTrigger">
-
                   <a href="{$riskId}" class="warningIcon" style="padding-left: 20px">
-
                     <b>
                       <xsl:call-template name="getRiskTitle">
                         <xsl:with-param name="code" select="@code"/>
                       </xsl:call-template>
                     </b>
-                    <xsl:text>: </xsl:text>
-                    <xsl:value-of select="./../n1:text"/>
                     <span class="tooltip risktooltip">
                       <xsl:text>Gehe zum: Risiko</xsl:text>
                     </span>
@@ -2720,7 +2871,7 @@ window.onload = function () {
       <xsl:when test="$hasWarnings='false' and $isStructuredDoc='false' and $isDischarge='true'">
         <div class="warncontainer" id="IDWarnContainer">
           <div class="warncontainer_content">
-            <p class="warning_icon">
+            <p class="warning">
               <span class="warningIcon" style="padding-left: 20px;">
                 <xsl:text>Für dieses Dokument wurden keine automatischen Hinweistexte erzeugt. Wichtige Informationen über Allergien, Risiken, Patientenverfügungen etc. sind möglicherweise im Befundtext enthalten.</xsl:text>
               </span>
@@ -2763,9 +2914,8 @@ window.onload = function () {
           <xsl:call-template name="documentstate" />
         </div>
         <div id="backToTopContainer">
-          <span class="collapseLinks tooltipTrigger" style="display: block; float: right;">
+          <span class="collapseLinks tooltipTrigger backlinktooltipTrigger" style="display: block; float: right;">
             <a class="backlink" href="#elgadocument">
-
               <span class="tooltip backlinktooltip">
                 <span>nach oben</span>
               </span>
@@ -2773,7 +2923,6 @@ window.onload = function () {
           </span>
         </div>
         <div style="clear: both;"></div>
-
 
         <div id="infoButtonPopUp" class="modal">
           <div class="modal-content">
@@ -2785,52 +2934,14 @@ window.onload = function () {
               <p>Sie werden nun zu einer Informationsseite am öffentlichen Gesundheitsportal Österreichs weitergeleitet. Dieser Link ist nicht Teil des unterzeichneten Befundes. Er wurde nachträglich automatisch zur Anzeige hinzugefügt.</p>
             </div>
             <div class="modal-footer">
-              <a id="eHealthPortalLink" target="_blank" style="text-decoration: none;"><span class="modal-ok">OK</span></a>
+              <a id="eHealthPortalLinkAllowAlways" target="_blank" style="text-decoration: none; margin-right: 14px;"><span class="modal-ok">Immer erlauben</span></a>
+              <a id="eHealthPortalLink" target="_blank" style="text-decoration: none;"><span class="modal-ok">Erlauben</span></a>
             </div>
           </div>
         </div>
 
         </div>
       </div>
-        <script type="text/javascript">
-          <xsl:variable name="javascriptpopup">
-            <![CDATA[
-
-              var modal = document.getElementById("infoButtonPopUp");
-              var link = document.getElementById("eHealthPortalLink");
-
-              var infoButtons = getElementsByClass("infoButton");
-              for(var i=0; i<infoButtons.length; i++) {
-                infoButtons[i].onclick = function() {
-                  modal.style.display = "block";
-                  link.href = "https://www.gesundheit.gv.at/linkaufloesung/applikation-flow?quelle=GHP&flow=LO&leistung=LA-GP-LO-" + this.getAttribute("data-observationCode")
-                }
-              }
-              var span = document.getElementById("modalClose");
-              span.onclick = function() {
-                  modal.style.display = "none";
-              }
-
-              window.onclick = function(event) {
-                  if (event.target == modal) {
-                      modal.style.display = "none";
-                  }
-              }
-
-            ]]>
-          </xsl:variable>
-
-          <!-- Beginning of CDATA section -->
-          <xsl:text disable-output-escaping="yes"><![CDATA[//<]]></xsl:text><xsl:text disable-output-escaping="yes">![CDATA[</xsl:text>
-
-          <!-- original javascript -->
-          <xsl:value-of select="$javascriptpopup" disable-output-escaping="yes" />
-
-          <!-- End of CDATA section -->
-          <xsl:text>//]]</xsl:text><xsl:text disable-output-escaping="yes"><![CDATA[>]]></xsl:text>
-
-
-        </script>
       </body>
 
     </html>
@@ -3226,34 +3337,49 @@ window.onload = function () {
 
 <xsl:template name="getPackageInfo">
 <xsl:param name="node" />
+<xsl:param name="quantity" />
 
-<xsl:variable name="quantity" select="n1:quantity/@value" />
 <xsl:variable name="value" select="$node/n1:manufacturedProduct/n1:manufacturedMaterial/ns2:asContent/ns2:containerPackagedMedicine/ns2:capacityQuantity/@value" />
 <xsl:variable name="unit" select="$node/n1:manufacturedProduct/n1:manufacturedMaterial/ns2:asContent/ns2:containerPackagedMedicine/ns2:capacityQuantity/@unit" />
 
-<xsl:if test="$quantity">
-  <xsl:value-of select="$quantity" />
-  <xsl:choose>
-    <xsl:when test="$quantity=1">
-      <xsl:text> Packung a </xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:text> Packungen a </xsl:text>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:if>
-<xsl:value-of select="$value" />
-<xsl:text> </xsl:text>
+<xsl:variable name="isMagZubereitung">
+  <xsl:call-template name="isMagZubereitung">
+    <xsl:with-param name="node" select="$node/.." />
+  </xsl:call-template>
+</xsl:variable>
+
 <xsl:choose>
-  <xsl:when test="not($unit)">
-    <xsl:text>Einheiten</xsl:text>
+  <xsl:when test="$isMagZubereitung='true'">
+    <xsl:text>1 Einheit</xsl:text>
   </xsl:when>
   <xsl:otherwise>
-    <xsl:call-template name="getELGAMedikationMengenart">
-      <xsl:with-param name="code" select="$unit" />
-    </xsl:call-template>
+    <xsl:if test="$quantity">
+      <xsl:value-of select="$quantity" />
+      <xsl:choose>
+        <xsl:when test="$quantity=1">
+          <xsl:text> Packung a </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text> Packungen a </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+    <xsl:value-of select="$value" />
+    <xsl:text> </xsl:text>
+    <xsl:choose>
+      <xsl:when test="not($unit)">
+        <xsl:text>Einheiten</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="getELGAMedikationMengenart">
+          <xsl:with-param name="code" select="$unit" />
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:otherwise>
 </xsl:choose>
+
+
 </xsl:template>
 
 <xsl:template name="getMedName">
@@ -3770,8 +3896,8 @@ window.onload = function () {
 
   <xsl:choose>
     <xsl:when test="$dosage/@unit and $dosage/@unit != '1'">
-      <xsl:call-template name="getUnit">
-        <xsl:with-param name="unit" select="$dosage/@unit" />
+      <xsl:call-template name="getELGAMedikationMengenart">
+        <xsl:with-param name="code" select="$dosage/@unit" />
       </xsl:call-template>
       <xsl:text> </xsl:text>
     </xsl:when>
@@ -3786,25 +3912,6 @@ window.onload = function () {
       </xsl:choose>
     </xsl:otherwise>
 </xsl:choose>
-
-</xsl:template>
-
-<xsl:template name="getUnit">
-  <xsl:param name="unit" />
-
-  <xsl:variable name="cleanCurlyBracketBefore">
-    <xsl:call-template name="string-replace-all">
-      <xsl:with-param name="text" select="$unit" />
-      <xsl:with-param name="replace">{</xsl:with-param>
-      <xsl:with-param name="by"></xsl:with-param>
-    </xsl:call-template>
-  </xsl:variable>
-
-  <xsl:call-template name="string-replace-all">
-    <xsl:with-param name="text" select="$cleanCurlyBracketBefore" />
-    <xsl:with-param name="replace">}</xsl:with-param>
-    <xsl:with-param name="by"></xsl:with-param>
-  </xsl:call-template>
 
 </xsl:template>
 
@@ -4275,14 +4382,15 @@ GDA-ID:
             <xsl:when test="$code='/min'">/min</xsl:when>
             <xsl:when test="$code='/s'">/s</xsl:when>
             <xsl:when test="$code='1'">Einheit(en)</xsl:when>
-            <xsl:when test="$code='a'">Jahr</xsl:when>
+            <xsl:when test="$code='10*6[iU]'">10^6 IE</xsl:when>
+            <xsl:when test="$code='a'">Jahr</xsl:when>
             <xsl:when test="$code='bar'">Bar</xsl:when>
             <xsl:when test="$code='cal'">cal</xsl:when>
             <xsl:when test="$code='cal/d'">cal/d</xsl:when>
             <xsl:when test="$code='cal/g'">cal/g</xsl:when>
             <xsl:when test="$code='cal/h'">cal/h</xsl:when>
             <xsl:when test="$code='cal/mL'">cal/ml</xsl:when>
-            <xsl:when test="$code='Cel'">°C</xsl:when>
+            <xsl:when test="$code='Cel'">C</xsl:when>
             <xsl:when test="$code='cm'">cm</xsl:when>
             <xsl:when test="$code='cm2'">cm2</xsl:when>
             <xsl:when test="$code='cm3'">cm3</xsl:when>
@@ -4315,14 +4423,14 @@ GDA-ID:
             <xsl:when test="$code='mg'">mg</xsl:when>
             <xsl:when test="$code='mg/L'">mg/l</xsl:when>
             <xsl:when test="$code='min'">min</xsl:when>
-            <xsl:when test="$code='mL'">ml</xsl:when>
+            <xsl:when test="$code='mL'">mL</xsl:when>
             <xsl:when test="$code='mL/s'">ml/s</xsl:when>
             <xsl:when test="$code='mm'">mm</xsl:when>
             <xsl:when test="$code='mm2'">mm2</xsl:when>
             <xsl:when test="$code='mmol'">mmol</xsl:when>
             <xsl:when test="$code='mmol/L'">mmol/l</xsl:when>
             <xsl:when test="$code='mm[Hg]'">mm Hg</xsl:when>
-            <xsl:when test="$code='mo'">Monat(e)</xsl:when>
+            <xsl:when test="$code='mo'">mo</xsl:when>
             <xsl:when test="$code='mol/L'">mol/l</xsl:when>
             <xsl:when test="$code='m[iU]'">mIE</xsl:when>
             <xsl:when test="$code='m[iU]/L'">mIE/l</xsl:when>
@@ -4335,7 +4443,7 @@ GDA-ID:
             <xsl:when test="$code='ug/L'">µg/l</xsl:when>
             <xsl:when test="$code='ukat'">µkat</xsl:when>
             <xsl:when test="$code='ukat/L'">µkat/l</xsl:when>
-            <xsl:when test="$code='ukat/mL'">µg</xsl:when>
+            <xsl:when test="$code='ukat/mL'">µkat/ml</xsl:when>
             <xsl:when test="$code='uL'">µl</xsl:when>
             <xsl:when test="$code='umol'">µmol</xsl:when>
             <xsl:when test="$code='umol/L'">µmol/l</xsl:when>
@@ -4345,6 +4453,7 @@ GDA-ID:
             <xsl:when test="$code='[iU]/mL'">IE/ml</xsl:when>
             <xsl:when test="$code='[iU]/{Broteinheiten}'">IE/BE</xsl:when>
             <xsl:when test="$code='[pH]'">pH</xsl:when>
+            <xsl:when test="$code='{Ampulle}'">Ampulle(n)</xsl:when>
             <xsl:when test="$code='{Beutel/Aufgussbeutel}'">Beutel/Aufgussbeutel</xsl:when>
             <xsl:when test="$code='{Broteinheiten}'">Broteinheit(en)</xsl:when>
             <xsl:when test="$code='{Essloeffel}'">Esslöffel</xsl:when>
@@ -4357,7 +4466,24 @@ GDA-ID:
             <xsl:when test="$code='{Stueck}'">Stück</xsl:when>
             <xsl:when test="$code='{Teeloeffel}'">Teelöffel</xsl:when>
             <xsl:when test="$code='{Tropfen}'">Tropfen</xsl:when>
-            <xsl:otherwise><xsl:text>unbekannter Code (</xsl:text><xsl:value-of select="$code" /><xsl:text>)</xsl:text></xsl:otherwise>
+            <xsl:otherwise><xsl:call-template name="getELGAMedikationMengenartAlternativ"><xsl:with-param name="code" select="$code" /></xsl:call-template></xsl:otherwise>
+        
+        </xsl:choose>
+    
+    </xsl:template>
+    
+
+
+
+    <!-- AUTO GENERATED TEMPLATE. DO NOT MODIFY! -->
+    
+    <xsl:template name="getELGAMedikationMengenartAlternativ">
+        <xsl:param name="code" />
+        
+        <xsl:choose>
+            <xsl:when test="$code='{HUB}'">Hub</xsl:when>
+            <xsl:when test="$code='{TAB}'">Tablette</xsl:when>
+            <xsl:otherwise><xsl:text>unbekannte Einheit (</xsl:text><xsl:value-of select="$code" /><xsl:text>)</xsl:text></xsl:otherwise>
         
         </xsl:choose>
     
@@ -4413,19 +4539,19 @@ GDA-ID:
   <xsl:variable name="isRepeatingMedication">
     <xsl:choose>
       <xsl:when test="$rootId='1.2.40.0.34.11.8.2.3.1'">
-        <xsl:for-each select="//n1:supply">
-          <xsl:if test="(n1:product/n1:manufacturedProduct/n1:manufacturedMaterial/n1:name=$medicationName or n1:consumable/n1:manufacturedProduct/n1:manufacturedMaterial/n1:name=$medicationName) and not(n1:id[@root='1.2.40.0.10.1.4.3.4.2.3.1']/@extension=$uuidOriginal)">true</xsl:if>
-        </xsl:for-each>
+        <xsl:if test="//n1:supply/n1:id[@root='1.2.40.0.10.1.4.3.4.2.3.1' and @extension=$uuidOriginal]/../n1:entryRelationship/n1:act/n1:templateId[@root='1.2.40.0.34.11.8.1.3.4']/../n1:code[@code='NICHTEINZEL']">
+          <xsl:value-of select="string(true())" />
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="//n1:substanceAdministration">
-          <xsl:if test="(n1:product/n1:manufacturedProduct/n1:manufacturedMaterial/n1:name=$medicationName or n1:consumable/n1:manufacturedProduct/n1:manufacturedMaterial/n1:name=$medicationName) and not(n1:id[@root='1.2.40.0.10.1.4.3.4.2.2.1']/@extension=$uuidOriginal)">true</xsl:if>
-        </xsl:for-each>
+        <xsl:if test="//n1:substanceAdministration/n1:id[@root='1.2.40.0.10.1.4.3.4.2.2.1' and @extension=$uuidOriginal]/../n1:entryRelationship/n1:act/n1:templateId[@root='1.2.40.0.34.11.8.1.3.4']/../n1:code[@code='NICHTEINZEL']">
+          <xsl:value-of select="string(true())" />
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:if test="$isRepeatingMedication!='' and $showRepeatingMedicationIcon='true'">
+  <xsl:if test="$isRepeatingMedication='true' and $showRepeatingMedicationIcon='true'">
     <span class="tooltipTrigger">
       <img style="vertical-align: middle;" alt="Symbol Dauermedikation" height="18" width="18" src="{$repeatingMedicationIcon}" />
       <span class="tooltip">
@@ -4578,11 +4704,13 @@ GDA-ID:
         <xsl:when test="$rootId='1.2.40.0.34.11.8.1.3.1'">
           <xsl:call-template name="getPackageInfo">
             <xsl:with-param name="node" select="$node/n1:consumable" />
+            <xsl:with-param name="quantity" select="$node/n1:quantity/@value" />
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="getPackageInfo">
             <xsl:with-param name="node" select="$node/n1:product" />
+            <xsl:with-param name="quantity" select="$node/n1:quantity/@value" />
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
@@ -4823,7 +4951,7 @@ GDA-ID:
     <xsl:param name="date_shortmode" />
 
     <xsl:choose>
-      <xsl:when test="not($date/@nullFlavor) and not($date/@nullFlavor='UNK') and $date">
+      <xsl:when test="not($date/@nullFlavor) and not($date/@nullFlavor='UNK') and $date and string-length($date/@value) >= 4">
         <xsl:call-template name="formateDateInternal">
           <xsl:with-param name="date" select="$date" />
           <xsl:with-param name="date_shortmode" select="$date_shortmode" />
@@ -4839,15 +4967,20 @@ GDA-ID:
     <xsl:param name="date" />
     <xsl:param name="date_shortmode" />
 
-    <xsl:choose>
-      <xsl:when test="substring ($date/@value, 7, 1)='0'">
-        <xsl:value-of select="substring ($date/@value, 8, 1)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="substring ($date/@value, 7, 2)"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>. </xsl:text>
+    <!-- day -->
+    <xsl:if test="string-length($date/@value) >= 8">
+      <xsl:choose>
+        <xsl:when test="substring ($date/@value, 7, 1)='0'">
+          <xsl:value-of select="substring ($date/@value, 8, 1)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="substring ($date/@value, 7, 2)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:text>. </xsl:text>
+    </xsl:if>
+
+    <!-- month -->
     <xsl:variable name="month" select="substring ($date/@value, 5, 2)"/>
     <xsl:choose>
       <xsl:when test="$month='01'">
@@ -4887,25 +5020,76 @@ GDA-ID:
         <xsl:text>Dezember </xsl:text>
       </xsl:when>
     </xsl:choose>
+
+    <!-- year -->
     <xsl:value-of select="substring ($date/@value, 1, 4)"/>
-    <xsl:variable name="hour" select="substring ($date/@value, 9, 2)"/>
-    <xsl:if test="$hour != '' and $date_shortmode != 'true'">
-      <xsl:text> um </xsl:text>
+
+    <xsl:if test="$date_shortmode != 'true'">
+      <xsl:variable name="hour" select="substring($date/@value, 9, 2)"/>
+        <xsl:if test="$hour != ''">
+        <xsl:text> um </xsl:text>
+        <xsl:call-template name="getTime">
+          <xsl:with-param name="date" select="$date" />
+        </xsl:call-template>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="getTime">
+    <xsl:param name="date"/>
+
+    <xsl:variable name="timeWithoutTimeZone">
       <xsl:choose>
-        <!-- print "00:00" Uhr as "0:00" Uhr -->
-        <xsl:when test="$hour='00'">
-          <xsl:text>0</xsl:text>
+        <xsl:when test="contains($date/@value, '+')">
+          <xsl:value-of select="substring-before($date/@value, '+')" />
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="substring ($date/@value, 9, 2)"/>
+          <xsl:value-of select="$date/@value" />
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>:</xsl:text>
-      <xsl:value-of select="substring ($date/@value, 11, 2)"/>
-      <xsl:text> Uhr </xsl:text>
-    </xsl:if>
+    </xsl:variable>
 
+    <xsl:choose>
+      <xsl:when test="string-length($timeWithoutTimeZone) >= 12">
+
+        <!-- hour -->
+        <xsl:variable name="hour" select="substring($timeWithoutTimeZone, 9, 2)"/>
+        <xsl:if test="$hour != ''">
+          <xsl:choose>
+            <!-- print "00:00" Uhr as "0:00" Uhr -->
+            <xsl:when test="$hour='00'">
+              <xsl:text>0</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="substring($timeWithoutTimeZone, 9, 2)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
+
+        <xsl:text>:</xsl:text>
+        <!-- minute -->
+        <xsl:value-of select="substring($timeWithoutTimeZone, 11, 2)"/>
+        <xsl:text> Uhr</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unbekannt</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="isDateTimeValid">
+    <xsl:param name="date" />
+
+    <xsl:choose>
+      <xsl:when test="$date and $date/@value and not($date/n1:time/@nullFlavor) and string-length($date/@value) > 3">
+        <xsl:value-of select="string(true())" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="string(false())" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   
   <!-- StructuredBody -->
   <xsl:template match="n1:component/n1:structuredBody">
@@ -4969,10 +5153,12 @@ GDA-ID:
                 </xsl:call-template>
               </b>
               <xsl:text>: </xsl:text>
-              <xsl:value-of select="n1:text"/>
             </span>
           </xsl:element>
 
+          <div class="warningBody">
+            <xsl:apply-templates select="n1:text"/>
+          </div>
         </div>
       </xsl:when>
       <xsl:otherwise>
@@ -5048,9 +5234,12 @@ GDA-ID:
         <xsl:text>Patientenverfügung vorhanden</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>unbekannter code (</xsl:text>
-        <xsl:value-of select="$code"/>
-        <xsl:text>)</xsl:text>
+        <xsl:text>unbekannter code</xsl:text>
+        <xsl:if test="$code">
+          <xsl:text> (</xsl:text>
+          <xsl:value-of select="$code"/>
+          <xsl:text>)</xsl:text>
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -5076,18 +5265,14 @@ GDA-ID:
   </xsl:template>
 
 
-  <!--   RenderLogo
-    only handles PNG's and JPEG's.  It could, however,
-  media type  @ID  =$imageRef  referencedObject
-    -->
   <xsl:template name="renderLogo">
     <xsl:param name="logo"/>
 
-    <xsl:if test="$logo/n1:value[@mediaType='image/png' or @mediaType='image/jpg' or @mediaType='image/jpeg']">
+    <xsl:if test="$logo/n1:templateId[@root='1.2.40.0.34.11.1.3.2' or @root='1.2.40.0.34.6.0.11.3.53'] or $logo/n1:value[@mediaType='image/png' or @mediaType='image/jpg' or @mediaType='image/jpeg']">
       <!-- image data inline B64 coded -->
       <xsl:if test="$logo/n1:value/@representation='B64'">
         <xsl:element name="img">
-          <xsl:attribute name="alt" />
+          <xsl:attribute name="alt">Logo des erstellenden Gesundheitsdiensteanbieters</xsl:attribute>
           <xsl:attribute name="src">data:
           <xsl:value-of select="$logo/n1:value/@mediaType"/>;base64,
           <xsl:value-of select="$logo/n1:value"/></xsl:attribute>
@@ -5475,40 +5660,189 @@ GDA-ID:
     </xsl:choose>
   </xsl:template>
 
-  <!--
-    code translations for ambulantory description
-  -->
-  <xsl:template name="getAmbulatory">
-    <xsl:param name="effectiveTime" />
-    <xsl:param name="code" />
-    <xsl:param name="date_shortmode" />
-    <xsl:variable name="codeName" select="$code/@code" />
-    <xsl:variable name="codeSys" select="$code/@codeSystem" />
-    <xsl:variable name="prefix">
+  <xsl:template name="getEncounterType">
+    <xsl:variable name="code" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:code/@code"/>
+    <xsl:choose>
+      <xsl:when test="$code = 'AMB'">Ambulant</xsl:when>
+      <xsl:when test="$code = 'EMER'">Akutbehandlung</xsl:when>
+      <xsl:when test="$code = 'FLD'">Notfall, Rettung, erste Hilfe</xsl:when>
+      <xsl:when test="$code = 'HH'">Hausbesuch(e)</xsl:when>
+      <xsl:when test="$code = 'IMP'">Stationär</xsl:when>
+      <xsl:when test="$code = 'ACUTE'">Stationär</xsl:when>
+      <xsl:when test="$code = 'NONAC'">Stationär</xsl:when>
+      <xsl:when test="$code = 'PRENC'">Prästationär</xsl:when>
+      <xsl:when test="$code = 'SS'">Tagesklinisch</xsl:when>
+      <xsl:when test="$code = 'VR'">Behandlung</xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unbekannter Aufenthaltscode (code: </xsl:text>
+        <xsl:value-of select="$code"/>
+        <xsl:text>)</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="getEncounterDurationFrom">
+    <xsl:param name="useDateTimeFormat" select="string(false())"/>
+
+    <xsl:variable name="shortMode">
       <xsl:choose>
-        <xsl:when test="$codeName = 'AMB' and $codeSys = '2.16.840.1.113883.5.4' ">Ambulant</xsl:when>
-        <xsl:when test="$codeName = 'EMER' and $codeSys = '2.16.840.1.113883.5.4' ">Akutbehandlung</xsl:when>
-        <xsl:when test="$codeName = 'FLD' and $codeSys = '2.16.840.1.113883.5.4' ">Notfall, Rettung, erste Hilfe</xsl:when>
-        <xsl:when test="$codeName = 'HH' and $codeSys = '2.16.840.1.113883.5.4' ">Hausbesuch(e)</xsl:when>
-        <xsl:when test="$codeName = 'IMP' and $codeSys = '2.16.840.1.113883.5.4' ">Stationär</xsl:when>
-        <xsl:when test="$codeName = 'ACUTE' and $codeSys = '2.16.840.1.113883.5.4' ">Stationär</xsl:when>
-        <xsl:when test="$codeName = 'NONAC' and $codeSys = '2.16.840.1.113883.5.4' ">Stationär</xsl:when>
-        <xsl:when test="$codeName = 'PRENC' and $codeSys = '2.16.840.1.113883.5.4' ">Prästationär</xsl:when>
-        <xsl:when test="$codeName = 'SS' and $codeSys = '2.16.840.1.113883.5.4' ">Tagesklinisch</xsl:when>
-        <xsl:when test="$codeName = 'VR' and $codeSys = '2.16.840.1.113883.5.4' ">Behandlung</xsl:when>
-        <xsl:otherwise> </xsl:otherwise>
+        <xsl:when test="$useDateTimeFormat='true'">
+          <xsl:text>false</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>true</xsl:text>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:value-of select="$prefix"/><xsl:text> vom </xsl:text>
-        <xsl:call-template name="formatDate">
-            <xsl:with-param name="date" select="$effectiveTime/n1:low"/>
-	        <xsl:with-param name="date_shortmode"><xsl:value-of select="$date_shortmode" /></xsl:with-param>
-        </xsl:call-template>
-        <xsl:text> bis </xsl:text>
-        <xsl:call-template name="formatDate">
-            <xsl:with-param name="date" select="$effectiveTime/n1:high"/>
-            <xsl:with-param name="date_shortmode"><xsl:value-of select="$date_shortmode" /></xsl:with-param>
-        </xsl:call-template>
+
+    <xsl:call-template name="formatDate">
+      <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:low"/>
+      <xsl:with-param name="date_shortmode" select="$shortMode" />
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="getEncounterDurationTo">
+    <xsl:param name="useDateTimeFormat" select="string(false())"/>
+
+    <xsl:variable name="shortMode">
+      <xsl:choose>
+        <xsl:when test="$useDateTimeFormat='true'">
+          <xsl:text>false</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>true</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:call-template name="formatDate">
+      <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:high"/>
+      <xsl:with-param name="date_shortmode" select="$shortMode" />
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="getEncounterText">
+    <xsl:param name="format"><xsl:text>short</xsl:text></xsl:param>
+
+    <xsl:call-template name="getEncounterType"/>
+
+    <xsl:variable name="encounterType" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:code/@code"/>
+    <xsl:choose>
+      <xsl:when test="$encounterType='AMB'">
+        <xsl:choose>
+          <xsl:when test="$format='short'">
+            <xsl:variable name="durationFrom">
+              <xsl:call-template name="getEncounterDurationFrom"/>
+            </xsl:variable>
+            <xsl:variable name="durationTo">
+              <xsl:call-template name="getEncounterDurationTo"/>
+            </xsl:variable>
+            <xsl:variable name="durationToValid">
+              <xsl:call-template name="isDateTimeValid">
+                <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:high" />
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:choose>
+              <xsl:when test="$durationFrom=$durationTo or $durationToValid='false'">
+                <xsl:text> am </xsl:text>
+                <xsl:value-of select="$durationFrom" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text> vom </xsl:text>
+                <xsl:value-of select="$durationFrom" />
+                <xsl:text> bis </xsl:text>
+                <xsl:value-of select="$durationTo" />
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="durationFrom">
+              <xsl:call-template name="getEncounterDurationFrom"/>
+            </xsl:variable>
+            <xsl:variable name="durationTo">
+              <xsl:call-template name="getEncounterDurationTo"/>
+            </xsl:variable>
+            <xsl:variable name="durationToValid">
+              <xsl:call-template name="isDateTimeValid">
+                <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:high" />
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:choose>
+              <xsl:when test="$durationFrom!=$durationTo and $durationToValid='true'">
+                <xsl:text> vom </xsl:text>
+                <xsl:call-template name="getEncounterDurationFrom">
+                  <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+                </xsl:call-template>
+                <xsl:text> bis </xsl:text>
+                <xsl:call-template name="getEncounterDurationTo">
+                  <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:when test="$durationFrom=$durationTo and $durationToValid='true'">
+                <xsl:text> am </xsl:text>
+                <xsl:value-of select="$durationFrom" />
+                <xsl:text> von </xsl:text>
+                <xsl:call-template name="getTime">
+                  <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:low" />
+                </xsl:call-template>
+                <xsl:text> bis </xsl:text>
+                <xsl:call-template name="getTime">
+                  <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime/n1:high" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text> am </xsl:text>
+                <xsl:call-template name="getEncounterDurationFrom">
+                  <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+                </xsl:call-template>
+                <xsl:text> bis </xsl:text>
+                <xsl:call-template name="getEncounterDurationTo">
+                  <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+                </xsl:call-template>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$format='short'">
+            <xsl:variable name="durationFrom">
+              <xsl:call-template name="getEncounterDurationFrom"/>
+            </xsl:variable>
+            <xsl:if test="$durationFrom != ''">
+              <xsl:text> vom </xsl:text>
+              <xsl:value-of select="$durationFrom"/>
+            </xsl:if>
+
+            <xsl:variable name="durationTo">
+              <xsl:call-template name="getEncounterDurationTo"/>
+            </xsl:variable>
+            <xsl:if test="$durationTo != ''">
+              <xsl:text> bis </xsl:text>
+              <xsl:value-of select="$durationTo"/>
+            </xsl:if>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="durationFrom">
+              <xsl:call-template name="getEncounterDurationFrom">
+                <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:text> vom </xsl:text>
+            <xsl:value-of select="$durationFrom"/>
+
+            <xsl:variable name="durationTo">
+              <xsl:call-template name="getEncounterDurationTo">
+                <xsl:with-param name="useDateTimeFormat" select="string(true())" />
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:text> bis </xsl:text>
+            <xsl:value-of select="$durationTo"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
@@ -5537,30 +5871,28 @@ GDA-ID:
   -->
   <xsl:template name="getNameFromOID">
     <xsl:for-each select="/n1:ClinicalDocument/n1:templateId">
-      <xsl:variable name="oid">
-        <xsl:value-of select="@root"/>
-      </xsl:variable>
       <xsl:choose>
-        <xsl:when test="$oid = '1.2.40.0.34.11.1'">Allgemeiner Leitfaden</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.2'">, Entlassungsbrief (Ärztlich)</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.3'">, Entlassungsbrief (Pflege)</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.4'">, Laborbefund</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.5'">, Befund Bildgebende Diagnostik</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.8.1'">, e-Medikation (Rezept)</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.8.2'">, e-Medikation (Abgabe)</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.8.3'">, e-Medikation (Medikationsliste)</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.8.4'">, e-Medikation (Pharmazeutische Empfehlung)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.1'">Allgemeiner Leitfaden</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.2'">Entlassungsbrief (Ärztlich)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.3'">Entlassungsbrief (Pflege)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.4'">Laborbefund</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.5'">Befund Bildgebende Diagnostik</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.1'">e-Medikation (Rezept)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.2'">e-Medikation (Abgabe)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.3'">e-Medikation (Medikationsliste)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.4'">e-Medikation (Pharmazeutische Empfehlung)</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.10'">Telemonitoring Episodenbericht</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.5'">Ambulanzbefund</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.13'">Patientenverfügung</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.6'">Export-Normdatensatz</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.4'">Kompletter Immunisierungsstatus</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.2'">Update Immunisierungsstatus</xsl:when>
       </xsl:choose>
+      <xsl:if test="position() &lt; count(//n1:ClinicalDocument/n1:templateId[@root='1.2.40.0.34.11.1' or @root='1.2.40.0.34.11.2' or @root='1.2.40.0.34.11.3' or @root='1.2.40.0.34.11.4' or @root='1.2.40.0.34.11.5' or @root='1.2.40.0.34.11.8.1' or @root='1.2.40.0.34.11.8.2' or @root='1.2.40.0.34.11.8.3' or @root='1.2.40.0.34.11.8.4' or @root='1.2.40.0.34.6.0.11.0.10' or @root='1.2.40.0.34.6.0.11.0.5' or @root='1.2.40.0.34.6.0.11.0.13' or @root='1.2.40.0.34.6.0.11.0.6' or @root='1.2.40.0.34.6.0.11.0.4' or @root='1.2.40.0.34.6.0.11.0.2'])">
+        <xsl:text>, </xsl:text>
+      </xsl:if>
     </xsl:for-each>
-    <xsl:if test="not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.1') and 
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.2') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.3') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.4') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.5') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.8.1') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.8.2') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.8.3') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.8.4')">
+    <xsl:if test="0 = count(//n1:ClinicalDocument/n1:templateId[@root='1.2.40.0.34.11.1' or @root='1.2.40.0.34.11.2' or @root='1.2.40.0.34.11.3' or @root='1.2.40.0.34.11.4' or @root='1.2.40.0.34.11.5' or @root='1.2.40.0.34.11.8.1' or @root='1.2.40.0.34.11.8.2' or @root='1.2.40.0.34.11.8.3' or @root='1.2.40.0.34.11.8.4' or @root='1.2.40.0.34.6.0.11.0.10' or @root='1.2.40.0.34.6.0.11.0.5' or @root='1.2.40.0.34.6.0.11.0.13' or @root='1.2.40.0.34.6.0.11.0.6' or @root='1.2.40.0.34.6.0.11.0.4' or @root='1.2.40.0.34.6.0.11.0.2'])">
       <xsl:text>(keine)</xsl:text>
     </xsl:if>
   </xsl:template>
@@ -5570,34 +5902,32 @@ GDA-ID:
   -->
   <xsl:template name="getEISFromOID">
     <xsl:for-each select="/n1:ClinicalDocument/n1:templateId">
-      <xsl:variable name="oid">
-        <xsl:value-of select="@root"/>
-      </xsl:variable>
       <xsl:choose>
-        <xsl:when test="$oid = '1.2.40.0.34.11.2.0.1'">Basic/Structured</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.2.0.2'">Enhanced</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.2.0.3'">Full support</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.3.0.1'">Basic/Structured</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.3.0.2'">Enhanced</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.3.0.3'">Full support</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.4.0.1'">Basic/Structured</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.4.0.2'">Enhanced</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.4.0.3'">Full support</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.5.0.1'">Basic</xsl:when>
-        <xsl:when test="$oid = '1.2.40.0.34.11.5.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.2.0.1'">Basic/Structured</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.2.0.2'">Enhanced</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.2.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.3.0.1'">Basic/Structured</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.3.0.2'">Enhanced</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.3.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.4.0.1'">Basic/Structured</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.4.0.2'">Enhanced</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.4.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.5.0.1'">Basic</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.5.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.1'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.2'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.11.8.4'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.10'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.5.0.2'">Enhanced</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.5.0.3'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.13'">Basic</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.6'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.4'">Full support</xsl:when>
+        <xsl:when test="./@root = '1.2.40.0.34.6.0.11.0.2'">Full support</xsl:when>
       </xsl:choose>
     </xsl:for-each>
-    <xsl:if test="not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.2.0.1') and 
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.2.0.2') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.2.0.3') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.3.0.1') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.3.0.2') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.3.0.3') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.4.0.1') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.4.0.2') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.4.0.3') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.5.0.1') and
-      not(/n1:ClinicalDocument/n1:templateId/@root='1.2.40.0.34.11.5.0.3')">
+    <xsl:if test="0 = count(//n1:ClinicalDocument/n1:templateId[@root='1.2.40.0.34.11.2.0.1' or @root='1.2.40.0.34.11.2.0.2' or @root='1.2.40.0.34.11.2.0.3' or @root='1.2.40.0.34.11.3.0.1' or @root='1.2.40.0.34.11.3.0.2' or @root='1.2.40.0.34.11.3.0.3' or @root='1.2.40.0.34.11.4.0.1' or @root='1.2.40.0.34.11.4.0.2' or @root='1.2.40.0.34.11.4.0.3' or @root='1.2.40.0.34.11.5.0.1' or @root='1.2.40.0.34.11.5.0.3' or @root='1.2.40.0.34.6.0.11.0.10' or @root='1.2.40.0.34.6.0.11.0.5.0.2' or @root='1.2.40.0.34.6.0.11.0.5.0.3' or @root='1.2.40.0.34.6.0.11.0.13' or @root='1.2.40.0.34.6.0.11.0.6' or @root='1.2.40.0.34.6.0.11.0.4' or @root='1.2.40.0.34.6.0.11.0.2' or @root='1.2.40.0.34.11.8.1' or @root='1.2.40.0.34.11.8.2' or @root='1.2.40.0.34.11.8.3' or @root='1.2.40.0.34.11.8.4'])">
       <xsl:text>(keine)</xsl:text>
     </xsl:if>
   </xsl:template>
@@ -5650,7 +5980,9 @@ GDA-ID:
             <xsl:when test="$code='18842-5'">Entlassungsbrief</xsl:when>
             <xsl:when test="$code='11490-0'">Entlassungsbrief Ärztlich</xsl:when>
             <xsl:when test="$code='34745-0'">Entlassungsbrief Pflege</xsl:when>
+            <xsl:when test="$code='18761-7'">Transferbericht (Verlegungsbericht)</xsl:when>
             <xsl:when test="$code='11502-2'">Laborbefund</xsl:when>
+            <xsl:when test="$code='18725-2'">Mikrobiologie-Befund</xsl:when>
             <xsl:when test="$code='18748-4'">Befund bildgebende Diagnostik</xsl:when>
             <xsl:when test="$code='25045-6'">Computertomographie-Befund</xsl:when>
             <xsl:when test="$code='25056-3'">Magnetresonanztomographie-Befund</xsl:when>
@@ -5671,12 +6003,13 @@ GDA-ID:
             <xsl:when test="$code='61356-2'">Pharmazeutische Empfehlung</xsl:when>
             <xsl:when test="$code='11529-5'">Pathologiebefund</xsl:when>
             <xsl:when test="$code='18743-5'">Obduktionsbefund</xsl:when>
-            <xsl:when test="$code='18725-2'">Mikrobiologie-Befund</xsl:when>
             <xsl:when test="$code='11504-8'">OP-Bericht</xsl:when>
             <xsl:when test="$code='57829-4'">Verordnung von Heilbehelfen und Hilfsmitteln</xsl:when>
             <xsl:when test="$code='64288-4'">Brillenverordnung</xsl:when>
-            <xsl:when test="$code='51845-6'">Allgemeiner Facharztbefund</xsl:when>
+            <xsl:when test="$code='75476-2'">Ärztlicher Befund</xsl:when>
+            <xsl:when test="$code='34131-3'">Ärztlicher Statusbericht</xsl:when>
             <xsl:when test="$code='34764-1'">Allgemeinmedizinischer Befund</xsl:when>
+            <xsl:when test="$code='77403-4'">Anästhesiologischer Befund</xsl:when>
             <xsl:when test="$code='34803-7'">Arbeitsmedizinischer Befund</xsl:when>
             <xsl:when test="$code='34807-8'">Augenbefund</xsl:when>
             <xsl:when test="$code='33720-4'">Immunhämatologischer Befund</xsl:when>
@@ -5687,27 +6020,42 @@ GDA-ID:
             <xsl:when test="$code='34761-7'">Gastroenterologiebefund</xsl:when>
             <xsl:when test="$code='34853-2'">Gefäßchirurgischer Befund</xsl:when>
             <xsl:when test="$code='34776-5'">Geriatriebefund</xsl:when>
+            <xsl:when test="$code='69438-0'">Gerichtsmedizinischer Befund</xsl:when>
             <xsl:when test="$code='34777-3'">Gynäkologie-Befund</xsl:when>
+            <xsl:when test="$code='34816-9'">Hals-Nasen-Ohrenheilkunde-Befund</xsl:when>
             <xsl:when test="$code='34779-9'">Hämatologie-Befund</xsl:when>
-            <xsl:when test="$code='34816-9'">HNO-Befund</xsl:when>
+            <xsl:when test="$code='80575-4'">Herzchirurgischer Befund</xsl:when>
+            <xsl:when test="$code='77429-9'">Immunologischer Befund</xsl:when>
             <xsl:when test="$code='34781-5'">Infektiologiebefund</xsl:when>
+            <xsl:when test="$code='85238-4'">Internistischer Befund</xsl:when>
             <xsl:when test="$code='34099-2'">Kardiologiebefund</xsl:when>
             <xsl:when test="$code='68881-2'">Kinder- und Jugendchirurgischer Befund</xsl:when>
+            <xsl:when test="$code='68645-1'">Kinder- und Jugendpsychiatrischer Befund</xsl:when>
+            <xsl:when test="$code='78254-0'">Medizinisch-Genetischer Befund</xsl:when>
             <xsl:when test="$code='34812-8'">Mund-, Kiefer- und Gesichtschirurgischer Befund</xsl:when>
             <xsl:when test="$code='34795-5'">Nephrologischer befund</xsl:when>
             <xsl:when test="$code='34798-9'">Neurochirurgischer Befund</xsl:when>
             <xsl:when test="$code='34797-1'">Neurologischer Befund</xsl:when>
+            <xsl:when test="$code='34878-9'">Notfallmedizinischer Befund</xsl:when>
             <xsl:when test="$code='34805-2'">Onkologiebefund</xsl:when>
             <xsl:when test="$code='34814-4'">Orthopädischer/Orthopädisch-Chirurgischer Befund</xsl:when>
-            <xsl:when test="$code='68818-4'">Pädiatrischer Befund</xsl:when>
+            <xsl:when test="$code='78726-7'">Pädiatrischer Befund</xsl:when>
+            <xsl:when test="$code='78568-3'">Palliativmedizinischer Befund</xsl:when>
+            <xsl:when test="$code='34820-1'">Pharmakologisch-Toxikologischer Befund</xsl:when>
             <xsl:when test="$code='34822-7'">Physikalisch-Medizinischer Befund</xsl:when>
             <xsl:when test="$code='34826-8'">Plastisch-Chirurgischer Befund</xsl:when>
+            <xsl:when test="$code='67862-3'">Präoperativer Befund</xsl:when>
             <xsl:when test="$code='34788-0'">Psychiatrischer Befund</xsl:when>
             <xsl:when test="$code='34103-2'">Pulmologischer Befund</xsl:when>
+            <xsl:when test="$code='82359-1'">Reproduktionsmedizinischer Befund</xsl:when>
             <xsl:when test="$code='34839-1'">Rheumatologischer Befund</xsl:when>
+            <xsl:when test="$code='85866-2'">Schlafmedizinischer Befund</xsl:when>
+            <xsl:when test="$code='78738-2'">Sportmedizinischer Befund</xsl:when>
             <xsl:when test="$code='34831-8'">Strahlentherapeutisch-Radioonkologischer Befund</xsl:when>
             <xsl:when test="$code='34849-0'">Thoraxchirurgischer Befund</xsl:when>
+            <xsl:when test="$code='78732-5'">Unfallchirurgischer Befund</xsl:when>
             <xsl:when test="$code='34851-6'">Urologischer Befund</xsl:when>
+            <xsl:when test="$code='34756-7'">Zahn-, Mund- und Kieferheilkunde-Befund</xsl:when>
             <xsl:when test="$code='28651-8'">Pflegesituationsbericht</xsl:when>
             <xsl:when test="$code='46215-0'">Wunddokumentation</xsl:when>
             <xsl:when test="$code='57016-8'">Patienteneinverständniserklärung</xsl:when>
@@ -5729,9 +6077,132 @@ GDA-ID:
             <xsl:when test="$code='11524-6'">EKG-Bericht</xsl:when>
             <xsl:when test="$code='46209-3'">Anforderung / Auftrag</xsl:when>
             <xsl:when test="$code='11488-4'">Befund</xsl:when>
+            <xsl:when test="$code='57831-0'">Antrag auf Anschlussheilverfahren</xsl:when>
             <xsl:when test="$code='60591-5'">Patient Summary</xsl:when>
             <xsl:when test="$code='34133-9'">Krankengeschichte</xsl:when>
-            <xsl:otherwise>unbestätigte Dokumentenklasse</xsl:otherwise>
+            <xsl:when test="$code='11369-6'">Immunisierungsstatus</xsl:when>
+            <xsl:when test="$code='82593-5'">Immunisierungsstatus - Zusammenfassung</xsl:when>
+            <xsl:when test="$code='87273-9'">Update Immunisierungsstatus</xsl:when>
+            <xsl:when test="$code='75496-0'">Telegesundheitsdienst Bericht</xsl:when>
+            <xsl:when test="$code='75497-8'">Telegesundheitsdienst Zwischenbericht</xsl:when>
+            <xsl:when test="$code='75498-6'">Telegesundheitsdienst Entlassungsbericht</xsl:when>
+            <xsl:when test="$code='75500-9'">Triage-Dokumentation</xsl:when>
+            <xsl:when test="$code='54094-8'">Triage der Notfallabteilung</xsl:when>
+            <xsl:when test="$code='75499-4'">Hotline-Triage (Telefonkontakt)</xsl:when>
+            <xsl:otherwise><xsl:text /></xsl:otherwise>
+        
+        </xsl:choose>
+    
+    </xsl:template>
+    
+
+
+
+    <!-- AUTO GENERATED TEMPLATE. DO NOT MODIFY! -->
+    
+    <xsl:template name="getDocumentClassesPrimary">
+        <xsl:param name="code" />
+        
+        <xsl:choose>
+            <xsl:when test="$code='18842-5'">Entlassungsbrief</xsl:when>
+            <xsl:when test="$code='11502-2'">Laborbefund</xsl:when>
+            <xsl:when test="$code='18748-4'">Befund bildgebende Diagnostik</xsl:when>
+            <xsl:when test="$code='52471-0'">Dokumente der e-Medikation</xsl:when>
+            <xsl:when test="$code='11369-6'">Immunisierungsstatus</xsl:when>
+            <xsl:when test="$code='75496-0'">Telegesundheitsdienst Bericht</xsl:when>
+            <xsl:when test="$code='75476-2'">Ärztlicher Befund</xsl:when>
+            <xsl:otherwise><xsl:text /></xsl:otherwise>
+        
+        </xsl:choose>
+    
+    </xsl:template>
+    
+
+
+
+    <!-- AUTO GENERATED TEMPLATE. DO NOT MODIFY! -->
+    
+    <xsl:template name="getDocumentClassesSecondary">
+        <xsl:param name="code" />
+        
+        <xsl:choose>
+            <xsl:when test="$code='11490-0'">Entlassungsbrief aus stationärer Behandlung (Ärztlich)</xsl:when>
+            <xsl:when test="$code='34745-0'">Entlassungsbrief aus stationärer Behandlung (Pflege)</xsl:when>
+            <xsl:when test="$code='28651-8'">Pflegedokumentation</xsl:when>
+            <xsl:when test="$code='18725-2'">Für direkt aus der Mikrobiologie erstellte Befunde</xsl:when>
+            <xsl:when test="$code='25045-6'">Computertomographie-Befund</xsl:when>
+            <xsl:when test="$code='25056-3'">Magnetresonanztomographie-Befund</xsl:when>
+            <xsl:when test="$code='25061-3'">Ultraschall-Befund</xsl:when>
+            <xsl:when test="$code='49118-3'">Nuklearmedizinischer Befund</xsl:when>
+            <xsl:when test="$code='44136-0'">Positronen-Emissions-Tomographie-Befund</xsl:when>
+            <xsl:when test="$code='18745-0'">Herzkatheter-Befund</xsl:when>
+            <xsl:when test="$code='42148-7'">Echokardiographie-Befund</xsl:when>
+            <xsl:when test="$code='18782-3'">Radiologie-Befund</xsl:when>
+            <xsl:when test="$code='18746-8'">Kolonoskopie-Befund</xsl:when>
+            <xsl:when test="$code='18751-8'">Endoskopie-Befund</xsl:when>
+            <xsl:when test="$code='11525-3'">Geburtshilfliche Ultraschalluntersuchung</xsl:when>
+            <xsl:when test="$code='55113-5'">KOS Objekte</xsl:when>
+            <xsl:when test="$code='57833-6'">Rezept</xsl:when>
+            <xsl:when test="$code='60593-1'">Abgabe</xsl:when>
+            <xsl:when test="$code='56445-0'">Medikationsliste</xsl:when>
+            <xsl:when test="$code='61356-2'">Pharmazeutische Empfehlung (Korrekturmeldung)</xsl:when>
+            <xsl:when test="$code='82593-5'">Immunisierungsstatus - Zusammenfassung</xsl:when>
+            <xsl:when test="$code='87273-9'">Update Immunisierungsstatus</xsl:when>
+            <xsl:when test="$code='75497-8'">Telegesundheitsdienst Zwischenbericht</xsl:when>
+            <xsl:when test="$code='75498-6'">Telegesundheitsdienst Entlassungsbericht</xsl:when>
+            <xsl:when test="$code='42348-3'">Patientenverfügung</xsl:when>
+            <xsl:when test="$code='34764-1'">Befund Allgemeinmedizin</xsl:when>
+            <xsl:when test="$code='34131-3'">Statusbericht</xsl:when>
+            <xsl:when test="$code='77403-4'">Befund Anästhesiologie und Intensivmedizin</xsl:when>
+            <xsl:when test="$code='34803-7'">Befund Arbeitsmedizin</xsl:when>
+            <xsl:when test="$code='34807-8'">Befund Augenheilkunde und Optometrie</xsl:when>
+            <xsl:when test="$code='33720-4'">Befund Blutgruppenserologie und Transfusionsmedizin</xsl:when>
+            <xsl:when test="$code='34847-4'">Befund Chirurgie</xsl:when>
+            <xsl:when test="$code='34760-9'">Befund Diabetologie</xsl:when>
+            <xsl:when test="$code='34879-7'">Befund Endokrinologie</xsl:when>
+            <xsl:when test="$code='34777-3'">Befund Frauenheilkunde und Geburtshilfe</xsl:when>
+            <xsl:when test="$code='34761-7'">Befund Gastroenterologie</xsl:when>
+            <xsl:when test="$code='34853-2'">Befund Gefäßchirurgie</xsl:when>
+            <xsl:when test="$code='34776-5'">Befund Geriatrie</xsl:when>
+            <xsl:when test="$code='69438-0'">Befund Gerichtsmedizin</xsl:when>
+            <xsl:when test="$code='34816-9'">Befund Hals-, Nasen- und Ohrenkrankheiten</xsl:when>
+            <xsl:when test="$code='34779-9'">Befund Hämatologie</xsl:when>
+            <xsl:when test="$code='34758-3'">Befund Haut- und Geschlechtskrankheiten</xsl:when>
+            <xsl:when test="$code='80575-4'">Befund Herzchirurgie</xsl:when>
+            <xsl:when test="$code='77429-9'">Befund Immunologie</xsl:when>
+            <xsl:when test="$code='34781-5'">Befund Infektiologie</xsl:when>
+            <xsl:when test="$code='85238-4'">Befund Innere Medizin</xsl:when>
+            <xsl:when test="$code='34099-2'">Befund Kardiologie</xsl:when>
+            <xsl:when test="$code='68881-2'">Befund Kinder- und Jugendchirurgie</xsl:when>
+            <xsl:when test="$code='78726-7'">Befund Kinder- und Jugendheilkunde</xsl:when>
+            <xsl:when test="$code='68645-1'">Befund Kinder- und Jugendpsychiatrie</xsl:when>
+            <xsl:when test="$code='34103-2'">Befund Lungenkrankheiten</xsl:when>
+            <xsl:when test="$code='78254-0'">Befund Medizinische Genetik</xsl:when>
+            <xsl:when test="$code='34812-8'">Befund Mund-, Kiefer- und Gesichtschirurgie</xsl:when>
+            <xsl:when test="$code='34795-5'">Befund Nephrologie</xsl:when>
+            <xsl:when test="$code='34798-9'">Befund Neurochirurgie</xsl:when>
+            <xsl:when test="$code='34797-1'">Befund Neurologie</xsl:when>
+            <xsl:when test="$code='34878-9'">Befund Notfallmedizin</xsl:when>
+            <xsl:when test="$code='34805-2'">Befund Onkologie</xsl:when>
+            <xsl:when test="$code='34814-4'">Befund Orthopädie und Orthopädische Chirurgie</xsl:when>
+            <xsl:when test="$code='78568-3'">Befund Palliativmedizin</xsl:when>
+            <xsl:when test="$code='34820-1'">Befund Pharmakologie und Toxikologie</xsl:when>
+            <xsl:when test="$code='34822-7'">Befund Physikalische Medizin und Allgemeine Rehabilitation</xsl:when>
+            <xsl:when test="$code='34826-8'">Befund Plastische, Ästhetische und Rekonstruktive Chirurgie</xsl:when>
+            <xsl:when test="$code='34788-0'">Befund Psychiatrie</xsl:when>
+            <xsl:when test="$code='82359-1'">Befund Reproduktionsmedizin</xsl:when>
+            <xsl:when test="$code='34839-1'">Befund Rheumatologie</xsl:when>
+            <xsl:when test="$code='85866-2'">Befund Schlafmedizin</xsl:when>
+            <xsl:when test="$code='78738-2'">Befund Sportmedizin</xsl:when>
+            <xsl:when test="$code='34831-8'">Befund Strahlentherapie-Radioonkologie</xsl:when>
+            <xsl:when test="$code='34849-0'">Befund Thoraxchirurgie</xsl:when>
+            <xsl:when test="$code='78732-5'">Befund Unfallchirurgie</xsl:when>
+            <xsl:when test="$code='34851-6'">Befund Urologie</xsl:when>
+            <xsl:when test="$code='34756-7'">Befund Zahn-, Mund- und Kieferheilkunde</xsl:when>
+            <xsl:when test="$code='67862-3'">Präoperativer Befund</xsl:when>
+            <xsl:when test="$code='84035-5'">Befund Transplantationsmedizin</xsl:when>
+            <xsl:when test="$code='90343-5'">Befund Nuklearmedizin</xsl:when>
+            <xsl:otherwise><xsl:text /></xsl:otherwise>
         
         </xsl:choose>
     
@@ -6380,7 +6851,7 @@ GDA-ID:
             <xsl:when test="$trimmedCode='tl'">Tagalog</xsl:when>
             <xsl:when test="$trimmedCode='tlh'">Klingonisch</xsl:when>
             <xsl:when test="$trimmedCode='tli'">Tlingit-Sprache</xsl:when>
-            <xsl:when test="$trimmedCode='tmh'">Tamaeq</xsl:when>
+            <xsl:when test="$trimmedCode='tmh'">Tamaseq</xsl:when>
             <xsl:when test="$trimmedCode='tn'">Tswana-Sprache</xsl:when>
             <xsl:when test="$trimmedCode='to'">Tongaisch</xsl:when>
             <xsl:when test="$trimmedCode='tog'">Tonga (Bantusprache, Sambia)</xsl:when>
@@ -6718,7 +7189,7 @@ GDA-ID:
             <xsl:when test="$country='ZAR'">Zaire (jetzt Demokratische Republik Kongo)</xsl:when>
             <xsl:when test="$country='ZMB'">Sambia</xsl:when>
             <xsl:when test="$country='ZWE'">Simbabwe</xsl:when>
-            <xsl:otherwise><xsl:text>unbekannter Ländercode (</xsl:text><xsl:value-of select="$country" /><xsl:text>)</xsl:text></xsl:otherwise>
+            <xsl:otherwise><xsl:value-of select="$country" /></xsl:otherwise>
         
         </xsl:choose>
     
@@ -6919,23 +7390,15 @@ GDA-ID:
       </xsl:for-each>
 
       <xsl:for-each select="/n1:ClinicalDocument/n1:participant">
-        <!-- do not show signee and responsible contact again -->
-        <xsl:if test="not(@typeCode = 'CALLBCK' and not(n1:functionCode/@code) and n1:associatedEntity/@classCode= 'PROV') ">
+        <!-- do not show callback contact again -->
+        <xsl:if test="not(@typeCode='CALLBCK')">
 
           <!-- do not show referrer again, when data is already shown in fulfillment container -->
           <xsl:if test="not(@typeCode= 'REF' and //n1:ClinicalDocument/n1:inFulfillmentOf)">
-            <xsl:variable name="showFunctionCode">
-              <xsl:if test="@typeCode = 'CON' and n1:associatedEntity/@classCode= 'PROV'">
-                <!-- different layout for "weitere behandler" -->
-                <xsl:value-of select="1" />
-              </xsl:if>
-            </xsl:variable>
-
             <xsl:call-template name="bottomlineElement" >
               <xsl:with-param name="participant" select="." />
-              <xsl:with-param name="showFunctionCode" select="$showFunctionCode" />
             </xsl:call-template>
-            </xsl:if>
+          </xsl:if>
         </xsl:if>
       </xsl:for-each>
 
@@ -6960,9 +7423,7 @@ GDA-ID:
       </div>
       
       
-      <xsl:if test="/n1:ClinicalDocument/n1:documentationOf/n1:serviceEvent/n1:code/@code='KASSEN' or 
-      				/n1:ClinicalDocument/n1:documentationOf/n1:serviceEvent/n1:code/@code='PRIVAT' or 
-      				/n1:ClinicalDocument/n1:documentationOf/n1:serviceEvent/n1:code/@code='SUBST'">
+      <xsl:if test="//n1:ClinicalDocument/n1:templateId[@root='1.2.40.0.34.11.8.1']">
         <div class="element" style="cursor: default;" onclick="toggleCollapseable(this);">
           <div class="bottomlineCollapseable">
             <div class="leftsmall">
@@ -7024,7 +7485,6 @@ GDA-ID:
   -->
   <xsl:template name="bottomlineElement">
     <xsl:param name="participant" />
-    <xsl:param name="showFunctionCode" select="0" />
 
     <div class="element" onclick="toggleCollapseable(this);">
       <div class="bottomlineCollapseable">
@@ -7036,37 +7496,35 @@ GDA-ID:
         </div>
         <div class="leftwide">
           <p class="organisationName">
-          <!-- different insurance person -->
-          <xsl:variable name="typecode" select="$participant/@typeCode" />
-          <xsl:variable name="classcode" select="$participant/n1:associatedEntity/@classCode" />
-          <xsl:variable name="code" select="$participant/n1:associatedEntity/n1:code/@code" />
+            <!-- different insurance person -->
+            <xsl:variable name="typecode" select="$participant/@typeCode" />
+            <xsl:variable name="classcode" select="$participant/n1:associatedEntity/@classCode" />
+            <xsl:variable name="code" select="$participant/n1:associatedEntity/n1:code/@code" />
 
-          <xsl:if test="$typecode = 'HLD' and $classcode = 'POLHOLD' and $code = 'SELF'">
-            <xsl:text>Versichert bei: </xsl:text>
-          </xsl:if>
-          <xsl:if test="$typecode = 'HLD' and $classcode = 'POLHOLD' and $code = 'FAMDEP'">
-            <xsl:text>Mitversichert bei: </xsl:text>
-          </xsl:if>
-          <xsl:call-template name="getName">
-            <xsl:with-param name="name" select="n1:associatedEntity/n1:associatedPerson/n1:name"/>
-          </xsl:call-template>
-          <!-- if urgency contact display relationship -->
-          <xsl:if test="@typeCode='IND' and not(n1:functionCode/@code) and (n1:associatedEntity/@classCode='ECON' or n1:associatedEntity/@classCode='PRS') ">
-            <span class="relationship"><xsl:text> (</xsl:text>
-            <xsl:call-template name="getELGAPersonalRelationship" >
-              <xsl:with-param name="participant" select="$participant" />
+            <xsl:if test="$typecode = 'HLD' and $classcode = 'POLHOLD' and $code = 'SELF'">
+              <xsl:text>Versichert bei: </xsl:text>
+            </xsl:if>
+            <xsl:if test="$typecode = 'HLD' and $classcode = 'POLHOLD' and $code = 'FAMDEP'">
+              <xsl:text>Mitversichert bei: </xsl:text>
+            </xsl:if>
+            <xsl:call-template name="getName">
+              <xsl:with-param name="name" select="n1:associatedEntity/n1:associatedPerson/n1:name"/>
             </xsl:call-template>
-            <xsl:text>)</xsl:text></span>
+            <!-- if urgency contact display relationship -->
+            <xsl:if test="@typeCode='IND' and not(n1:functionCode/@code) and (n1:associatedEntity/@classCode='ECON' or n1:associatedEntity/@classCode='PRS') ">
+              <span class="relationship"><xsl:text> (</xsl:text>
+              <xsl:call-template name="getELGAPersonalRelationship" >
+                <xsl:with-param name="participant" select="$participant" />
+              </xsl:call-template>
+              <xsl:text>)</xsl:text></span>
             </xsl:if>
           </p>
-          <xsl:if test="$showFunctionCode='1'">
-            <xsl:if test="n1:functionCode">
-              <p class="organisationName">
-                <xsl:call-template name="getELGAAuthorSpeciality">
-                  <xsl:with-param name="code" select="n1:functionCode/@code"/>
-                </xsl:call-template>
-              </p>
-            </xsl:if>
+          <xsl:if test="n1:functionCode/@code and @typeCode='CON' and n1:associatedEntity/@classCode='PROV'">
+            <p class="telecom"> <!-- show function code only of section is expanded -->
+              <xsl:call-template name="getELGAAuthorSpeciality">
+                <xsl:with-param name="code" select="n1:functionCode/@code"/>
+              </xsl:call-template>
+            </p>
           </xsl:if>
           <xsl:call-template name="getContactInfo">
             <xsl:with-param name="contact" select="n1:associatedEntity"/>
@@ -7084,9 +7542,12 @@ GDA-ID:
 
   <xsl:template name="getDocumentInformation">
     <p class="metaInformationLine">
-      <xsl:call-template name="getHL7ATXDSDokumentenklassen">
-        <xsl:with-param name="code" select="/n1:ClinicalDocument/n1:code/@code" />
-      </xsl:call-template>
+      <xsl:text>Dokumententyp: </xsl:text>
+      <xsl:call-template name="getDocumentType"/>
+    </p>
+    <p class="metaInformationLine">
+      <xsl:text>Dokumentenklasse: </xsl:text>
+      <xsl:call-template name="getDocumentClass"/>
     </p>
     <p class="metaInformationLine">
       <xsl:text>Dokument erzeugt am </xsl:text>
@@ -7153,6 +7614,19 @@ GDA-ID:
     </p>
     <p class="metaInformationLine">
       <xsl:text>Dokumentversion: </xsl:text><xsl:value-of select="/n1:ClinicalDocument/n1:versionNumber/@value" />
+    </p>
+    <p class="metaInformationLine">
+      <xsl:text>Terminologiedatum: </xsl:text>
+      <xsl:choose>
+        <xsl:when test="//n1:ClinicalDocument/*[local-name()='terminologyDate']/@value">
+          <xsl:call-template name="formatDate">
+            <xsl:with-param name="date" select="//n1:ClinicalDocument/*[local-name()='terminologyDate']"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>unbekannt</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
     </p>
     <p class="metaInformationLine">
       <xsl:text>Angezeigt mit </xsl:text><xsl:value-of select="document('')/xsl:stylesheet/@id" />
@@ -7223,6 +7697,97 @@ GDA-ID:
         </xsl:otherwise>
       </xsl:choose>
     </p>
+  </xsl:template>
+
+  <xsl:template name="getDocumentType">
+    <xsl:variable name="documentType">
+      <xsl:call-template name="getDocumentClassesSecondary">
+        <xsl:with-param name="code" select="//n1:ClinicalDocument/n1:code/@code" />
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:variable name="documentTypeFallback">
+      <xsl:call-template name="getHL7ATXDSDokumentenklassen">
+        <xsl:with-param name="code" select="//n1:ClinicalDocument/n1:code/@code" />
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$documentType != ''">
+        <xsl:value-of select="$documentType" />
+      </xsl:when>
+      <xsl:when test="$documentTypeFallback != ''">
+        <xsl:value-of select="$documentTypeFallback" />
+      </xsl:when>
+      <xsl:when test="//n1:ClinicalDocument/n1:code/@code != '' and //n1:ClinicalDocument/n1:code/@displayName != ''">
+        <xsl:value-of select="//n1:ClinicalDocument/n1:code/@displayName" />
+        <xsl:text> (</xsl:text>
+        <xsl:value-of select="//n1:ClinicalDocument/n1:code/@code" />
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unbekannt</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="getDocumentClass">
+    <xsl:variable name="documentClass">
+      <xsl:call-template name="getDocumentClassesPrimary">
+        <xsl:with-param name="code" select="//n1:ClinicalDocument/n1:code/n1:translation/@code" />
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:variable name="documentClassFallback">
+      <xsl:call-template name="getHL7ATXDSDokumentenklassen">
+        <xsl:with-param name="code" select="//n1:ClinicalDocument/n1:code/n1:translation/@code" />
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$documentClass != ''">
+        <xsl:value-of select="$documentClass" />
+      </xsl:when>
+      <xsl:when test="$documentClassFallback != ''">
+        <xsl:value-of select="$documentClassFallback" />
+      </xsl:when>
+      <xsl:when test="//n1:ClinicalDocument/n1:code/n1:translation/@code != '' and //n1:ClinicalDocument/n1:code/n1:translation/@displayName != ''">
+        <xsl:value-of select="//n1:ClinicalDocument/n1:code/n1:translation/@displayName" />
+        <xsl:text> (</xsl:text>
+        <xsl:value-of select="//n1:ClinicalDocument/n1:code/n1:translation/@code" />
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unbekannt</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="hasStatusCode">
+    <xsl:choose>
+      <xsl:when test="//n1:ClinicalDocument/*[local-name()='statusCode']/@code">
+        <xsl:value-of select="string(true())" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="string(false())" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="getStatusCode">
+    <xsl:choose>
+      <xsl:when test="//n1:ClinicalDocument/*[local-name()='statusCode']/@code='active'">
+        <xsl:text>Für dieses Dokument wird noch eine Aktualisierung erwartet</xsl:text>
+      </xsl:when>
+      <xsl:when test="//n1:ClinicalDocument/*[local-name()='statusCode']/@code='nullified'">
+        <xsl:text>storniertes Dokument</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unbekannt (</xsl:text>
+        <xsl:value-of select="//n1:ClinicalDocument/*[local-name()='statusCode']/@code" />
+        <xsl:text>)</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="renderParamWithValue">
@@ -7322,10 +7887,29 @@ GDA-ID:
             <xsl:text>Geburtsort</xsl:text>
           </td>
           <td>
-            <xsl:apply-templates select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthplace/n1:place/n1:addr"/>
+            <div class="addressClean">
+              <xsl:apply-templates select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:birthplace/n1:place/n1:addr"/>
+            </div>
           </td>
         </tr>
       </xsl:if>
+      <xsl:if test="//n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/*[local-name()='deceasedTime']">
+        <tr>
+          <td class="firstrow">
+            <xsl:text>Todesdatum</xsl:text>
+          </td>
+          <td>
+            <xsl:call-template name="formatDate">
+              <xsl:with-param name="date" select="//n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/*[local-name()='deceasedTime']" />
+              <xsl:with-param name="date_shortmode">true</xsl:with-param>
+            </xsl:call-template>
+          </td>
+        </tr>
+      </xsl:if>
+      <tr class="spacer">
+        <td />
+        <td />
+      </tr>
       <tr>
         <td class="firstrow">
           <xsl:text>SV-Nr</xsl:text>
@@ -7399,7 +7983,7 @@ GDA-ID:
 <xsl:template name="getPatientGuardian">
   <xsl:if test="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:guardian">
     <div>
-      <b><xsl:text>Gesetzlicher Vertreter: Sachwalter, Vormund, Obsorge</xsl:text></b>
+      <b><xsl:text>Gesetzlicher Vertreter: Erwachsenenvertreter, Vormund, Obsorgeberechtigter</xsl:text></b>
       <xsl:apply-templates select="/n1:ClinicalDocument/n1:recordTarget/n1:patientRole/n1:patient/n1:guardian"/>
     </div>
   </xsl:if>
@@ -7414,30 +7998,59 @@ GDA-ID:
   </div>
   <div class="boxRight">
     <p>
-      <b>
+      <strong>
         <xsl:call-template name="getEncounterCaseNumber"/>
         <xsl:apply-templates select="/n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:id/@extension"/>
-      </b>
+      </strong>
     </p>
     <p>
-      <xsl:call-template name="getAmbulatory">
-        <xsl:with-param name="code" select="/n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:code"/>
-        <xsl:with-param name="effectiveTime" select="/n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:effectiveTime"/>
-        <xsl:with-param name="date_shortmode">false</xsl:with-param>
+      <xsl:call-template name="getEncounterText">
+        <xsl:with-param name="format" select="'long'" />
       </xsl:call-template>
     </p>
+    <xsl:if test="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:responsibleParty/n1:assignedEntity">
+      <p>
+        <div style="padding-top: 1em">
+          <p>
+            <strong><xsl:text>Kontaktperson:</xsl:text></strong>
+          </p>
+          <p>
+            <xsl:call-template name="getName">
+              <xsl:with-param name="name" select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:responsibleParty/n1:assignedEntity/n1:assignedPerson/n1:name"/>
+            </xsl:call-template>
+          </p>
+          <xsl:if test="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:responsibleParty/n1:assignedEntity/n1:telecom">
+            <p>
+              <xsl:apply-templates select="//n1:ClinicalDocument/n1:componentOf/n1:encompassingEncounter/n1:responsibleParty/n1:assignedEntity/n1:telecom"/>
+            </p>
+          </xsl:if>
+        </div>
+      </p>
+    </xsl:if>
   </div>
   <div class="clearer"/>
 </xsl:template>
 
-<xsl:template name="getReferrer">
+<xsl:template name="getOrderingProvider">
+
+  <xsl:variable name="classStyle">
+    <xsl:choose>
+      <xsl:when test="//n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:associatedEntity/n1:scopingOrganization">
+        <xsl:text>address</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <div class="boxLeft">
-    <xsl:call-template name="getOrganization">
-      <xsl:with-param name="organization" select="//n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:associatedEntity/n1:scopingOrganization "/>
-      <xsl:with-param name="printNameBold" select="string(true())" />
-    </xsl:call-template>
-  </div>
-  <div class="boxRight">
+    <div class="{$classStyle}">
+      <xsl:call-template name="getOrganization">
+        <xsl:with-param name="organization" select="//n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:associatedEntity/n1:scopingOrganization"/>
+        <xsl:with-param name="printNameBold" select="string(true())" />
+      </xsl:call-template>
+    </div>
     <p>
       <xsl:call-template name="getName">
         <xsl:with-param name="name" select="//n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:associatedEntity/n1:associatedPerson/n1:name"/>
@@ -7446,6 +8059,26 @@ GDA-ID:
     <p>
       <xsl:call-template name="getContactInfo">
         <xsl:with-param name="contact" select="//n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:associatedEntity"/>
+      </xsl:call-template>
+    </p>
+  </div>
+  <div class="boxRight">
+    <p><b><xsl:text>Auftragsdaten:</xsl:text></b></p>
+    <p>
+      Auftragsnummer:
+      <xsl:choose>
+        <xsl:when test="/n1:ClinicalDocument/n1:inFulfillmentOf/n1:order/n1:id/@extension">
+          <xsl:apply-templates select="/n1:ClinicalDocument/n1:inFulfillmentOf/n1:order/n1:id/@extension" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>nicht angegeben</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </p>
+    <p>
+      Auftragsdatum:
+      <xsl:call-template name="formatDate">
+        <xsl:with-param name="date" select="/n1:ClinicalDocument/n1:participant[@typeCode='REF']/n1:time" />
       </xsl:call-template>
     </p>
   </div>
@@ -7518,7 +8151,7 @@ GDA-ID:
             <xsl:when test="$code='MTH'">Mutter</xsl:when>
             <xsl:when test="$code='NPRN'">leibliches Elternteil</xsl:when>
             <xsl:when test="$code='NFTH'">leiblicher Vater</xsl:when>
-            <xsl:when test="$code='NMTH'">leibliche Mutther</xsl:when>
+            <xsl:when test="$code='NMTH'">leibliche Mutter</xsl:when>
             <xsl:when test="$code='PRNINLAW'">Schwiegereltern</xsl:when>
             <xsl:when test="$code='FTHINLAW'">Schwiegervater</xsl:when>
             <xsl:when test="$code='MTHINLAW'">Schwiegermutter</xsl:when>
@@ -7577,7 +8210,7 @@ GDA-ID:
             <xsl:when test="$code='DOMPART'">LebenspartnerIn</xsl:when>
             <xsl:when test="$code='NBOR'">NachbarIn</xsl:when>
             <xsl:when test="$code='SPON'">Pflegeperson</xsl:when>
-            <xsl:when test="$code='GUARD'">SachwalterIn</xsl:when>
+            <xsl:when test="$code='GUARD'">Gesetzliche Vertretung</xsl:when>
             <xsl:when test="$code='SELF'">Patient selbst</xsl:when>
             <xsl:otherwise><xsl:value-of select="$code" />)</xsl:otherwise>
         
@@ -7629,7 +8262,7 @@ GDA-ID:
         <xsl:param name="code" />
         
         <xsl:choose>
-            <xsl:when test="$code='10'">Rollen für Personen</xsl:when>
+            <xsl:when test="$code='10'">Teil 1: Rollen für Personen</xsl:when>
             <xsl:when test="$code='100'">Ärztin/Arzt für Allgemeinmedizin</xsl:when>
             <xsl:when test="$code='101'">Approbierte Ärztin/Approbierter Arzt</xsl:when>
             <xsl:when test="$code='158'">Fachärztin/Facharzt</xsl:when>
@@ -7705,7 +8338,7 @@ GDA-ID:
             <xsl:when test="$code='214'">Diplomierte psychiatrische Gesundheits- und Krankenschwester/Diplomierter psychiatrischer Gesundheits- und Krankenpfleger</xsl:when>
             <xsl:when test="$code='215'">Heilmasseurin/Heilmasseur</xsl:when>
             <xsl:when test="$code='216'">Diplomierte Kardiotechnikerin/Diplomierter Kardiotechniker</xsl:when>
-            <xsl:when test="$code='20'">Teil 2: Rollen für Organisationen</xsl:when>
+            <xsl:when test="$code='20'">Teil 2: Rollen für Organisationen</xsl:when>
             <xsl:when test="$code='300'">Allgemeine Krankenanstalt</xsl:when>
             <xsl:when test="$code='301'">Sonderkrankenanstalt</xsl:when>
             <xsl:when test="$code='302'">Pflegeanstalt</xsl:when>
@@ -7738,7 +8371,11 @@ GDA-ID:
             <xsl:when test="$code='408'">Gesundheitsversicherung</xsl:when>
             <xsl:when test="$code='500'">IKT-Gesundheitsservice</xsl:when>
             <xsl:when test="$code='501'">Verrechnungsservice</xsl:when>
-            <xsl:otherwise>Fachrichtung unbekannt</xsl:otherwise>
+            <xsl:when test="$code='30'">Ergänzende Rollen</xsl:when>
+            <xsl:when test="$code='157'">Ärztin/Arzt in Ausbildung</xsl:when>
+            <xsl:when test="$code='217'">Pflegeassistentin/Pflegeassistent</xsl:when>
+            <xsl:when test="$code='218'">Pflegefachassistentin/Pflegefachassistent</xsl:when>
+            <xsl:otherwise><xsl:text>Fachrichtung unbekannt (</xsl:text><xsl:value-of select="$code" /><xsl:text>)</xsl:text></xsl:otherwise>
         
         </xsl:choose>
     
@@ -7784,6 +8421,8 @@ GDA-ID:
   <xsl:variable name="toTopIcon">data:image/png;base64,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</xsl:variable>
 
   <xsl:variable name="toTopIconHover">data:image/png;base64,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</xsl:variable>
+
+  <xsl:variable name="patientDeceasedIndicator">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</xsl:variable>
 
   <xsl:template name="uriDecode">
     <xsl:param name="uri" />

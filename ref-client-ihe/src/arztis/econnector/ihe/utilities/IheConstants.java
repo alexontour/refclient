@@ -71,6 +71,9 @@ public class IheConstants {
     /** name of GINA service. */
     public static final String GINA_SERVICE = "gina";
 
+	/** name of CRS service. */
+	public static final String CRS_SERVICE = "crs";
+
     /** name of AUTH service. */
     public static final String AUTH_SERVICE = "auth";
 

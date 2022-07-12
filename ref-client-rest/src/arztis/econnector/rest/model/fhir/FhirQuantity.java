@@ -8,13 +8,13 @@ package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.INT;
-import org.ehealth_connector.common.hl7cdar2.IVLINT;
-import org.ehealth_connector.common.hl7cdar2.IVLPQ;
-import org.ehealth_connector.common.hl7cdar2.PQ;
-import org.ehealth_connector.common.hl7cdar2.QTY;
 import org.hl7.fhir.r4.model.Quantity;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.IVLINT;
+import org.husky.common.hl7cdar2.IVLPQ;
+import org.husky.common.hl7cdar2.PQ;
+import org.husky.common.hl7cdar2.QTY;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
@@ -84,10 +84,10 @@ public class FhirQuantity extends Quantity {
 	 * @param qty measured quantity HL7 CDA R2 {@link QTY}
 	 */
 	private void fromQty(QTY qty) {
-		if (qty instanceof INT) {
-			setValue(((INT) qty).getValue().intValue());
-		} else if (qty instanceof IVLINT) {
-			FhirRange range = new FhirRange((IVLINT) qty);
+		if (qty instanceof INT intVal) {
+			setValue(intVal.getValue().intValue());
+		} else if (qty instanceof IVLINT ivlint) {
+			FhirRange range = new FhirRange(ivlint);
 
 			if (range.getLow() != null && range.getLow().getValue() != null) {
 				setValue(range.getLow().getValue());
@@ -96,8 +96,8 @@ public class FhirQuantity extends Quantity {
 				setValue(range.getHigh().getValue());
 				setComparator(range.getLow().getComparator());
 			}
-		} else if (qty instanceof PQ) {
-			fromPq((PQ) qty);
+		} else if (qty instanceof PQ pq) {
+			fromPq(pq);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class FhirQuantity extends Quantity {
 	 * @return created CDA R2 {@link IVLPQ}
 	 */
 	public static IVLPQ createHl7CdaR2Ivlpq(Quantity quantitiy, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.IVLPQ retVal = new org.ehealth_connector.common.hl7cdar2.IVLPQ();
+		org.husky.common.hl7cdar2.IVLPQ retVal = new org.husky.common.hl7cdar2.IVLPQ();
 
 		if (quantitiy != null && quantitiy.getUnit() != null) {
 			retVal.setValue(String.valueOf(quantitiy.getValue()));

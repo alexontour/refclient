@@ -12,11 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentUpdateImmunisierungsstatus;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.ConfidentialityCode;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component2;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Coding;
@@ -33,6 +28,12 @@ import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
+import org.husky.cda.elga.generated.artdecor.EimpfDocumentUpdateImmunisierungsstatus;
+import org.husky.common.at.enums.ConfidentialityCode;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.INT;
+import org.husky.common.hl7cdar2.POCDMT000040Component2;
+import org.husky.common.model.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -270,7 +271,7 @@ public class UpdateImmunizationState {
 			for (PractitionerRole author : authors) {
 				author.setPractitionerTarget(practitioners.get(author.getPractitioner().getReference()));
 				author.setOrganizationTarget(organizations.get(author.getOrganization().getReference()));
-				cda.addHl7Author(FhirPractitionerRole.getAtcdabbrHeaderAuthor(null, author));
+				cda.getAuthor().add(FhirPractitionerRole.getAtcdabbrHeaderAuthor(null, author));
 			}
 		}
 
@@ -287,9 +288,7 @@ public class UpdateImmunizationState {
 			version = ((IntegerType) versionExtension.getValue()).getValue();
 		}
 
-		cda.setVersion(
-				new Identificator(composition.getIdentifier().getSystem(), composition.getIdentifier().getValue()),
-				version);
+		cda.setVersionNumber(new INT(version));
 
 		cda.setTitle(CdaUtil.createTitle(composition.getTitle()));
 		cda.setEffectiveTime(CdaUtil.createEffectiveTimePoint(composition.getDate()));
@@ -346,7 +345,7 @@ public class UpdateImmunizationState {
 			confCode.setCodeSystem(confidentiality.getSystem());
 			confCode.setDisplayName(confidentiality.getDisplay());
 		} else {
-			org.ehealth_connector.common.mdht.Code code = ConfidentialityCode.NORMAL.getCode();
+			Code code = ConfidentialityCode.NORMAL.getCode();
 			confCode.setCode(code.getCode());
 			confCode.setCodeSystem(code.getCodeSystem());
 			confCode.setDisplayName(code.getDisplayName());

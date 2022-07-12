@@ -6,18 +6,17 @@
  */
 package arztis.econnector.rest.model.fhir;
 
-import org.ehealth_connector.common.at.enums.AuthorRole;
-import org.ehealth_connector.common.hl7cdar2.PN;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Person;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Practitioner;
-import org.openhealthtools.ihe.common.hl7v2.XCN;
-import org.openhealthtools.ihe.common.hl7v2.format.HL7V2MessageFormat;
-import org.openhealthtools.ihe.common.hl7v2.format.MessageDelimiters;
+import org.husky.common.at.enums.AuthorRole;
+import org.husky.common.hl7cdar2.PN;
+import org.husky.common.hl7cdar2.POCDMT000040Person;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Hl7v2Based;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Person;
 
 import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.GdaAddress;
 import arztis.econnector.ihe.generatedClasses.gdaiws.GdaIndexWsStub.GdaDescriptor;
@@ -63,7 +62,7 @@ public class FhirPractitioner extends Practitioner {
 	 * @param index  index of author or legal authenticator. It must be build of
 	 *               {document response index} - {author index}
 	 */
-	public FhirPractitioner(XCN author, String index) {
+	public FhirPractitioner(Person author, String index) {
 		fromDocumentEntryResponse(author, index);
 	}
 
@@ -226,17 +225,21 @@ public class FhirPractitioner extends Practitioner {
 	 * @param index  index of author or legal authenticator. It must be build of
 	 *               {document response index} - {author index}
 	 */
-	private void fromDocumentEntryResponse(XCN author, String index) {
+	private void fromDocumentEntryResponse(Person author, String index) {
 		if (author == null) {
 			return;
 		}
 
 		setId(index);
-		addName(author.getGivenName(), author.getFamilyName(), author.getPrefix(), author.getSuffix());
+		addName(author.getName().getGivenName(), author.getName().getFamilyName(), author.getName().getPrefix(),
+				author.getName().getSuffix());
 
 		Identifier id = new Identifier();
-		id.setValue(author.getIdNumber());
-		id.setSystem(author.getAssigningAuthorityUniversalId());
+		id.setValue(author.getId().getId());
+
+		if (author.getId().getAssigningAuthority() != null) {
+			id.setSystem(author.getId().getAssigningAuthority().getUniversalId());
+		}
 		addIdentifier(id);
 	}
 
@@ -255,8 +258,7 @@ public class FhirPractitioner extends Practitioner {
 
 		for (SlotType1 slot : slots) {
 			if (slot != null && "legalAuthenticator".equalsIgnoreCase(slot.getName())) {
-				XCN xcn = HL7V2MessageFormat.buildXCNFromMessageString(MetadataConverter.getStringFromSlot(slot),
-						MessageDelimiters.COMPONENT, MessageDelimiters.SUBCOMPONENT);
+				Person xcn = Hl7v2Based.parse(MetadataConverter.getStringFromSlot(slot), Person.class);
 				if (xcn != null) {
 					fromDocumentEntryResponse(xcn, index);
 				}
@@ -313,7 +315,7 @@ public class FhirPractitioner extends Practitioner {
 	 */
 	private void fromPOCDMT000040Person(POCDMT000040Person person, String id) {
 		setId(id);
-		if (person != null && person.getName() != null) {
+		if (person != null) {
 			for (PN pn : person.getName()) {
 				if (pn != null) {
 					addName(new FhirHumanName(pn));
@@ -351,7 +353,7 @@ public class FhirPractitioner extends Practitioner {
 				}
 			}
 
-			if (person.getClassCode() != null && person.getClassCode().isEmpty()) {
+			if (person.getClassCode().isEmpty()) {
 				person.getClassCode().add("PSN");
 			}
 			person.setDeterminerCode(CdaUtil.DETERMINERCODE_INSTANCE);

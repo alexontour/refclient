@@ -1,25 +1,25 @@
-> Das OpenSource Projekt "ELGA RefClient" zeigt eine Möglichkeit, wie man sich IHE-nativ mit den ELGA Schnittstellen verbindet und die CDA Generierung funktionieren kann. Das schweizer Opensource-Projekt "eHealth Connector" fungiert als Basis.
+> Das OpenSource Projekt "ELGA RefClient" zeigt eine Möglichkeit, wie man sich IHE-nativ mit den ELGA Schnittstellen verbindet und die CDA Generierung funktionieren kann. Das schweizer Opensource-Projekt "HUSKY" fungiert als Basis.
 
 # Funktionen
-- ServicesELGA
-  - API zum Erstellen von CDA-Dokumenten unter Verwendung der eHealthConnector API
+- ELGA RefClient
+  - API zum Erstellen von CDA-Dokumenten unter Verwendung der Husky API
   - Einfache REST-Inferfaces zur Kommunikation mit der Test-GUI
 - Test-Oberfläche 
   - HTML5/Java-Script Oberfläche unter Verwendung des Polymer Frameworks
-  - Kommuniziert mittels REST-Calls mit der in ServicesELGA gekapselten API
+  - Kommuniziert mittels REST-Calls mit der in RefClient gekapselten API
     - Anmeldung mit O-Card
     - Kontaktbestätigungen erzeugen
     - Dokumente up/downloaden
 
 # Basis & Erweiterungen
-- Basis: eHealth Connector Suisse (EHC)  (https://www.ehealth-connector.org/de/home) 
-  - https://gitlab.com/ehealth-connector/api-java
-  - Branch: 20190917-R201909
-    - https://gitlab.com/ehealth-connector/api-java/-/tree/20190917-R201909)
+- Basis: HUSKY Health Usability Key (https://www.e-health-suisse.ch/technik-semantik/technische-interoperabilitaet/husky.html) 
+  - https://github.com/project-husky/husky
+  - Branch: feat/austrian_extensions
+    - https://github.com/project-husky/husky/tree/feat/austrian_extensions)
 - Österreichspezifische Erweiterungen folgender Pakete
-  - ehealth_connector-cda-at
-  - ehealth_connector-common-at
-  - ehealth_connector-communication-at
+  - husky-elga
+  - husky-common-at
+  - husky-communication-at
   
 # Installationsanleitung
 [[_TOC_]]
@@ -28,16 +28,16 @@
 ## Systemvoraussetzungen 
 Beachten Sie, dass Sie nach jeder Installation einen Neustart durchführen!
 Bevor Sie anfangen können, muss Ihr System folgende Voraussetzungen erfüllen:
-1. **Java OpenJDK Version 12 oder 13**
+1. **Java OpenJDK Version 17**
    
    Unter folgenden Link können Sie diese installieren: https://jdk.java.net/archive/
    
    Für Linux-User finden Sie hier eine Installationsanleitung für JAVA OpenJDK: https://openjdk.java.net/install/
-2. **JAVA_HOME Environment Variable auf den Ordner OpenJDK 12 oder 13 setzen**
+2. **JAVA_HOME Environment Variable auf den Ordner OpenJDK 17 setzen**
 3. **Git muss installiert sein**
    
    Unter folgendem Link finden Sie den Download für Git: https://git-scm.com/downloads
-4. **Eclipse Version ab 2019-09 muss installiert sein**
+4. **Eclipse Version ab 2021-12 muss installiert sein**
    
    Unter folgendem Link verfügbar: https://www.eclipse.org/downloads/packages/installer 
 
@@ -184,9 +184,9 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
 1. Legen Sie einen Ordner an mit folgenden Unterordnern:
    1. resources (diesen Unterordner können Sie aus dem Eclipse Projekt kopieren)
    2. keystore (dieser Unterordner wurde unter Punkt „Keystore anlegen“ beschrieben)
-2. Speichern Sie die Datei ref-client-rest-0.0.2-SNAPSHOT.jar ebenfalls in diesen Ordner
+2. Speichern Sie die Datei ref-client-rest-1.0.0-SNAPSHOT.jar ebenfalls in diesen Ordner
 3. Das Programm kann mit Hilfe des Befehls aus dem Punkt „ELGA Referenz Client aus der Kommandozeile starten“ gestartet werden.
 
 ### ELGA Referenzclient aus der Kommandozeile starten 
 1. Öffnen Sie ein Terminal geben Sie folgenden Befehl ein:
-   1. <JAVA_HOME>/bin/java -Dfile.encoding=UTF-8 -jar ref-client-rest-0.0.2-SNAPSHOT.jar <encrypted keystore password>. Ersezten Sie die Platzhalter <> mit Ihrem Wert
+   1. <JAVA_HOME>/bin/java -Dfile.encoding=UTF-8 -jar ref-client-rest-1.0.0-SNAPSHOT.jar <encrypted keystore password>. Ersezten Sie die Platzhalter <> mit Ihrem Wert

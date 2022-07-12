@@ -23,7 +23,7 @@ public class SoapUtil {
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class.getName());
-	
+
 	/** XML schema instance namespace. */
 	public static final String XML_SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
 
@@ -53,12 +53,9 @@ public class SoapUtil {
 			Iterator exceptionElements = af.getDetail().getChildElements();
 			while (exceptionElements.hasNext()) {
 				Object object = exceptionElements.next();
-				if (object instanceof OMElement) {
-					OMElement element = (OMElement) object;
-					if ("message".equalsIgnoreCase(element.getLocalName())) {
-						returnMessage = element.getText();
-						LOGGER.error("There was a problem: {}", returnMessage);
-					}
+				if (object instanceof OMElement element && "message".equalsIgnoreCase(element.getLocalName())) {
+					returnMessage = element.getText();
+					LOGGER.error("There was a problem: {}", returnMessage);
 				}
 			}
 		} else if (af.getMessage() != null) {

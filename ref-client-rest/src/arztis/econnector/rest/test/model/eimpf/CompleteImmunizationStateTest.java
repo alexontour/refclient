@@ -12,12 +12,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentKompletterImmunisierungsstatus;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Composition;
@@ -37,11 +38,15 @@ import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
+import org.husky.cda.elga.xml.CdaDocumentUnmarshaller;
+import org.husky.common.hl7cdar2.POCDMT000040ClinicalDocument;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import arztis.econnector.ihe.tests.TestUtils;
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.eimpf.CompleteImmunizationState;
 import arztis.econnector.rest.utilities.FhirUtil;
 
@@ -96,12 +101,16 @@ public class CompleteImmunizationStateTest extends TestUtils {
 	 * {@link arztis.econnector.ihe.model.eimpf.CompleteImmunizationState()}.
 	 *
 	 * @throws JAXBException the JAXB exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException   Signals that an I/O exception has occurred.
+	 * @throws SAXException
 	 */
 	@Test
-	public void testCompleteImmunizationState() throws JAXBException, IOException {
-		EimpfDocumentKompletterImmunisierungsstatus cda = EimpfDocumentKompletterImmunisierungsstatus
-				.loadFromFile("resources/tests/xml/eImpf-2019-11-Kompletter_Immunisierungsstatus.xml");
+	public void testCompleteImmunizationState() throws JAXBException, IOException, SAXException {
+		POCDMT000040ClinicalDocument cda = null;
+		try (InputStream is = new FileInputStream(
+				new File("resources/tests/xml/eImpf-2019-11-Kompletter_Immunisierungsstatus.xml"))) {
+			cda = CdaDocumentUnmarshaller.unmarshall(is);
+		}
 
 		CompleteImmunizationState completeImmunization = new CompleteImmunizationState(cda);
 		assertNotNull(completeImmunization);
@@ -116,35 +125,35 @@ public class CompleteImmunizationStateTest extends TestUtils {
 
 		int countTest = 0;
 		for (BundleEntryComponent entry : completeImmunization.getEntry()) {
-			if (entry.getResource() instanceof Composition) {
-				testCompositionEntry((Composition) entry.getResource());
+			if (entry.getResource() instanceof Composition composition) {
+				testCompositionEntry(composition);
 				countTest++;
-			} else if (entry.getResource() instanceof Patient) {
-				testPatientEntry((Patient) entry.getResource());
+			} else if (entry.getResource() instanceof Patient patient) {
+				testPatientEntry(patient);
 				countTest++;
-			} else if (entry.getResource() instanceof PractitionerRole) {
-				testPractitionerRoleEntry((PractitionerRole) entry.getResource());
+			} else if (entry.getResource() instanceof PractitionerRole practitionerRole) {
+				testPractitionerRoleEntry(practitionerRole);
 				countTest++;
-			} else if (entry.getResource() instanceof Practitioner) {
-				testPractitionerEntry((Practitioner) entry.getResource());
+			} else if (entry.getResource() instanceof Practitioner practitioner) {
+				testPractitionerEntry(practitioner);
 				countTest++;
-			} else if (entry.getResource() instanceof Device) {
-				testDeviceEntry((Device) entry.getResource());
+			} else if (entry.getResource() instanceof Device device) {
+				testDeviceEntry(device);
 				countTest++;
-			} else if (entry.getResource() instanceof Organization) {
-				testOrganizationEntry((Organization) entry.getResource());
+			} else if (entry.getResource() instanceof Organization organization) {
+				testOrganizationEntry(organization);
 				countTest++;
-			} else if (entry.getResource() instanceof Immunization) {
-				testImmunizationEntry((Immunization) entry.getResource());
+			} else if (entry.getResource() instanceof Immunization immunization) {
+				testImmunizationEntry(immunization);
 				countTest++;
-			} else if (entry.getResource() instanceof ImmunizationRecommendation) {
-				testImmunizationRecommendationEntry((ImmunizationRecommendation) entry.getResource());
+			} else if (entry.getResource() instanceof ImmunizationRecommendation immunizationRecomm) {
+				testImmunizationRecommendationEntry(immunizationRecomm);
 				countTest++;
-			} else if (entry.getResource() instanceof Observation) {
-				testObservationEntry((Observation) entry.getResource());
+			} else if (entry.getResource() instanceof Observation observation) {
+				testObservationEntry(observation);
 				countTest++;
-			} else if (entry.getResource() instanceof DocumentReference) {
-				testDocumentReferenceEntry((DocumentReference) entry.getResource());
+			} else if (entry.getResource() instanceof DocumentReference documentReference) {
+				testDocumentReferenceEntry(documentReference);
 				countTest++;
 			}
 		}

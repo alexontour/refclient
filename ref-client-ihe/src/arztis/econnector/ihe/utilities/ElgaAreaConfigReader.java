@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ehealth_connector.common.at.enums.TypeCode;
+import org.husky.common.at.enums.TypeCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

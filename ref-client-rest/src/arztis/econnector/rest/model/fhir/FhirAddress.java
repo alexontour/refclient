@@ -12,18 +12,18 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.enums.PostalAddressUse;
-import org.ehealth_connector.common.hl7cdar2.AD;
-import org.ehealth_connector.common.hl7cdar2.AdxpCity;
-import org.ehealth_connector.common.hl7cdar2.AdxpCountry;
-import org.ehealth_connector.common.hl7cdar2.AdxpHouseNumber;
-import org.ehealth_connector.common.hl7cdar2.AdxpPostalCode;
-import org.ehealth_connector.common.hl7cdar2.AdxpState;
-import org.ehealth_connector.common.hl7cdar2.AdxpStreetAddressLine;
-import org.ehealth_connector.common.hl7cdar2.AdxpStreetName;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.StringType;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.enums.PostalAddressUse;
+import org.husky.common.hl7cdar2.AD;
+import org.husky.common.hl7cdar2.AdxpCity;
+import org.husky.common.hl7cdar2.AdxpCountry;
+import org.husky.common.hl7cdar2.AdxpHouseNumber;
+import org.husky.common.hl7cdar2.AdxpPostalCode;
+import org.husky.common.hl7cdar2.AdxpState;
+import org.husky.common.hl7cdar2.AdxpStreetAddressLine;
+import org.husky.common.hl7cdar2.AdxpStreetName;
 
 import arztis.econnector.ihe.utilities.CdaUtil;
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
@@ -83,30 +83,30 @@ public class FhirAddress extends Address {
 					JAXBElement<?> elem = (JAXBElement<?>) element;
 					if (elem.getValue() instanceof AdxpStreetName) {
 						AdxpStreetName obj = (AdxpStreetName) elem.getValue();
-						streetname = obj.xmlContent;
+						streetname = obj.getMergedXmlMixed();
 					} else if (elem.getValue() instanceof AdxpHouseNumber) {
 						AdxpHouseNumber obj = (AdxpHouseNumber) elem.getValue();
-						buildingNumber = obj.xmlContent;
+						buildingNumber = obj.getMergedXmlMixed();
 					} else if (elem.getValue() instanceof AdxpPostalCode) {
 						AdxpPostalCode obj = (AdxpPostalCode) elem.getValue();
-						setPostalCode(obj.xmlContent);
+						setPostalCode(obj.getMergedXmlMixed());
 					} else if (elem.getValue() instanceof AdxpCity) {
 						AdxpCity obj = (AdxpCity) elem.getValue();
-						setCity(obj.xmlContent);
+						setCity(obj.getMergedXmlMixed());
 					} else if (elem.getValue() instanceof AdxpState) {
 						AdxpState obj = (AdxpState) elem.getValue();
-						setState(obj.xmlContent);
+						setState(obj.getMergedXmlMixed());
 					} else if (elem.getValue() instanceof AdxpCountry) {
 						AdxpCountry obj = (AdxpCountry) elem.getValue();
-						setCountry(obj.xmlContent);
+						setCountry(obj.getMergedXmlMixed());
 					} else if (elem.getValue() instanceof AdxpStreetAddressLine) {
 						if (streetAddressLine1 == null) {
 							AdxpStreetAddressLine obj = (AdxpStreetAddressLine) elem.getValue();
-							streetAddressLine1 = obj.xmlContent;
+							streetAddressLine1 = obj.getMergedXmlMixed();
 							addLine(streetAddressLine1);
 						} else if (streetAddressLine2 == null) {
 							AdxpStreetAddressLine obj = (AdxpStreetAddressLine) elem.getValue();
-							streetAddressLine2 = obj.xmlContent;
+							streetAddressLine2 = obj.getMergedXmlMixed();
 							addLine(streetAddressLine2);
 						}
 					}
@@ -226,7 +226,7 @@ public class FhirAddress extends Address {
 	 * @return created {@link AD}
 	 */
 	public static AD createHl7CdaR2Ad(Address address, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.AD retVal = new org.ehealth_connector.common.hl7cdar2.AD();
+		org.husky.common.hl7cdar2.AD retVal = new org.husky.common.hl7cdar2.AD();
 
 		String value;
 
@@ -245,7 +245,7 @@ public class FhirAddress extends Address {
 		value = address.getCity();
 		if (value != null) {
 			AdxpCity obj = new AdxpCity();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent()
 					.add(new JAXBElement<AdxpCity>(new QName(CdaUtil.NAMESPACE_HL7_V3, "city"), AdxpCity.class, obj));
 		}
@@ -253,7 +253,7 @@ public class FhirAddress extends Address {
 		value = address.getCountry();
 		if (value != null) {
 			AdxpCountry obj = new AdxpCountry();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent().add(new JAXBElement<AdxpCountry>(new QName(CdaUtil.NAMESPACE_HL7_V3, "country"),
 					AdxpCountry.class, obj));
 		}
@@ -261,7 +261,7 @@ public class FhirAddress extends Address {
 		value = address.getPostalCode();
 		if (value != null) {
 			AdxpPostalCode obj = new AdxpPostalCode();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent().add(new JAXBElement<AdxpPostalCode>(new QName(CdaUtil.NAMESPACE_HL7_V3, "postalCode"),
 					AdxpPostalCode.class, obj));
 		}
@@ -269,7 +269,7 @@ public class FhirAddress extends Address {
 		value = address.getState();
 		if (value != null) {
 			AdxpState obj = new AdxpState();
-			obj.xmlContent = value;
+			obj.setXmlMixed(value);
 			retVal.getContent().add(
 					new JAXBElement<AdxpState>(new QName(CdaUtil.NAMESPACE_HL7_V3, "state"), AdxpState.class, obj));
 		}
@@ -278,7 +278,7 @@ public class FhirAddress extends Address {
 			for (StringType line : address.getLine()) {
 				if (line != null && line.getValue() != null) {
 					AdxpStreetAddressLine obj = new AdxpStreetAddressLine();
-					obj.xmlContent = line.getValue();
+					obj.setXmlMixed(line.getValue());
 					retVal.getContent()
 							.add(new JAXBElement<AdxpStreetAddressLine>(
 									new QName(CdaUtil.NAMESPACE_HL7_V3, "streetAddressLine"),

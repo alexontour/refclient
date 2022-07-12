@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.ehealth_connector.cda.at.elga.v2019.cdabuilder.PractitionerAt;
-import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaAuthorSpeciality;
-import org.ehealth_connector.common.enums.TelecomAddressUse;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -32,6 +28,11 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
+import org.husky.cda.elga.generated.artdecor.enums.ElgaAuthorSpeciality;
+import org.husky.common.at.PractitionerAt;
+import org.husky.common.enums.TelecomAddressUse;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.model.Code;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -99,7 +100,8 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		testAuthorBodyPs.setIdentifier(ids);
 
 		testAuthorBodyPs.getSpecialty().clear();
-		testAuthorBodyPs.addSpecialty(createCodeFromEnum(ElgaAuthorSpeciality.FACHARZT_HERZCHIRURGIE.getCode()));
+		testAuthorBodyPs.addSpecialty(
+				createCodeFromEnum(ElgaAuthorSpeciality.FACH_RZTIN_FACHARZT_F_R_HERZCHIRURGIE_L2.getCode()));
 
 		Practitioner practitioner = new Practitioner();
 		practitioner.addAddress(getAddress1());
@@ -124,7 +126,9 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		concept.addCoding(code);
 		testHeaderAuthor.addCode(concept);
 		testHeaderAuthor
-				.addSpecialty(createCodeFromEnum(ElgaAuthorSpeciality.FACHARZT_HYGIENE_MIKROBIOLOGIE.getCode()));
+				.addSpecialty(
+						createCodeFromEnum(
+								ElgaAuthorSpeciality.FACH_RZTIN_FACHARZT_F_R_HYGIENE_UND_MIKROBIOLOGIE_L2.getCode()));
 
 		Identifier internalId = new Identifier();
 		internalId.setSystem("1.2.40.0.34.99.111.1.3");
@@ -211,7 +215,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 	 * @param mdhtCode the mdht code
 	 * @return the codeable concept
 	 */
-	private CodeableConcept createCodeFromEnum(org.ehealth_connector.common.mdht.Code mdhtCode) {
+	private CodeableConcept createCodeFromEnum(Code mdhtCode) {
 		CodeableConcept concept = new CodeableConcept();
 		Coding code = new Coding();
 		code.setCode(mdhtCode.getCode());
@@ -222,7 +226,7 @@ public class FhirPractitionerRoleTest extends TestUtils {
 
 	/**
 	 * Test method for
-	 * {@link org.ehealth_connector.cda.at.cdabuilder.PractitionerAt#getAuthorBodyPs()}.
+	 * {@link org.husky.cda.at.cdabuilder.PractitionerAt#getAuthorBodyPs()}.
 	 *
 	 * @throws ParseException the parse exception
 	 */
@@ -288,7 +292,8 @@ public class FhirPractitionerRoleTest extends TestUtils {
 		assertNotNull(authorBodyPs.getAssignedAuthor().getRepresentedOrganization().getName());
 		assertNotNull(authorBodyPs.getAssignedAuthor().getRepresentedOrganization().getName().get(0));
 		assertNotNull(authorBodyPs.getAssignedAuthor().getRepresentedOrganization().getName().get(0).getContent());
-		assertEquals(getTs1(), authorBodyPs.getAssignedAuthor().getRepresentedOrganization().getName().get(0).xmlContent);
+		assertEquals(getTs1(),
+				authorBodyPs.getAssignedAuthor().getRepresentedOrganization().getName().get(0).getMergedXmlMixed());
 
 	}
 

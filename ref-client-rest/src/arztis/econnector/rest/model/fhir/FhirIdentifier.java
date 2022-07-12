@@ -8,9 +8,9 @@ package arztis.econnector.rest.model.fhir;
 
 import java.util.ArrayList;
 
-import org.ehealth_connector.common.enums.NullFlavor;
-import org.ehealth_connector.common.hl7cdar2.II;
 import org.hl7.fhir.r4.model.Identifier;
+import org.husky.common.enums.NullFlavor;
+import org.husky.common.hl7cdar2.II;
 
 import ca.uhn.fhir.model.api.annotation.DatatypeDef;
 
@@ -67,7 +67,7 @@ public class FhirIdentifier extends Identifier {
 	 * @return created CDA R2 {@link II}
 	 */
 	public static II createHl7CdaR2Ii(Identifier id, NullFlavor nf) {
-		org.ehealth_connector.common.hl7cdar2.II retVal = new org.ehealth_connector.common.hl7cdar2.II();
+		org.husky.common.hl7cdar2.II retVal = new org.husky.common.hl7cdar2.II();
 
 		if (id == null) {
 			if (retVal.nullFlavor == null) {

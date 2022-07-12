@@ -9,9 +9,9 @@ package arztis.econnector.ihe.queries;
 import java.rmi.RemoteException;
 
 import org.apache.xmlbeans.XmlException;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.AvailabilityStatus;
-import org.ehealth_connector.common.at.enums.TypeCode;
+import org.husky.common.at.enums.TypeCode;
+import org.husky.common.model.Identificator;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

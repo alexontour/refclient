@@ -6,20 +6,6 @@
  */
 package arztis.econnector.rest.model.eimpf;
 
-import org.ehealth_connector.cda.at.elga.v2019.elgaimpf.EimpfDocumentKompletterImmunisierungsstatus;
-import org.ehealth_connector.cda.at.elga.v2019.enums.ElgaSections;
-import org.ehealth_connector.common.hl7cdar2.CE;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Component3;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040DocumentationOf;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Entry;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ParentDocument;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RecordTarget;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040RelatedDocument;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Section;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ServiceEvent;
-import org.ehealth_connector.common.hl7cdar2.XActRelationshipDocument;
-import org.ehealth_connector.common.utils.DateUtil;
 import org.hl7.fhir.r4.model.Composition;
 import org.hl7.fhir.r4.model.Composition.CompositionAttestationMode;
 import org.hl7.fhir.r4.model.Composition.CompositionAttesterComponent;
@@ -34,7 +20,21 @@ import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
+import org.husky.cda.elga.generated.artdecor.ps.enums.ElgaSections;
+import org.husky.common.hl7cdar2.CE;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040ClinicalDocument;
+import org.husky.common.hl7cdar2.POCDMT000040Component3;
+import org.husky.common.hl7cdar2.POCDMT000040DocumentationOf;
+import org.husky.common.hl7cdar2.POCDMT000040Entry;
+import org.husky.common.hl7cdar2.POCDMT000040ParentDocument;
+import org.husky.common.hl7cdar2.POCDMT000040RecordTarget;
+import org.husky.common.hl7cdar2.POCDMT000040RelatedDocument;
+import org.husky.common.hl7cdar2.POCDMT000040Section;
+import org.husky.common.hl7cdar2.POCDMT000040ServiceEvent;
+import org.husky.common.hl7cdar2.XActRelationshipDocument;
 
+import arztis.econnector.ihe.utilities.DateUtil;
 import arztis.econnector.rest.model.fhir.FhirBundle;
 import arztis.econnector.rest.model.fhir.FhirCodeableConcept;
 import arztis.econnector.rest.model.fhir.FhirDevice;
@@ -75,7 +75,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	 *
 	 * @param cda CDA document to be extracted
 	 */
-	public CompleteImmunizationState(EimpfDocumentKompletterImmunisierungsstatus cda) {
+	public CompleteImmunizationState(POCDMT000040ClinicalDocument cda) {
 		fromCompleteImmunizationState(cda);
 	}
 
@@ -86,7 +86,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	 *
 	 * @param cda CDA document to be extracted
 	 */
-	private void fromCompleteImmunizationState(EimpfDocumentKompletterImmunisierungsstatus cda) {
+	private void fromCompleteImmunizationState(POCDMT000040ClinicalDocument cda) {
 		Composition composition = fromHeader(cda);
 
 		addResource(composition);
@@ -107,7 +107,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param cda         CDA document to be extracted
 	 * @param composition {@link Composition} to add extracted resources
 	 */
-	private void fromStructuredBody(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
+	private void fromStructuredBody(POCDMT000040ClinicalDocument cda, Composition composition) {
 		if (cda.getComponent() != null && cda.getComponent().getStructuredBody() != null
 				&& cda.getComponent().getStructuredBody().getComponent() != null) {
 			CE sectionCode;
@@ -146,7 +146,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	private void extractImmunization(POCDMT000040Section section, Composition composition) {
 		if (section != null) {
 			SectionComponent sectionComp = new SectionComponent();
-			sectionComp.setTitle(section.getTitle().xmlContent);
+			sectionComp.setTitle(section.getTitle().getMergedXmlMixed());
 			sectionComp.setCode(new FhirCodeableConcept(section.getCode()));
 			composition.addSection(sectionComp);
 
@@ -182,7 +182,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	private void extractObservation(POCDMT000040Section section, Composition composition, String type) {
 		if (section != null) {
 			SectionComponent sectionComp = new SectionComponent();
-			sectionComp.setTitle(section.getTitle().xmlContent);
+			sectionComp.setTitle(section.getTitle().getMergedXmlMixed());
 			sectionComp.setCode(new FhirCodeableConcept(section.getCode()));
 			composition.addSection(sectionComp);
 
@@ -217,7 +217,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	private void extractImmunizationRecommendation(POCDMT000040Section section, Composition composition) {
 		if (section != null) {
 			SectionComponent sectionComp = new SectionComponent();
-			sectionComp.setTitle(section.getTitle().xmlContent);
+			sectionComp.setTitle(section.getTitle().getMergedXmlMixed());
 			sectionComp.setCode(new FhirCodeableConcept(section.getCode()));
 			composition.addSection(sectionComp);
 
@@ -259,11 +259,11 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param cda CDA document to be extracted
 	 * @return {@link Composition} with extracted information
 	 */
-	private Composition fromHeader(EimpfDocumentKompletterImmunisierungsstatus cda) {
+	private Composition fromHeader(POCDMT000040ClinicalDocument cda) {
 		Composition composition = new Composition();
 
 		if (cda.getTitle() != null) {
-			composition.setTitle(cda.getTitle().xmlContent);
+			composition.setTitle(cda.getTitle().getMergedXmlMixed());
 		}
 
 		if (cda.getEffectiveTime() != null && cda.getEffectiveTime().getValue() != null) {
@@ -275,7 +275,7 @@ public class CompleteImmunizationState extends FhirBundle {
 		composition.setIdentifier(new FhirIdentifier(cda.getSetId()));
 		composition.addCategory(new FhirCodeableConcept(cda.getCode()));
 
-		if (cda.getCode() != null && cda.getCode().getTranslation() != null
+		if (cda.getCode() != null
 				&& !cda.getCode().getTranslation().isEmpty()) {
 			composition.setType(new FhirCodeableConcept(cda.getCode().getTranslation().get(0)));
 		}
@@ -298,12 +298,10 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param composition {@link Composition} to add extracted resources
 	 *
 	 */
-	private void extractPatient(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
-		if (cda.getRecordTarget() != null) {
-			for (POCDMT000040RecordTarget target : cda.getRecordTarget()) {
-				composition.setSubject(new Reference(String.format("Patient/%d", 1)));
-				addResource(new FhirPatientAt(target, "1"));
-			}
+	private void extractPatient(POCDMT000040ClinicalDocument cda, Composition composition) {
+		for (POCDMT000040RecordTarget target : cda.getRecordTarget()) {
+			composition.setSubject(new Reference(String.format("Patient/%d", 1)));
+			addResource(new FhirPatientAt(target, "1"));
 		}
 	}
 
@@ -315,8 +313,8 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param cda         CDA document to be extracted
 	 * @param composition {@link Composition} to add extracted resources
 	 */
-	private void extractDocumentationOf(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
-		if (cda.getDocumentationOf() != null && !cda.getDocumentationOf().isEmpty()) {
+	private void extractDocumentationOf(POCDMT000040ClinicalDocument cda, Composition composition) {
+		if (!cda.getDocumentationOf().isEmpty()) {
 			for (POCDMT000040DocumentationOf documentationOf : cda.getDocumentationOf()) {
 				if (documentationOf != null && documentationOf.getServiceEvent() != null) {
 					CompositionEventComponent event = new CompositionEventComponent();
@@ -341,16 +339,15 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param cda         CDA document to be extracted
 	 * @param composition {@link Composition} to add extracted resources
 	 */
-	private void extractRelatedDocument(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
-		if (cda.getRelatedDocument() != null && !cda.getRelatedDocument().isEmpty()) {
+	private void extractRelatedDocument(POCDMT000040ClinicalDocument cda, Composition composition) {
+		if (!cda.getRelatedDocument().isEmpty()) {
 			for (POCDMT000040RelatedDocument relatedDoc : cda.getRelatedDocument()) {
 				if (relatedDoc != null && relatedDoc.getParentDocument() != null) {
 					CompositionRelatesToComponent relatesTo = new CompositionRelatesToComponent();
 
 					relatesTo.setCode(convertXActDocumentRelationshipType(relatedDoc.getTypeCode()));
 
-					if (relatedDoc.getParentDocument().getId() != null
-							&& !relatedDoc.getParentDocument().getId().isEmpty()) {
+					if (!relatedDoc.getParentDocument().getId().isEmpty()) {
 						relatesTo.setTarget(new FhirIdentifier(relatedDoc.getParentDocument().getId().get(0)));
 					}
 
@@ -409,7 +406,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param composition {@link Composition} to add extracted resources
 	 *
 	 */
-	private void extractLegalAuthenticator(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
+	private void extractLegalAuthenticator(POCDMT000040ClinicalDocument cda, Composition composition) {
 		if (cda.getLegalAuthenticator() != null && cda.getCustodian().getAssignedCustodian() != null
 				&& cda.getCustodian().getAssignedCustodian().getRepresentedCustodianOrganization() != null) {
 			CompositionAttesterComponent attester = new CompositionAttesterComponent();
@@ -441,7 +438,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param composition {@link Composition} to add extracted resources
 	 *
 	 */
-	private void extractCustodian(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
+	private void extractCustodian(POCDMT000040ClinicalDocument cda, Composition composition) {
 		if (cda.getCustodian() != null && cda.getCustodian().getAssignedCustodian() != null
 				&& cda.getCustodian().getAssignedCustodian().getRepresentedCustodianOrganization() != null) {
 			composition.setCustodian(new Reference("Organization/custodian"));
@@ -460,31 +457,27 @@ public class CompleteImmunizationState extends FhirBundle {
 	 * @param composition {@link Composition} to add extracted resources
 	 *
 	 */
-	private void extractAuthors(EimpfDocumentKompletterImmunisierungsstatus cda, Composition composition) {
-		if (cda.getAuthor() != null) {
-			int index = 2;
-			for (POCDMT000040Author authorHl7cdar2 : cda.getAuthor()) {
-				if (authorHl7cdar2 != null && authorHl7cdar2.getAssignedAuthor() != null) {
-					if (authorHl7cdar2.getAssignedAuthor().getAssignedAuthoringDevice() != null) {
-						composition.addAuthor(new Reference(String.format("Device/%s", String.valueOf(index))));
-						addResource(new FhirDevice(authorHl7cdar2, String.valueOf(index)));
+	private void extractAuthors(POCDMT000040ClinicalDocument cda, Composition composition) {
+		int index = 2;
+		for (POCDMT000040Author authorHl7cdar2 : cda.getAuthor()) {
+			if (authorHl7cdar2 != null && authorHl7cdar2.getAssignedAuthor() != null) {
+				if (authorHl7cdar2.getAssignedAuthor().getAssignedAuthoringDevice() != null) {
+					composition.addAuthor(new Reference(String.format("Device/%s", String.valueOf(index))));
+					addResource(new FhirDevice(authorHl7cdar2, String.valueOf(index)));
 
-					} else {
-						composition
-								.addAuthor(new Reference(String.format("PractitionerRole/%s", String.valueOf(index))));
-						addResource(new FhirPractitionerRole(authorHl7cdar2, String.valueOf(index)));
+				} else {
+					composition.addAuthor(new Reference(String.format("PractitionerRole/%s", String.valueOf(index))));
+					addResource(new FhirPractitionerRole(authorHl7cdar2, String.valueOf(index)));
 
-						if (authorHl7cdar2.getAssignedAuthor().getAssignedPerson() != null) {
-							addResource(new FhirPractitioner(authorHl7cdar2.getAssignedAuthor().getAssignedPerson(),
-									String.valueOf(index)));
-						}
+					if (authorHl7cdar2.getAssignedAuthor().getAssignedPerson() != null) {
+						addResource(new FhirPractitioner(authorHl7cdar2.getAssignedAuthor().getAssignedPerson(),
+								String.valueOf(index)));
 					}
+				}
 
-					if (authorHl7cdar2.getAssignedAuthor().getRepresentedOrganization() != null) {
-						addResource(
-								new FhirOrganization(authorHl7cdar2.getAssignedAuthor().getRepresentedOrganization(),
-										String.valueOf(index)));
-					}
+				if (authorHl7cdar2.getAssignedAuthor().getRepresentedOrganization() != null) {
+					addResource(new FhirOrganization(authorHl7cdar2.getAssignedAuthor().getRepresentedOrganization(),
+							String.valueOf(index)));
 				}
 			}
 		}

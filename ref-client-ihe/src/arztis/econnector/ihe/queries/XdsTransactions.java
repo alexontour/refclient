@@ -11,37 +11,40 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.rmi.RemoteException;
-import java.util.Iterator;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import javax.activation.DataHandler;
+import javax.mail.util.ByteArrayDataSource;
 import javax.naming.ServiceUnavailableException;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.xmlbeans.XmlException;
-import org.ehealth_connector.common.Identificator;
-import org.ehealth_connector.common.at.enums.ClassCode;
-import org.ehealth_connector.common.at.enums.PracticeSettingCode;
-import org.ehealth_connector.common.at.enums.TypeCode;
-import org.ehealth_connector.common.at.utils.XdsMetadataUtilAt;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040Author;
-import org.ehealth_connector.common.hl7cdar2.POCDMT000040ClinicalDocument;
-import org.ehealth_connector.communication.DocumentRequest;
-import org.ehealth_connector.communication.at.ConvenienceCommunicationAt;
-import org.ehealth_connector.communication.at.DocumentMetadataAt;
-import org.ehealth_connector.communication.at.xd.storedquery.FindDocumentsQuery;
-import org.ehealth_connector.fhir.structures.gen.FhirCommon;
-import org.ehealth_connector.fhir.structures.gen.FhirPatient;
-import org.ehealth_connector.validation.service.config.ConfigurationException;
-import org.hl7.fhir.dstu3.model.Identifier;
-import org.openhealthtools.ihe.xds.document.DocumentDescriptor;
-import org.openhealthtools.ihe.xds.metadata.AvailabilityStatusType;
-import org.openhealthtools.ihe.xds.metadata.CodedMetadataType;
-import org.openhealthtools.ihe.xds.metadata.ParentDocumentRelationshipType;
-import org.openhealthtools.ihe.xds.response.XDSQueryResponseType;
-import org.openhealthtools.ihe.xds.response.XDSResponseType;
-import org.openhealthtools.ihe.xds.response.XDSRetrieveResponseType;
-import org.openhealthtools.ihe.xua.XUAAssertion;
+import org.hl7.fhir.r4.model.Identifier;
+import org.husky.common.at.enums.ClassCode;
+import org.husky.common.at.enums.PracticeSettingCode;
+import org.husky.common.at.enums.TypeCode;
+import org.husky.common.enums.DocumentDescriptor;
+import org.husky.common.hl7cdar2.POCDMT000040Author;
+import org.husky.common.hl7cdar2.POCDMT000040ClinicalDocument;
+import org.husky.common.model.Code;
+import org.husky.common.model.Identificator;
+import org.husky.communication.DocumentRequest;
+import org.husky.communication.at.ConvenienceCommunicationAt;
+import org.husky.communication.at.DocumentMetadataAt;
+import org.husky.communication.xd.storedquery.FindDocumentsQuery;
+import org.husky.fhir.structures.gen.FhirCommon;
+import org.husky.fhir.structures.gen.FhirPatient;
+import org.husky.xua.core.SecurityHeaderElement;
+import org.husky.xua.exceptions.DeserializeException;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AssociationType;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.AvailabilityStatus;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.Identifiable;
+import org.openehealth.ipf.commons.ihe.xds.core.metadata.SubmissionSet;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.QueryResponse;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.Response;
+import org.openehealth.ipf.commons.ihe.xds.core.responses.RetrievedDocumentSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -53,7 +56,6 @@ import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.
 import arztis.econnector.ihe.generatedClasses.org.oasis_open.docs.wss._2004._01.oasis_200401_wss_wssecurity_secext.SecurityHeaderType;
 import arztis.econnector.ihe.generatedClasses.rs.ebxml_regrep.tc.names.oasis.RegistryResponseType;
 import arztis.econnector.ihe.queries.common.IheQueryTransformer;
-import arztis.econnector.ihe.queries.common.InvalidCdaException;
 import arztis.econnector.ihe.utilities.AssertionTypeUtil;
 import arztis.econnector.ihe.utilities.ElgaAreaConfig;
 import arztis.econnector.ihe.utilities.ElgaAreaConfigReader;
@@ -88,7 +90,9 @@ public class XdsTransactions {
 	private static final String URN_OID_FORMAT = "urn:oid:";
 	
 	/** The HCP or context assertion. */
-	private XUAAssertion oAssertion;
+	private SecurityHeaderElement oAssertion;
+
+	private String oid;
 
 	/** The xml assertion. */
 	private AssertionType xmlAssertion;
@@ -105,13 +109,16 @@ public class XdsTransactions {
 	 * @param voId           eHealth application for which XDS transaction should be
 	 *                       executed
 	 * @throws ParserConfigurationException the parser configuration exception
-	 * @throws SAXException the SAX exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException                 the SAX exception
+	 * @throws IOException                  Signals that an I/O exception has
+	 *                                      occurred.
+	 * @throws DeserializeException
 	 */
 	public XdsTransactions(String organizationId, AssertionType assertion, ElgaEHealthApplication voId)
-			throws ParserConfigurationException, SAXException, IOException {
+			throws ParserConfigurationException, SAXException, IOException, DeserializeException {
 		xmlAssertion = assertion;
 		oAssertion = AssertionTypeUtil.transformAssertionTypeToXUAAssertion(assertion);
+		oid = AssertionTypeUtil.getOrganizationIdOfHcpAssertion(assertion).replace(URN_OID_FORMAT, "");
 		this.virtualOrganizationId = voId;
 	}
 
@@ -126,13 +133,12 @@ public class XdsTransactions {
 	 *                          use for electronic records and virtual
 	 *                          organizations. Values are available under <a href=
 	 *                          "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen</a>
-	 * @return a list of {@link XDSQueryResponseType}, if the query find some
-	 *         matching data, otherwise it will also return
-	 *         {@link XDSQueryResponseType}
-	 * @throws ServiceUnavailableException the service unavailable exception
+	 * @return a list of {@link QueryResponse}, if the query find some matching
+	 *         data, otherwise it will also return {@link QueryResponse}
+	 * @throws Exception
 	 */
-	public XDSQueryResponseType queryDocumentList(FindDocumentsQuery findDocumentQuery, String typeCode)
-			throws ServiceUnavailableException {
+	public QueryResponse queryDocumentList(FindDocumentsQuery findDocumentQuery, String typeCode)
+			throws Exception {
 		ConvenienceCommunicationAt communication = null;
 
 		if (findDocumentQuery == null) {
@@ -145,8 +151,7 @@ public class XdsTransactions {
 			throw new ServiceUnavailableException("No service found to query documents");
 		}
 
-		communication.addXUserAssertion(oAssertion);
-		return communication.queryDocuments(findDocumentQuery);
+		return communication.queryDocuments(findDocumentQuery, oAssertion, null);
 	}
 
 	/**
@@ -167,21 +172,21 @@ public class XdsTransactions {
 	 *                        "https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen">https://termpub.gesundheit.gv.at:443/TermBrowser/gui/main/main.zul?loadType=ValueSet&loadName=HL7-at_XDS-Dokumentenklassen</a>
 	 *
 	 *
-	 * @return {@link XDSQueryResponseType} with details about success or failure of
+	 * @return {@link RetrievedDocumentSet} with details about success or failure of
 	 *         request
+	 * @throws Exception
 	 *
 	 */
-	public XDSRetrieveResponseType retrieveDocument(String uniqueId, String repositoryId, String homeCommunityId,
-			String typeCode) {
+	public RetrievedDocumentSet retrieveDocument(String uniqueId, String repositoryId, String homeCommunityId,
+			String typeCode) throws Exception {
 		if (uniqueId == null || repositoryId == null || homeCommunityId == null) {
 			return null;
 		}
 
 		ConvenienceCommunicationAt communication = getConvenienceCommunication(typeCode, true);
-		communication.addXUserAssertion(oAssertion);
 
 		return communication.retrieveDocuments(generateDocumentRequests(uniqueId, repositoryId, homeCommunityId,
-				communication.getAffinityDomain().getRepositoryDestination().getUri()));
+				communication.getAffinityDomain().getRepositoryDestination().getUri()), oAssertion, null);
 	}
 
 	/**
@@ -297,21 +302,16 @@ public class XdsTransactions {
 	 * @param ownOid                 OID of document author
 	 * @param validate               indicates whether CDA document should be
 	 *                               validated before sending
-	 * @return {@link XDSResponseType} with details about success or failure of
-	 *         request
+	 * @return {@link Response} with details about success or failure of request
 	 * @throws Exception the exception
 	 */
-	public XDSResponseType provideAndRegisterDocuments(AvailabilityStatusType status, String typeCode,
-			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
-			CodedMetadataType formatCode, Identificator patientId, String parentDoc, POCDMT000040ClinicalDocument cda,
+	public Response provideAndRegisterDocuments(AvailabilityStatus status, String typeCode, Code healthCareFacilityCode,
+			Code practiceSettingCode, Code formatCode, Identificator patientId, String parentDoc,
+			POCDMT000040ClinicalDocument cda,
 			byte[] bytesDoc, String oid, String ownOid, boolean validate) throws Exception {
 		ConvenienceCommunicationAt communication = getConvenienceCommunication(typeCode, false);
 
 		final InputStream inputStream = new ByteArrayInputStream(bytesDoc);
-
-		if (validate) {
-			validateCdaDocument(bytesDoc);
-		}
 
 		ElgaAreaConfig config = ElgaAreaConfigReader.getInstance().getElgaAreaConfigMap().get(oid);
 		if (ownOid != null && ownOid.contains("urn:oid") && !config.isUrnOidNeededForOrganizationId()) {
@@ -320,69 +320,41 @@ public class XdsTransactions {
 		}
 
 		DocumentMetadataAt metaData = extractMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode,
-				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid,
-				config.isUrnOidNeededForOrganizationId());
+				formatCode, patientId, parentDoc, cda, communication, inputStream, oid, ownOid);
 
 		if (metaData != null) {
 			inputStream.close();
-			XDSResponseType response = null;
+			Response response = null;
 
-			String setId = XdsMetadataUtilAt.extractIdOfCxi(metaData.getRefrencedIdList());
+			String setId = metaData.getDocumentEntry().getReferenceIdList().get(0).getId();
 
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("set id: {}", setId);
-
-				int index = 0;
-				for (org.ehealth_connector.common.mdht.Identificator id : metaData.getPatient().getIds()) {
-					if (id != null) {
-						LOGGER.debug("Found ID: {}, index: {}", id.getExtension(), index++);
-					}
-				}
-
-				index = 0;
-				Iterator eListIterator = metaData.getMdhtDocumentEntryType().getSourcePatientInfo()
-						.getPatientIdentifier().iterator();
-				while (eListIterator.hasNext()) {
-					LOGGER.debug("Found ID: {}, index: {}", eListIterator.next().toString(), index++);
-				}
 			}
 
-			communication.addXUserAssertion(oAssertion);
+			metaData.getDocumentEntry().assignEntryUuid();
 
-			response = communication.submit(metaData.getParentDocument() != null, metaData.getAuthorsAt().get(0),
-					ownOid, getContentTypeCode(typeCode, oid));
+			if (communication.getTxnData().getSubmissionSet() == null) {
+				communication.getTxnData().setSubmissionSet(new SubmissionSet());
+			}
+
+			var dataSource = new ByteArrayDataSource(bytesDoc, "text/xml");
+			communication.getTxnData().getDocuments().get(0).setDataHandler(new DataHandler(dataSource));
+
+			communication.getTxnData().getSubmissionSet().setSourceId(ownOid);
+
+			communication.getTxnData().getSubmissionSet()
+					.setAuthor(communication.getTxnData().getDocuments().get(0).getDocumentEntry().getAuthors().get(0));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			communication.getTxnData().getSubmissionSet().setSubmissionTime(sdf.format(new Date()));
+
+			response = communication.submit(metaData.getAuthors().get(0), getContentTypeCode(typeCode, oid), oAssertion,
+					null);
 			communication.clearDocuments();
 			return response;
 		}
 
 		throw new IllegalArgumentException("No metadata found");
-	}
-
-	/**
-	 * validates passed CDA document. If validation failed with an error
-	 * {@link InvalidCdaException} will be thrown with result details.
-	 *
-	 * @param document bytes of XML document
-	 * @throws InvalidCdaException the invalid cda exception
-	 */
-	private void validateCdaDocument(byte[] document) throws InvalidCdaException {
-		try {
-			String validationResult = ValidationTransactions.validateCDADocument(true, true, false, document);
-
-			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("CDA doc: {}", new String(document));
-				LOGGER.info("Result of CDA validation: {}", validationResult);
-			}
-
-			if (validationResult.toUpperCase().contains("FAILED")) {
-				throw new InvalidCdaException(HttpServletResponse.SC_BAD_REQUEST, validationResult);
-			} else if (validationResult.toUpperCase().contains("WARNING")) {
-				LOGGER.warn(validationResult);
-			}
-
-		} catch (ConfigurationException e1) {
-			LOGGER.error(e1.getMessage(), e1);
-		}
 	}
 
 	/**
@@ -399,7 +371,7 @@ public class XdsTransactions {
 	 *
 	 * @return correct content type {@link CodedMetadataType}
 	 */
-	private CodedMetadataType getContentTypeCode(String typeCode, String oid) {
+	private Code getContentTypeCode(String typeCode, String oid) {
 		String key = oid;
 		if (typeCode != null) {
 			if (TypeCode.isMedications(typeCode)) {
@@ -412,23 +384,24 @@ public class XdsTransactions {
 		ElgaAreaConfig config = ElgaAreaConfigReader.getInstance().getElgaAreaConfigMap().get(key);
 
 		if (!config.isDifferentContentTypeNeeded()) {
-			return TypeCode.getEnum(typeCode).getCodedMetadataType();
+			return TypeCode.getEnum(typeCode).getCode();
 		}
 
-		CodedMetadataType metadataType = null;
+		Code metadataType = null;
 		String contentTypeCode = config.getContentTypes().get(typeCode);
 
 		if (contentTypeCode != null && TypeCode.isInValueSet(contentTypeCode)) {
-			metadataType = TypeCode.getEnum(contentTypeCode).getCodedMetadataType();
+			metadataType = TypeCode.getEnum(contentTypeCode).getCode();
 		}
 
 		if (metadataType == null) {
-			metadataType = ClassCode.getEnum(contentTypeCode).getCodedMetadataType();
+			metadataType = ClassCode.getEnum(contentTypeCode).getCode();
 		}
 
-		if (metadataType != null && metadataType.getSchemeName() != null && !metadataType.getSchemeName().isEmpty()
-				&& config.isUrnOidNeeded() && !metadataType.getSchemeName().contains(URN_OID_FORMAT)) {
-			metadataType.setSchemeName(String.format("urn:oid:%s", metadataType.getSchemeName()));
+		if (metadataType.getCodeSystemName() != null
+				&& !metadataType.getCodeSystemName().isEmpty() && config.isUrnOidNeeded()
+				&& !metadataType.getCodeSystemName().contains(URN_OID_FORMAT)) {
+			metadataType.setCodeSystemName(String.format("urn:oid:%s", metadataType.getCodeSystemName()));
 		}
 
 		return metadataType;
@@ -503,14 +476,13 @@ public class XdsTransactions {
 	 *
 	 * @return created {@link DocumentMetadataAt}
 	 */
-	private DocumentMetadataAt extractMetadata(AvailabilityStatusType status, String typeCode,
-			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
-			CodedMetadataType formatCode, Identificator patientId, String parentDoc, POCDMT000040ClinicalDocument cda,
-			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid,
-			boolean orgUrnOidNeeded) {
+	private DocumentMetadataAt extractMetadata(AvailabilityStatus status, String typeCode,
+			Code healthCareFacilityCode, Code practiceSettingCode, Code formatCode, Identificator patientId,
+			String parentDoc, POCDMT000040ClinicalDocument cda,
+			ConvenienceCommunicationAt communication, InputStream inputStream, String oid, String ownOid) {
 		DocumentMetadataAt metadata = null;
 		if (typeCode != null && cda != null) {
-			if (TypeCode.isImmunizationHistory(typeCode) && cda.getAuthor() != null && !cda.getAuthor().isEmpty()) {
+			if (TypeCode.isImmunizationHistory(typeCode) && !cda.getAuthor().isEmpty()) {
 				for (POCDMT000040Author author : cda.getAuthor()) {
 					if (author != null && author.getFunctionCode() == null && practiceSettingCode != null
 							&& practiceSettingCode.getCode() != null) {
@@ -521,11 +493,11 @@ public class XdsTransactions {
 			}
 
 			metadata = communication.addElgaDocument(DocumentDescriptor.CDA_R2, inputStream, cda,
-					isUrnOidNeeded(oid, typeCode), orgUrnOidNeeded);
+					isUrnOidNeeded(oid, typeCode));
 		}
 
 		addExplicitMetadata(status, typeCode, healthCareFacilityCode, practiceSettingCode, formatCode, patientId,
-				parentDoc, metadata, TypeCode.isMedications(typeCode), oid, ownOid);
+				parentDoc, metadata, TypeCode.isMedications(typeCode), oid, ownOid, cda);
 		return metadata;
 	}
 
@@ -562,10 +534,10 @@ public class XdsTransactions {
 	 *
 	 *
 	 */
-	private void addExplicitMetadata(AvailabilityStatusType status, String typeCode,
-			CodedMetadataType healthCareFacilityCode, CodedMetadataType practiceSettingCode,
-			CodedMetadataType formatCode, Identificator patientId, String parentDoc, DocumentMetadataAt metaData,
-			boolean emed, String elgaAreaOid, String ownOid) {
+	private void addExplicitMetadata(AvailabilityStatus status, String typeCode, Code healthCareFacilityCode,
+			Code practiceSettingCode, Code formatCode, Identificator patientId, String parentDoc,
+			DocumentMetadataAt metaData,
+			boolean emed, String elgaAreaOid, String ownOid, POCDMT000040ClinicalDocument cda) {
 		if (metaData == null) {
 			return;
 		}
@@ -581,31 +553,49 @@ public class XdsTransactions {
 		}
 
 		if (parentDoc != null) {
-			metaData.setParentDocument(parentDoc, ParentDocumentRelationshipType.RPLC_LITERAL);
+			metaData.setParentDocument(new Identifiable(parentDoc), AssociationType.REPLACE);
 		}
 
 		if (practiceSettingCode != null) {
 			metaData.setPracticeSettingCode(practiceSettingCode);
+			metaData.getDocumentEntry().getPracticeSettingCode().getDisplayName().setLang("de-AT");
+
 		}
 
 		Identificator sourcePatientId = getSourcePatientIdHl7Cdar2(metaData.getPatientIdsHl7Cdar2(), ownOid, typeCode);
 		if (sourcePatientId != null) {
-			metaData.setSourcePatientIdHl7Cdar2(sourcePatientId);
+			metaData.setSourcePatientId(sourcePatientId);
 		}
 
 		Identificator destinationPatientId = getDestinationPatientIdHl7Cdar2(patientId, elgaAreaOid, emed);
 
 		if (destinationPatientId != null) {
-			metaData.setDestinationPatientIdHl7Cdar2(destinationPatientId);
+			metaData.setDestinationPatientId(destinationPatientId);
 		}
 
-		if (metaData.getMdhtDocumentEntryType() != null
-				&& metaData.getMdhtDocumentEntryType().getLegalAuthenticator() != null) {
-			metaData.getMdhtDocumentEntryType().getLegalAuthenticator().setAssigningAuthorityName("");
+		metaData.setRefrencedIdList(new Identificator(cda.getSetId()),
+				isUrnOidNeeded(elgaAreaOid, typeCode)
+						? String.format("urn:oid:%s", getHomeCommunityId(emed, elgaAreaOid))
+						: getHomeCommunityId(emed, elgaAreaOid));
+
+		for (org.openehealth.ipf.commons.ihe.xds.core.metadata.Code code : metaData.getDocumentEntry()
+				.getConfidentialityCodes()) {
+			if (code != null) {
+				code.setSchemeName("urn:oid:2.16.840.1.113883.5.25");
+			}
 		}
 
-		metaData.setRefrencedIdList(metaData.getSetId(), getHomeCommunityId(emed, elgaAreaOid),
-				"urn:elga:iti:xds:2014:ownDocument_setId");
+		// fix type code
+		metaData.getDocumentEntry().getClassCode().setSchemeName("urn:oid:2.16.840.1.113883.6.1");
+		metaData.getDocumentEntry().getTypeCode().setSchemeName("urn:oid:2.16.840.1.113883.6.1");
+
+		// fix service event code
+		for (org.openehealth.ipf.commons.ihe.xds.core.metadata.Code code : metaData.getDocumentEntry()
+				.getEventCodeList()) {
+			if (code != null) {
+				code.setSchemeName("urn:oid:2.16.840.1.113883.6.96");
+			}
+		}
 	}
 
 	/**
@@ -703,15 +693,17 @@ public class XdsTransactions {
 		FhirPatient patient = new FhirPatient();
 		patient.addIdentifier(getIdentifierOfIdentificator(patientId));
 
-		List<FhirPatient> patients = PatientIndexTransactions.queryPatientDemographics(patient, oAssertion);
+		var patIndexTransactions = new PatientIndexTransactions();
+
+		List<FhirPatient> patients = patIndexTransactions.queryPatientDemographics(patient, oAssertion, oid);
 		if (patients != null && !patients.isEmpty() && patients.get(0) != null) {
 			for (Identifier id : patients.get(0).getIdentifier()) {
-				String oid = "";
-				if (id != null && id.getSystem().startsWith(FhirCommon.oidUrn)) {
-					oid = FhirCommon.removeUrnOidPrefix(id.getSystem());
+				String patIdOid = "";
+				if (id != null && id.getSystem().startsWith(FhirCommon.OID_URN)) {
+					patIdOid = FhirCommon.removeUrnOidPrefix(id.getSystem());
 
-					if (oid != null && oid.contains(elgaAreaOid)) {
-						return new Identificator(oid, id.getValue());
+					if (patIdOid != null && patIdOid.contains(elgaAreaOid)) {
+						return new Identificator(patIdOid, id.getValue());
 					}
 				}
 			}
