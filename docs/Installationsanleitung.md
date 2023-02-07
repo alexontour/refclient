@@ -112,7 +112,7 @@ Befolgen Sie die weiteren Schritte der Installationsanleitung wie auf der Seite 
       1. Staat oder Provinz
       1. Ländercode z.B. AT
    3. Kopieren Sie den generierten Keystore *.jks aus dem $JAVA_HOME/bin/ Ordner in den zuvor erstellten keystore Ordner.
-4. (Nur wenn mit GINA und e-Card gearbeitet wird, wird dieser Punkt benötigt) Importieren Sie die benötigten Zertifikate der SVC (https://www.chipkarte.at/cdscontent/?contentid=10007.678619&portal=ecardportal) in den cacerts1_keystore und den cacerts1_truststore.
+4. (Nur wenn mit GINA und e-Card gearbeitet wird, wird dieser Punkt benötigt) Importieren Sie die benötigten Zertifikate der SVC (https://www.chipkarte.at/zertifikate) in den cacerts1_keystore und den cacerts1_truststore.
    1. keytool -importcert -file <cerfilepath>.cer -keystore <keystorename>.jks -alias <alias>
 5. Importieren Sie den erhaltenen Key des jeweiligen ELGA Bereichs in den cacerts1_keystore mit privatem Schlüssel:
    1. openssl pkcs12 -export -in <pemfilepath>.pem -name test -out <name>.p12
