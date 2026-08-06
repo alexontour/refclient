@@ -250,15 +250,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.openehealth.ipf.commons</groupId>
-			<artifactId>ipf-commons-ihe-xds</artifactId>
-			<version>4.3-ALPHA</version>
+			<groupId>org.openehealth.ipf.platform-camel</groupId>
+			<artifactId>ipf-platform-camel-ihe-ws</artifactId>
+			<version>4.3.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.openehealth.ipf.platform-camel</groupId>
-			<artifactId>ipf-platform-camel-ihe-ws</artifactId>
-			<version>4.3-ALPHA</version>
+			<artifactId>ipf-platform-camel-ihe-atna</artifactId>
+			<version>4.3.1</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
