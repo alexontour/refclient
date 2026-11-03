@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>elga</groupId>
 		<artifactId>ref-client</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>ref-client-rest</artifactId>
 	<name>ref-client-rest</name>
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>elga</groupId>
 			<artifactId>ref-client-ihe</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

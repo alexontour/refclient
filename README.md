@@ -4,6 +4,10 @@ Eine deutschsprachige Demonstrationsanwendung für den Weg von der Patientensuch
 über die Impfdokumentation bis zum angezeigten eImpfpass. Zwei Oberflächen nutzen
 zusammen die FHIR-/CDA-Verarbeitung des ELGA-Referenzclients auf HUSKY-Basis.
 
+**Version 1.0.0** ist online unter [refclient.ehealth-solutions.at](https://refclient.ehealth-solutions.at/).
+Die [Schulimpfung](https://refclient.ehealth-solutions.at/schulimpfung/) ist dort ebenfalls erreichbar.
+Änderungen je Version stehen in der [Versionshistorie](CHANGELOG.md).
+
 **Für synthetische Testdaten.** Die Anwendung erzeugt und liest echte CDA-Dokumente;
 Patientenindex, PVP-Anmeldung und ELGA-Übertragung sind Mocks. Ein Mock-Beleg ist
 keine Bestätigung eines echten ELGA-Dienstes. Der Impfstoffkatalog ist historisch.
@@ -73,10 +77,10 @@ verwendet andere lokale Fixtures; diese Unterschiede sind in ihrer Anleitung bes
 
 ## Hinweise für Verantwortliche
 
-Der vorbereitete Deployment-Stand ist eine **interne Demonstrations- und Testumgebung**.
+Die online verfügbare Anwendung ist eine **Demonstrations- und Testumgebung**.
 Die Schulimpfung verwaltet einen gemeinsamen Arbeitszustand; sie ist kein isolierter
-Mehrbenutzerbetrieb. Echte Patientendaten, echte ELGA-Zertifikate und öffentliche
-Freigabe sind nicht Bestandteil dieses Standes.
+Mehrbenutzerbetrieb. Echte Patientendaten und echte ELGA-Zertifikate sind nicht
+Bestandteil dieses Standes.
 
 Die Funktionsdokumentation steht oben im Mittelpunkt. Technische Details sind getrennt:
 [Betrieb und Deployment](docs/Docker.md) · [Prüfungen](tests/README.md) ·

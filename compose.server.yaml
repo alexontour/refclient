@@ -1,0 +1,25 @@
+services:
+  gateway:
+    networks:
+      - default
+      - traefik
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: matrix_matrix_network
+      traefik.http.routers.refclient.rule: Host(`refclient.ehealth-solutions.at`)
+      traefik.http.routers.refclient.entrypoints: websecure
+      traefik.http.routers.refclient.tls: "true"
+      traefik.http.routers.refclient.tls.certresolver: letls
+      traefik.http.routers.refclient.service: refclient
+      traefik.http.services.refclient.loadbalancer.server.port: "8080"
+      traefik.http.routers.refclient-http.rule: Host(`refclient.ehealth-solutions.at`)
+      traefik.http.routers.refclient-http.entrypoints: web
+      traefik.http.routers.refclient-http.middlewares: refclient-https
+      traefik.http.routers.refclient-http.service: refclient
+      traefik.http.middlewares.refclient-https.redirectscheme.scheme: https
+      traefik.http.middlewares.refclient-https.redirectscheme.permanent: "true"
+
+networks:
+  traefik:
+    external: true
+    name: matrix_matrix_network

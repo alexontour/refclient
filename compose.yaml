@@ -18,6 +18,10 @@ services:
     restart: unless-stopped
   schulimpfung:
     build: ./schulimpfung
+    networks:
+      default:
+        aliases:
+          - refclient-school-backend
     environment:
       APP_ENV: test
       APPLICATION_ROOT: /schulimpfung
@@ -29,6 +33,10 @@ services:
     restart: unless-stopped
   refclient:
     build: .
+    networks:
+      default:
+        aliases:
+          - refclient-java-backend
     environment:
       ELGA_MOCK_EXTERNAL: "true"
     healthcheck:
