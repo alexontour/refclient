@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.ihe.gazelle.common.code</groupId>
+	<artifactId>common-operations-jar</artifactId>
+	<name>common-operations-jar</name>
+	<version>1.0.2</version>
+	
+	<description>common operations used by the validators</description>
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://gazelle.ihe.net/jira/projects/GOC</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://gazelle.ihe.net/jenkins/job/common-operations-jar/</url>
+	</ciManagement>
+	<organization>
+		<url>https://ihe-europe.net/</url>
+		<name>IHE-Europe</name>
+	</organization>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<compilerVersion>1.7</compilerVersion>
+					<fork>true</fork>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<scm>
+		<connection>scm:svn:svn+ssh://scm.gforge.inria.fr/svn/gazelle/validators/src-gen/common-operations-jar/tags/common-operations-jar-1.0.2</connection>
+		<developerConnection>scm:svn:svn+ssh://scm.gforge.inria.fr/svn/gazelle/validators/src-gen/common-operations-jar/tags/common-operations-jar-1.0.2</developerConnection>
+		<url>https://scm.gforge.inria.fr/anonscm/svn/gazelle/validators/src-gen/common-operations-jar/tags/common-operations-jar-1.0.2</url>
+	</scm>
+	
+	<distributionManagement>
+		<repository>
+			<id>sumo</id>
+			<url>https://gazelle.ihe.net/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sumo</id>
+			<url>https://gazelle.ihe.net/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>irisa-sumo</id>
+			<name>Sumo Irisa Public Maven Repository Group</name>
+			<url>https://gazelle.ihe.net/nexus/content/groups/public/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-resteasy</artifactId>
+			<version>2.2.2.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>jaxen</groupId>
+		  <artifactId>jaxen</artifactId>
+		  <version>1.1.1</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>saxon9he</groupId>
+		  <artifactId>net.sf.saxon</artifactId>
+		  <version>9.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>apache-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+			
+			
+	</dependencies>
+	
+</project>

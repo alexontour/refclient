@@ -71,3 +71,5 @@ müssen alle dortigen Prüfungen erfolgreich sein. Buildprotokolle, Laufzeitdate
 Zertifikate und lokale Zugangsdaten gehören nicht ins Repository.
 
 [Prüfumfang](../tests/README.md) · [Herkunft und Lizenz](../README.md#herkunft-und-lizenz)
+
+Die drei benötigten historischen Gazelle-Artefakte liegen versionsgleich im mitgelieferten Maven-Repository. Ihre ursprünglichen SHA-1-Dateien wurden geprüft; ein zusätzlicher SHA-256-Nachweis und die Herkunftsangaben liegen unter ref-client-ihe/librariesNeeded/repo/net/ihe/gazelle. Dadurch benötigt der aktuelle Build für diese Pakete keinen Zugriff auf den ausgefallenen IHE-Server.
