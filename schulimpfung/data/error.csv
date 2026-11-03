@@ -1,0 +1,6 @@
+Code,Fehlermeldung,Logik
+100,SVNr doppelt,"wenn ein Schüler hinzugefügt wird, und die SBNr bereits vorhanden ist"
+101,Schülerliste fehlerhaft,"Prüfung beim Upload: Doppelte SVNr, SVNr fehlerhaft"
+102,SVNr fehlerhaft,Prüfung ob SVNr. Ok – siehe http://www2.argedaten.at/static/svnr.html
+103,CDA validieren fehlgeschlagen,Validierungsfehler CDA
+104,Upload eImpfpass fehlgeschlagen,Fehler beim Upload

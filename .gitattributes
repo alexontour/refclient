@@ -1,0 +1,3 @@
+# Preserve supplied reference assets while keeping checks useful for authored code.
+ref-client-rest/resources/cda/* -whitespace
+schulimpfung/data/cda/* -whitespace

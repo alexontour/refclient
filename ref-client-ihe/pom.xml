@@ -84,19 +84,28 @@
 	</build>
 	<repositories>
 		<repository>
+			<id>gazelle</id>
+			<url>https://nexus.ihe-catalyst.net/repository/releases/</url>
+		</repository>
+		<repository>
 			<id>my-local-repo</id>
 			<url>file://${project.basedir}/librariesNeeded/repo</url>
 		</repository>
 		<repository>
 			<id>mvnrepository.com</id>
 			<name>MVN Repository</name>
-			<url>http://mvnrepository.com/artifact/</url>
+			<url>https://repo.maven.apache.org/maven2/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+			<groupId>org.openehealth.ipf.commons</groupId>
+			<artifactId>ipf-commons-ihe-xds</artifactId>
+			<version>${ipf.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>elga</groupId>
 			<artifactId>ref-client-common</artifactId>

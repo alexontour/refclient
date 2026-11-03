@@ -11,6 +11,7 @@ import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class IJettyServer extends Thread {
     public IJettyServer(int httpPort, HttpConfiguration http){
         this.httpPort = httpPort;
         this.httpConfig = http;
-        this.handler = new RestHandler();
+        this.handler = "true".equalsIgnoreCase(System.getenv("ELGA_MOCK_EXTERNAL")) ? null : new RestHandler();
     }
 
     /**
@@ -58,7 +59,12 @@ public class IJettyServer extends Thread {
             httpConnector.setPort(httpPort);
         }
 
-        HandlerCollection handlerCollection = new HandlerCollection(handler);
+        ResourceHandler ui = new ResourceHandler();
+        ui.setResourceBase("ui");
+        ui.setDirectoriesListed(false);
+        ui.setWelcomeFiles(new String[] { "index.html" });
+        HandlerCollection handlerCollection = new HandlerCollection(
+            "true".equalsIgnoreCase(System.getenv("ELGA_MOCK_EXTERNAL")) ? new EImpfHandler() : handler, ui);
 
         try {
             if (httpConnector != null) {

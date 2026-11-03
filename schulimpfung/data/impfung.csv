@@ -1,0 +1,11 @@
+Anzeige,ValueSet,Anzeige als,Hilfetext,Order
+Dosis,https://termgit.elga.gv.at/ValueSet-eimpf-impfdosis.html,DropDown,Hilfetext,3
+Grund,https://termgit.elga.gv.at/ValueSet-eimpf-impfgrund.html,DropDown,Hilfetext,4
+Relevante Erkrankung,https://termgit.elga.gv.at/ValueSet-eimpf-impfrelevanteerkrankung.html,DropDown,Hilfetext,10
+Schema,https://termgit.elga.gv.at/ValueSet-eimpf-impfschema.html,DropDown,Hilfetext,1
+Impfstoff,https://termgit.elga.gv.at/ValueSet-eimpf-impfstoffe.html,DropDown,Hilfetext,2
+Klassifikation,https://termgit.elga.gv.at/ValueSet-eimpf-zusatzklassifikation.html,DropDown,Hilfetext,7
+Setting,https://termgit.elga.gv.at/ValueSet-eimpf-zusatzklassifikation-impfsetting.html,DropDown,Hilfetext,8
+Programm,https://termgit.elga.gv.at/ValueSet-eimpf-zusatzklassifikation-impfprogramm.html,,,9
+Chargennummer,,Textfeld,Hilfetext,5
+Datum,default=‘now’,Datepicker,Hilfetext,6

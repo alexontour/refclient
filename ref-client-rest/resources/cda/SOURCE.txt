@@ -1,0 +1,5 @@
+Quelle: https://gitlab.com/elga-gmbh/cda/visualization
+Commit: cd693384d78e9bbe722ebb732f9f8b81b59e87ed
+Datei: ELGA_eimpf_Referenzstylesheet/eimpf-stylesheet_v1.0.xsl
+Version: 1.18.2+20260318
+Unverändert übernommen; Lizenz und Nutzungsbedingungen siehe LICENSE und readme.txt.

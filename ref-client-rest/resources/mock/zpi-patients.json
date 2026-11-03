@@ -1,0 +1,132 @@
+{
+  "type": "collection",
+  "resourceType": "Bundle",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "0ed79aa4-4970-4320-b95d-af5dadbc1dc0",
+        "identifier": [
+          {
+            "value": "1001210995",
+            "system": "1.2.40.0.10.1.4.3.1"
+          },
+          {
+            "value": "ZPI-TEST-1",
+            "system": "1.2.40.0.34.99.10.2.1.2.14827"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Max"
+            ],
+            "family": "Musterpatient"
+          }
+        ],
+        "birthDate": "1995-09-21",
+        "gender": "male",
+        "address": [
+          {
+            "line": "Hubertusgasse 5",
+            "city": "Graz",
+            "postalCode": "8020",
+            "state": "STMK",
+            "country": "AUT"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "03168899521",
+            "use": "home"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "bff8c0f6-058d-4860-8252-698d64702d00",
+        "identifier": [
+          {
+            "value": "1002210995",
+            "system": "1.2.40.0.10.1.4.3.1"
+          },
+          {
+            "value": "ZPI-TEST-2",
+            "system": "1.2.40.0.34.99.10.2.1.2.14827"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Maria"
+            ],
+            "family": "Musterpatient"
+          }
+        ],
+        "birthDate": "1995-09-21",
+        "gender": "female",
+        "address": [
+          {
+            "line": "Hubertusgasse 5",
+            "city": "Graz",
+            "postalCode": "8020",
+            "state": "STMK",
+            "country": "AUT"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "03168899521",
+            "use": "home"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "18dfa018-3f70-443c-a357-33e7de592d49",
+        "identifier": [
+          {
+            "value": "6122031523",
+            "system": "1.2.40.0.10.1.4.3.1"
+          },
+          {
+            "value": "ZPI-TEST-3",
+            "system": "1.2.40.0.34.99.10.2.1.2.14827"
+          }
+        ],
+        "name": [
+          {
+            "given": [
+              "Max"
+            ],
+            "family": "Musterpatient"
+          }
+        ],
+        "birthDate": "2003-09-21",
+        "gender": "male",
+        "address": [
+          {
+            "line": "Hubertusgasse 5",
+            "city": "Graz",
+            "postalCode": "8020",
+            "state": "STMK",
+            "country": "AUT"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "03168899521",
+            "use": "home"
+          }
+        ]
+      }
+    }
+  ]
+}

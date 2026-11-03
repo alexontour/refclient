@@ -1,0 +1,22 @@
+meta {
+  name: Leere Patientensuche ablehnen
+  type: http
+  seq: 4
+}
+post {
+  url: {{baseUrl}}/api/eimpf/patients/search
+  body: json
+  auth: none
+}
+headers {
+  Content-Type: application/fhir+json
+}
+body:json {
+  {"resourceType":"Patient"}
+}
+tests {
+  test("Leere Suche liefert OperationOutcome", function () {
+    expect(res.getStatus()).to.equal(400);
+    expect(res.getBody().resourceType).to.equal("OperationOutcome");
+  });
+}

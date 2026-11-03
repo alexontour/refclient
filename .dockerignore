@@ -1,0 +1,11 @@
+.git
+docs
+examples
+**/target
+build.log
+docker-build.log
+vendor
+**/node_modules
+**/test-results
+**/playwright-report
+.upstream-metadata

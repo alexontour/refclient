@@ -1,0 +1,68 @@
+services:
+  gateway:
+    image: nginx:1.28-alpine
+    ports:
+      - "127.0.0.1:8087:8080"
+    volumes:
+      - ./scripts/ui-gateway.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      refclient:
+        condition: service_healthy
+      schulimpfung:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  schulimpfung:
+    build: ./schulimpfung
+    environment:
+      APP_ENV: test
+      APPLICATION_ROOT: /schulimpfung
+      REFCLIENT_URL: http://refclient:8087
+      DOWNLOAD_DELAY_SECONDS: "0"
+    volumes:
+      - schulimpfung-data:/var/lib/schulimpfung
+      - schulimpfung-logs:/var/log/schulimpfung
+    restart: unless-stopped
+  refclient:
+    build: .
+    environment:
+      ELGA_MOCK_EXTERNAL: "true"
+    healthcheck:
+      test: ["CMD", "java", "-cp", "/app/healthcheck", "DockerHealthcheck"]
+      interval: 15s
+      timeout: 10s
+      start_period: 60s
+      retries: 5
+    volumes:
+      - eimpf-data:/app/data
+    restart: unless-stopped
+  bruno:
+    image: usebruno/cli@sha256:384707c6fc91969a7359c245d6a5746c210d0dbee46910699e7c07632fc874f9
+    profiles: ["tests"]
+    working_dir: /bruno
+    volumes:
+      - ./tests/bruno:/bruno:ro
+    command: ["run", "--env", "Docker"]
+    depends_on:
+      refclient:
+        condition: service_healthy
+  ui-tests:
+    build: ./tests/ui
+    profiles: ["tests"]
+    init: true
+    shm_size: '1gb'
+    environment:
+      BASE_URL: http://gateway:8080
+    volumes:
+      - ./tests/ui/test-results:/tests/test-results
+    depends_on:
+      gateway:
+        condition: service_healthy
+volumes:
+  eimpf-data:
+  schulimpfung-data:
+  schulimpfung-logs:

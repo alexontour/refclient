@@ -1,0 +1,7 @@
+{
+  "requests": 5,
+  "timeouts": 0,
+  "minMs": 131.0,
+  "maxMs": 614.0,
+  "meanMs": 244.0
+}

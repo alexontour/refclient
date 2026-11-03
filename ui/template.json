@@ -1,0 +1,245 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "1.2.40.0.34.99.10.2.1.2.14827",
+    "value": "44929e4e-048e-03fc-be6b-108f72287c59_20201022172003"
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Composition",
+        "type": {
+          "coding": [
+            {
+              "code": "87273-9",
+              "system": "http://loinc.org"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "11369-6",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "title": "Update Immunisierungsstatus",
+        "status": "final",
+        "date": "2020-10-20T15:30:00Z",
+        "subject": {
+          "reference": "Patient/1",
+          "type": "Patient"
+        },
+        "author": [
+          {
+            "reference": "PractitionerRole/2",
+            "type": "PractitionerRole"
+          }
+        ],
+        "custodian": {
+          "reference": "Organization/1",
+          "type": "Organization"
+        },
+        "attester": [
+          {
+            "mode": "legal",
+            "time": "2020-10-20T14:45Z",
+            "party": {
+              "reference": "PractitionerRole/2",
+              "type": "PractitionerRole"
+            }
+          }
+        ],
+        "event": [
+          {
+            "period": {
+              "start": "2020-10-20",
+              "end": "2020-10-21"
+            }
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/composition-clinicaldocument-versionNumber",
+            "valueInteger": 2
+          }
+        ],
+        "identifier": {
+          "system": "1.2.40.0.34.99.10.2.1.2.14827",
+          "value": "44929e4e-048e-03fc-be6b-108f72287c59_20201022112003"
+        },
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "Immunization/1",
+                "type": "Immunization"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [
+          {
+            "value": "6122031523",
+            "system": "1.2.40.0.10.1.4.3.1"
+          },
+          {
+            "value": "124",
+            "system": "1.2.40.0.34.99.10.2.1.2.14827"
+          }
+        ],
+        "name": [
+          {
+            "given": "Max",
+            "family": "Musterpatient"
+          }
+        ],
+        "birthDate": "2003-09-21",
+        "gender": "male",
+        "address": [
+          {
+            "line": "Hubertusgasse 5",
+            "city": "Graz",
+            "postalCode": "8020",
+            "state": "STMK",
+            "country": "AUT"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "03168899521",
+            "use": "home"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "2",
+        "identifier": [
+          {
+            "value": "1",
+            "system": "1.2.40.0.34.99.10.2.1.2.14827"
+          }
+        ],
+        "organization": {
+          "reference": "Organization/1",
+          "type": "Organization"
+        },
+        "practitioner": {
+          "reference": "Practitioner/1",
+          "type": "Practitioner"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "1",
+        "name": [
+          {
+            "given": "Helga",
+            "family": "Musterärztin",
+            "prefix": "Dr."
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0154168899521",
+            "use": "work"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "1",
+        "identifier": [
+          {
+            "system": "1.2.40.0.34.3.1.1177",
+            "value": "1.2.40.0.34.3.1.1177"
+          }
+        ],
+        "name": "Landessanitätsdirektion Salzburg, Referat 20902, Abteilung 9 Gesundheit, Land Salzburg"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "1",
+        "identifier": [
+          {
+            "system": "1.2.40.0.34.99.10.2.1.2.14827",
+            "value": "1"
+          }
+        ],
+        "status": "completed",
+        "occurrenceDateTime": "2020-10-20T14:00:00Z",
+        "vaccineCode": {
+          "coding": [
+            {
+              "code": "4209702"
+            }
+          ]
+        },
+        "lotNumber": "123458",
+        "protocolApplied": [
+          {
+            "series": "SCHEMA007",
+            "doseNumberString": "D1",
+            "authority": {
+              "reference": "PractitionerRole/2",
+              "type": "PractitionerRole"
+            },
+            "targetDisease": [
+              {
+                "coding": [
+                  {
+                    "code": "836403007",
+                    "system": "2.16.840.1.113883.6.96"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "expirationDate": "2025-07-30",
+        "programEligibility": [],
+        "recorded": "2020-10-20T14:30:00Z",
+        "performer": [
+          {
+            "function": {
+              "coding": [
+                {
+                  "code": "100",
+                  "system": "1.2.40.0.34.5.2"
+                }
+              ]
+            },
+            "actor": {
+              "reference": "PractitionerRole/2",
+              "type": "PractitionerRole"
+            }
+          }
+        ],
+        "patient": {
+          "reference": "Patient/1"
+        }
+      }
+    }
+  ]
+}

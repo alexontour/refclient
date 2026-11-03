@@ -1,0 +1,31 @@
+name: Functional checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check functional documentation links
+        run: node scripts/check-docs.js
+      - name: Build and test both applications
+        shell: pwsh
+        run: ./scripts/test-docker.ps1
+      - name: Save browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-results
+          path: tests/ui/test-results
+          if-no-files-found: ignore
+      - name: Container diagnostics
+        if: failure()
+        run: docker compose logs --tail 100
+      - name: Stop test services
+        if: always()
+        run: docker compose down

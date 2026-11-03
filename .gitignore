@@ -15,3 +15,15 @@ docs/doc/*
 /keystore/*
 **/keystore/*
 /keystore/
+/build.log
+/docker-build.log
+/vendor/
+**/node_modules/
+**/test-results/
+**/playwright-report/
+**/__pycache__/
+*.pyc
+*.log
+/.upstream-metadata/
+/schulimpfung/data/sessions/
+/schulimpfung/data/logs/

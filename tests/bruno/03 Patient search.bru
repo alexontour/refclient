@@ -1,0 +1,23 @@
+meta {
+  name: Patientensuche im ZPI-Mock
+  type: http
+  seq: 3
+}
+post {
+  url: {{baseUrl}}/api/eimpf/patients/search
+  body: json
+  auth: none
+}
+headers {
+  Content-Type: application/fhir+json
+}
+body:json {
+  {"resourceType":"Patient","identifier":[{"value":"1001210995"}]}
+}
+tests {
+  test("Synthetischer Patient wird gefunden", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody().total).to.equal(1);
+    expect(res.getBody().entry[0].resource.name[0].given[0]).to.equal("Max");
+  });
+}

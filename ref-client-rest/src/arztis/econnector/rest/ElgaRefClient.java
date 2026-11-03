@@ -49,6 +49,12 @@ public class ElgaRefClient {
 	 *             PBEWithMD5AndDES
 	 */
 	public static void main(String[] args) {
+		if ("true".equalsIgnoreCase(System.getenv("ELGA_MOCK_EXTERNAL"))) {
+			setLogFile();
+			setConfigFile();
+			new IJettyServer(ConfigReader.getInstance().getServerPort(), new HttpConfiguration()).start();
+			return;
+		}
 		var app = new SpringApplication(IpfApplication.class);
 		app.setWebApplicationType(WebApplicationType.NONE);
 

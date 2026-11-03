@@ -342,7 +342,7 @@ public class CompleteImmunizationState extends FhirBundle {
 	private void extractRelatedDocument(POCDMT000040ClinicalDocument cda, Composition composition) {
 		if (!cda.getRelatedDocument().isEmpty()) {
 			for (POCDMT000040RelatedDocument relatedDoc : cda.getRelatedDocument()) {
-				if (relatedDoc != null && relatedDoc.getParentDocument() != null) {
+				if (relatedDoc != null && relatedDoc.getParentDocument() != null && relatedDoc.getTypeCode() != null) {
 					CompositionRelatesToComponent relatesTo = new CompositionRelatesToComponent();
 
 					relatesTo.setCode(convertXActDocumentRelationshipType(relatedDoc.getTypeCode()));

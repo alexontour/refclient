@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+
+{% block title %}Impfprozess – Schulimpfung{% endblock %}
+
+{% block content %}
+{#
+<section class="card shadow-sm border-0 mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+      <div>
+        <h2 class="h5 mb-1">Schülerliste hochladen</h2>
+      </div>
+      {% if upload_message == "success" %}
+      <span class="badge text-bg-success">Upload abgeschlossen</span>
+      {% elif upload_message == "missing" %}
+      <span class="badge text-bg-warning">Keine Datei ausgewählt</span>
+      {% endif %}
+    </div>
+
+    {% if session_gda %}
+    <div class="d-flex gap-2 flex-wrap mt-2">
+      {% for gda in session_gda %}
+      <a class="badge text-bg-light border text-decoration-none" href="{{ gda.Details }}" target="_blank" rel="noreferrer">
+        {% if gda.Bezeichnung == "Organisation" and gda.Name %}
+        Organisation: {{ gda.Name }}
+        {% elif gda.Bezeichnung == "Impfarzt" and gda.Nachname %}
+        Impfarzt: {{ gda.Titel }} {{ gda.Vorname }} {{ gda.Nachname }}
+        {% else %}
+        {{ gda.Bezeichnung }} {{ gda.OID }}
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form class="row g-2 align-items-end mt-3" action="{{ url_for('upload_students') }}" method="post" enctype="multipart/form-data">
+      <div class="col-12 col-lg">
+        <label class="form-label" for="student_list">CSV-Datei</label>
+        <input class="form-control" id="student_list" name="student_list" type="file" accept=".csv,text/csv">
+      </div>
+      <div class="col-12 col-lg-auto">
+        <button class="btn btn-primary w-100" type="submit">Schülerliste hochladen</button>
+      </div>
+    </form>
+  </div>
+</section>
+#}
+
+<section class="card shadow-sm border-0 mb-4">
+  <div class="card-body">
+    <div class="process-statusbar" aria-label="Prozessstatus">
+      <div class="process-status-step {% if active_count %}is-active{% endif %} {% if can_document_vaccination or completed_active_count %}is-complete{% endif %}">
+        <span class="process-status-marker">1</span>
+        <div>
+          <h2 class="h6 mb-1">Schülerliste bearbeiten</h2>
+        </div>
+      </div>
+      <div class="process-status-step {% if can_document_vaccination %}is-active{% endif %} {% if active_count and completed_active_count == active_count %}is-complete{% endif %}">
+        <span class="process-status-marker">2</span>
+        <div>
+          <h2 class="h6 mb-1">Impfung dokumentieren</h2>
+        </div>
+      </div>
+      <div class="process-status-step {% if can_upload_eimpfpass %}is-active{% endif %} {% if active_count and uploaded_active_count == active_count %}is-complete{% endif %}">
+        <span class="process-status-marker">3</span>
+        <div>
+          <h2 class="h6 mb-1">Impfung übertragen</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if action_message == "added" %}
+<div class="alert alert-success" role="alert">Schüler wurde ergänzt.</div>
+{% elif action_message == "updated" %}
+<div class="alert alert-success" role="alert">Schüler wurde geändert.</div>
+{% elif action_message == "missing" %}
+<div class="alert alert-warning" role="alert">Schüler wurde nicht gefunden.</div>
+{% elif action_message == "passes_downloaded" %}
+<div class="alert alert-success" role="alert">eImpfpässe für aktive Schüler wurden heruntergeladen.</div>
+{% elif action_message == "vaccination_documented" %}
+<div class="alert alert-success" role="alert">Impfung wurde für aktive Schüler dokumentiert.</div>
+{% elif action_message == "eimpfpass_uploaded" %}
+<div class="alert alert-success" role="alert">{% if refclient_enabled %}Impfdokumente wurden im gemeinsamen Referenzclient gespeichert.{% else %}CDA-Dateien wurden an den eImpfpass Mock übergeben.{% endif %}</div>
+{% elif action_message == "eimpfpass_upload_failed" %}
+<div class="alert alert-warning" role="alert">{% if refclient_enabled %}Upload in den Referenzclient fehlgeschlagen.{% else %}Upload in den eImpfpass Mock fehlgeschlagen.{% endif %}</div>
+{% elif action_message == "vaccination_blocked" %}
+<div class="alert alert-warning" role="alert">Bitte zuerst eImpfpässe herunterladen.</div>
+{% elif action_message == "session_closed" %}
+<div class="alert alert-success" role="alert">Session wurde abgeschlossen. Du kannst mit einer leeren Liste neu beginnen.</div>
+{% endif %}
+
+{% if error_message %}
+<div class="alert alert-danger" role="alert">{{ error_message }}</div>
+{% endif %}
+
+<section class="row g-4 align-items-start">
+  <div class="col-12 col-xl-7">
+    <section class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <div>
+            <h2 class="h5 mb-1">Schülerliste</h2>
+            <p class="text-secondary small mb-0">{{ students|length }} Schüler, {{ active_count }} aktiv</p>
+          </div>
+          <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary btn-sm {% if not active_count %}disabled{% endif %}" href="{{ url_for('download_vaccination_passes') }}" {% if not active_count %}aria-disabled="true"{% endif %}>eImpfpass laden</a>
+            <a class="btn btn-outline-primary btn-sm {% if not can_document_vaccination %}disabled{% endif %}" href="{{ url_for('index', view='vaccination') }}" {% if not can_document_vaccination %}aria-disabled="true"{% endif %}>Impfung dokumentieren</a>
+            <a class="btn btn-outline-primary btn-sm add-student-button" href="{{ url_for('index', view='new') }}" aria-label="Schüler ergänzen">+</a>
+          </div>
+        </div>
+
+        <form class="student-upload-form row g-2 align-items-end mb-3" action="{{ url_for('upload_students') }}" method="post" enctype="multipart/form-data">
+          <div class="col-12 col-lg">
+            <label class="form-label small text-secondary" for="student_list">Sch&uuml;lerliste hochladen</label>
+            <input class="form-control form-control-sm" id="student_list" name="student_list" type="file" accept=".csv,text/csv">
+          </div>
+          <div class="col-12 col-lg-auto">
+            <button class="btn btn-primary btn-sm w-100" type="submit">Sch&uuml;lerliste hochladen</button>
+          </div>
+          {% if upload_message == "success" %}
+          <div class="col-12 col-lg-auto">
+            <span class="badge text-bg-success">Upload abgeschlossen</span>
+          </div>
+          {% elif upload_message == "missing" %}
+          <div class="col-12 col-lg-auto">
+            <span class="badge text-bg-warning">Keine Datei ausgewählt</span>
+          </div>
+          {% endif %}
+        </form>
+
+        {% if students %}
+        <div class="table-responsive student-list">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Schüler</th>
+                <th>Geburtsdatum</th>
+                <th>Schule</th>
+                <th>Klasse</th>
+                <th>Aktiv</th>
+                <th>Impfpass</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for student in students %}
+              <tr class="{% if selected_student and student.id == selected_student.id %}table-primary{% endif %}">
+                <td>
+                  <strong>{{ student.name }}</strong><br>
+                  <span class="text-secondary small">SVNR {{ student.social_security_number }}</span>
+                </td>
+                <td>{{ student.birth_date }}</td>
+                <td>{{ student.school }}</td>
+                <td>{{ student.class_name }}</td>
+                <td>
+                  <form action="{{ url_for('update_student_active', student_id=student.id) }}" method="post">
+                    <div class="form-check">
+                      <input class="form-check-input" name="active" type="checkbox" onchange="this.form.submit()" {% if student.active %}checked{% endif %}>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  {% if student.pass_downloaded %}
+                  <a class="btn btn-outline-secondary btn-sm icon-button" href="{{ url_for('index', student_id=student.id, view='pass') }}" aria-label="eImpfpass anzeigen" title="eImpfpass anzeigen">📄</a>
+                  {% else %}
+                  <span class="text-secondary">—</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a class="btn btn-outline-primary btn-sm" href="{{ url_for('index', student_id=student.id, view='edit') }}">Bearbeiten</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="border rounded bg-body-tertiary p-4 text-center">
+          <p class="mb-0 fw-semibold">Keine Schüler</p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12 col-xl-5">
+    <aside class="workbench">
+      {% if can_upload_eimpfpass %}
+      <section class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center gap-2 mb-3 flex-wrap">
+            <h3 class="h6 mb-0">eImpfpass hochladen</h3>
+            <span class="badge text-bg-light border">{{ completed_active_count }} dokumentiert</span>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            {% if refclient_enabled %}
+            <form action="{{ url_for('upload_eimpfpass') }}" method="post">
+              <button class="btn btn-outline-primary btn-sm" type="submit">eImpfpass hochladen</button>
+            </form>
+            {% else %}
+            <button class="btn btn-outline-primary btn-sm" type="button" data-local-modal-target="#eImpfpassUnavailableModal">eImpfpass hochladen</button>
+            {% endif %}
+            <form action="{{ url_for('close_session') }}" method="post">
+              <button class="btn btn-outline-danger btn-sm" type="submit">Neue Impfserie</button>
+            </form>
+          </div>
+          <div class="mt-3 small">
+            {% if refclient_enabled %}
+            <p class="text-secondary mb-2">Upload in den gemeinsamen lokalen Referenzclient: {{ uploaded_active_count }} von {{ completed_active_count }} dokumentierten Impfungen gespeichert. Die Dokumente sind anschließend auch in der Referenzclient-Oberfläche sichtbar.</p>
+            {% else %}
+            <p class="text-secondary mb-2">Die Daten werden an die eImpf-Datenbank übertragen. Das ist nicht Teil der Demo. Daten können hier heruntergeladen werden:</p>
+            {% endif %}
+            <p class="mb-2">
+              <a href="https://ovp.elga-services.at/validation.html" target="_blank" rel="noreferrer">CDA-Dokumente im OVP-Validator prüfen</a>
+              <span class="text-secondary">- Die erzeugten CDA-Dokumente können hier validiert werden.</span>
+            </p>
+            <ul class="list-unstyled mb-0">
+              {% for download in vaccination_downloads %}
+              <li>
+                <a href="{{ url_for('vaccination_document_file', filename=download.filename) }}">{{ download.student_name }} - {{ download.filename }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+      {% if workbench_mode == "new" %}
+      <section class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <h3 class="h6 mb-3">Schüler ergänzen</h3>
+          <form class="row g-3" action="{{ url_for('add_student') }}" method="post">
+            <div class="col-md-6">
+              <label class="form-label" for="add_first_name">Vorname</label>
+              <input class="form-control" id="add_first_name" name="first_name" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="add_last_name">Nachname</label>
+              <input class="form-control" id="add_last_name" name="last_name" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="add_birth_date">Geburtsdatum</label>
+              <input class="form-control" id="add_birth_date" name="birth_date">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="add_social_security_number">SVNR</label>
+              <input class="form-control" id="add_social_security_number" name="social_security_number">
+            </div>
+            <div class="col-md-7">
+              <label class="form-label" for="add_school">Schule</label>
+              <input class="form-control" id="add_school" name="school">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="add_class_name">Klasse</label>
+              <input class="form-control" id="add_class_name" name="class_name">
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-primary btn-sm" type="submit">Schüler ergänzen</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      {% elif workbench_mode == "vaccination" and can_document_vaccination %}
+      <section class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+            <h3 class="h6 mb-0">Impfung dokumentieren</h3>
+            <span class="badge text-bg-light border">{{ active_count }} aktiv</span>
+          </div>
+
+          <form class="row g-3" id="vaccinationDocumentationForm" action="{{ url_for('document_vaccination') }}" method="post">
+            <input type="hidden" id="confirm_documentation" name="confirm_documentation" value="{% if vaccination_summary_open %}yes{% endif %}">
+            {% for field in vaccination_fields %}
+            <div class="{% if field.control == 'Textfeld' or field.control == 'Datepicker' %}col-md-6{% else %}col-12{% endif %}">
+              <label class="form-label" for="{{ field.id }}">
+                {{ field.label }}
+                {% if field.required %}<span class="required-marker" aria-label="Pflichtfeld">*</span>{% endif %}
+                {% if field.help %}
+                <span class="field-help" tabindex="0" role="button" data-bs-toggle="tooltip" data-bs-title="{{ field.help }}" aria-label="Hilfetext zu {{ field.label }}">?</span>
+                {% endif %}
+              </label>
+              {% set summary_value = request.args.get('summary_' ~ field.name, field.default) %}
+              {% if field.control == "Datepicker" %}
+              <input class="form-control {% if field.required %}required-field{% endif %}" id="{{ field.id }}" name="{{ field.name }}" type="date" value="{{ summary_value }}" {% if field.required %}required{% endif %}>
+              {% elif field.control == "DropDown" or field.options %}
+              <select class="form-select {% if field.required %}required-field{% endif %}" id="{{ field.id }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+                <option value="">Auswählen</option>
+                {% for option in field.options %}
+                <option value="{{ option.value }}" {% if summary_value == option.value %}selected{% endif %}>{{ option.label }}</option>
+                {% endfor %}
+              </select>
+              {% else %}
+              <input class="form-control {% if field.required %}required-field{% endif %}" id="{{ field.id }}" name="{{ field.name }}" value="{{ summary_value }}" {% if field.required %}required{% endif %}>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <div class="col-12">
+              <button class="btn btn-primary btn-sm" type="submit">Zusammenfassung anzeigen</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      {% elif selected_student and workbench_mode == "pass" and selected_student.pass_downloaded %}
+      <section class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+            <div>
+              <h3 class="h6 mb-1">eImpfpass</h3>
+              <p class="text-secondary small mb-0">{{ selected_student.name }}</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-outline-secondary btn-sm icon-button" type="button" data-local-modal-target="#vaccinationPassLargeModal" aria-label="eImpfpass groß anzeigen" title="eImpfpass groß anzeigen">⛶</button>
+              <span class="badge text-bg-primary">{{ selected_student.class_name }}</span>
+            </div>
+          </div>
+          <dl class="row mb-0 small">
+            <dt class="col-5">Quelle</dt>
+            <dd class="col-7">{{ selected_student.pass_file_name }}</dd>
+          </dl>
+          <div class="cda-frame-wrap mt-3">
+            <iframe class="cda-frame" title="eImpfpass CDA" src="{{ url_for('downloaded_pass_file', filename=selected_student.pass_file_name) }}"></iframe>
+          </div>
+
+        </div>
+      </section>
+      {% elif selected_student %}
+      <section class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <h3 class="h6 mb-3">Schüler ändern</h3>
+          <form class="row g-3" action="{{ url_for('edit_student', student_id=selected_student.id) }}" method="post">
+            <div class="col-md-6">
+              <label class="form-label" for="edit_first_name">Vorname</label>
+              <input class="form-control" id="edit_first_name" name="first_name" value="{{ selected_student.first_name }}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="edit_last_name">Nachname</label>
+              <input class="form-control" id="edit_last_name" name="last_name" value="{{ selected_student.last_name }}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="edit_birth_date">Geburtsdatum</label>
+              <input class="form-control" id="edit_birth_date" name="birth_date" value="{{ selected_student.birth_date }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="edit_social_security_number">SVNR</label>
+              <input class="form-control" id="edit_social_security_number" name="social_security_number" value="{{ selected_student.social_security_number }}">
+            </div>
+            <div class="col-md-7">
+              <label class="form-label" for="edit_school">Schule</label>
+              <input class="form-control" id="edit_school" name="school" value="{{ selected_student.school }}">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="edit_class_name">Klasse</label>
+              <input class="form-control" id="edit_class_name" name="class_name" value="{{ selected_student.class_name }}">
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary btn-sm" type="submit">Schüler ändern</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+
+{% if can_upload_eimpfpass %}
+<div class="modal fade local-modal" id="eImpfpassUnavailableModal" tabindex="-1" aria-labelledby="eImpfpassUnavailableModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="eImpfpassUnavailableModalTitle">eImpfpass hochladen</h2>
+        <button type="button" class="btn-close" data-local-modal-dismiss aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">Übertragung an den eImpfpass nicht verfügbar</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" type="button" data-local-modal-dismiss>OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if selected_student and workbench_mode == "pass" and selected_student.pass_downloaded %}
+<div class="modal fade local-modal" id="vaccinationPassLargeModal" tabindex="-1" aria-labelledby="vaccinationPassLargeModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xl-down modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title fs-5" id="vaccinationPassLargeModalTitle">eImpfpass</h2>
+          <p class="text-secondary small mb-0">{{ selected_student.name }} · {{ selected_student.pass_file_name }}</p>
+        </div>
+        <button type="button" class="btn-close" data-local-modal-dismiss aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body p-0">
+        <iframe class="cda-frame cda-frame-large" title="eImpfpass CDA groß" src="{{ url_for('downloaded_pass_file', filename=selected_student.pass_file_name) }}"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if vaccination_summary_open %}
+<div class="modal fade local-modal show" id="vaccinationSummaryModal" tabindex="-1" aria-labelledby="vaccinationSummaryModalTitle" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title fs-5" id="vaccinationSummaryModalTitle">Zusammenfassung</h2>
+          <p class="text-secondary small mb-0">{{ request.args.get('active_count', active_count) }} aktive Schüler</p>
+        </div>
+        <a class="btn-close" href="{{ url_for('index', view='vaccination') }}" aria-label="Schließen"></a>
+      </div>
+      <div class="modal-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-4">Anzahl der Schüler</dt>
+          <dd class="col-sm-8">{{ request.args.get('active_count', active_count) }}</dd>
+          {% for field in vaccination_fields %}
+          <dt class="col-sm-4">{{ field.label }}</dt>
+          <dd class="col-sm-8">{{ request.args.get('summary_' ~ field.name) or '-' }}</dd>
+          {% endfor %}
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('index', view='vaccination') }}">Zurück</a>
+        <button class="btn btn-primary btn-sm" type="submit" form="vaccinationDocumentationForm">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" data-local-modal-backdrop="true"></div>
+{% endif %}
+
+{% endblock %}

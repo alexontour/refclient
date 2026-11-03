@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Schulimpfung{% endblock %}</title>
+    <link href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='app.css') }}" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container d-flex justify-content-between align-items-start gap-3">
+        <div>
+          <span class="navbar-brand fw-semibold d-block">Schulimpfung dokumentieren</span>
+          <span class="navbar-version text-white-50">{{ version_label }}</span>
+        </div>
+        {% if session_gda %}
+        <div class="navbar-gda-summary d-flex flex-column align-items-end gap-1">
+          {% for gda in session_gda %}
+            {% if gda.Bezeichnung == "Impfarzt" and gda.Nachname %}
+            {% set gda_display_name = (gda.Titel ~ " " ~ gda.Vorname ~ " " ~ gda.Nachname).strip() %}
+            <div class="text-white-50">
+              <a class="text-white-50 text-decoration-none" href="{{ gda.Details }}" target="_blank" rel="noreferrer">{{ gda_display_name }}</a>
+              {% for protocol in protocol_summary if protocol.gda == gda_display_name %}
+              <span> | {{ protocol.count }} Impfungen</span>
+              {% endfor %}
+              <span> | </span><a class="text-white fw-semibold text-decoration-none" href="{{ url_for('vaccination_protocol_file') }}">Protokoll</a>
+            </div>
+            {% else %}
+            <a class="text-white-50 text-decoration-none" href="{{ gda.Details }}" target="_blank" rel="noreferrer">
+              {% if gda.Bezeichnung == "Organisation" and gda.Name %}
+              {{ gda.Name }}
+              {% else %}
+              {{ gda.Bezeichnung }} {{ gda.OID }}
+              {% endif %}
+            </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+
+    <main id="main-content" tabindex="-1" class="container py-4 py-md-5">
+      <nav aria-label="Oberfläche auswählen" class="d-flex flex-wrap gap-2 mb-4">
+        <a class="btn btn-outline-primary" href="/">Referenzclient</a>
+        <a class="btn btn-primary" href="{{ url_for('index') }}" aria-current="page">Schulimpfung</a>
+        <a class="btn btn-outline-primary" href="/help.html">Hilfe &amp; Bedienung</a>
+      </nav>
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap.bundle.min.js') }}"></script>
+  </body>
+</html>

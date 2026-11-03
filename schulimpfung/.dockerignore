@@ -1,0 +1,10 @@
+.git
+__pycache__/
+**/__pycache__/
+*.pyc
+*.log
+.pytest_cache/
+data/sessions/
+data/logs/
+flask-out.log
+flask-err.log

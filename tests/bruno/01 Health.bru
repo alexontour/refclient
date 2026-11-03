@@ -1,0 +1,17 @@
+meta {
+  name: Mock-Betrieb und echte CDA-Verarbeitung
+  type: http
+  seq: 1
+}
+get {
+  url: {{baseUrl}}/health
+  body: none
+  auth: none
+}
+tests {
+  test("Mock-Server ist bereit", function () {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody().mode).to.equal("external-mock");
+    expect(res.getBody().cda).to.equal("real-husky");
+  });
+}

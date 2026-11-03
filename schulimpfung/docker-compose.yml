@@ -1,0 +1,17 @@
+# Optional: eigenständiger Fixture-Modus ohne Java-Referenzclient.
+# Der gemeinsame Betrieb wird durch ../compose.yaml definiert.
+services:
+  schulimpfung:
+    build: .
+    environment:
+      APP_ENV: test
+      DOWNLOAD_DELAY_SECONDS: "0"
+    ports:
+      - "127.0.0.1:5005:5000"
+    volumes:
+      - schulimpfung-data:/var/lib/schulimpfung
+      - schulimpfung-logs:/var/log/schulimpfung
+    restart: unless-stopped
+volumes:
+  schulimpfung-data:
+  schulimpfung-logs:

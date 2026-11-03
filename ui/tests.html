@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="de">
+<head><link rel="icon" href="data:,"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Testzugänge · ELGA Referenzclient</title><link rel="stylesheet" href="style.css"></head>
+<body class="test-access">
+<header><h1>Testzugänge</h1><p>ELGA RefClient · Basis master / 1a1542b6 · lokale Mock-Erweiterungen</p></header>
+<main>
+<p><a href="/">Zur lokalen eImpfpass-Testoberfläche</a></p>
+<section><h2>Testoberfläche laut Repository</h2>
+<p>Das Original-Repository beschreibt eine HTML5-/JavaScript-Testoberfläche auf Basis von Polymer für O-Card-Anmeldung, Kontaktbestätigungen sowie Dokument-Upload und -Download.</p>
+<p><a href="https://gitlab.com/elga-gmbh/refclient" target="_blank" rel="noopener noreferrer">Original-Repository und Beschreibung der Testoberfläche öffnen</a></p>
+<p>Die Polymer-GUI ist in den geprüften veröffentlichten Branches nicht enthalten. Dieser Verweis führt zur Repository-Dokumentation. Die lokal ergänzte eImpfpass-Oberfläche ist über den Link oben erreichbar.</p></section>
+<section><h2>Bruno mit lokalen Mocks</h2>
+<p><a href="downloads/refclient-bruno-mock.zip" download>Bruno-Mock-Sammlung herunterladen (ZIP)</a></p>
+<p>ZIP entpacken, in Bruno mit „Open Collection“ den entpackten Ordner öffnen und die Umgebung <strong>Local</strong> wählen. Die Sammlung prüft Betriebsmodus, Impfstoffkatalog, Patientensuche und Eingabeprüfung gegen diesen lokalen Referenzclient.</p>
+<p>Aus dem Projektverzeichnis lassen sich die Tests auch ohne lokale Bruno-Installation starten:</p>
+<pre>docker compose --profile tests run --rm bruno</pre>
+<p>Der vollständige Testlauf einschließlich FHIR→CDA→FHIR, Bruno und Browser-Tests startet mit <code>./scripts/test-docker.ps1</code>.</p></section>
+<section><h2>Automatisierte UI-Tests</h2>
+<p>Playwright prüft Patientensuche und -übernahme, CDA-Vorschau und Download sowie den Bruno-Zugang in Desktop- und Mobilansicht gegen den lokalen Mock.</p>
+<p>Im Projektverzeichnis ausführen:</p>
+<pre>docker compose --profile tests run --build --rm ui-tests</pre>
+<p>Bei Fehlern liegen Screenshots und Traces unter <code>tests/ui/test-results</code>. Einrichtung und interaktiver Testmodus sind in <code>tests/README.md</code> beschrieben.</p></section>
+<section><h2>Veröffentlichte Bruno-Sammlung</h2>
+<p><a href="https://gitlab.com/elga-gmbh/refclient/-/tree/2a2bfc2880abd0c8ac4716b879053ef763cf3a14/docs/API/bruno/ELGA%20Refclient" target="_blank" rel="noopener noreferrer">Originale Bruno-Sammlung im Repository öffnen</a></p>
+<p>Stand des Entwicklungsbranches „5-add-endpoint-for-patient-creation“: <code>2a2bfc28</code>. Die Originalsammlung enthält zusätzliche produktive Schnittstellen. O-Card-, Login- und IHE-Abläufe benötigen die externe Testinfrastruktur und werden vom lokalen Mock nicht vollständig unterstützt.</p></section>
+</main></body></html>
