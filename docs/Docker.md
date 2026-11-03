@@ -15,7 +15,7 @@ oder echte Gesundheitsdaten benötigen eine gesonderte Architektur und Freigabe.
 ## Start und Prüfung
 
 Voraussetzung: Docker mit Linux-Containern und Compose. Der erste Build benötigt
-Zugriff auf Container-, Maven- und Python-Paketquellen.
+Zugriff auf Container-, Maven- und Python-Paketquellen. Maven verwendet zuerst die mitgelieferten Bibliotheken, anschließend Maven Central und zuletzt das zusätzliche IHE-Repository.
 
 ```powershell
 docker compose up -d --build --wait

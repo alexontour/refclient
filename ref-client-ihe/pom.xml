@@ -83,10 +83,7 @@
 		</plugins>
 	</build>
 	<repositories>
-		<repository>
-			<id>gazelle</id>
-			<url>https://nexus.ihe-catalyst.net/repository/releases/</url>
-		</repository>
+		<!-- Resolve supplied libraries and standard packages before the IHE fallback. -->
 		<repository>
 			<id>my-local-repo</id>
 			<url>file://${project.basedir}/librariesNeeded/repo</url>
@@ -98,6 +95,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>gazelle</id>
+			<url>https://nexus.ihe-catalyst.net/repository/releases/</url>
 		</repository>
 	</repositories>
 	<dependencies>
